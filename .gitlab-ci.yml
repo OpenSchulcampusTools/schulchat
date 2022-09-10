@@ -58,9 +58,9 @@ build_web:
     flutter build web --release --verbose --source-maps
   after_script:
     #until https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1057 is implemented
-    - cd build/web && zip -r webbuild.zip .
+    - apt download zip && dpkg -x zip_*.deb .
+    - cd build/web && ../../usr/bin/zip -r webbuild.zip .
   artifacts:
-    when: on_success
     paths:
       - build/web/webbuild.zip
 
