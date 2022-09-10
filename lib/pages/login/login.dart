@@ -66,7 +66,7 @@ class LoginController extends State<Login> {
       await matrix.getLoginClient().login(LoginType.mLoginPassword,
           identifier: identifier,
           // To stay compatible with older server versions
-          // ignore: deprecated_member_use
+          // ignore: deprecated_member_use, deprecated_member_use_from_same_package
           user: identifier.type == AuthenticationIdentifierTypes.userId
               ? username
               : null,

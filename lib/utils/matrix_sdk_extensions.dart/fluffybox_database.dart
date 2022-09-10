@@ -16,7 +16,7 @@ import 'package:path_provider/path_provider.dart';
 import '../client_manager.dart';
 import '../famedlysdk_store.dart';
 
-// ignore: deprecated_member_use
+// ignore: deprecated_member_use, deprecated_member_use_from_same_package
 class FlutterFluffyBoxDatabase extends FluffyBoxDatabase {
   FlutterFluffyBoxDatabase(
     String name,
@@ -30,7 +30,7 @@ class FlutterFluffyBoxDatabase extends FluffyBoxDatabase {
 
   static const String _cipherStorageKey = 'database_encryption_key';
 
-  // ignore: deprecated_member_use
+  // ignore: deprecated_member_use, deprecated_member_use_from_same_package
   static Future<FluffyBoxDatabase> databaseBuilder(Client client) async {
     Logs().d('Open FluffyBox...');
     fluffybox.HiveAesCipher? hiverCipher;
@@ -65,7 +65,7 @@ class FlutterFluffyBoxDatabase extends FluffyBoxDatabase {
       Logs().w('Unable to init FluffyBox encryption', e, s);
     }
 
-    // ignore: deprecated_member_use
+    // ignore: deprecated_member_use, deprecated_member_use_from_same_package
     final db = FluffyBoxDatabase(
       'fluffybox_${client.clientName.replaceAll(' ', '_').toLowerCase()}',
       await _findDatabasePath(client),
