@@ -26,8 +26,6 @@ flutter_analyze:
   extends:
     - .flutter_deps_and_format
   script: [flutter analyze]
-  #FIXME
-  allow_failure: true
 
 dart_code_metrics_analyze:
   stage: test
@@ -35,7 +33,6 @@ dart_code_metrics_analyze:
     - .flutter_deps_and_format
   script: ['flutter pub run dart_code_metrics:metrics lib -r gitlab > code-quality-report.json']
   #FIXME write analysis script for code-quality-report
-  allow_failure: true
   artifacts:
     reports:
       codequality: code-quality-report.json
