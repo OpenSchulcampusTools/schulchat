@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fluffychat/pages/chat/chat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ import 'package:vrouter/vrouter.dart';
 
 import 'package:fluffychat/pages/chat/cupertino_widgets_bottom_sheet.dart';
 import 'package:fluffychat/pages/chat/edit_widgets_dialog.dart';
+import 'package:fluffychat/pages/chat/search_dialog.dart';
 import 'package:fluffychat/pages/chat/widgets_bottom_sheet.dart';
 import 'm2_popup_menu_button.dart';
 import 'matrix.dart';
@@ -86,6 +88,16 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
             const Icon(Icons.delete_outlined),
             const SizedBox(width: 12),
             Text(L10n.of(context)!.leave),
+          ],
+        ),
+      ),
+      PopupMenuItem<String>(
+        value: 'search',
+        child: Row(
+          children: [
+            const Icon(Icons.search),
+            const SizedBox(width: 12),
+            Text(L10n.of(context)!.search),
           ],
         ),
       ),
@@ -170,6 +182,13 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
                 break;
               case 'details':
                 _showChatDetails();
+                break;
+              case 'search':
+                showDialog(
+                  context: context,
+                  builder: (context) => SearchDialog(room: widget.room),
+                  useRootNavigator: false,
+                );
                 break;
             }
           },
