@@ -13,6 +13,7 @@ class ChatSearch extends StatefulWidget {
 class ChatSearchController extends State<ChatSearch> {
 
   String? get roomId => VRouter.of(context).pathParameters['roomid'];
+  Timeline? timeline;
   List<Event> searchResult = [];
   final TextEditingController searchController = TextEditingController();
   String? searchError;
@@ -25,13 +26,13 @@ class ChatSearchController extends State<ChatSearch> {
 
       final searchText = searchController.text;
       final room = Matrix.of(context).client.getRoomById(roomId!)!;
-      final timeline = await room.getTimeline();
+      timeline = await room.getTimeline();
 
       searchResult = [];
 
-      if(!searchText.isEmpty) {
-        for (var i = 0; i < timeline.chunk.events.length; i++) {
-          final event = timeline.chunk.events[i];
+      if(searchText.isNotEmpty) {
+        for (var i = 0; i < timeline!.chunk.events.length; i++) {
+          final event = timeline!.chunk.events[i];
           if (event.type == EventTypes.Message) {
             String? body = event.content["body"];
             if (body != null && body.toLowerCase().contains(searchText)) {
@@ -47,6 +48,17 @@ class ChatSearchController extends State<ChatSearch> {
     } catch (e) {
       searchError = "Bei der Suche ist ein Fehler aufgetreten.";
     }
+  }
+
+  void unfold(String eventId) {
+
+  }
+
+  void onSelectMessage(Event event) {
+    VRouter.of(context).path.startsWith('/spaces/')
+        ? VRouter.of(context).pop()
+        : VRouter.of(context)
+        .toSegments(['rooms', roomId!], queryParameters: {'event': event.eventId});
   }
 
   @override

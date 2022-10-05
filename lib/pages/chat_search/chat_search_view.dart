@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/pages/chat/events/message.dart';
 import 'package:fluffychat/pages/chat_search/chat_search.dart';
 import 'package:fluffychat/utils/fluffy_share.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
@@ -30,7 +31,6 @@ class ChatSearchView extends StatelessWidget {
         ),
       );
     } else {
-
       return StreamBuilder(
           stream: room.onUpdate.stream,
           builder: (context, snapshot) {
@@ -78,46 +78,60 @@ class ChatSearchView extends StatelessWidget {
                   ),
                 ],
                 body: MaxWidthBody(
-                  child: ListView.builder(
-                      itemCount: controller.searchResult.length + 1 +
-                          (controller.searchResult.isEmpty ? 1 : 0),
-                      itemBuilder: (BuildContext context, int i) => i == 0
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextField(
-                                      controller: controller.searchController,
-                                      onSubmitted: (value){controller.search();},
-                                      autofocus: true,
-                                      decoration: InputDecoration(
-                                        prefixIcon: const Icon(Icons.label),
-                                        label: Text(L10n.of(context)!.search),
-                                        errorText: controller.searchError,
-                                      ),
-                                    ),
-                                  ),
-                                  ButtonBar(
-                                    children: [
-                                      TextButton(
-                                        onPressed: controller.search,
-                                        child: Text(L10n.of(context)!.search),
-                                      ),
-                                    ],
-                                  ),
-                                ])
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                controller.searchResult.isEmpty
-                                    ? ListTile(
-                                        title: Text("Keine Suchergebnisse"))
-                                    : ListTile(
-                                      title: Text(controller.searchResult[i-1]
-                                          .content["body"] )//Text("Text 2")
-                                      )
-                                ])),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: controller.searchController,
+                            onSubmitted: (value) {
+                              controller.search();
+                            },
+                            autofocus: true,
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.label),
+                              label: Text(L10n.of(context)!.search),
+                              errorText: controller.searchError,
+                            ),
+                          ),
+                        ),
+                        ButtonBar(
+                          children: [
+                            TextButton(
+                              onPressed: controller.search,
+                              child: Text(L10n.of(context)!.search),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child:  Builder(builder: (context) {
+                                if (controller.searchResult.isEmpty) {
+                                  return ListTile(
+                                      title: Text("Keine Suchergebnisse"));
+                                } else {
+                                  return ListView.builder(
+                                      itemCount: controller.searchResult.length,
+                                      itemBuilder:
+                                          (BuildContext context, int i) {
+                                        return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: <Widget>[
+                                              Message(
+                                                  controller.searchResult[i],
+                                                  onSwipe: (direction) => {},
+                                                  unfold: controller.unfold,
+                                                //  onInfoTab: controller.onInfoTab,
+                                                  onSelect: controller.onSelectMessage,
+                                                  timeline:
+                                                      controller.timeline!)
+                                            ]);
+                                      });
+                                }
+                              }),
+                        )
+                      ]),
                 ),
               ),
             );
