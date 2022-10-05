@@ -1,3 +1,4 @@
+import 'package:fluffychat/pages/chat_search/chat_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:vrouter/vrouter.dart';
@@ -84,6 +85,11 @@ class AppRoutes {
                 path: 'details',
                 widget: const ChatDetails(),
                 stackedRoutes: _chatDetailsRoutes,
+              ),
+              VWidget(
+                path: 'search',
+                widget: const ChatSearch(),
+               // stackedRoutes: _chatDetailsRoutes,
               ),
             ]),
             VWidget(
@@ -184,6 +190,12 @@ class AppRoutes {
                       widget: const ChatDetails(),
                       buildTransition: _fadeTransition,
                       stackedRoutes: _chatDetailsRoutes,
+                    ),
+                    VWidget(
+                      path: 'search',
+                      widget: const ChatSearch(),
+                      buildTransition: _fadeTransition,
+                    //  stackedRoutes: _chatDetailsRoutes,
                     ),
                     VWidget(
                       path: 'invite',
