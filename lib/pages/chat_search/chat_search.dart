@@ -14,32 +14,53 @@ class ChatSearchController extends State<ChatSearch> {
 
   String? get roomId => VRouter.of(context).pathParameters['roomid'];
   Timeline? timeline;
-  List<Event> searchResult = [];
+  Room? room;
+  Stream<List<Event>>? searchResultStream;
   final TextEditingController searchController = TextEditingController();
   String? searchError;
+  String lastSearchTerm = "";
 
   static const fixedWidth = 360.0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<bool> getTimeline() async {
+
+    if(room == null) {
+      room = Matrix.of(context).client.getRoomById(roomId!)!;
+    }
+
+    if (timeline == null) {
+
+      await Matrix.of(context).client.roomsLoading;
+      await Matrix.of(context).client.accountDataLoading;
+      timeline = await room!.getTimeline();
+    }
+
+    timeline!.requestKeys();
+    return true;
+  }
 
   void search() async {
     try {
       searchError = null;
 
       final searchText = searchController.text;
-      final room = Matrix.of(context).client.getRoomById(roomId!)!;
-      timeline = await room.getTimeline();
-
-      searchResult = [];
 
       if(searchText.isNotEmpty) {
-        for (var i = 0; i < timeline!.chunk.events.length; i++) {
-          final event = timeline!.chunk.events[i];
-          if (event.type == EventTypes.Message) {
-            String? body = event.content["body"];
-            if (body != null && body.toLowerCase().contains(searchText)) {
-              searchResult.add(event);
-            }
-          }
+        if (searchText != lastSearchTerm) {
+          lastSearchTerm = searchText;
+          searchResultStream = timeline?.searchEvent(
+              searchTerm: searchText,
+              requestHistoryCount: 30,
+              maxHistoryRequests: 30).asBroadcastStream();
         }
+      }
+      else {
+        searchResultStream = _emptyList();
       }
 
       setState(() {});
@@ -48,6 +69,10 @@ class ChatSearchController extends State<ChatSearch> {
     } catch (e) {
       searchError = "Bei der Suche ist ein Fehler aufgetreten.";
     }
+  }
+
+  Stream<List<Event>> _emptyList() async* {
+    yield <Event>[];
   }
 
   void unfold(String eventId) {
