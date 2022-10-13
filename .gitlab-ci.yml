@@ -1,10 +1,10 @@
 variables:
   FLUTTER_VERSION: 3.0.5
 
-stages:
-  - test
-  - build
-  - upload
+    #stages:
+    #  - test
+    #  - build
+    #  - upload #FIXME upload webbuild and android package 
 
 # fetch and extract flutter
 .prepare_flutter:
@@ -22,17 +22,16 @@ stages:
     - flutter format lib/ test/ --set-exit-if-changed
 
 flutter_analyze:
-  stage: test
+  #  stage: test
   extends:
     - .flutter_deps_and_format
   script: [flutter analyze]
 
 dart_code_metrics_analyze:
-  stage: test
+  #  stage: test
   extends:
     - .flutter_deps_and_format
   script: ['flutter pub run dart_code_metrics:metrics lib -r gitlab > code-quality-report.json']
-  #FIXME write analysis script for code-quality-report
   artifacts:
     reports:
       codequality: code-quality-report.json
@@ -47,11 +46,11 @@ dart_code_metrics_analyze:
 #  script: [flutter test]
 
 build_web:
-  stage: build
+  #  stage: build
   extends:
     - .prepare_flutter
   script: |
-    ./scripts/prepare-web.sh
+    ./scripts/prepare-web.sh # FIXME
     flutter config --enable-web
     flutter clean
     flutter pub get
@@ -64,22 +63,21 @@ build_web:
     paths:
       - build/web/webbuild.zip
 
-#build_android_apk:
-#  stage: build
-#  before_script:
-#    - git apply ./scripts/enable-android-google-services.patch
-#    - ./scripts/prepare-android-release.sh
-#  script: [./scripts/build-android-apk.sh]
-#  tags:
-#    - android
-#  artifacts:
-#    when: on_success
-#    paths:
-#      - build/android/app-release.apk
-#  only:
-#    - main
-#    - tags
-#
+build_android_apk:
+  tags: [docker]
+    #services:
+    #  - name: docker:20.10.16-dind
+  #  stage: build
+  script: |
+    docker build -f docker/Dockerfile.android -t fluffy-android .
+    docker create --name androidimage fluffy-android
+    docker cp androidimage:fluffychat/build/app/outputs/flutter-apk/app-debug.apk .
+    docker rm androidimage
+  artifacts:
+    when: on_success
+    name: app-debug.apk
+    paths:
+      - app-debug.apk
 
 #build_linux_x86:
 #  stage: build
