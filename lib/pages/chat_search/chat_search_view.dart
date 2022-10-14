@@ -32,112 +32,119 @@ class ChatSearchView extends StatelessWidget {
         ),
       );
     } else {
-        return FutureBuilder<bool>(
-            future: controller.getTimeline(),
-            builder: (BuildContext context, snapshot) {
-              return Scaffold(
-                body: NestedScrollView(
-                  headerSliverBuilder:
-                      (BuildContext context, bool innerBoxIsScrolled) => <Widget>[
-                    SliverAppBar(
-                      leading: IconButton(
-                        icon: const Icon(Icons.close_outlined),
-                        onPressed: () =>
-                            VRouter.of(context).path.startsWith('/spaces/')
-                                ? VRouter.of(context).pop()
-                                : VRouter.of(context)
-                                    .toSegments(['rooms', controller.roomId!]),
-                      ),
-                      elevation: Theme.of(context).appBarTheme.elevation,
-                      expandedHeight: 300.0,
-                      floating: true,
-                      pinned: true,
-                      actions: <Widget>[
-                        if (room.canonicalAlias.isNotEmpty)
-                          IconButton(
-                            tooltip: L10n.of(context)!.share,
-                            icon: Icon(Icons.adaptive.share_outlined),
-                            onPressed: () => FluffyShare.share(
-                                AppConfig.inviteLinkPrefix + room.canonicalAlias,
-                                context),
-                          ),
-                        ChatSettingsPopupMenu(room, false)
-                      ],
-                      title: Text(
-                        room.getLocalizedDisplayname(
-                            MatrixLocals(L10n.of(context)!)),
-                      ),
-                      backgroundColor:
-                          Theme.of(context).appBarTheme.backgroundColor,
-                      flexibleSpace: FlexibleSpaceBar(
-                        background: ContentBanner(
-                          mxContent: room.avatar,
-                          onEdit: null,
-                          defaultIcon: Icons.group_outlined,
+      return FutureBuilder<bool>(
+          future: controller.getTimeline(),
+          builder: (BuildContext context, snapshot) {
+            return Scaffold(
+              body: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) => <Widget>[
+                  SliverAppBar(
+                    leading: IconButton(
+                      icon: const Icon(Icons.close_outlined),
+                      onPressed: () =>
+                          VRouter.of(context).path.startsWith('/spaces/')
+                              ? VRouter.of(context).pop()
+                              : VRouter.of(context)
+                                  .toSegments(['rooms', controller.roomId!]),
+                    ),
+                    elevation: Theme.of(context).appBarTheme.elevation,
+                    expandedHeight: 300.0,
+                    floating: true,
+                    pinned: true,
+                    actions: <Widget>[
+                      if (room.canonicalAlias.isNotEmpty)
+                        IconButton(
+                          tooltip: L10n.of(context)!.share,
+                          icon: Icon(Icons.adaptive.share_outlined),
+                          onPressed: () => FluffyShare.share(
+                              AppConfig.inviteLinkPrefix + room.canonicalAlias,
+                              context),
                         ),
+                      ChatSettingsPopupMenu(room, false)
+                    ],
+                    title: Text(
+                      room.getLocalizedDisplayname(
+                          MatrixLocals(L10n.of(context)!)),
+                    ),
+                    backgroundColor:
+                        Theme.of(context).appBarTheme.backgroundColor,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: ContentBanner(
+                        mxContent: room.avatar,
+                        onEdit: null,
+                        defaultIcon: Icons.group_outlined,
                       ),
                     ),
-                  ],
-                  body: MaxWidthBody(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextField(
-                              controller: controller.searchController,
-                              onSubmitted: (value) {
-                                controller.search();
-                              },
-                              autofocus: true,
-                              decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.label),
-                                label: Text(L10n.of(context)!.search),
-                                errorText: controller.searchError,
-                              ),
-                            ),
-                          ),
-                          ButtonBar(
-                            children: [
-                              TextButton(
-                                onPressed: controller.search,
-                                child: Text(L10n.of(context)!.search),
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            child: StreamBuilder<List<Event>>(
-                              stream: controller.searchResultStream,
-                                builder: (context, snapshot) {
-                              if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                                return ListTile(
-                                    title: Text("Keine Suchergebnisse"));
-                              } else {
-                                return ListView.builder(
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (BuildContext context, int i) {
-                                      return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: <Widget>[
-                                            Message(snapshot.data![i],
-                                                onSwipe: (direction) => {},
-                                                unfold: controller.unfold,
-                                                //  onInfoTab: controller.onInfoTab,
-                                                onSelect:
-                                                    controller.onSelectMessage,
-                                                timeline: controller.timeline!)
-                                          ]);
-                                    });
-                              }
-                            }),
-                          )
-                        ]),
                   ),
+                ],
+                body: MaxWidthBody(
+                  child:
+                        Expanded(
+                          child: StreamBuilder<List<Event>>(
+                              stream: controller.searchResultStream,
+                              builder: (context, snapshot) {
+                                  // put search field and button inside ListView, this way they are scrollable and
+                                // pixel overflow errors on small screens are avoided (as anything is scrollable)
+                                  return ListView.builder(
+                                      itemCount: (snapshot.hasData ? snapshot.data!.length + 1 : 1),
+                                      itemBuilder: (BuildContext context, int i) => i==0
+                                        ? Column(
+                                        children: <Widget> [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: TextField(
+                                              controller: controller.searchController,
+                                              onSubmitted: (value) {
+                                                controller.search();
+                                              },
+                                              autofocus: true,
+                                              decoration: InputDecoration(
+                                                prefixIcon: const Icon(Icons.label),
+                                                label: Text(L10n.of(context)!.search),
+                                                errorText: controller.searchError,
+                                              ),
+                                            ),
+                                          ),
+                                          ButtonBar(
+                                            children: [
+                                              TextButton(
+                                                onPressed: controller.search,
+                                                child: Text(L10n.of(context)!.search),
+                                              ),
+                                            ],
+                                          ),
+                                          !snapshot.hasData || snapshot.data!.isEmpty
+                                              ? ListTile(
+                                              title: Text("Keine Suchergebnisse"))
+                                              : Container(),
+                                        ]
+                                      )
+                                      : Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: <Widget>[
+                                              snapshot.hasData && snapshot.data!.isNotEmpty
+                                              ? Message(snapshot.data![i-1],
+                                                  onSwipe: (direction) => {},
+                                                  unfold: controller.unfold,
+                                                  //  onInfoTab: controller.onInfoTab,
+                                                  onSelect: controller
+                                                      .onSelectMessage,
+                                                  timeline:
+                                                      controller.timeline!)
+                                                  :  ListTile(
+                                                  title: Text("Keine Suchergebnisse"))
+                                            ])
+                                      );
+
+                              }),
+                        )
+                      ,
                 ),
-              );
-            })
-      ;
+              ),
+            );
+          });
     }
   }
 }

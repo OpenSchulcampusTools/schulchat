@@ -25,6 +25,7 @@ class ChatSearchController extends State<ChatSearch> {
   @override
   void initState() {
     super.initState();
+    searchResultStream = _emptyList();
   }
 
   Future<bool> getTimeline() async {
@@ -50,20 +51,22 @@ class ChatSearchController extends State<ChatSearch> {
 
       final searchText = searchController.text;
 
-      if(searchText.isNotEmpty) {
-        if (searchText != lastSearchTerm) {
-          lastSearchTerm = searchText;
+      if (searchText != lastSearchTerm) {
+
+        setState(() {searchResultStream = _emptyList();});
+        lastSearchTerm = searchText;
+
+        if (searchText.isNotEmpty) {
+
           searchResultStream = timeline?.searchEvent(
               searchTerm: searchText,
               requestHistoryCount: 30,
               maxHistoryRequests: 30).asBroadcastStream();
-        }
-      }
-      else {
-        searchResultStream = _emptyList();
-      }
 
-      setState(() {});
+          setState(() {});
+        }
+
+      }
 
     //  Navigator.of(context).pop();
     } catch (e) {
