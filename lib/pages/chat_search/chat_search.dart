@@ -45,23 +45,37 @@ class ChatSearchController extends State<ChatSearch> {
     return true;
   }
 
+  String searchTerm = "";
+  bool searchFunc(Event event) {
+
+    bool found = false;
+    if(event.type == EventTypes.Message) {
+      found = event.body.toLowerCase().contains(
+          searchTerm.toLowerCase());
+    }
+
+    return found;
+  }
+
   void search() async {
     try {
       searchError = null;
 
-      final searchText = searchController.text;
+      searchTerm = searchController.text;
 
-      if (searchText != lastSearchTerm) {
+      if (searchTerm != lastSearchTerm) {
 
         setState(() {searchResultStream = _emptyList();});
-        lastSearchTerm = searchText;
+        lastSearchTerm = searchTerm;
 
-        if (searchText.isNotEmpty) {
+        if (searchTerm.isNotEmpty) {
 
+        //  searchTerm = searchText;
           searchResultStream = timeline?.searchEvent(
-              searchTerm: searchText,
+              searchTerm: searchTerm,
               requestHistoryCount: 30,
-              maxHistoryRequests: 30).asBroadcastStream();
+              maxHistoryRequests: 30,
+              searchFunc: searchFunc).asBroadcastStream();
 
           setState(() {});
         }
