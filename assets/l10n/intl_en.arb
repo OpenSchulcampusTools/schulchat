@@ -2976,4 +2976,6 @@
   },
   "hideUnimportantStateEvents": "Hide unimportant state events",
   "doNotShowAgain": "Do not show again"
+  "noSearchResult": "No search results found",
+  "@noSearchResult": {}
 }

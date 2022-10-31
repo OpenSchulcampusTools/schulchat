@@ -30,9 +30,7 @@ class ChatSearchController extends State<ChatSearch> {
 
   Future<bool> getTimeline() async {
 
-    if(room == null) {
-      room = Matrix.of(context).client.getRoomById(roomId!)!;
-    }
+    room ??= Matrix.of(context).client.getRoomById(roomId!)!;
 
     if (timeline == null) {
 
@@ -50,8 +48,7 @@ class ChatSearchController extends State<ChatSearch> {
 
     bool found = false;
     if(event.type == EventTypes.Message) {
-      found = event.body.toLowerCase().contains(
-          searchTerm.toLowerCase());
+      found = event.body.toLowerCase().contains(searchTerm.toLowerCase());
     }
 
     return found;

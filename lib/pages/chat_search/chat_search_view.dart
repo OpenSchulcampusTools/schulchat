@@ -116,7 +116,7 @@ class ChatSearchView extends StatelessWidget {
                                           ),
                                           !snapshot.hasData || snapshot.data!.isEmpty
                                               ? ListTile(
-                                              title: Text("Keine Suchergebnisse"))
+                                              title: Text(L10n.of(context)!.noSearchResult))
                                               : Container(),
                                         ]
                                       )
@@ -134,7 +134,7 @@ class ChatSearchView extends StatelessWidget {
                                                   timeline:
                                                       controller.timeline!)
                                                   :  ListTile(
-                                                  title: Text("Keine Suchergebnisse"))
+                                                  title: Text(L10n.of(context)!.noSearchResult))
                                             ])
                                       );
 

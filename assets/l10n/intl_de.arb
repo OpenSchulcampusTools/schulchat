@@ -2992,4 +2992,6 @@
       "number": {}
     }
   }
+  "noSearchResult": "Keine Suchergebnisse gefunden",
+  "@noSearchResult": {}
 }
