@@ -79,68 +79,90 @@ class ChatSearchView extends StatelessWidget {
                   ),
                 ],
                 body: MaxWidthBody(
-                  child:
-                        Expanded(
-                          child: StreamBuilder<List<Event>>(
-                              stream: controller.searchResultStream,
-                              builder: (context, snapshot) {
-                                  // put search field and button inside ListView, this way they are scrollable and
-                                // pixel overflow errors on small screens are avoided (as anything is scrollable)
-                                  return ListView.builder(
-                                      itemCount: (snapshot.hasData ? snapshot.data!.length + 1 : 1),
-                                      itemBuilder: (BuildContext context, int i) => i==0
-                                        ? Column(
-                                        children: <Widget> [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: TextField(
-                                              controller: controller.searchController,
-                                              onSubmitted: (value) {
-                                                controller.search();
-                                              },
-                                              autofocus: true,
-                                              decoration: InputDecoration(
-                                                prefixIcon: const Icon(Icons.label),
-                                                label: Text(L10n.of(context)!.search),
-                                                errorText: controller.searchError,
-                                              ),
-                                            ),
+                  child: Expanded(
+                    child: StreamBuilder<List<Event>>(
+                        stream: controller.searchResultStream,
+                        builder: (context, snapshot) {
+                          // put search field and button inside ListView, this way they are scrollable and
+                          // pixel overflow errors on small screens are avoided (as anything is scrollable)
+                          return ListView.builder(
+                              itemCount: (snapshot.hasData
+                                  ? snapshot.data!.length + 1
+                                  : 1),
+                              itemBuilder: (BuildContext context, int i) => i ==
+                                      0
+                                  ? Column(children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextField(
+                                          controller:
+                                              controller.searchController,
+                                          onSubmitted: (value) {
+                                            controller.search();
+                                          },
+                                          autofocus: true,
+                                          decoration: InputDecoration(
+                                            prefixIcon: const Icon(Icons.label),
+                                            label:
+                                                Text(L10n.of(context)!.search),
+                                            errorText: controller.searchError,
                                           ),
-                                          ButtonBar(
-                                            children: [
-                                              TextButton(
-                                                onPressed: controller.search,
-                                                child: Text(L10n.of(context)!.search),
-                                              ),
-                                            ],
+                                        ),
+                                      ),
+                                      ButtonBar(
+                                        children: [
+                                          TextButton(
+                                            onPressed: controller.search,
+                                            child:
+                                                Text(L10n.of(context)!.search),
                                           ),
-                                          !snapshot.hasData || snapshot.data!.isEmpty
-                                              ? ListTile(
-                                              title: Text(L10n.of(context)!.noSearchResult))
-                                              : Container(),
-                                        ]
-                                      )
-                                      : Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: <Widget>[
-                                              snapshot.hasData && snapshot.data!.isNotEmpty
-                                              ? Message(snapshot.data![i-1],
+                                        ],
+                                      ),
+                                      !controller.searchResultsFound &&
+                                              (controller.searchState ==
+                                                      SearchState.noResult ||
+                                                  controller.searchState ==
+                                                      SearchState.finished)
+                                          ? ListTile(
+                                              title: Text(L10n.of(context)!
+                                                  .noSearchResult))
+                                          : Container(),
+                                      !controller.searchResultsFound &&
+                                              controller.searchState ==
+                                                  SearchState.searching
+                                          ? Center(
+                                              child: CircularProgressIndicator
+                                                  .adaptive(strokeWidth: 2),
+                                            )
+                                          : Container(),
+                                    ])
+                                  : controller.searchResultsFound
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: <Widget>[
+                                              Message(snapshot.data![i - 1],
                                                   onSwipe: (direction) => {},
                                                   unfold: controller.unfold,
-                                                  //  onInfoTab: controller.onInfoTab,
                                                   onSelect: controller
                                                       .onSelectMessage,
                                                   timeline:
-                                                      controller.timeline!)
-                                                  :  ListTile(
-                                                  title: Text(L10n.of(context)!.noSearchResult))
+                                                      controller.timeline!),
+                                              i == snapshot.data?.length &&
+                                                      controller.searchState ==
+                                                          SearchState.searching
+                                                  ? Center(
+                                                      child:
+                                                          CircularProgressIndicator
+                                                              .adaptive(
+                                                                  strokeWidth:
+                                                                      2),
+                                                    )
+                                                  : Container()
                                             ])
-                                      );
-
-                              }),
-                        )
-                      ,
+                                      : Container());
+                        }),
+                  ),
                 ),
               ),
             );

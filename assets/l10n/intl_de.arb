@@ -2991,7 +2991,9 @@
     "placeholders": {
       "number": {}
     }
-  }
+  },
   "noSearchResult": "Keine Suchergebnisse gefunden",
-  "@noSearchResult": {}
+  "@noSearchResult": {},
+  "searchError": "Bei der Suche ist ein Fehler aufgetreten",
+  "@searchError": {}
 }

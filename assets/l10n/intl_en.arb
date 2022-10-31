@@ -2975,7 +2975,9 @@
     }
   },
   "hideUnimportantStateEvents": "Hide unimportant state events",
-  "doNotShowAgain": "Do not show again"
+  "doNotShowAgain": "Do not show again",
   "noSearchResult": "No search results found",
-  "@noSearchResult": {}
+  "@noSearchResult": {},
+  "searchError": "An error occurred while searching",
+  "@searchError": {}
 }
