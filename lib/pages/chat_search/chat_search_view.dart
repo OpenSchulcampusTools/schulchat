@@ -36,7 +36,18 @@ class ChatSearchView extends StatelessWidget {
           future: controller.getTimeline(),
           builder: (BuildContext context, snapshot) {
             return Scaffold(
+              floatingActionButton: controller.showScrollToTopButton
+                ?Padding(
+                  padding: const EdgeInsets.only(bottom: 56.0),
+                  child: FloatingActionButton(
+                    onPressed: controller.scrollToTop,
+                    mini: true,
+                    child: const Icon(Icons.arrow_upward_outlined),
+                  )
+                )
+              : null,
               body: NestedScrollView(
+                controller: controller.scrollController,
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) => <Widget>[
                   SliverAppBar(
@@ -89,8 +100,7 @@ class ChatSearchView extends StatelessWidget {
                               itemCount: (snapshot.hasData
                                   ? snapshot.data!.length + 1
                                   : 1),
-                              itemBuilder: (BuildContext context, int i) => i ==
-                                      0
+                              itemBuilder: (BuildContext context, int i) => i == 0
                                   ? Column(children: <Widget>[
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -118,23 +128,15 @@ class ChatSearchView extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      !controller.searchResultsFound &&
-                                              (controller.searchState ==
-                                                      SearchState.noResult ||
-                                                  controller.searchState ==
-                                                      SearchState.finished)
-                                          ? ListTile(
-                                              title: Text(L10n.of(context)!
-                                                  .noSearchResult))
-                                          : Container(),
-                                      !controller.searchResultsFound &&
-                                              controller.searchState ==
-                                                  SearchState.searching
-                                          ? Center(
-                                              child: CircularProgressIndicator
-                                                  .adaptive(strokeWidth: 2),
-                                            )
-                                          : Container(),
+                                      if(!controller.searchResultsFound)
+                                        if (controller.searchState == SearchState.noResult ||
+                                                  controller.searchState == SearchState.finished)
+                                          ListTile(
+                                              title: Text(L10n.of(context)!.noSearchResult))
+                                        else if(controller.searchState == SearchState.searching)
+                                          Center(
+                                              child: CircularProgressIndicator.adaptive(strokeWidth: 2),
+                                            ),
                                     ])
                                   : controller.searchResultsFound
                                       ? Column(
@@ -144,21 +146,12 @@ class ChatSearchView extends StatelessWidget {
                                               Message(snapshot.data![i - 1],
                                                   onSwipe: (direction) => {},
                                                   unfold: controller.unfold,
-                                                  onSelect: controller
-                                                      .onSelectMessage,
-                                                  timeline:
-                                                      controller.timeline!),
-                                              i == snapshot.data?.length &&
-                                                      controller.searchState ==
-                                                          SearchState.searching
-                                                  ? Center(
-                                                      child:
-                                                          CircularProgressIndicator
-                                                              .adaptive(
-                                                                  strokeWidth:
-                                                                      2),
-                                                    )
-                                                  : Container()
+                                                  onSelect: controller.onSelectMessage,
+                                                  timeline: controller.timeline!),
+                                              if(i == snapshot.data?.length && controller.searchState == SearchState.searching)
+                                                  Center(
+                                                      child: CircularProgressIndicator.adaptive(strokeWidth: 2),
+                                                    ),
                                             ])
                                       : Container());
                         }),

@@ -6,17 +6,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:matrix/matrix.dart';
 import 'package:vrouter/vrouter.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
-enum SearchState {
-  searching,
-  finished,
-  noResult
-}
+enum SearchState { searching, finished, noResult }
 
 class ChatSearch extends StatefulWidget {
   const ChatSearch({Key? key}) : super(key: key);
 
-  @override ChatSearchController createState() => ChatSearchController();
+  @override
+  ChatSearchController createState() => ChatSearchController();
 }
 
 class ChatSearchController extends State<ChatSearch> {
@@ -24,27 +22,32 @@ class ChatSearchController extends State<ChatSearch> {
   String? get roomId => VRouter.of(context).pathParameters['roomid'];
   Timeline? timeline;
   Room? room;
+
   Stream<List<Event>>? searchResultStream;
   final TextEditingController searchController = TextEditingController();
   String? searchError;
   String lastSearchTerm = "";
   SearchState searchState = SearchState.noResult;
   bool searchResultsFound = false;
+  String searchTerm = "";
+
+  final AutoScrollController scrollController = AutoScrollController();
+  bool showScrollToTopButton = false;
 
   static const fixedWidth = 360.0;
 
   @override
   void initState() {
-    super.initState();
+    scrollController.addListener(_updateScrollController);
     searchResultStream = _emptyList();
+
+    super.initState();
   }
 
   Future<bool> getTimeline() async {
-
     room ??= Matrix.of(context).client.getRoomById(roomId!)!;
 
     if (timeline == null) {
-
       await Matrix.of(context).client.roomsLoading;
       await Matrix.of(context).client.accountDataLoading;
       timeline = await room!.getTimeline();
@@ -54,62 +57,59 @@ class ChatSearchController extends State<ChatSearch> {
     return true;
   }
 
-  String searchTerm = "";
-  bool searchFunc(Event event) {
+  void _updateScrollController() {
+    if (!scrollController.hasClients) return;
 
-    bool found = false;
-    if(event.type == EventTypes.Message) {
-      found = event.body.toLowerCase().contains(searchTerm.toLowerCase());
+    if (scrollController.position.pixels > 0 && showScrollToTopButton == false) {
+      setState(() => showScrollToTopButton = true);
+    } else if (scrollController.position.pixels == 0 &&
+        showScrollToTopButton == true) {
+      setState(() => showScrollToTopButton = false);
     }
-
-    return found;
   }
 
+  bool searchFunction(Event event) {
+    if (event.type == EventTypes.Message) {
+      return event.body.toLowerCase().contains(searchTerm.toLowerCase());
+    } else {
+      return false;
+    }
+  }
 
   void search() async {
     try {
-
-      searchError = null;
       searchTerm = searchController.text;
 
-      // start search only if a new search word was entered
+      // start search only if a new search term was entered
       if (searchTerm != lastSearchTerm) {
-
         lastSearchTerm = searchTerm;
-
-        // set back UI
+        searchError = null;
         searchResultsFound = false;
-        searchState = SearchState.noResult;
-        setState(() {});
 
         if (searchTerm.isNotEmpty) {
-
-          searchResultStream = timeline?.searchEvent(
-              searchTerm: searchTerm,
-              requestHistoryCount: 30,
-              maxHistoryRequests: 30,
-              searchFunc: searchFunc).asBroadcastStream();
+          searchResultStream = timeline
+              ?.searchEvent(
+                  searchTerm: searchTerm,
+                  requestHistoryCount: 30,
+                  maxHistoryRequests: 30,
+                  searchFunc: searchFunction)
+              .asBroadcastStream();
 
           searchState = SearchState.searching;
           searchResultStream?.listen(_listenToSearchStream,
               onDone: () => searchState = SearchState.finished,
               onError: (error) {
-                  searchState = SearchState.finished;
-                  searchError = L10n.of(context)?.searchError;
-                  },
-              cancelOnError: true
-          );
-
-
-        }
-        else {
-          searchResultStream = _emptyList().asBroadcastStream();
+                searchState = SearchState.finished;
+                searchError = L10n.of(context)?.searchError;
+              },
+              cancelOnError: true);
+        } else {
+          searchResultStream = _emptyList();
           searchState = SearchState.noResult;
         }
 
         setState(() {});
       }
-
     } catch (e) {
       searchError = L10n.of(context)?.searchError;
     }
@@ -119,20 +119,21 @@ class ChatSearchController extends State<ChatSearch> {
     searchResultsFound = true;
   }
 
-
   Stream<List<Event>> _emptyList() async* {
     yield <Event>[];
   }
 
-  void unfold(String eventId) {
-
-  }
+  void unfold(String eventId) {}
 
   void onSelectMessage(Event event) {
     VRouter.of(context).path.startsWith('/spaces/')
         ? VRouter.of(context).pop()
-        : VRouter.of(context)
-        .toSegments(['rooms', roomId!], queryParameters: {'event': event.eventId});
+        : VRouter.of(context).toSegments(['rooms', roomId!],
+            queryParameters: {'event': event.eventId});
+  }
+
+  void scrollToTop() {
+    scrollController.jumpTo(0);
   }
 
   @override
