@@ -147,6 +147,7 @@ class ChatSearchView extends StatelessWidget {
                                                   onSwipe: (direction) => {},
                                                   unfold: controller.unfold,
                                                   onSelect: controller.onSelectMessage,
+                                                  scrollToEventId: controller.scrollToEventId,
                                                   timeline: controller.timeline!),
                                               if(i == snapshot.data?.length && controller.searchState == SearchState.searching)
                                                   Center(

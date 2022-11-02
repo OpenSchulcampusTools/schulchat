@@ -26,10 +26,12 @@ class ChatSearchController extends State<ChatSearch> {
   Stream<List<Event>>? searchResultStream;
   final TextEditingController searchController = TextEditingController();
   String? searchError;
-  String lastSearchTerm = "";
   SearchState searchState = SearchState.noResult;
   bool searchResultsFound = false;
-  String searchTerm = "";
+
+  String _searchTerm = "";
+  String _lastSearchTerm = "";
+  List<String> _foundMessages = <String>[];
 
   final AutoScrollController scrollController = AutoScrollController();
   bool showScrollToTopButton = false;
@@ -69,27 +71,35 @@ class ChatSearchController extends State<ChatSearch> {
   }
 
   bool searchFunction(Event event) {
-    if (event.type == EventTypes.Message) {
-      return event.body.toLowerCase().contains(searchTerm.toLowerCase());
-    } else {
-      return false;
+    // use _foundMessages to filter out messages which have already be found
+    if (event.type == EventTypes.Message && !_foundMessages.contains(event.eventId)) {
+      bool found = event.body.toLowerCase().contains(_searchTerm.toLowerCase());
+      if(found) {
+        _foundMessages.add(event.eventId);
+        return found;
+      }
     }
+
+    return false;
   }
 
   void search() async {
     try {
-      searchTerm = searchController.text;
+      _searchTerm = searchController.text;
 
       // start search only if a new search term was entered
-      if (searchTerm != lastSearchTerm) {
-        lastSearchTerm = searchTerm;
+      if (_searchTerm != _lastSearchTerm) {
+
+        _lastSearchTerm = _searchTerm;
+        _foundMessages.clear();
+
         searchError = null;
         searchResultsFound = false;
 
-        if (searchTerm.isNotEmpty) {
+        if (_searchTerm.isNotEmpty) {
           searchResultStream = timeline
               ?.searchEvent(
-                  searchTerm: searchTerm,
+                  searchTerm: _searchTerm,
                   requestHistoryCount: 30,
                   maxHistoryRequests: 30,
                   searchFunc: searchFunction)
@@ -126,10 +136,14 @@ class ChatSearchController extends State<ChatSearch> {
   void unfold(String eventId) {}
 
   void onSelectMessage(Event event) {
+    scrollToEventId(event.eventId);
+  }
+
+  void scrollToEventId(String eventId) {
     VRouter.of(context).path.startsWith('/spaces/')
         ? VRouter.of(context).pop()
         : VRouter.of(context).toSegments(['rooms', roomId!],
-            queryParameters: {'event': event.eventId});
+        queryParameters: {'event': eventId});
   }
 
   void scrollToTop() {
