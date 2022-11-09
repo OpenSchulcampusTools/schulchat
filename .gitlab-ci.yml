@@ -63,6 +63,24 @@ build_web:
     paths:
       - build/web/webbuild.zip
 
+build_web_profile:
+  #  stage: build
+  extends:
+    - .prepare_flutter
+  script: |
+    ./scripts/prepare-web.sh #FIXME
+    flutter config --enable-web
+    flutter clean
+    flutter pub get
+    flutter build web --verbose --source-maps --profile --dart-define=Dart2jsOptimization=O1 #as per https://github.com/flutter/flutter/blob/master/packages/flutter_tools/lib/src/build_system/targets/web.dart is O0 possible? does it matter?
+  after_script:
+    #until https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1057 is implemented
+    - apt download zip && dpkg -x zip_*.deb .
+    - cd build/web && ../../usr/bin/zip -r webbuild.zip .
+  artifacts:
+    paths:
+      - build/web/webbuild.zip
+
 build_android_apk:
   tags: [docker]
     #services:
