@@ -40,6 +40,7 @@ class ChatSearchView extends StatelessWidget {
                 ?Padding(
                   padding: const EdgeInsets.only(bottom: 56.0),
                   child: FloatingActionButton(
+                    heroTag: "searchBackToTop",
                     onPressed: controller.scrollToTop,
                     mini: true,
                     child: const Icon(Icons.arrow_upward_outlined),
@@ -90,9 +91,9 @@ class ChatSearchView extends StatelessWidget {
                   ),
                 ],
                 body: MaxWidthBody(
-                  child: Expanded(
+
                     child: StreamBuilder<List<Event>>(
-                        stream: controller.searchResultStream,
+                        stream: controller.searchResultStreamController.stream,
                         builder: (context, snapshot) {
                           // put search field and button inside ListView, this way they are scrollable and
                           // pixel overflow errors on small screens are avoided (as anything is scrollable)
@@ -156,7 +157,7 @@ class ChatSearchView extends StatelessWidget {
                                             ])
                                       : Container());
                         }),
-                  ),
+
                 ),
               ),
             );

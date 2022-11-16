@@ -13,8 +13,7 @@ enum SearchState { searching, finished, noResult }
 class ChatSearch extends StatefulWidget {
   const ChatSearch({Key? key}) : super(key: key);
 
-  @override
-  ChatSearchController createState() => ChatSearchController();
+  @override ChatSearchController createState() => ChatSearchController();
 }
 
 class ChatSearchController extends State<ChatSearch> {
@@ -23,7 +22,9 @@ class ChatSearchController extends State<ChatSearch> {
   Timeline? timeline;
   Room? room;
 
-  Stream<List<Event>>? searchResultStream;
+  StreamController<List<Event>> searchResultStreamController = StreamController();
+  StreamSubscription<List<Event>>? searchResultStreamSubscription;
+
   final TextEditingController searchController = TextEditingController();
   String? searchError;
   SearchState searchState = SearchState.noResult;
@@ -41,8 +42,6 @@ class ChatSearchController extends State<ChatSearch> {
   @override
   void initState() {
     scrollController.addListener(_updateScrollController);
-    searchResultStream = _emptyList();
-
     super.initState();
   }
 
@@ -72,13 +71,20 @@ class ChatSearchController extends State<ChatSearch> {
 
   bool searchFunction(Event event) {
     // use _foundMessages to filter out messages which have already be found
-    if (event.type == EventTypes.Message && !_foundMessages.contains(event.eventId)) {
-      bool found = event.body.toLowerCase().contains(_searchTerm.toLowerCase());
-      if(found) {
-        _foundMessages.add(event.eventId);
-        return found;
+      if (searchState == SearchState.searching && event.type == EventTypes.Message && !_foundMessages.contains(event.eventId)) {
+        bool found = event.body.toLowerCase().contains(_searchTerm.toLowerCase());
+        if (found) {
+          _foundMessages.add(event.eventId);
+
+          if (!searchResultsFound) {
+            setState(() {
+              searchResultsFound = true;
+            });
+          }
+
+          return found;
+        }
       }
-    }
 
     return false;
   }
@@ -93,44 +99,58 @@ class ChatSearchController extends State<ChatSearch> {
         _lastSearchTerm = _searchTerm;
         _foundMessages.clear();
 
-        searchError = null;
-        searchResultsFound = false;
+        searchResultStreamSubscription?.cancel();
+        //searchResultStreamController.close();
+
+        setState(() {
+          searchResultStreamController = StreamController();
+          searchError = null;
+          searchResultsFound = false;
+          searchState = SearchState.finished;
+        });
 
         if (_searchTerm.isNotEmpty) {
-          searchResultStream = timeline
+
+          setState(() {
+            searchState = SearchState.searching;
+          });
+
+          final Stream<List<Event>>? searchResultStream = timeline
               ?.searchEvent(
                   searchTerm: _searchTerm,
                   requestHistoryCount: 30,
                   maxHistoryRequests: 30,
-                  searchFunc: searchFunction)
-              .asBroadcastStream();
+                  searchFunc: searchFunction).asBroadcastStream();
 
-          searchState = SearchState.searching;
-          searchResultStream?.listen(_listenToSearchStream,
-              onDone: () => searchState = SearchState.finished,
-              onError: (error) {
+
+          searchResultStreamController.addStream(searchResultStream!);
+
+          searchResultStreamSubscription = searchResultStream.listen((event) => {},
+            onDone: () => setState(() {
+              searchState = SearchState.finished;
+            }),
+            onError: (error) {
+              setState(() {
                 searchState = SearchState.finished;
                 searchError = L10n.of(context)?.searchError;
-              },
-              cancelOnError: true);
+              });
+            },
+          );
+
+
+          setState(() {});
+
         } else {
-          searchResultStream = _emptyList();
-          searchState = SearchState.noResult;
+          setState(() {
+            searchState = SearchState.noResult;
+          });
         }
 
-        setState(() {});
+      //  setState(() {});
       }
     } catch (e) {
       searchError = L10n.of(context)?.searchError;
     }
-  }
-
-  void _listenToSearchStream(event) {
-    searchResultsFound = true;
-  }
-
-  Stream<List<Event>> _emptyList() async* {
-    yield <Event>[];
   }
 
   void unfold(String eventId) {}
@@ -148,6 +168,20 @@ class ChatSearchController extends State<ChatSearch> {
 
   void scrollToTop() {
     scrollController.jumpTo(0);
+  }
+
+  @override
+  void dispose() {
+    // remove listeners so that setState isn't called after dispose
+    searchResultStreamSubscription?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
   }
 
   @override

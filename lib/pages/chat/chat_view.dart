@@ -194,6 +194,7 @@ class ChatView extends StatelessWidget {
                     ? Padding(
                         padding: const EdgeInsets.only(bottom: 56.0),
                         child: FloatingActionButton(
+                          heroTag: "chatToTopButton",
                           onPressed: controller.scrollDown,
                           mini: true,
                           child: const Icon(Icons.arrow_downward_outlined),
