@@ -1,10 +1,10 @@
 variables:
-  FLUTTER_VERSION: 3.0.5
+  FLUTTER_VERSION: 3.3.8
 
-    #stages:
-    #  - test
-    #  - build
-    #  - upload #FIXME upload webbuild and android package 
+stages:
+  - build
+  - analyze
+#  - upload #FIXME upload webbuild and android package
 
 # fetch and extract flutter
 .prepare_flutter:
@@ -22,13 +22,13 @@ variables:
     - flutter format lib/ test/ --set-exit-if-changed
 
 flutter_analyze:
-  #  stage: test
+  stage: analyze
   extends:
     - .flutter_deps_and_format
   script: [flutter analyze]
 
 dart_code_metrics_analyze:
-  #  stage: test
+  stage: analyze
   extends:
     - .flutter_deps_and_format
   script: ['flutter pub run dart_code_metrics:metrics lib -r gitlab > code-quality-report.json']
@@ -46,7 +46,7 @@ dart_code_metrics_analyze:
 #  script: [flutter test]
 
 build_web:
-  #  stage: build
+  stage: build
   extends:
     - .prepare_flutter
   script: |
@@ -64,7 +64,7 @@ build_web:
       - build/web/webbuild.zip
 
 build_web_profile:
-  #  stage: build
+  stage: build
   extends:
     - .prepare_flutter
   script: |
@@ -82,10 +82,8 @@ build_web_profile:
       - build/web/webbuild.zip
 
 build_android_apk:
+  stage: build
   tags: [docker]
-    #services:
-    #  - name: docker:20.10.16-dind
-  #  stage: build
   script: |
     docker build -f docker/Dockerfile.android -t fluffy-android --build-arg CI_JOB_TOKEN=$CI_JOB_TOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA .
     docker create --name androidimage fluffy-android
@@ -96,52 +94,3 @@ build_android_apk:
     name: app-debug.apk
     paths:
       - app-debug.apk
-
-#build_linux_x86:
-#  stage: build
-#  extends:
-#    - .prepare_flutter
-#  script: |
-#    # sudo apt update && DEBIAN_FRONTEND=noninteractive sudo apt install -y keyboard-configuration curl clang cmake ninja-build pkg-config libgtk-3-dev libblkid-dev liblzma-dev libjsoncpp-dev cmake-data libsecret-1-dev libsecret-1-0 librhash0
-#    flutter config --enable-linux-desktop
-#    flutter clean
-#    flutter pub get
-#    flutter build linux --release -v
-#  artifacts:
-#    when: on_success
-#    paths:
-#      - build/linux/x64/release/bundle/
-#
-#.release:
-#  stage: upload
-#  before_script:
-#    #- sudo apt update && DEBIAN_FRONTEND=noninteractive sudo apt install -y curl
-#    - export PACKAGE_REGISTRY_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/fluffychat/${CI_COMMIT_SHORT_SHA}"
-
-#upload_android:
-#  extends: .release
-#  script:
-#    - |
-#      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file build/android/app-release.apk ${PACKAGE_REGISTRY_URL}/fluffychat.apk
-#
-#upload_web:
-#  extends: .release
-#  script:
-#    - tar czf package.tar.gz -C build/web/ .
-#    - |
-#      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file package.tar.gz ${PACKAGE_REGISTRY_URL}/fluffychat-web.tar.gz
-#
-#upload_linux_x86:
-#  extends: .release
-#  script:
-#    - tar czf package.tar.gz -C build/linux/x64/release/bundle/ .
-#    - |
-#      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file package.tar.gz ${PACKAGE_REGISTRY_URL}/fluffychat-linux-x86.tar.gz
-#
-#upload_linux_arm64:
-#  extends: .release
-#  script:
-#    - tar czf package.tar.gz -C build/linux/arm64/release/bundle/ .
-#    - |
-#      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file package.tar.gz ${PACKAGE_REGISTRY_URL}/fluffychat-linux-arm64.tar.gz
-#
