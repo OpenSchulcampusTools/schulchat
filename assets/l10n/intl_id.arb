@@ -102,7 +102,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "acceptedTheInvitation": "{username} menerima undangannya",
+  "acceptedTheInvitation": "👍 {username} menerima undangannya",
   "@acceptedTheInvitation": {
     "type": "text",
     "placeholders": {
@@ -147,7 +147,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "invitedUser": "{username} mengundang {targetName}",
+  "invitedUser": "📩 {username} mengundang {targetName}",
   "@invitedUser": {
     "type": "text",
     "placeholders": {
@@ -524,7 +524,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "createdTheChat": "{username} membuat chat ini",
+  "createdTheChat": "💬 {username} membuat chat ini",
   "@createdTheChat": {
     "type": "text",
     "placeholders": {
@@ -963,7 +963,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "activatedEndToEndEncryption": "{username} mengaktifkan enkripsi ujung ke ujung",
+  "activatedEndToEndEncryption": "🔐 {username} mengaktifkan enkripsi ujung ke ujung",
   "@activatedEndToEndEncryption": {
     "type": "text",
     "placeholders": {
@@ -1014,7 +1014,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kickedAndBanned": "{username} mengeluarkan dan mencekal {targetName}",
+  "kickedAndBanned": "🙅 {username} mengeluarkan dan mencekal {targetName}",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -1022,7 +1022,7 @@
       "targetName": {}
     }
   },
-  "kicked": "{username} mengeluarkan {targetName}",
+  "kicked": "👞 {username} mengeluarkan {targetName}",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -1045,7 +1045,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "{username} telah bergabung di chat",
+  "joinedTheChat": "👋 {username} telah bergabung di chat",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -1107,7 +1107,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "Pesan baru di FluffyChat",
+  "newMessageInFluffyChat": "💬 Pesan baru di FluffyChat",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -1211,7 +1211,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "userLeftTheChat": "{username} keluar dari chat",
+  "userLeftTheChat": "🚪 {username} keluar dari chat",
   "@userLeftTheChat": {
     "type": "text",
     "placeholders": {
@@ -1857,35 +1857,35 @@
       "senderName": {}
     }
   },
-  "sentAVideo": "{username} mengirim video",
+  "sentAVideo": "🎥 {username} mengirim video",
   "@sentAVideo": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentASticker": "{username} mengirim stiker",
+  "sentASticker": "😊 {username} mengirim stiker",
   "@sentASticker": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAPicture": "{username} mengirim gambar",
+  "sentAPicture": "🖼️ {username} mengirim gambar",
   "@sentAPicture": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAnAudio": "{username} mengirim suara",
+  "sentAnAudio": "🎤 {username} mengirim suara",
   "@sentAnAudio": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAFile": "{username} mengirim file",
+  "sentAFile": "📁 {username} mengirim file",
   "@sentAFile": {
     "type": "text",
     "placeholders": {
@@ -2793,7 +2793,7 @@
   "@widgetUrlError": {},
   "widgetNameError": "Mohon sediakan sebuah nama tampilan.",
   "@widgetNameError": {},
-  "separateChatTypes": "Pisahkan Pesan Langsung, Grup, dan Space",
+  "separateChatTypes": "Pisahkan Pesan Langsung dan Grup",
   "@separateChatTypes": {
     "type": "text",
     "placeholders": {}
@@ -2803,25 +2803,25 @@
     "type": "text",
     "placeholders": {}
   },
-  "youInvitedBy": "Kamu telah diundang oleh {user}",
+  "youInvitedBy": "📩 Kamu telah diundang oleh {user}",
   "@youInvitedBy": {
     "placeholders": {
       "user": {}
     }
   },
-  "youInvitedUser": "Kamu mengundang {user}",
+  "youInvitedUser": "📩 Kamu mengundang {user}",
   "@youInvitedUser": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKicked": "Kamu mengeluarkan {user}",
+  "youKicked": "👞 Kamu mengeluarkan {user}",
   "@youKicked": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKickedAndBanned": "Kamu mengeluarkan dan mencekal {user}",
+  "youKickedAndBanned": "🙅 Kamu mengeluarkan dan mencekal {user}",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
@@ -2831,7 +2831,7 @@
   "@youRejectedTheInvitation": {},
   "youJoinedTheChat": "Kamu bergabung ke obrolan",
   "@youJoinedTheChat": {},
-  "youAcceptedTheInvitation": "Kamu menerima undangannya",
+  "youAcceptedTheInvitation": "👍 Kamu menerima undangannya",
   "@youAcceptedTheInvitation": {},
   "youBannedUser": "Kamu mencekal {user}",
   "@youBannedUser": {
@@ -2938,5 +2938,79 @@
     "placeholders": {
       "mxid": {}
     }
-  }
+  },
+  "commandHint_markasdm": "Tandai sebagai ruangan pesan langsung",
+  "@commandHint_markasdm": {},
+  "commandHint_markasgroup": "Tandai sebagai grup",
+  "@commandHint_markasgroup": {},
+  "screenSharingTitle": "membagikan layar",
+  "@screenSharingTitle": {},
+  "appearOnTopDetails": "Memperbolehkan aplikasi untuk ditampilkan di atas (tidak dibutuhkan jika kamu memiliki FluffyChat ditetapkan sebagai akun pemanggilan)",
+  "@appearOnTopDetails": {},
+  "callingAccountDetails": "Memperbolehkan FluffyChat untuk menggunakan aplikasi penelepon Android bawaan.",
+  "@callingAccountDetails": {},
+  "noKeyForThisMessage": "Hal ini bisa terjadi jika pesan dikirim sebelum kamu masuk ke akunmu di perangkat ini.\n\nMungkin juga pengirim telah memblokir perangkatmu atau ada yang tidak beres dengan koneksi internet.\n\nApakah kamu bisa membaca pesan pada sesi lain? Maka kamu bisa mentransfer pesan dari sesi tersebut! Buka Pengaturan > Perangkat dan pastikan bahwa perangkat Anda telah ditandatangani secara silang. Ketika kamu membuka ruangan di lain waktu dan kedua sesi berada di latar depan, kunci akan ditransmisikan secara otomatis.\n\nApakah kamu tidak mau kehilangan kunci saat keluar atau berpindah perangkat? Pastikan bahwa kamu telah mengaktifkan cadangan obrolan dalam pengaturan.",
+  "@noKeyForThisMessage": {},
+  "foregroundServiceRunning": "Notifikasi ini ditampilkan ketika layanan latar depan berjalan.",
+  "@foregroundServiceRunning": {},
+  "callingPermissions": "Perizinan panggilan",
+  "@callingPermissions": {},
+  "appearOnTop": "Tampilkan di atas",
+  "@appearOnTop": {},
+  "callingAccount": "Akun pemanggilan",
+  "@callingAccount": {},
+  "otherCallingPermissions": "Mikrofon, kamera dan perizinan FluffyChat lainnya",
+  "@otherCallingPermissions": {},
+  "whyIsThisMessageEncrypted": "Mengapa pesan ini tidak bisa dibaca?",
+  "@whyIsThisMessageEncrypted": {},
+  "newGroup": "Grup baru",
+  "@newGroup": {},
+  "newSpace": "Space baru",
+  "@newSpace": {},
+  "enterSpace": "Masuk space",
+  "@enterSpace": {},
+  "enterRoom": "Masuk ruangan",
+  "@enterRoom": {},
+  "allSpaces": "Semua space",
+  "@allSpaces": {},
+  "screenSharingDetail": "Kamu membagikan layarmu di FluffyChat",
+  "@screenSharingDetail": {},
+  "numChats": "{number} obrolan",
+  "@numChats": {
+    "type": "number",
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "hideUnimportantStateEvents": "Sembunyikan peristiwa keadaan yang tidak penting",
+  "@hideUnimportantStateEvents": {},
+  "doNotShowAgain": "Jangan tampilkan lagi",
+  "@doNotShowAgain": {},
+  "hugContent": "{senderName} memeluk kamu",
+  "@hugContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "googlyEyesContent": "{senderName} mengirim mata googly",
+  "@googlyEyesContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "cuddleContent": "{senderName} berpelukan dengan kamu",
+  "@cuddleContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "commandHint_googly": "Kirim mata googly",
+  "@commandHint_googly": {},
+  "commandHint_hug": "Kirim pelukan",
+  "@commandHint_hug": {},
+  "commandHint_cuddle": "Kirim berpelukan",
+  "@commandHint_cuddle": {}
 }

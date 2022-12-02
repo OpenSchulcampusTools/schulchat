@@ -39,7 +39,7 @@
       "username": {}
     }
   },
-  "activatedEndToEndEncryption": "{username} otti käyttöön päästä-päähän salauksen",
+  "activatedEndToEndEncryption": "🔐 {username} otti käyttöön päästä-päähän salauksen",
   "@activatedEndToEndEncryption": {
     "type": "text",
     "placeholders": {
@@ -71,7 +71,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "addToSpace": "Lisää Spaceen",
+  "addToSpace": "Lisää tilaan",
   "@addToSpace": {},
   "admin": "Ylläpitäjä",
   "@admin": {
@@ -392,7 +392,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "chatHasBeenAddedToThisSpace": "Keskustelu on lisätty tähän Spaceen",
+  "chatHasBeenAddedToThisSpace": "Keskustelu on lisätty tähän tilaan",
   "@chatHasBeenAddedToThisSpace": {},
   "chats": "Keskustelut",
   "@chats": {
@@ -481,7 +481,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "createNewSpace": "Uusi Space",
+  "createNewSpace": "Uusi tila",
   "@createNewSpace": {
     "type": "text",
     "placeholders": {}
@@ -887,7 +887,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "invitedUser": "{username} kutsui käyttäjän {targetName}",
+  "invitedUser": "📩 {username} kutsui käyttäjän {targetName}",
   "@invitedUser": {
     "type": "text",
     "placeholders": {
@@ -918,7 +918,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "{username} potki käyttäjän {targetName}",
+  "kicked": "👞 {username} potki käyttäjän {targetName}",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -926,7 +926,7 @@
       "targetName": {}
     }
   },
-  "kickedAndBanned": "{username} potki ja antoi porttikiellon käyttäjälle {targetName}",
+  "kickedAndBanned": "🙅 {username} potki ja antoi porttikiellon käyttäjälle {targetName}",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -1079,7 +1079,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "Uusi viesti FluffyChätissä",
+  "newMessageInFluffyChat": "💬 Uusi viesti FluffyChätissä",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -1319,7 +1319,7 @@
   },
   "setupChatBackupDescription": "Suojellaksemme viestejäsi olemme luoneet sinulle palautusavaimen.\nPidäthän tätä turvallisessa paikassa, kuten salasanamanagerissasi.",
   "@setupChatBackupDescription": {},
-  "chatHasBeenRemovedFromThisSpace": "Keskustelu on poistettu tästä Spacesta",
+  "chatHasBeenRemovedFromThisSpace": "Keskustelu on poistettu tästä tilasta",
   "@chatHasBeenRemovedFromThisSpace": {
     "type": "text",
     "placeholders": {}
@@ -1408,7 +1408,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "enterASpacepName": "Syötä Spacen nimi",
+  "enterASpacepName": "Nimeä tila",
   "@enterASpacepName": {},
   "inoffensive": "Loukkaamatonta",
   "@inoffensive": {
@@ -1482,7 +1482,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "{username} liittyi keskusteluun",
+  "joinedTheChat": "👋 {username} liittyi keskusteluun",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -1925,12 +1925,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "spaceIsPublic": "Space on julkinen",
+  "spaceIsPublic": "Tila on julkinen",
   "@spaceIsPublic": {
     "type": "text",
     "placeholders": {}
   },
-  "spaceName": "Spacen nimi",
+  "spaceName": "Tilan nimi",
   "@spaceName": {
     "type": "text",
     "placeholders": {}
@@ -2076,7 +2076,7 @@
       "username": {}
     }
   },
-  "userLeftTheChat": "{username} poistui keskustelusta",
+  "userLeftTheChat": "🚪 {username} poistui keskustelusta",
   "@userLeftTheChat": {
     "type": "text",
     "placeholders": {
@@ -2255,11 +2255,11 @@
     "type": "text",
     "placeholders": {}
   },
-  "removeFromSpace": "Poista Spacesta",
+  "removeFromSpace": "Poista tilasta",
   "@removeFromSpace": {},
-  "removeFromSpaceDescription": "Tämä poistaa keskustelun nykyisestä Spacesta. Se tulee yhä näkymään kategoriassa \"Kaikki keskustelut\".",
+  "removeFromSpaceDescription": "Tämä poistaa keskustelun nykyisestä tilasta. Se tulee yhä näkymään kategoriassa \"Kaikki keskustelut\".",
   "@removeFromSpaceDescription": {},
-  "addToSpaceDescription": "Valitse Space, jonne tämä keskustelu lisätään.",
+  "addToSpaceDescription": "Valitse tila, johon tämä keskustelu lisätään.",
   "@addToSpaceDescription": {},
   "start": "Aloita",
   "@start": {},
@@ -2341,14 +2341,14 @@
     "type": "text",
     "placeholders": {}
   },
-  "sentAFile": "{username} lähetti tiedoston",
+  "sentAFile": "📁 {username} lähetti tiedoston",
   "@sentAFile": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAnAudio": "{username} lähetti ääniviestin",
+  "sentAnAudio": "🎤 {username} lähetti ääniviestin",
   "@sentAnAudio": {
     "type": "text",
     "placeholders": {
@@ -2422,7 +2422,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "publicSpace": "Julkinen Space",
+  "publicSpace": "Julkinen tila",
   "@publicSpace": {
     "type": "text",
     "placeholders": {}
@@ -2464,21 +2464,21 @@
     "type": "text",
     "placeholders": {}
   },
-  "sentAPicture": "{username} lähetti kuvan",
+  "sentAPicture": "🖼️ {username} lähetti kuvan",
   "@sentAPicture": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentASticker": "{username} lähetti tarran",
+  "sentASticker": "😊 {username} lähetti tarran",
   "@sentASticker": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAVideo": "{username} lähetti videon",
+  "sentAVideo": "🎥 {username} lähetti videon",
   "@sentAVideo": {
     "type": "text",
     "placeholders": {
@@ -2780,9 +2780,9 @@
   "@widgetNameError": {},
   "addWidget": "Lisää pienoissovellus",
   "@addWidget": {},
-  "showSpaces": "Näytä Space-luettelo",
+  "showSpaces": "Näytä luettelo tiloista",
   "@showSpaces": {},
-  "showDirectChatsInSpaces": "Näytä Spaceihin kuuluvat suorat keskustelut niissä",
+  "showDirectChatsInSpaces": "Näytä tiloihin kuuluvat yksityisviestit niissä",
   "@showDirectChatsInSpaces": {
     "type": "text",
     "placeholders": {}
@@ -2791,7 +2791,7 @@
   "@youRejectedTheInvitation": {},
   "youJoinedTheChat": "Liityit keskusteluun",
   "@youJoinedTheChat": {},
-  "youAcceptedTheInvitation": "Hyväksyit kutsun",
+  "youAcceptedTheInvitation": "👍 Hyväksyit kutsun",
   "@youAcceptedTheInvitation": {},
   "youBannedUser": "Annoit porttikiellon käyttäjälle {user}",
   "@youBannedUser": {
@@ -2805,25 +2805,25 @@
       "user": {}
     }
   },
-  "youInvitedBy": "{user} kutsui sinut",
+  "youInvitedBy": "📩 {user} kutsui sinut",
   "@youInvitedBy": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKicked": "Poistit käyttäjän {user} keskustelusta",
+  "youKicked": "👞 Potkit käyttäjän {user} keskustelusta",
   "@youKicked": {
     "placeholders": {
       "user": {}
     }
   },
-  "youInvitedUser": "Kutsuit käyttäjän {user}",
+  "youInvitedUser": "📩 Kutsuit käyttäjän {user}",
   "@youInvitedUser": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKickedAndBanned": "Poistit ja annoit porttikiellon käyttäjälle {user}",
+  "youKickedAndBanned": "🙅 Potkit ja annoit porttikiellon käyttäjälle {user}",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
@@ -2835,7 +2835,7 @@
       "user": {}
     }
   },
-  "separateChatTypes": "Erota suorat keskustelut, ryhmät ja Spacet",
+  "separateChatTypes": "Erota yksityiskeskustelut ryhmistä",
   "@separateChatTypes": {
     "type": "text",
     "placeholders": {}
@@ -2903,7 +2903,7 @@
   },
   "storeInSecureStorageDescription": "Tallenna palautusavain tämän laitteen turvavarastoon.",
   "@storeInSecureStorageDescription": {},
-  "suggestedRooms": "Löydä ryhmiä tässä Spacessa",
+  "suggestedRooms": "Löydä tässä tilassa olevia ryhmiä",
   "@suggestedRooms": {},
   "indexedDbErrorTitle": "Yksityisen selauksen ongelmat",
   "@indexedDbErrorTitle": {},
@@ -2925,5 +2925,79 @@
   "updateAvailable": "FluffyChatin päivitys on saatavilla",
   "@updateAvailable": {},
   "updateNow": "Aloita päivitys taustalla",
-  "@updateNow": {}
+  "@updateNow": {},
+  "commandHint_markasgroup": "Merkitse ryhmäksi",
+  "@commandHint_markasgroup": {},
+  "whyIsThisMessageEncrypted": "Miksei tätä viestiä voida lukea?",
+  "@whyIsThisMessageEncrypted": {},
+  "noKeyForThisMessage": "Tämä voi tapahtua mikäli viesti lähetettiin ennen sisäänkirjautumistasi tälle laitteelle.\n\nOn myös mahdollista, että lähettäjä on estänyt tämän laitteen tai jokin meni pieleen verkkoyhteyden kanssa.\n\nPystytkö lukemaan viestin toisella istunnolla? Siinä tapauksessa voit siirtää viestin siltä! Mene Asetukset > Laitteet ja varmista, että laitteesi ovat varmistaneet toisensa. Seuraavankerran avatessasi laitteen ja molempien istuntojen ollessa etualalla, avaimet siirretään automaattisesti.\n\nHaluatko varmistaa ettet menetä avaimia uloskirjautuessa tai laitteita vaihtaessa? Varmista avainvarmuuskopion käytössäolo asetuksista.",
+  "@noKeyForThisMessage": {},
+  "commandHint_markasdm": "Merkitse yksityiskeskusteluksi",
+  "@commandHint_markasdm": {},
+  "foregroundServiceRunning": "Tämä ilmoitus näkyy etualapalvelun ollessa käynnissä.",
+  "@foregroundServiceRunning": {},
+  "callingPermissions": "Puheluoikeudet",
+  "@callingPermissions": {},
+  "callingAccount": "Soittamistunnus",
+  "@callingAccount": {},
+  "callingAccountDetails": "Sallii FluffyChatin käyttää Androidin omaa Puhelut-sovellusta.",
+  "@callingAccountDetails": {},
+  "appearOnTop": "Näy päällä",
+  "@appearOnTop": {},
+  "appearOnTopDetails": "Sallii sovelluksen näkyä muiden sovellusten päällä (tätä ei tarvita, mikäli olet jo määrittänyt FluffyChatin puhelin-tunnukseksi)",
+  "@appearOnTopDetails": {},
+  "newSpace": "Uusi tila",
+  "@newSpace": {},
+  "enterSpace": "Siirry tilaan",
+  "@enterSpace": {},
+  "enterRoom": "Siirry huoneeseen",
+  "@enterRoom": {},
+  "allSpaces": "Kaikki tilat",
+  "@allSpaces": {},
+  "screenSharingTitle": "ruudunjako",
+  "@screenSharingTitle": {},
+  "otherCallingPermissions": "Mikrofoni, kamera ja muut FluffyChatin oikeudet",
+  "@otherCallingPermissions": {},
+  "newGroup": "Uusi ryhmä",
+  "@newGroup": {},
+  "screenSharingDetail": "Jaat ruutuasi FluffyChatissä",
+  "@screenSharingDetail": {},
+  "hugContent": "{senderName} halaa sinua",
+  "@hugContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "cuddleContent": "{senderName} kokovartalohalaa sinua",
+  "@cuddleContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "commandHint_hug": "Lähetä halaus",
+  "@commandHint_hug": {},
+  "googlyEyesContent": "{senderName} lähettää askartelusilmiä",
+  "@googlyEyesContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "numChats": "{number} keskustelua",
+  "@numChats": {
+    "type": "number",
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "commandHint_googly": "Lähetä askartelusilmiä",
+  "@commandHint_googly": {},
+  "commandHint_cuddle": "Lähetä kokovartaluhalaus",
+  "@commandHint_cuddle": {},
+  "hideUnimportantStateEvents": "Piilota ei-niin-tärkeät tilatapahtumat",
+  "@hideUnimportantStateEvents": {},
+  "doNotShowAgain": "Älä näytä uudelleen",
+  "@doNotShowAgain": {}
 }

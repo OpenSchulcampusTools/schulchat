@@ -14,6 +14,7 @@ import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/utils/string_color.dart';
 import 'package:fluffychat/utils/url_launcher.dart';
 import 'package:fluffychat/widgets/avatar.dart';
+import '../../widgets/m2_popup_menu_button.dart';
 
 class StoryView extends StatelessWidget {
   final StoryPageController controller;
@@ -50,6 +51,7 @@ class StoryView extends StatelessWidget {
       appBar: AppBar(
         titleSpacing: 0,
         leading: IconButton(
+          color: Colors.white,
           icon: const Icon(Icons.close),
           onPressed: Navigator.of(context).pop,
         ),
@@ -96,10 +98,12 @@ class StoryView extends StatelessWidget {
             : [
                 if (!controller.isOwnStory)
                   IconButton(
+                    color: Colors.white,
                     icon: Icon(Icons.adaptive.share_outlined),
                     onPressed: controller.share,
                   ),
-                PopupMenuButton<PopupStoryAction>(
+                M2PopupMenuButton<PopupStoryAction>(
+                  color: Colors.white,
                   onSelected: controller.onPopupStoryAction,
                   itemBuilder: (context) => [
                     if (controller.currentEvent?.canRedact ?? false)

@@ -59,7 +59,7 @@ class HomeserverPickerController extends State<HomeserverPicker> {
     );
 
     final isTor = await TorBrowserDetector.isTorBrowser;
-    setState(() => isTorBrowser = isTor);
+    isTorBrowser = isTor;
   }
 
   void _updateFocus() {
@@ -96,6 +96,7 @@ class HomeserverPickerController extends State<HomeserverPicker> {
         homeserverList,
         timeout: const Duration(seconds: 10),
       );
+      if (!mounted) return;
       setState(() {
         benchmarkResults = benchmark;
       });
@@ -180,12 +181,12 @@ class HomeserverPickerController extends State<HomeserverPicker> {
   }
 
   Future<void> restoreBackup() async {
+    final file = await FilePickerCross.importFromStorage();
+    if (file.fileName == null) return;
     await showFutureLoadingDialog(
         context: context,
         future: () async {
           try {
-            final file = await FilePickerCross.importFromStorage(
-                fileExtension: '.fluffybackup');
             final client = Matrix.of(context).getLoginClient();
             await client.importDump(file.toString());
             Matrix.of(context).initMatrix();

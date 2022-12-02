@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:collection/collection.dart';
 import 'package:desktop_notifications/desktop_notifications.dart';
@@ -400,22 +401,23 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         client,
         context,
         widget.router,
-        onFcmError: (errorMsg, {Uri? link}) => Timer(
-          const Duration(seconds: 1),
-          () {
-            final banner = SnackBar(
-              content: Text(errorMsg),
-              duration: const Duration(seconds: 30),
-              action: link == null
-                  ? null
-                  : SnackBarAction(
-                      label: L10n.of(context)!.link,
-                      onPressed: () => launch(link.toString()),
-                    ),
-            );
-            ScaffoldMessenger.of(navigatorContext).showSnackBar(banner);
-          },
-        ),
+        onFcmError: (errorMsg, {Uri? link}) async {
+          final result = await showOkCancelAlertDialog(
+            barrierDismissible: true,
+            context: context,
+            title: L10n.of(context)!.oopsSomethingWentWrong,
+            message: errorMsg,
+            okLabel:
+                link == null ? L10n.of(context)!.ok : L10n.of(context)!.help,
+            cancelLabel: L10n.of(context)!.doNotShowAgain,
+          );
+          if (result == OkCancelResult.ok && link != null) {
+            launch(link.toString());
+          }
+          if (result == OkCancelResult.cancel) {
+            await store.setItemBool(SettingKeys.showNoGoogle, true);
+          }
+        },
       );
     }
 
@@ -427,8 +429,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
       voipPlugin = null;
       return;
     }
-    voipPlugin =
-        webrtcIsSupported ? VoipPlugin(client: client, context: context) : null;
+    voipPlugin = webrtcIsSupported ? VoipPlugin(client) : null;
   }
 
   bool _firstStartup = true;
@@ -490,10 +491,14 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     store.getItem(SettingKeys.chatColor).then((value) {
       if (value != null && int.tryParse(value) != null) {
         AppConfig.colorSchemeSeed = Color(int.parse(value));
-        AdaptiveTheme.of(context).setTheme(
-          light: FluffyThemes.buildTheme(Brightness.light),
-          dark: FluffyThemes.buildTheme(Brightness.dark),
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            AdaptiveTheme.of(context).setTheme(
+              light: FluffyThemes.buildTheme(Brightness.light),
+              dark: FluffyThemes.buildTheme(Brightness.dark),
+            );
+          }
+        });
       }
     });
   }

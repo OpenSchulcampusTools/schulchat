@@ -11,7 +11,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "acceptedTheInvitation": "{username} приймає запрошення",
+  "acceptedTheInvitation": "👍 {username} погоджується на запрошення",
   "@acceptedTheInvitation": {
     "type": "text",
     "placeholders": {
@@ -28,7 +28,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "activatedEndToEndEncryption": "{username} активує наскрізне шифрування",
+  "activatedEndToEndEncryption": "🔐 {username} активує наскрізне шифрування",
   "@activatedEndToEndEncryption": {
     "type": "text",
     "placeholders": {
@@ -395,7 +395,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "createdTheChat": "{username} створює бесіду",
+  "createdTheChat": "💬 {username} створює бесіду",
   "@createdTheChat": {
     "type": "text",
     "placeholders": {
@@ -706,7 +706,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "invitedUser": "{username} запрошує {targetName}",
+  "invitedUser": "📩 {username} запрошує {targetName}",
   "@invitedUser": {
     "type": "text",
     "placeholders": {
@@ -737,7 +737,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "{username} приєднується до бесіди",
+  "joinedTheChat": "👋 {username} приєднується до бесіди",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -754,7 +754,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "{username} вилучає {targetName}",
+  "kicked": "👞 {username} вилучає {targetName}",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -762,7 +762,7 @@
       "targetName": {}
     }
   },
-  "kickedAndBanned": "{username} вилучає та блокує {targetName}",
+  "kickedAndBanned": "🙅 {username} вилучає та блокує {targetName}",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -886,7 +886,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "Нове повідомлення у FluffyChat",
+  "newMessageInFluffyChat": "💬 Нове повідомлення у FluffyChat",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -1166,35 +1166,35 @@
     "type": "text",
     "placeholders": {}
   },
-  "sentAFile": "{username} надсилає файл",
+  "sentAFile": "📁 {username} надсилає файл",
   "@sentAFile": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAnAudio": "{username} надсилає аудіо",
+  "sentAnAudio": "🎤 {username} надсилає аудіо",
   "@sentAnAudio": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAPicture": "{username} надсилає зображення",
+  "sentAPicture": "🖼️ {username} надсилає зображення",
   "@sentAPicture": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentASticker": "{username} надсилає наліпку",
+  "sentASticker": "😊 {username} надсилає наліпку",
   "@sentASticker": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAVideo": "{username} надсилає відео",
+  "sentAVideo": "🎥 {username} надсилає відео",
   "@sentAVideo": {
     "type": "text",
     "placeholders": {
@@ -1402,7 +1402,7 @@
       "username": {}
     }
   },
-  "userLeftTheChat": "{username} виходить з бесіди",
+  "userLeftTheChat": "🚪 {username} виходить з бесіди",
   "@userLeftTheChat": {
     "type": "text",
     "placeholders": {
@@ -2794,7 +2794,7 @@
   "@widgetUrlError": {},
   "errorAddingWidget": "Помилка додавання віджета.",
   "@errorAddingWidget": {},
-  "separateChatTypes": "Окремі особисті бесіди, групи та простори",
+  "separateChatTypes": "Розділіть особисті бесіди та групи",
   "@separateChatTypes": {
     "type": "text",
     "placeholders": {}
@@ -2804,13 +2804,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "youInvitedBy": "Ви були запрошені {user}",
+  "youInvitedBy": "📩 Ви були запрошені {user}",
   "@youInvitedBy": {
     "placeholders": {
       "user": {}
     }
   },
-  "youAcceptedTheInvitation": "Ви прийняли запрошення",
+  "youAcceptedTheInvitation": "👍 Ви погодилися на запрошення",
   "@youAcceptedTheInvitation": {},
   "youRejectedTheInvitation": "Ви відхилили запрошення",
   "@youRejectedTheInvitation": {},
@@ -2826,7 +2826,7 @@
       "user": {}
     }
   },
-  "youKickedAndBanned": "Ви вилучили й заблокували {user}",
+  "youKickedAndBanned": "🙅 Ви вилучили й заблокували {user}",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
@@ -2834,7 +2834,7 @@
   },
   "youJoinedTheChat": "Ви приєдналися до бесіди",
   "@youJoinedTheChat": {},
-  "youKicked": "Ви вилучили {user}",
+  "youKicked": "👞 Ви вилучили {user}",
   "@youKicked": {
     "placeholders": {
       "user": {}
@@ -2846,7 +2846,7 @@
       "user": {}
     }
   },
-  "youInvitedUser": "Ви запросили {user}",
+  "youInvitedUser": "📩 Ви запросили {user}",
   "@youInvitedUser": {
     "placeholders": {
       "user": {}
@@ -2939,5 +2939,79 @@
     }
   },
   "confirmMatrixId": "Підтвердьте свій Matrix ID, щоб видалити свій обліковий запис.",
-  "@confirmMatrixId": {}
+  "@confirmMatrixId": {},
+  "commandHint_markasgroup": "Позначити групою",
+  "@commandHint_markasgroup": {},
+  "commandHint_markasdm": "Позначити кімнатою особистого спілкування",
+  "@commandHint_markasdm": {},
+  "whyIsThisMessageEncrypted": "Чому це повідомлення нечитабельне?",
+  "@whyIsThisMessageEncrypted": {},
+  "noKeyForThisMessage": "Це може статися, якщо повідомлення було надіслано до того, як ви ввійшли у свій обліковий запис на цьому пристрої.\n\nТакож можливо, що відправник заблокував ваш пристрій або щось пішло не так з під'єднанням до інтернету.\n\nЧи можете ви прочитати повідомлення на іншому сеансі? Тоді ви зможете перенести повідомлення з нього! Перейдіть до Налаштування > Пристрої та переконайтеся, що ваші пристрої перевірили один одного. Коли ви відкриєте кімнату наступного разу й обидва сеанси будуть на активні, ключі будуть передані автоматично.\n\nВи ж не хочете втрачати ключі після виходу або зміни пристроїв? Переконайтеся, що ви ввімкнули резервне копіювання бесід у налаштуваннях.",
+  "@noKeyForThisMessage": {},
+  "foregroundServiceRunning": "Це сповіщення з'являється під час роботи основної служби.",
+  "@foregroundServiceRunning": {},
+  "screenSharingTitle": "спільний доступ до екрана",
+  "@screenSharingTitle": {},
+  "callingPermissions": "Дозволи на виклик",
+  "@callingPermissions": {},
+  "callingAccount": "Обліковий запис для виклику",
+  "@callingAccount": {},
+  "callingAccountDetails": "Дозволяє FluffyChat використовувати основний застосунок Android для набору номера.",
+  "@callingAccountDetails": {},
+  "appearOnTop": "З'являтися зверху",
+  "@appearOnTop": {},
+  "appearOnTopDetails": "Дозволяє застосунку показуватися зверху (не потрібно, якщо Fluffychat вже налаштований обліковим записом для викликів)",
+  "@appearOnTopDetails": {},
+  "newGroup": "Нова група",
+  "@newGroup": {},
+  "newSpace": "Новий простір",
+  "@newSpace": {},
+  "enterSpace": "Увійти в простір",
+  "@enterSpace": {},
+  "enterRoom": "Увійти в кімнату",
+  "@enterRoom": {},
+  "otherCallingPermissions": "Мікрофон, камера та інші дозволи FluffyChat",
+  "@otherCallingPermissions": {},
+  "allSpaces": "Усі простори",
+  "@allSpaces": {},
+  "screenSharingDetail": "Ви ділитеся своїм екраном FuffyChat",
+  "@screenSharingDetail": {},
+  "numChats": "{number} бесід",
+  "@numChats": {
+    "type": "number",
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "hideUnimportantStateEvents": "Сховати неважливі державні свята",
+  "@hideUnimportantStateEvents": {},
+  "doNotShowAgain": "Не показувати знову",
+  "@doNotShowAgain": {},
+  "commandHint_cuddle": "Надіслати пригортайку",
+  "@commandHint_cuddle": {},
+  "googlyEyesContent": "{senderName} надсилає вам гугл-очі",
+  "@googlyEyesContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "commandHint_googly": "Надіслати кілька гугл-очей",
+  "@commandHint_googly": {},
+  "commandHint_hug": "Надіслати обійми",
+  "@commandHint_hug": {},
+  "cuddleContent": "{senderName} пригортається до вас",
+  "@cuddleContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "hugContent": "{senderName} обіймає вас",
+  "@hugContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  }
 }

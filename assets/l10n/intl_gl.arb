@@ -11,7 +11,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "acceptedTheInvitation": "{username} aceptou o convite",
+  "acceptedTheInvitation": "👍 {username} aceptou o convite",
   "@acceptedTheInvitation": {
     "type": "text",
     "placeholders": {
@@ -28,7 +28,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "activatedEndToEndEncryption": "{username} activou o cifrado extremo-a-extremo",
+  "activatedEndToEndEncryption": "🔐 {username} activou o cifrado extremo-a-extremo",
   "@activatedEndToEndEncryption": {
     "type": "text",
     "placeholders": {
@@ -538,7 +538,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "connect": "Conectar",
+  "connect": "Acceder",
   "@connect": {
     "type": "text",
     "placeholders": {}
@@ -622,7 +622,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "createdTheChat": "{username} creou a conversa",
+  "createdTheChat": "💬 {username} creou a conversa",
   "@createdTheChat": {
     "type": "text",
     "placeholders": {
@@ -1127,7 +1127,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "invitedUser": "{username} convidou a {targetName}",
+  "invitedUser": "📩 {username} convidou a {targetName}",
   "@invitedUser": {
     "type": "text",
     "placeholders": {
@@ -1163,7 +1163,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "{username} uníuse ao chat",
+  "joinedTheChat": "👋 {username} uníuse ao chat",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -1185,7 +1185,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "{username} expulsou a {targetName}",
+  "kicked": "👞 {username} expulsou a {targetName}",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -1193,7 +1193,7 @@
       "targetName": {}
     }
   },
-  "kickedAndBanned": "{username} expulsou e vetou a {targetName}",
+  "kickedAndBanned": "🙅 {username} expulsou e vetou a {targetName}",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -1361,7 +1361,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "Nova mensaxe en FluffyChat",
+  "newMessageInFluffyChat": "💬 Nova mensaxe en FluffyChat",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -1950,35 +1950,35 @@
     "type": "text",
     "placeholders": {}
   },
-  "sentAFile": "{username} enviou un ficheiro",
+  "sentAFile": "📁 {username} enviou un ficheiro",
   "@sentAFile": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAnAudio": "{username} enviou un audio",
+  "sentAnAudio": "🎤 {username} enviou un audio",
   "@sentAnAudio": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAPicture": "{username} enviou unha imaxe",
+  "sentAPicture": "🖼️ {username} enviou unha imaxe",
   "@sentAPicture": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentASticker": "{username} enviou un adhesivo",
+  "sentASticker": "😊 {username} enviou un adhesivo",
   "@sentASticker": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAVideo": "{username} enviou un vídeo",
+  "sentAVideo": "🎥 {username} enviou un vídeo",
   "@sentAVideo": {
     "type": "text",
     "placeholders": {
@@ -2324,7 +2324,7 @@
       "username": {}
     }
   },
-  "userLeftTheChat": "{username} deixou a conversa",
+  "userLeftTheChat": "🚪 {username} deixou a conversa",
   "@userLeftTheChat": {
     "type": "text",
     "placeholders": {
@@ -2799,7 +2799,7 @@
   "@addToBundle": {},
   "removeFromBundle": "Eliminar deste feixe",
   "@removeFromBundle": {},
-  "separateChatTypes": "Separar Conversas directas, Grupos e Espazos",
+  "separateChatTypes": "Separar Conversas directas e Grupos",
   "@separateChatTypes": {
     "type": "text",
     "placeholders": {}
@@ -2817,7 +2817,7 @@
       "user": {}
     }
   },
-  "youInvitedBy": "{user} convidoute",
+  "youInvitedBy": "📩 {user} convidoute",
   "@youInvitedBy": {
     "placeholders": {
       "user": {}
@@ -2825,7 +2825,7 @@
   },
   "youJoinedTheChat": "Unícheste á conversa",
   "@youJoinedTheChat": {},
-  "youAcceptedTheInvitation": "Aceptaches o convite",
+  "youAcceptedTheInvitation": "👍 Aceptaches o convite",
   "@youAcceptedTheInvitation": {},
   "youHaveWithdrawnTheInvitationFor": "Retiraches o convite para {user}",
   "@youHaveWithdrawnTheInvitationFor": {
@@ -2833,19 +2833,19 @@
       "user": {}
     }
   },
-  "youInvitedUser": "Convidaches a {user}",
+  "youInvitedUser": "📩  Convidaches a {user}",
   "@youInvitedUser": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKicked": "Expulsaches a {user}",
+  "youKicked": "👞 Expulsaches a {user}",
   "@youKicked": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKickedAndBanned": "Expulsaches e vetaches a {user}",
+  "youKickedAndBanned": "🙅 Expulsaches e vetaches a {user}",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
@@ -2933,5 +2933,90 @@
   "updateAvailable": "Actualización dispoñible para FluffyChat",
   "@updateAvailable": {},
   "updateNow": "Iniciar actualización en segundo plano",
-  "@updateNow": {}
+  "@updateNow": {},
+  "confirmMatrixId": "Confirma o teu ID Matrix para poder eliminar a conta.",
+  "@confirmMatrixId": {},
+  "supposedMxid": "Debería ser {mxid}",
+  "@supposedMxid": {
+    "type": "text",
+    "placeholders": {
+      "mxid": {}
+    }
+  },
+  "allSuggestedRoomsJoined": "Unícheste a tódalas salas suxeridas",
+  "@allSuggestedRoomsJoined": {},
+  "commandHint_markasdm": "Marcar como sala de mensaxe directa",
+  "@commandHint_markasdm": {},
+  "commandHint_markasgroup": "Marcar como grupo",
+  "@commandHint_markasgroup": {},
+  "whyIsThisMessageEncrypted": "Por que non podo ler esta mensaxe?",
+  "@whyIsThisMessageEncrypted": {},
+  "noKeyForThisMessage": "Pode ser que a mensaxe fose enviada antes de que ti accedeses á túa conta neste dispositivo.\n\nTamén é posible que a remitente non validase o teu dispositivo ou tamén que algo fallase na conexión a internet.\n\nPodes ler a mensaxe noutro dispositivo? Entón podes transferila desde el! Vai a Axustes > Dispositivos e comproba que tes tódolos dispositivos verificados. Entón cando abras a sala a próxima vez a sincronización realizarase e as chaves transmitiranse automáticamente.\n\nNon desexas perder as chaves cando pechas sesión ou cambias de dispositivo? Comproba nos axustes que activaches a copia de apoio das conversas.",
+  "@noKeyForThisMessage": {},
+  "appearOnTop": "Aparecer arriba",
+  "@appearOnTop": {},
+  "otherCallingPermissions": "Micrófono, cámara e outros permisos para FluffyChat",
+  "@otherCallingPermissions": {},
+  "newGroup": "Novo grupo",
+  "@newGroup": {},
+  "newSpace": "Novo espazo",
+  "@newSpace": {},
+  "foregroundServiceRunning": "Esta notificación aparece cando se está a executar o servizo en segundo plano.",
+  "@foregroundServiceRunning": {},
+  "screenSharingTitle": "compartición da pantalla",
+  "@screenSharingTitle": {},
+  "callingPermissions": "Permisos de chamada",
+  "@callingPermissions": {},
+  "callingAccount": "Conta que chama",
+  "@callingAccount": {},
+  "callingAccountDetails": "Permite a FluffyChat usar a app marcador nativa de android.",
+  "@callingAccountDetails": {},
+  "appearOnTopDetails": "Permítelle á app aparecer por enrriba (non é preciso se xa configuraches FluffyChat como unha conta para chamadas)",
+  "@appearOnTopDetails": {},
+  "enterSpace": "Entrar no espazo",
+  "@enterSpace": {},
+  "enterRoom": "Entrar na sala",
+  "@enterRoom": {},
+  "allSpaces": "Tódolos espazos",
+  "@allSpaces": {},
+  "screenSharingDetail": "Estás compartindo a túa pantalla en FluffyChat",
+  "@screenSharingDetail": {},
+  "numChats": "{number} chats",
+  "@numChats": {
+    "type": "number",
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "hideUnimportantStateEvents": "Agochar os eventos de menor relevancia",
+  "@hideUnimportantStateEvents": {},
+  "doNotShowAgain": "Non mostrar outra vez",
+  "@doNotShowAgain": {},
+  "commandHint_googly": "Envía uns ollos desos grandes",
+  "@commandHint_googly": {},
+  "googlyEyesContent": "{senderName} enviouche uns ollos grandes",
+  "@googlyEyesContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "cuddleContent": "{senderName} mándache un achuche",
+  "@cuddleContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "commandHint_cuddle": "Envía un agarimo",
+  "@commandHint_cuddle": {},
+  "commandHint_hug": "Envía un abrazo",
+  "@commandHint_hug": {},
+  "hugContent": "{senderName} abrázate",
+  "@hugContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  }
 }

@@ -88,7 +88,7 @@ class BootstrapDialogState extends State<BootstrapDialog> {
     titleText = null;
     _recoveryKeyStored = false;
     bootstrap =
-        widget.client.encryption!.bootstrap(onUpdate: () => setState(() {}));
+        widget.client.encryption!.bootstrap(onUpdate: (_) => setState(() {}));
     final key = await const FlutterSecureStorage().read(key: _secureStorageKey);
     if (key == null) return;
     _recoveryKeyTextEditingController.text = key;
@@ -270,6 +270,11 @@ class BootstrapDialogState extends State<BootstrapDialog> {
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                          backgroundColor: Theme.of(context).primaryColor,
+                        ),
                         icon: _recoveryKeyInputLoading
                             ? const CircularProgressIndicator.adaptive()
                             : const Icon(Icons.lock_open_outlined),
@@ -335,7 +340,7 @@ class BootstrapDialogState extends State<BootstrapDialog> {
                     const SizedBox(height: 16),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        onPrimary: Colors.red,
+                        foregroundColor: Colors.red,
                       ),
                       icon: const Icon(Icons.delete_outlined),
                       label: Text(L10n.of(context)!.recoveryKeyLost),

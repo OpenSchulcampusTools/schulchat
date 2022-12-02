@@ -15,6 +15,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LoginScaffold(
       appBar: AppBar(
+        leading: controller.loading ? null : const BackButton(),
         automaticallyImplyLeading: !controller.loading,
         centerTitle: true,
         title: Text(
@@ -23,7 +24,6 @@ class LoginView extends StatelessWidget {
               .homeserver
               .toString()
               .replaceFirst('https://', '')),
-          style: const TextStyle(color: Colors.white),
         ),
       ),
       body: Builder(builder: (context) {
@@ -47,10 +47,6 @@ class LoginView extends StatelessWidget {
                     errorText: controller.usernameError,
                     errorStyle: const TextStyle(color: Colors.orange),
                     hintText: L10n.of(context)!.emailOrUsername,
-                    fillColor: Theme.of(context)
-                        .colorScheme
-                        .background
-                        .withOpacity(0.75),
                   ),
                 ),
               ),
@@ -62,7 +58,7 @@ class LoginView extends StatelessWidget {
                   autofillHints:
                       controller.loading ? null : [AutofillHints.password],
                   controller: controller.passwordController,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.go,
                   obscureText: !controller.showPassword,
                   onSubmitted: controller.login,
                   decoration: InputDecoration(
@@ -70,20 +66,15 @@ class LoginView extends StatelessWidget {
                     errorText: controller.passwordError,
                     errorStyle: const TextStyle(color: Colors.orange),
                     suffixIcon: IconButton(
-                      tooltip: L10n.of(context)!.showPassword,
+                      onPressed: controller.toggleShowPassword,
                       icon: Icon(
                         controller.showPassword
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
                         color: Colors.black,
                       ),
-                      onPressed: controller.toggleShowPassword,
                     ),
                     hintText: L10n.of(context)!.password,
-                    fillColor: Theme.of(context)
-                        .colorScheme
-                        .background
-                        .withOpacity(0.75),
                   ),
                 ),
               ),
@@ -92,6 +83,10 @@ class LoginView extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    ),
                     onPressed: controller.loading
                         ? null
                         : () => controller.login(context),
@@ -101,36 +96,41 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  const Expanded(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Expanded(
                       child: Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  )),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(
-                      L10n.of(context)!.or,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
+                        thickness: 1,
+                        color: Theme.of(context).dividerColor,
                       ),
                     ),
-                  ),
-                  const Expanded(
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        L10n.of(context)!.or,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    Expanded(
                       child: Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  )),
-                ],
+                        thickness: 1,
+                        color: Theme.of(context).dividerColor,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: ElevatedButton(
                   onPressed:
                       controller.loading ? () {} : controller.passwordForgotten,
-                  style: ElevatedButton.styleFrom(onPrimary: Colors.red),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Theme.of(context).colorScheme.error,
+                    backgroundColor: Theme.of(context).colorScheme.onError,
+                  ),
                   child: Text(L10n.of(context)!.passwordForgotten),
                 ),
               ),

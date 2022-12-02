@@ -250,7 +250,7 @@ class BackgroundPush {
         return;
       }
       _wentToRoomOnStartup = true;
-      goToRoom(details.payload);
+      goToRoom(details.notificationResponse);
     });
   }
 
@@ -258,8 +258,11 @@ class BackgroundPush {
     if (context == null) {
       return;
     }
-    if (await store.getItemBool(SettingKeys.showNoGoogle, true)) {
-      await loadLocale();
+    if (await store.getItemBool(SettingKeys.showNoGoogle, true) != true) {
+      return;
+    }
+    await loadLocale();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (PlatformInfos.isAndroid) {
         onFcmError?.call(
           l10n!.noGoogleServicesWarning,
@@ -267,13 +270,10 @@ class BackgroundPush {
             AppConfig.enablePushTutorial,
           ),
         );
+        return;
       }
       onFcmError?.call(l10n!.oopsPushError);
-
-      if (null == await store.getItem(SettingKeys.showNoGoogle)) {
-        await store.setItemBool(SettingKeys.showNoGoogle, false);
-      }
-    }
+    });
   }
 
   Future<void> setupFirebase() async {
@@ -294,8 +294,9 @@ class BackgroundPush {
     );
   }
 
-  Future<void> goToRoom(String? roomId) async {
+  Future<void> goToRoom(NotificationResponse? response) async {
     try {
+      final roomId = response?.payload;
       Logs().v('[Push] Attempting to go to room $roomId...');
       if (router == null || roomId == null) {
         return;

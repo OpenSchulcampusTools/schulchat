@@ -13,13 +13,14 @@ import 'package:fluffychat/config/setting_keys.dart';
 import 'package:fluffychat/utils/client_manager.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:fluffychat/utils/voip/callkeep_manager.dart';
 
 Future<void> pushHelper(
   PushNotification notification, {
   Client? client,
   L10n? l10n,
   String? activeRoomId,
-  Future<dynamic> Function(String?)? onSelectNotification,
+  void Function(NotificationResponse?)? onSelectNotification,
 }) async {
   try {
     await _tryPushHelper(
@@ -37,16 +38,17 @@ Future<void> pushHelper(
     await flutterLocalNotificationsPlugin.initialize(
       const InitializationSettings(
         android: AndroidInitializationSettings('notifications_icon'),
-        iOS: IOSInitializationSettings(),
+        iOS: DarwinInitializationSettings(),
       ),
-      onSelectNotification: onSelectNotification,
+      onDidReceiveNotificationResponse: onSelectNotification,
+      onDidReceiveBackgroundNotificationResponse: onSelectNotification,
     );
     flutterLocalNotificationsPlugin.show(
       0,
       l10n?.newMessageInFluffyChat,
       l10n?.openAppToReadMessages,
       NotificationDetails(
-          iOS: const IOSNotificationDetails(),
+          iOS: const DarwinNotificationDetails(),
           android: AndroidNotificationDetails(
             AppConfig.pushNotificationsChannelId,
             AppConfig.pushNotificationsChannelName,
@@ -66,7 +68,7 @@ Future<void> _tryPushHelper(
   Client? client,
   L10n? l10n,
   String? activeRoomId,
-  Future<dynamic> Function(String?)? onSelectNotification,
+  void Function(NotificationResponse?)? onSelectNotification,
 }) async {
   final isBackgroundMessage = client == null;
   Logs().v(
@@ -87,9 +89,10 @@ Future<void> _tryPushHelper(
   await flutterLocalNotificationsPlugin.initialize(
     const InitializationSettings(
       android: AndroidInitializationSettings('notifications_icon'),
-      iOS: IOSInitializationSettings(),
+      iOS: DarwinInitializationSettings(),
     ),
-    onSelectNotification: onSelectNotification,
+    onDidReceiveNotificationResponse: onSelectNotification,
+    //onDidReceiveBackgroundNotificationResponse: onSelectNotification,
   );
 
   client ??= (await ClientManager.getClients(initialize: false)).first;
@@ -110,11 +113,29 @@ Future<void> _tryPushHelper(
     }
     return;
   }
-  Logs().v('Push helper got notification event.');
+  Logs().v('Push helper got notification event of type ${event.type}.');
 
-  if (!event.isEventTypeKnown) {
-    Logs()
-        .v('Push message event is from an unknown event type. Do not display.');
+  if (event.type.startsWith('m.call')) {
+    // make sure bg sync is on (needed to update hold, unhold events)
+    // prevent over write from app life cycle change
+    client.backgroundSync = true;
+  }
+
+  if (event.type == EventTypes.CallInvite) {
+    CallKeepManager().initialize();
+  } else if (event.type == EventTypes.CallHangup) {
+    client.backgroundSync = false;
+  }
+
+  if (event.type.startsWith('m.call') && event.type != EventTypes.CallInvite) {
+    Logs().v('Push message is a m.call but not invite. Do not display.');
+    return;
+  }
+
+  if ((event.type.startsWith('m.call') &&
+          event.type != EventTypes.CallInvite) ||
+      event.type == 'org.matrix.call.sdp_stream_metadata_changed') {
+    Logs().v('Push message was for a call, but not call invite.');
     return;
   }
 
@@ -122,14 +143,16 @@ Future<void> _tryPushHelper(
   final matrixLocals = MatrixLocals(l10n);
 
   // Calculate the body
-  final body = await event.calcLocalizedBody(
-    matrixLocals,
-    plaintextBody: true,
-    withSenderNamePrefix: false,
-    hideReply: true,
-    hideEdit: true,
-    removeMarkdown: true,
-  );
+  final body = event.type == EventTypes.Encrypted
+      ? l10n.newMessageInFluffyChat
+      : await event.calcLocalizedBody(
+          matrixLocals,
+          plaintextBody: true,
+          withSenderNamePrefix: false,
+          hideReply: true,
+          hideEdit: true,
+          removeMarkdown: true,
+        );
 
   // The person object for the android message style notification
   final avatar = event.room.avatar
@@ -185,7 +208,7 @@ Future<void> _tryPushHelper(
     priority: Priority.high,
     groupKey: event.room.id,
   );
-  const iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
   final platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics,
     iOS: iOSPlatformChannelSpecifics,

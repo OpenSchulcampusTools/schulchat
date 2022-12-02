@@ -23,7 +23,7 @@ abstract class AppConfig {
       'https://gitlab.com/famedly/fluffychat/-/blob/main/PRIVACY.md';
   static String get privacyUrl => _privacyUrl;
   static const String enablePushTutorial =
-      'https://www.reddit.com/r/fluffychat/comments/qn6liu/enable_push_notifications_without_google_services/';
+      'https://gitlab.com/famedly/fluffychat/-/wikis/Push-Notifications-without-Google-Services';
   static const String appId = 'im.fluffychat.FluffyChat';
   static const String appOpenUrlScheme = 'im.fluffychat';
   static String _webBaseUrl = 'https://fluffychat.im/web';
@@ -37,6 +37,7 @@ abstract class AppConfig {
   static bool renderHtml = true;
   static bool hideRedactedEvents = false;
   static bool hideUnknownEvents = true;
+  static bool hideUnimportantStateEvents = true;
   static bool showDirectChatsInSpaces = true;
   static bool separateChatTypes = false;
   static bool autoplayImages = true;

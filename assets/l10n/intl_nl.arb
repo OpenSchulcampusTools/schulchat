@@ -10,7 +10,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "acceptedTheInvitation": "{username} heeft de uitnodiging geaccepteerd",
+  "acceptedTheInvitation": "👍 {username} heeft de uitnodiging geaccepteerd",
   "@acceptedTheInvitation": {
     "type": "text",
     "placeholders": {
@@ -27,7 +27,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "activatedEndToEndEncryption": "{username} heeft eind-tot-eindversleuteling geactiveerd",
+  "activatedEndToEndEncryption": "🔐 {username} heeft eind-tot-eindversleuteling geactiveerd",
   "@activatedEndToEndEncryption": {
     "type": "text",
     "placeholders": {
@@ -630,7 +630,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "createdTheChat": "{username} heeft de chat gemaakt",
+  "createdTheChat": "💬 {username} heeft de chat gemaakt",
   "@createdTheChat": {
     "type": "text",
     "placeholders": {
@@ -1135,7 +1135,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "invitedUser": "{username} heeft {targetName} uitgenodigd",
+  "invitedUser": "📩 {username} heeft {targetName} uitgenodigd",
   "@invitedUser": {
     "type": "text",
     "placeholders": {
@@ -1171,7 +1171,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "{username} is toegetreden tot de chat",
+  "joinedTheChat": "👋 {username} is toegetreden tot de chat",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -1193,7 +1193,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "{username} heeft {targetName} verwijderd",
+  "kicked": "👞 {username} heeft {targetName} verwijderd",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -1201,7 +1201,7 @@
       "targetName": {}
     }
   },
-  "kickedAndBanned": "{username} heeft {targetName} verwijderd en verbannen",
+  "kickedAndBanned": "🙅 {username} heeft {targetName} verwijderd en verbannen",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -1369,7 +1369,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "Nieuw bericht in FluffyChat",
+  "newMessageInFluffyChat": "💬 Nieuw bericht in FluffyChat",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -1958,35 +1958,35 @@
     "type": "text",
     "placeholders": {}
   },
-  "sentAFile": "{username} heeft een bestand verzonden",
+  "sentAFile": "📁 {username} heeft een bestand verzonden",
   "@sentAFile": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAnAudio": "{username} heeft een audio verzonden",
+  "sentAnAudio": "🎤 {username} heeft een audio verzonden",
   "@sentAnAudio": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAPicture": "{username} heeft een afbeelding verzonden",
+  "sentAPicture": "🖼️ {username} heeft een afbeelding verzonden",
   "@sentAPicture": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentASticker": "{username} heeft een sticker verzonden",
+  "sentASticker": "😊 {username} heeft een sticker verzonden",
   "@sentASticker": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAVideo": "{username} heeft een video verzonden",
+  "sentAVideo": "🎥 {username} heeft een video verzonden",
   "@sentAVideo": {
     "type": "text",
     "placeholders": {
@@ -2332,7 +2332,7 @@
       "username": {}
     }
   },
-  "userLeftTheChat": "{username} is vertrokken uit de chat",
+  "userLeftTheChat": "🚪 {username} is vertrokken uit de chat",
   "@userLeftTheChat": {
     "type": "text",
     "placeholders": {
@@ -2798,7 +2798,7 @@
   "@widgetEtherpad": {},
   "editWidgets": "Widgets wijzigen",
   "@editWidgets": {},
-  "separateChatTypes": "Gescheiden directe chats, groepen en spaces",
+  "separateChatTypes": "Gescheiden directe chats en groepen",
   "@separateChatTypes": {
     "type": "text",
     "placeholders": {}
@@ -2808,7 +2808,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "youAcceptedTheInvitation": "Je hebt de uitnodiging geaccepteerd",
+  "youAcceptedTheInvitation": "👍 Je hebt de uitnodiging geaccepteerd",
   "@youAcceptedTheInvitation": {},
   "youRejectedTheInvitation": "Je hebt de uitnodiging afgewezen",
   "@youRejectedTheInvitation": {},
@@ -2826,25 +2826,25 @@
       "user": {}
     }
   },
-  "youInvitedBy": "Je bent uitgenodigd door {user}",
+  "youInvitedBy": "📩 Je bent uitgenodigd door {user}",
   "@youInvitedBy": {
     "placeholders": {
       "user": {}
     }
   },
-  "youInvitedUser": "Je hebt {user} uitgenodigd",
+  "youInvitedUser": "📩 Je hebt {user} uitgenodigd",
   "@youInvitedUser": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKicked": "Je hebt {user} weggestuurd",
+  "youKicked": "👞 Je hebt {user} weggestuurd",
   "@youKicked": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKickedAndBanned": "Je hebt weggestuurd en verbannen {user}",
+  "youKickedAndBanned": "🙅 Je hebt weggestuurd en verbannen {user}",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
@@ -2897,7 +2897,7 @@
       "number": {}
     }
   },
-  "dehydrateShare": "Dit is je prive FluffyChat export. Zorg ervoor dat je het niet verliest en houd het privé.",
+  "dehydrateShare": "Dit is jouw persoonlijke FluffyChat export. Zorg ervoor dat je het niet verliest en houd het privé.",
   "@dehydrateShare": {},
   "dehydrate": "Sessie exporteren en apparaat wissen",
   "@dehydrate": {},
@@ -2942,6 +2942,80 @@
     "type": "text",
     "placeholders": {
       "mxid": {}
+    }
+  },
+  "commandHint_markasdm": "Markeer als privéberichtenkamer",
+  "@commandHint_markasdm": {},
+  "commandHint_markasgroup": "Markeer als groep",
+  "@commandHint_markasgroup": {},
+  "whyIsThisMessageEncrypted": "Waarom is dit bericht onleesbaar?",
+  "@whyIsThisMessageEncrypted": {},
+  "noKeyForThisMessage": "Dit kan gebeuren als het bericht is verzonden voordat je bij je account op dit apparaat hebt aangemeld.\n\nHet is ook mogelijk dat de afzender je apparaat heeft geblokkeerd of dat er iets mis is gegaan met de internetverbinding.\n\nKan je het bericht wel lezen op een andere sessie? Dan kan je het bericht daarvandaan overzetten! Ga naar Instellingen > Apparaten en zorg ervoor dat je apparaten elkaar hebben geverifieerd. Wanneer je de kamer de volgende keer opent en beide sessies op de voorgrond staan, zullen de sleutels automatisch worden verzonden.\n\nWil je de sleutels niet verliezen als je uitlogt of van apparaat wisselt? Zorg er dan voor dat je de chat back-up hebt aangezet in de instellingen.",
+  "@noKeyForThisMessage": {},
+  "enterSpace": "Space betreden",
+  "@enterSpace": {},
+  "allSpaces": "Alle spaces",
+  "@allSpaces": {},
+  "foregroundServiceRunning": "Deze melding verschijnt wanneer de voorgronddienst draait.",
+  "@foregroundServiceRunning": {},
+  "screenSharingTitle": "scherm delen",
+  "@screenSharingTitle": {},
+  "screenSharingDetail": "Je deelt je scherm in FuffyChat",
+  "@screenSharingDetail": {},
+  "callingPermissions": "Belrechten",
+  "@callingPermissions": {},
+  "callingAccount": "Belaccount",
+  "@callingAccount": {},
+  "callingAccountDetails": "Hiermee kan FluffyChat de Android-kiezer-app gebruiken.",
+  "@callingAccountDetails": {},
+  "appearOnTop": "Bovenaan verschijnen",
+  "@appearOnTop": {},
+  "appearOnTopDetails": "Laat de app bovenaan verschijnen (niet nodig als je FluffyChat al hebt ingesteld als een belaccount)",
+  "@appearOnTopDetails": {},
+  "otherCallingPermissions": "Microfoon, camera en andere FluffyChat-rechten",
+  "@otherCallingPermissions": {},
+  "newGroup": "Nieuwe groep",
+  "@newGroup": {},
+  "newSpace": "Nieuwe space",
+  "@newSpace": {},
+  "enterRoom": "Kamer betreden",
+  "@enterRoom": {},
+  "numChats": "{number} chats",
+  "@numChats": {
+    "type": "number",
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "hideUnimportantStateEvents": "Onbelangrijke statusgebeurtenissen verbergen",
+  "@hideUnimportantStateEvents": {},
+  "doNotShowAgain": "Niet meer tonen",
+  "@doNotShowAgain": {},
+  "googlyEyesContent": "{senderName} stuurt je wiebelogen",
+  "@googlyEyesContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "commandHint_googly": "Wat wiebelogen versturen",
+  "@commandHint_googly": {},
+  "commandHint_cuddle": "Een knuffel versturen",
+  "@commandHint_cuddle": {},
+  "commandHint_hug": "Een knuffel versturen",
+  "@commandHint_hug": {},
+  "cuddleContent": "{senderName} knuffelt je",
+  "@cuddleContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "hugContent": "{senderName} omhelst je",
+  "@hugContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
     }
   }
 }

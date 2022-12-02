@@ -11,7 +11,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "acceptedTheInvitation": "{username} võttis kutse vastu",
+  "acceptedTheInvitation": "👍 {username} võttis kutse vastu",
   "@acceptedTheInvitation": {
     "type": "text",
     "placeholders": {
@@ -28,7 +28,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "activatedEndToEndEncryption": "{username} võttis kasutusele läbiva krüptimise",
+  "activatedEndToEndEncryption": "🔐{username} võttis kasutusele läbiva krüptimise",
   "@activatedEndToEndEncryption": {
     "type": "text",
     "placeholders": {
@@ -622,7 +622,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "createdTheChat": "{username} algatas vestluse",
+  "createdTheChat": "💬 {username} algatas vestluse",
   "@createdTheChat": {
     "type": "text",
     "placeholders": {
@@ -1127,7 +1127,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "invitedUser": "{username} kutsus kasutajaks {targetName}",
+  "invitedUser": "📩 {username} saatis kutse kasutajale {targetName}",
   "@invitedUser": {
     "type": "text",
     "placeholders": {
@@ -1163,7 +1163,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "{username} liitus vestlusega",
+  "joinedTheChat": "👋 {username} liitus vestlusega",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -1185,7 +1185,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "{username} müksas kasutaja {targetName} välja",
+  "kicked": "👞 {username} müksas kasutaja {targetName} välja",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -1193,7 +1193,7 @@
       "targetName": {}
     }
   },
-  "kickedAndBanned": "{username} müksas kasutaja {targetName} välja ning seadis talle suhtluskeelu",
+  "kickedAndBanned": "🙅{username} müksas kasutaja {targetName} välja ning seadis talle suhtluskeelu",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -1361,7 +1361,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "Uus sõnum FluffyChat'i vahendusel",
+  "newMessageInFluffyChat": "💬 Uus sõnum FluffyChat'i vahendusel",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -1950,35 +1950,35 @@
     "type": "text",
     "placeholders": {}
   },
-  "sentAFile": "{username} saatis faili",
+  "sentAFile": "📁 {username} saatis faili",
   "@sentAFile": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAnAudio": "{username} saatis helifaili",
+  "sentAnAudio": "🎤 {username} saatis helifaili",
   "@sentAnAudio": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAPicture": "{username} saatis pildi",
+  "sentAPicture": "🖼️ {username} saatis pildi",
   "@sentAPicture": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentASticker": "{username} saatis kleepsu",
+  "sentASticker": "😊 {username} saatis kleepsu",
   "@sentASticker": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAVideo": "{username} saatis video",
+  "sentAVideo": "🎥 {username} saatis video",
   "@sentAVideo": {
     "type": "text",
     "placeholders": {
@@ -2324,7 +2324,7 @@
       "username": {}
     }
   },
-  "userLeftTheChat": "{username} lahkus vestlusest",
+  "userLeftTheChat": "🚪{username} lahkus vestlusest",
   "@userLeftTheChat": {
     "type": "text",
     "placeholders": {
@@ -2737,7 +2737,7 @@
   "@unsupportedAndroidVersionLong": {},
   "nextAccount": "Järgmine kasutajakonto",
   "@nextAccount": {},
-  "separateChatTypes": "Eraldi vestlused, jututoad ja kogukonnad",
+  "separateChatTypes": "Eraldi vestlused ja jututoad",
   "@separateChatTypes": {
     "type": "text",
     "placeholders": {}
@@ -2771,7 +2771,7 @@
       "number": {}
     }
   },
-  "youAcceptedTheInvitation": "Sa võtsid kutse vastu",
+  "youAcceptedTheInvitation": "👍 Sa võtsid kutse vastu",
   "@youAcceptedTheInvitation": {},
   "youUnbannedUser": "Sa eemaldasid suhtluskeelu kasutajalt {user}",
   "@youUnbannedUser": {
@@ -2793,7 +2793,7 @@
   },
   "youJoinedTheChat": "Sa liitusid vestlusega",
   "@youJoinedTheChat": {},
-  "youKickedAndBanned": "Sa müksasid välja kasutaja {user} ning seadsid talle suhtluskeelu",
+  "youKickedAndBanned": "🙅Sa müksasid kasutaja {user} välja ning seadsid talle suhtluskeelu",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
@@ -2829,19 +2829,19 @@
   "@whatIsGoingOn": {},
   "youRejectedTheInvitation": "Sa lükkasid kutse tagasi",
   "@youRejectedTheInvitation": {},
-  "youKicked": "Sa müksasid välja kasutaja {user}",
+  "youKicked": "👞 Sa müksasid kasutaja {user} välja",
   "@youKicked": {
     "placeholders": {
       "user": {}
     }
   },
-  "youInvitedUser": "Sa saatsid kutse kasutajale {user}",
+  "youInvitedUser": "📩 Sa saatsid kutse kasutajale {user}",
   "@youInvitedUser": {
     "placeholders": {
       "user": {}
     }
   },
-  "youInvitedBy": "{user} saatis sulle kutse",
+  "youInvitedBy": "📩 {user} saatis sulle kutse",
   "@youInvitedBy": {
     "placeholders": {
       "user": {}
@@ -2944,5 +2944,79 @@
     "placeholders": {
       "mxid": {}
     }
-  }
+  },
+  "commandHint_markasgroup": "Märgi vestlusrühmaks",
+  "@commandHint_markasgroup": {},
+  "commandHint_markasdm": "Märgi otsevestusluseks",
+  "@commandHint_markasdm": {},
+  "whyIsThisMessageEncrypted": "Miks see sõnum pole loetav?",
+  "@whyIsThisMessageEncrypted": {},
+  "noKeyForThisMessage": "See võib juhtuda, kui sõnum oli saadetud enne, kui siin seadmes oma kontoga sisse logisid.\n\nSamuti võib juhtuda siis, kui saatja on lugemises selles seadmes blokeerinud või on tekkinud tõrkeid veebiühenduses.\n\nAga mõnes teises seadmes saad seda sõnumit lugeda? Siis sa võid sõnumi sealt üle tõsta. Ava Seadistused -> Seadmed ning kontrolli, et kõik sinu seadmed on omavahel verifitseeritud. Kui avad selle vestluse või jututoa ning mõlemad sessioonid on avatud, siis vajalikud krüptovõtmed saadetakse automaatset.\n\nKas sa soovid vältida krüptovõtmete kadumist väljalogimisel ja seadmete vahetusel? Siis palun kontrolli, et seadistuses on krüptovõtmete varundus sisse lülitatud.",
+  "@noKeyForThisMessage": {},
+  "callingPermissions": "Helistamise õigused",
+  "@callingPermissions": {},
+  "callingAccountDetails": "Võimaldab FluffyChat'il kasutada Androidi helistamisrakendust.",
+  "@callingAccountDetails": {},
+  "appearOnTop": "Luba pealmise rakendusena",
+  "@appearOnTop": {},
+  "otherCallingPermissions": "Mikrofoni, kaamera ja muud FluffyChat'i õigused",
+  "@otherCallingPermissions": {},
+  "newGroup": "Uus jututuba",
+  "@newGroup": {},
+  "newSpace": "Uus kogukond",
+  "@newSpace": {},
+  "enterSpace": "Sisene kogukonda",
+  "@enterSpace": {},
+  "enterRoom": "Ava jututuba",
+  "@enterRoom": {},
+  "appearOnTopDetails": "Sellega lubad rakendust avada kõige pealmisena (pole vajalik, kui Fluffychat on juba seadistatud toimima helistamiskontoga)",
+  "@appearOnTopDetails": {},
+  "callingAccount": "Helistamiskonto",
+  "@callingAccount": {},
+  "screenSharingTitle": "ekraani jagamine",
+  "@screenSharingTitle": {},
+  "foregroundServiceRunning": "See teavitus toimib siis, kui esiplaaniteenus töötab.",
+  "@foregroundServiceRunning": {},
+  "allSpaces": "Kõik kogukonnad",
+  "@allSpaces": {},
+  "screenSharingDetail": "Sa jagad oma ekraani FuffyChat'i vahendusel",
+  "@screenSharingDetail": {},
+  "numChats": "{number} vestlust",
+  "@numChats": {
+    "type": "number",
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "hideUnimportantStateEvents": "Peida väheolulised olekuteated",
+  "@hideUnimportantStateEvents": {},
+  "doNotShowAgain": "Ära näita uuesti",
+  "@doNotShowAgain": {},
+  "commandHint_cuddle": "Saada üks kaisutus",
+  "@commandHint_cuddle": {},
+  "commandHint_hug": "Saada üks kallistus",
+  "@commandHint_hug": {},
+  "googlyEyesContent": "{senderName} saatis sulle otsivad silmad",
+  "@googlyEyesContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "cuddleContent": "{senderName} kaisutab sind",
+  "@cuddleContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "hugContent": "{senderName} kallistab sind",
+  "@hugContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "commandHint_googly": "Saada ühed otsivad silmad",
+  "@commandHint_googly": {}
 }

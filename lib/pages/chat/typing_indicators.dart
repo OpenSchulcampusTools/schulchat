@@ -26,8 +26,8 @@ class TypingIndicators extends StatelessWidget {
         height: typingUsers.isEmpty ? 0 : Avatar.defaultSize + bottomPadding,
         duration: const Duration(milliseconds: 300),
         curve: Curves.bounceInOut,
-        alignment: controller.filteredEvents.isNotEmpty &&
-                controller.filteredEvents.first.senderId ==
+        alignment: controller.timeline!.events.isNotEmpty &&
+                controller.timeline!.events.first.senderId ==
                     Matrix.of(context).client.userID
             ? Alignment.topRight
             : Alignment.topLeft,
@@ -84,7 +84,11 @@ class TypingIndicators extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   child: typingUsers.isEmpty
                       ? null
-                      : Image.asset('assets/typing.gif', height: 12),
+                      : Image.asset(
+                          'assets/typing.gif',
+                          height: 30,
+                          filterQuality: FilterQuality.medium,
+                        ),
                 ),
               ),
             ),

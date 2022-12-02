@@ -11,7 +11,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "acceptedTheInvitation": "{username} 已接受邀请",
+  "acceptedTheInvitation": "👍 {username} 已接受邀请",
   "@acceptedTheInvitation": {
     "type": "text",
     "placeholders": {
@@ -28,7 +28,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "activatedEndToEndEncryption": "{username} 激活了端到端加密",
+  "activatedEndToEndEncryption": "🔐 {username} 激活了端到端加密",
   "@activatedEndToEndEncryption": {
     "type": "text",
     "placeholders": {
@@ -605,7 +605,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "createdTheChat": "{username} 创建了聊天",
+  "createdTheChat": "💬 {username} 创建了聊天",
   "@createdTheChat": {
     "type": "text",
     "placeholders": {
@@ -1091,7 +1091,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "invitedUser": "{username} 邀请了 {targetName}",
+  "invitedUser": "📩 {username} 邀请了 {targetName}",
   "@invitedUser": {
     "type": "text",
     "placeholders": {
@@ -1127,7 +1127,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "{username} 加入了聊天",
+  "joinedTheChat": "👋 {username} 加入了聊天",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -1149,7 +1149,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "{username} 踢了 {targetName}",
+  "kicked": "👞 {username} 踢了 {targetName}",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -1157,7 +1157,7 @@
       "targetName": {}
     }
   },
-  "kickedAndBanned": "{username} 踢了 {targetName} 并将其封禁",
+  "kickedAndBanned": "🙅 {username} 踢出 {targetName} 并将其封禁",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -1315,7 +1315,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "来自 FluffyChat 的新消息",
+  "newMessageInFluffyChat": "💬 FluffyChat 新消息",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -1881,35 +1881,35 @@
     "type": "text",
     "placeholders": {}
   },
-  "sentAFile": "{username} 发送了文件",
+  "sentAFile": "📁{username} 发送了文件",
   "@sentAFile": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAnAudio": "{username} 发送了音频",
+  "sentAnAudio": "🎤{username} 发送了音频",
   "@sentAnAudio": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAPicture": "{username} 发送了图片",
+  "sentAPicture": "🖼️ {username} 发送了图片",
   "@sentAPicture": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentASticker": "{username} 发送了贴纸",
+  "sentASticker": "😊 {username} 发送了贴纸",
   "@sentASticker": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAVideo": "{username} 发送了视频",
+  "sentAVideo": "🎥 {username} 发送了视频",
   "@sentAVideo": {
     "type": "text",
     "placeholders": {
@@ -2240,7 +2240,7 @@
       "username": {}
     }
   },
-  "userLeftTheChat": "{username} 离开了聊天",
+  "userLeftTheChat": "🚪{username} 离开了聊天",
   "@userLeftTheChat": {
     "type": "text",
     "placeholders": {
@@ -2799,7 +2799,7 @@
   "@widgetName": {},
   "widgetUrlError": "这不是有效的 URL。",
   "@widgetUrlError": {},
-  "separateChatTypes": "分开私聊、群组和空间",
+  "separateChatTypes": "分开私聊和群组",
   "@separateChatTypes": {
     "type": "text",
     "placeholders": {}
@@ -2819,19 +2819,19 @@
       "user": {}
     }
   },
-  "youInvitedBy": "你受到 {user} 的邀请",
+  "youInvitedBy": "📩 你受到 {user} 的邀请",
   "@youInvitedBy": {
     "placeholders": {
       "user": {}
     }
   },
-  "youInvitedUser": "你邀请了 {user}",
+  "youInvitedUser": "📩 你邀请了 {user}",
   "@youInvitedUser": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKicked": "你踢掉了 {user}",
+  "youKicked": "👞你踢掉了 {user}",
   "@youKicked": {
     "placeholders": {
       "user": {}
@@ -2843,7 +2843,7 @@
       "user": {}
     }
   },
-  "youAcceptedTheInvitation": "你接受了邀请",
+  "youAcceptedTheInvitation": "👍 你接受了邀请",
   "@youAcceptedTheInvitation": {},
   "youHaveWithdrawnTheInvitationFor": "你撤回了对 {user} 的邀请",
   "@youHaveWithdrawnTheInvitationFor": {
@@ -2851,7 +2851,7 @@
       "user": {}
     }
   },
-  "youKickedAndBanned": "你踢掉并封禁了 {user}",
+  "youKickedAndBanned": "🙅你踢掉并封禁了 {user}",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
@@ -2943,6 +2943,80 @@
     "type": "text",
     "placeholders": {
       "mxid": {}
+    }
+  },
+  "commandHint_markasgroup": "标记为群组",
+  "@commandHint_markasgroup": {},
+  "commandHint_markasdm": "标记为私信聊天室",
+  "@commandHint_markasdm": {},
+  "whyIsThisMessageEncrypted": "为什么此消息不可读？",
+  "@whyIsThisMessageEncrypted": {},
+  "noKeyForThisMessage": "如果消息是在你在此设备上登录账户前发送的，就可能发生这种情况。\n\n也有可能是发送者屏蔽了你的设备或网络连接出了问题。\n\n你能在另一个会话中读取消息吗？如果是的话，你可以从它那里传递信息！点击设置 > 设备，并确保你的设备已经相互验证。当你下次打开聊天室，且两个会话都在前台，密钥就会自动传输。\n\n你不想在注销或切换设备时丢失密钥？请确保在设置中启用了聊天备份。",
+  "@noKeyForThisMessage": {},
+  "newGroup": "新群组",
+  "@newGroup": {},
+  "newSpace": "新空间",
+  "@newSpace": {},
+  "enterSpace": "进入空间",
+  "@enterSpace": {},
+  "enterRoom": "进入聊天室",
+  "@enterRoom": {},
+  "allSpaces": "所有空间",
+  "@allSpaces": {},
+  "appearOnTop": "显示在其他应用上方",
+  "@appearOnTop": {},
+  "appearOnTopDetails": "允许应用显示在顶部（如果你已经将 Fluffychat 设置为呼叫账户，则不需要授予此权限）",
+  "@appearOnTopDetails": {},
+  "otherCallingPermissions": "麦克风、摄像头和其他 FluffyChat 权限",
+  "@otherCallingPermissions": {},
+  "callingPermissions": "呼叫权限",
+  "@callingPermissions": {},
+  "callingAccountDetails": "允许 FluffyChat 使用本机 android 拨号器应用。",
+  "@callingAccountDetails": {},
+  "foregroundServiceRunning": "此通知在前台服务运行时出现。",
+  "@foregroundServiceRunning": {},
+  "screenSharingTitle": "屏幕共享",
+  "@screenSharingTitle": {},
+  "callingAccount": "呼叫账户",
+  "@callingAccount": {},
+  "screenSharingDetail": "你正在 FluffyChat 共享屏幕",
+  "@screenSharingDetail": {},
+  "numChats": "{number} 个聊天",
+  "@numChats": {
+    "type": "number",
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "hideUnimportantStateEvents": "隐藏不重要的状态事件",
+  "@hideUnimportantStateEvents": {},
+  "doNotShowAgain": "不再显示",
+  "@doNotShowAgain": {},
+  "googlyEyesContent": "{senderName} 给你发送了“大眼”表情",
+  "@googlyEyesContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "commandHint_googly": "发送 一些“大眼”",
+  "@commandHint_googly": {},
+  "commandHint_cuddle": "发送“拥抱”",
+  "@commandHint_cuddle": {},
+  "commandHint_hug": "发送“搂抱”",
+  "@commandHint_hug": {},
+  "cuddleContent": "{senderName} 拥抱了你",
+  "@cuddleContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "hugContent": "{senderName} 搂抱了你",
+  "@hugContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
     }
   }
 }

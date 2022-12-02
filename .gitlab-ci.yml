@@ -35,6 +35,9 @@ dart_code_metrics_analyze:
   artifacts:
     reports:
       codequality: code-quality-report.json
+  tags:
+    - docker
+    - famedly
 
 #widget_test:
 #  stage: test

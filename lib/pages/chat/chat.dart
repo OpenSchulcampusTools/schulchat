@@ -25,11 +25,9 @@ import 'package:fluffychat/utils/matrix_sdk_extensions.dart/event_extension.dart
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/ios_badge_client_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/utils/voip/callkeep_manager.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import '../../utils/account_bundles.dart';
 import '../../utils/localized_exception_extension.dart';
-import '../../utils/matrix_sdk_extensions.dart/filtered_timeline_extension.dart';
 import '../../utils/matrix_sdk_extensions.dart/matrix_file_extension.dart';
 import 'send_file_dialog.dart';
 import 'send_location_dialog.dart';
@@ -112,8 +110,6 @@ class ChatController extends State<Chat> {
 
   List<Event> selectedEvents = [];
 
-  late List<Event> filteredEvents;
-
   final Set<String> unfolded = {};
 
   Event? replyEvent;
@@ -180,35 +176,12 @@ class ChatController extends State<Chat> {
   void initState() {
     scrollController.addListener(_updateScrollController);
     inputFocus.addListener(_inputFocusListener);
-    final voipPlugin = Matrix.of(context).voipPlugin;
-
-    if (voipPlugin != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        CallKeepManager().setVoipPlugin(voipPlugin);
-        CallKeepManager().initialize().catchError((_) => true);
-      });
-    }
     super.initState();
   }
 
   void updateView() {
     if (!mounted) return;
-    setState(
-      () {
-        filteredEvents = timeline!.getFilteredEvents(unfolded: unfolded);
-      },
-    );
-  }
-
-  void unfold(String eventId) {
-    var i = filteredEvents.indexWhere((e) => e.eventId == eventId);
-    setState(() {
-      while (i < filteredEvents.length - 1 && filteredEvents[i].isState) {
-        unfolded.add(filteredEvents[i].eventId);
-        i++;
-      }
-      filteredEvents = timeline!.getFilteredEvents(unfolded: unfolded);
-    });
+    setState(() {});
   }
 
   Future<bool> getTimeline() async {
@@ -234,8 +207,7 @@ class ChatController extends State<Chat> {
         }
       });
     }
-    filteredEvents = timeline!.getFilteredEvents(unfolded: unfolded);
-    timeline!.requestKeys();
+    timeline!.requestKeys(onlineKeyBackupOnly: false);
     return true;
   }
 
@@ -426,7 +398,7 @@ class ChatController extends State<Chat> {
   void voiceMessageAction() async {
     if (PlatformInfos.isAndroid) {
       final info = await DeviceInfoPlugin().androidInfo;
-      if ((info.version.sdkInt ?? 16) < 19) {
+      if (info.version.sdkInt < 19) {
         showOkAlertDialog(
           context: context,
           title: L10n.of(context)!.unsupportedAndroidVersion,
@@ -665,7 +637,7 @@ class ChatController extends State<Chat> {
   }
 
   void scrollToEventId(String eventId) async {
-    var eventIndex = filteredEvents.indexWhere((e) => e.eventId == eventId);
+    var eventIndex = timeline!.events.indexWhere((e) => e.eventId == eventId);
     if (eventIndex == -1) {
       // event id not found...maybe we can fetch it?
       // the try...finally is here to start and close the loading dialog reliably
@@ -702,7 +674,7 @@ class ChatController extends State<Chat> {
                 rethrow;
               }
               eventIndex =
-                  filteredEvents.indexWhere((e) => e.eventId == eventId);
+                  timeline!.events.indexWhere((e) => e.eventId == eventId);
             }
           });
     }
@@ -989,7 +961,7 @@ class ChatController extends State<Chat> {
     // VoIP required Android SDK 21
     if (PlatformInfos.isAndroid) {
       DeviceInfoPlugin().androidInfo.then((value) {
-        if ((value.version.sdkInt ?? 16) < 21) {
+        if (value.version.sdkInt < 21) {
           Navigator.pop(context);
           showOkAlertDialog(
             context: context,

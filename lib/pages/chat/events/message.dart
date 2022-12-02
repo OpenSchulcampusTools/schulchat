@@ -22,7 +22,6 @@ class Message extends StatelessWidget {
   final void Function(Event)? onAvatarTab;
   final void Function(Event)? onInfoTab;
   final void Function(String)? scrollToEventId;
-  final void Function(String) unfold;
   final void Function(SwipeDirection) onSwipe;
   final bool longPressSelect;
   final bool selected;
@@ -36,7 +35,6 @@ class Message extends StatelessWidget {
       this.onAvatarTab,
       this.scrollToEventId,
       required this.onSwipe,
-      required this.unfold,
       this.selected = false,
       required this.timeline,
       Key? key})
@@ -57,7 +55,7 @@ class Message extends StatelessWidget {
       if (event.type.startsWith('m.call.')) {
         return Container();
       }
-      return StateMessage(event, unfold: unfold);
+      return StateMessage(event);
     }
 
     if (event.type == EventTypes.Message &&
@@ -70,7 +68,7 @@ class Message extends StatelessWidget {
     final alignment = ownMessage ? Alignment.topRight : Alignment.topLeft;
     var color = Theme.of(context).brightness == Brightness.light
         ? Colors.white
-        : Colors.black;
+        : Theme.of(context).colorScheme.surfaceVariant;
     final displayTime = event.type == EventTypes.RoomCreate ||
         nextEvent == null ||
         !event.originServerTs.sameEnvironment(nextEvent!.originServerTs);
@@ -91,13 +89,13 @@ class Message extends StatelessWidget {
     final displayEvent = event.getDisplayEvent(timeline);
     final borderRadius = BorderRadius.only(
       topLeft: !ownMessage
-          ? const Radius.circular(2)
+          ? const Radius.circular(4)
           : const Radius.circular(AppConfig.borderRadius),
-      topRight: ownMessage
-          ? const Radius.circular(2)
-          : const Radius.circular(AppConfig.borderRadius),
+      topRight: const Radius.circular(AppConfig.borderRadius),
       bottomLeft: const Radius.circular(AppConfig.borderRadius),
-      bottomRight: const Radius.circular(AppConfig.borderRadius),
+      bottomRight: ownMessage
+          ? const Radius.circular(4)
+          : const Radius.circular(AppConfig.borderRadius),
     );
     final noBubble = {
           MessageTypes.Video,
@@ -174,8 +172,7 @@ class Message extends StatelessWidget {
               child: Material(
                 color: noBubble ? Colors.transparent : color,
                 elevation: event.type == EventTypes.Sticker ? 0 : 4,
-                shadowColor:
-                    Theme.of(context).colorScheme.onBackground.withAlpha(64),
+                shadowColor: Colors.black.withAlpha(64),
                 borderRadius: borderRadius,
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(

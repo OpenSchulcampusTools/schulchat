@@ -20,13 +20,15 @@
     "placeholders": {}
   },
   "updateAvailable": "FluffyChat update available",
+  "@updateAvailable": {},
   "updateNow": "Start update in background",
+  "@updateNow": {},
   "accept": "Accept",
   "@accept": {
     "type": "text",
     "placeholders": {}
   },
-  "acceptedTheInvitation": "{username} accepted the invitation",
+  "acceptedTheInvitation": "👍 {username} accepted the invitation",
   "@acceptedTheInvitation": {
     "type": "text",
     "placeholders": {
@@ -43,7 +45,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "activatedEndToEndEncryption": "{username} activated end to end encryption",
+  "activatedEndToEndEncryption": "🔐 {username} activated end to end encryption",
   "@activatedEndToEndEncryption": {
     "type": "text",
     "placeholders": {
@@ -56,11 +58,12 @@
     "placeholders": {}
   },
   "confirmMatrixId": "Please confirm your Matrix ID in order to delete your account.",
+  "@confirmMatrixId": {},
   "supposedMxid": "This should be {mxid}",
   "@supposedMxid": {
     "type": "text",
     "placeholders": {
-        "mxid": {}
+      "mxid": {}
     }
   },
   "addGroupDescription": "Add a group description",
@@ -99,6 +102,30 @@
   "@alreadyHaveAnAccount": {
     "type": "text",
     "placeholders": {}
+  },
+  "commandHint_googly":"Send some googly eyes",
+  "commandHint_cuddle": "Send a cuddle",
+  "commandHint_hug": "Send a hug",
+  "googlyEyesContent": "{senderName} sends you googly eyes",
+  "@googlyEyesContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "cuddleContent": "{senderName} cuddles you",
+  "@cuddleContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "hugContent": "{senderName} hugs you",
+  "@hugContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
   },
   "answeredTheCall": "{senderName} answered the call",
   "@answeredTheCall": {
@@ -153,6 +180,7 @@
     "placeholders": {}
   },
   "allSuggestedRoomsJoined": "You joined all suggested rooms",
+  "@allSuggestedRoomsJoined": {},
   "askVerificationRequest": "Accept this verification request from {username}?",
   "@askVerificationRequest": {
     "type": "text",
@@ -229,6 +257,7 @@
     }
   },
   "suggestedRooms": "Discover groups in this space",
+  "@suggestedRooms": {},
   "blockDevice": "Block Device",
   "@blockDevice": {
     "type": "text",
@@ -487,6 +516,10 @@
     "type": "text",
     "placeholders": {}
   },
+  "commandHint_markasdm": "Mark as direct message room",
+  "@commandHint_markasdm": {},
+  "commandHint_markasgroup": "Mark as group",
+  "@commandHint_markasgroup": {},
   "commandHint_ban": "Ban the given user from this room",
   "@commandHint_ban": {
     "type": "text",
@@ -693,7 +726,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "createdTheChat": "{username} created the chat",
+  "createdTheChat": "💬 {username} created the chat",
   "@createdTheChat": {
     "type": "text",
     "placeholders": {
@@ -1200,7 +1233,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "invitedUser": "{username} invited {targetName}",
+  "invitedUser": "📩 {username} invited {targetName}",
   "@invitedUser": {
     "type": "text",
     "placeholders": {
@@ -1236,7 +1269,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "{username} joined the chat",
+  "joinedTheChat": "👋 {username} joined the chat",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -1258,7 +1291,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "{username} kicked {targetName}",
+  "kicked": "👞 {username} kicked {targetName}",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -1266,7 +1299,7 @@
       "targetName": {}
     }
   },
-  "kickedAndBanned": "{username} kicked and banned {targetName}",
+  "kickedAndBanned": "🙅 {username} kicked and banned {targetName}",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -1324,14 +1357,23 @@
     }
   },
   "dehydrate": "Export session and wipe device",
+  "@dehydrate": {},
   "dehydrateWarning": "This action cannot be undone. Ensure you safely store the backup file.",
+  "@dehydrateWarning": {},
   "dehydrateShare": "This is your private FluffyChat export. Ensure you don't lose it and keep it private.",
+  "@dehydrateShare": {},
   "dehydrateTor": "TOR Users: Export session",
+  "@dehydrateTor": {},
   "dehydrateTorLong": "For TOR users, it is recommended to export the session before closing the window.",
+  "@dehydrateTorLong": {},
   "hydrateTor": "TOR Users: Import session export",
+  "@hydrateTor": {},
   "hydrateTorLong": "Did you export your session last time on TOR? Quickly import it and continue chatting.",
+  "@hydrateTorLong": {},
   "hydrate": "Restore from backup file",
+  "@hydrate": {},
   "advanced": "Advanced",
+  "@advanced": {},
   "loadingPleaseWait": "Loading… Please wait.",
   "@loadingPleaseWait": {
     "type": "text",
@@ -1440,7 +1482,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "New message in FluffyChat",
+  "newMessageInFluffyChat": "💬 New message in FluffyChat",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -2050,35 +2092,35 @@
     "type": "text",
     "placeholders": {}
   },
-  "sentAFile": "{username} sent a file",
+  "sentAFile": "📁 {username} sent a file",
   "@sentAFile": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAnAudio": "{username} sent an audio",
+  "sentAnAudio": "🎤 {username} sent an audio",
   "@sentAnAudio": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAPicture": "{username} sent a picture",
+  "sentAPicture": "🖼️ {username} sent a picture",
   "@sentAPicture": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentASticker": "{username} sent a sticker",
+  "sentASticker": "😊 {username} sent a sticker",
   "@sentASticker": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "sentAVideo": "{username} sent a video",
+  "sentAVideo": "🎥 {username} sent a video",
   "@sentAVideo": {
     "type": "text",
     "placeholders": {
@@ -2102,7 +2144,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "separateChatTypes": "Separate Direct Chats, Groups, and Spaces",
+  "separateChatTypes": "Separate Direct Chats and Groups",
   "@separateChatTypes": {
     "type": "text",
     "placeholders": {}
@@ -2434,7 +2476,7 @@
       "username": {}
     }
   },
-  "userLeftTheChat": "{username} left the chat",
+  "userLeftTheChat": "🚪 {username} left the chat",
   "@userLeftTheChat": {
     "type": "text",
     "placeholders": {
@@ -2781,7 +2823,9 @@
   "emailOrUsername": "Email or username",
   "@emailOrUsername": {},
   "indexedDbErrorTitle": "Private mode issues",
+  "@indexedDbErrorTitle": {},
   "indexedDbErrorLong": "The message storage is unfortunately not enabled in private mode by default.\nPlease visit\n - about:config\n - set dom.indexedDB.privateBrowsing.enabled to true\nOtherwise, it is not possible to run FluffyChat.",
+  "@indexedDbErrorLong": {},
   "switchToAccount": "Switch to account {number}",
   "@switchToAccount": {
     "type": "number",
@@ -2817,7 +2861,7 @@
   "@youRejectedTheInvitation": {},
   "youJoinedTheChat": "You joined the chat",
   "@youJoinedTheChat": {},
-  "youAcceptedTheInvitation": "You accepted the invitation",
+  "youAcceptedTheInvitation": "👍 You accepted the invitation",
   "@youAcceptedTheInvitation": {},
   "youBannedUser": "You banned {user}",
   "@youBannedUser": {
@@ -2831,25 +2875,25 @@
       "user": {}
     }
   },
-  "youInvitedBy": "You have been invited by {user}",
+  "youInvitedBy": "📩 You have been invited by {user}",
   "@youInvitedBy": {
     "placeholders": {
       "user": {}
     }
   },
-  "youInvitedUser": "You invited {user}",
+  "youInvitedUser": "📩 You invited {user}",
   "@youInvitedUser": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKicked": "You kicked {user}",
+  "youKicked": "👞 You kicked {user}",
   "@youKicked": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKickedAndBanned": "You kicked and banned {user}",
+  "youKickedAndBanned": "🙅 You kicked and banned {user}",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
@@ -2888,5 +2932,48 @@
     }
   },
   "user": "User",
-  "custom": "Custom"
+  "@user": {},
+  "custom": "Custom",
+  "@custom": {},
+  "foregroundServiceRunning": "This notification appears when the foreground service is running.",
+  "@foregroundServiceRunning": {},
+  "screenSharingTitle": "screen sharing",
+  "@screenSharingTitle": {},
+  "screenSharingDetail": "You are sharing your screen in FuffyChat",
+  "@screenSharingDetail": {},
+  "callingPermissions": "Calling permissions",
+  "@callingPermissions": {},
+  "callingAccount": "Calling account",
+  "@callingAccount": {},
+  "callingAccountDetails": "Allows FluffyChat to use the native android dialer app.",
+  "@callingAccountDetails": {},
+  "appearOnTop": "Appear on top",
+  "@appearOnTop": {},
+  "appearOnTopDetails": "Allows the app to appear on top (not needed if you already have Fluffychat setup as a calling account)",
+  "@appearOnTopDetails": {},
+  "otherCallingPermissions": "Microphone, camera and other FluffyChat permissions",
+  "@otherCallingPermissions": {},
+  "whyIsThisMessageEncrypted": "Why is this message unreadable?",
+  "@whyIsThisMessageEncrypted": {},
+  "noKeyForThisMessage": "This can happen if the message was sent before you have signed in to your account at this device.\n\nIt is also possible that the sender has blocked your device or something went wrong with the internet connection.\n\nAre you able to read the message on another session? Then you can transfer the message from it! Go to Settings > Devices and make sure that your devices have verified each other. When you open the room the next time and both sessions are in the foreground, the keys will be transmitted automatically.\n\nDo you not want to loose the keys when logging out or switching devices? Make sure that you have enabled the chat backup in the settings.",
+  "@noKeyForThisMessage": {},
+  "newGroup": "New group",
+  "@newGroup": {},
+  "newSpace": "New space",
+  "@newSpace": {},
+  "enterSpace": "Enter space",
+  "@enterSpace": {},
+  "enterRoom": "Enter room",
+  "@enterRoom": {},
+  "allSpaces": "All spaces",
+  "@allSpaces": {},
+  "numChats": "{number} chats",
+  "@numChats": {
+    "type": "number",
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "hideUnimportantStateEvents": "Hide unimportant state events",
+  "doNotShowAgain": "Do not show again"
 }

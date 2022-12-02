@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:vrouter/vrouter.dart';
+
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'app_config.dart';
 
 abstract class FluffyThemes {
   static const double columnWidth = 360.0;
+
+  static bool isColumnModeByWidth(double width) => width > columnWidth * 2 + 64;
+
   static bool isColumnMode(BuildContext context) =>
-      MediaQuery.of(context).size.width > columnWidth * 2;
+      isColumnModeByWidth(MediaQuery.of(context).size.width);
+
+  static bool getDisplayNavigationRail(BuildContext context) =>
+      !VRouter.of(context).path.startsWith('/settings');
 
   static const fallbackTextStyle = TextStyle(
     fontFamily: 'Roboto',
@@ -51,7 +59,7 @@ abstract class FluffyThemes {
             ? Colors.blueGrey.shade50
             : Colors.blueGrey.shade900,
         inputDecorationTheme: const InputDecorationTheme(
-          border: UnderlineInputBorder(borderSide: BorderSide(width: 1)),
+          border: InputBorder.none,
           filled: true,
         ),
         appBarTheme: AppBarTheme(
