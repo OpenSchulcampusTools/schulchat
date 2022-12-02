@@ -15,16 +15,17 @@ enum SearchState { searching, finished, noResult }
 class ChatSearch extends StatefulWidget {
   const ChatSearch({Key? key}) : super(key: key);
 
-  @override ChatSearchController createState() => ChatSearchController();
+  @override
+  ChatSearchController createState() => ChatSearchController();
 }
 
 class ChatSearchController extends State<ChatSearch> {
-
   String? get roomId => VRouter.of(context).pathParameters['roomid'];
   Timeline? timeline;
   Room? room;
 
-  StreamController<List<Event>> searchResultStreamController = StreamController();
+  StreamController<List<Event>> searchResultStreamController =
+      StreamController();
   StreamSubscription<List<Event>>? searchResultStreamSubscription;
 
   final TextEditingController searchController = TextEditingController();
@@ -63,7 +64,8 @@ class ChatSearchController extends State<ChatSearch> {
   void _updateScrollController() {
     if (!scrollController.hasClients) return;
 
-    if (scrollController.position.pixels > 0 && showScrollToTopButton == false) {
+    if (scrollController.position.pixels > 0 &&
+        showScrollToTopButton == false) {
       setState(() => showScrollToTopButton = true);
     } else if (scrollController.position.pixels == 0 &&
         showScrollToTopButton == true) {
@@ -73,20 +75,22 @@ class ChatSearchController extends State<ChatSearch> {
 
   bool searchFunction(Event event) {
     // use _foundMessages to filter out messages which have already be found
-      if (searchState == SearchState.searching && event.type == EventTypes.Message && !_foundMessages.contains(event.eventId)) {
-        bool found = event.body.toLowerCase().contains(_searchTerm.toLowerCase());
-        if (found) {
-          _foundMessages.add(event.eventId);
+    if (searchState == SearchState.searching &&
+        event.type == EventTypes.Message &&
+        !_foundMessages.contains(event.eventId)) {
+      bool found = event.body.toLowerCase().contains(_searchTerm.toLowerCase());
+      if (found) {
+        _foundMessages.add(event.eventId);
 
-          if (!searchResultsFound) {
-            setState(() {
-              searchResultsFound = true;
-            });
-          }
-
-          return found;
+        if (!searchResultsFound) {
+          setState(() {
+            searchResultsFound = true;
+          });
         }
+
+        return found;
       }
+    }
 
     return false;
   }
@@ -97,7 +101,6 @@ class ChatSearchController extends State<ChatSearch> {
 
       // start search only if a new search term was entered
       if (_searchTerm != _lastSearchTerm) {
-
         _lastSearchTerm = _searchTerm;
         _foundMessages.clear();
 
@@ -112,7 +115,6 @@ class ChatSearchController extends State<ChatSearch> {
         });
 
         if (_searchTerm.isNotEmpty) {
-
           setState(() {
             searchState = SearchState.searching;
           });
@@ -122,12 +124,13 @@ class ChatSearchController extends State<ChatSearch> {
                   searchTerm: _searchTerm,
                   requestHistoryCount: 30,
                   maxHistoryRequests: 30,
-                  searchFunc: searchFunction).asBroadcastStream();
-
+                  searchFunc: searchFunction)
+              .asBroadcastStream();
 
           searchResultStreamController.addStream(searchResultStream!);
 
-          searchResultStreamSubscription = searchResultStream.listen((event) => {},
+          searchResultStreamSubscription = searchResultStream.listen(
+            (event) => {},
             onDone: () => setState(() {
               searchState = SearchState.finished;
             }),
@@ -139,16 +142,14 @@ class ChatSearchController extends State<ChatSearch> {
             },
           );
 
-
           setState(() {});
-
         } else {
           setState(() {
             searchState = SearchState.noResult;
           });
         }
 
-      //  setState(() {});
+        //  setState(() {});
       }
     } catch (e) {
       searchError = L10n.of(context)?.searchError;
@@ -165,7 +166,7 @@ class ChatSearchController extends State<ChatSearch> {
     VRouter.of(context).path.startsWith('/spaces/')
         ? VRouter.of(context).pop()
         : VRouter.of(context).toSegments(['rooms', roomId!],
-        queryParameters: {'event': eventId});
+            queryParameters: {'event': eventId});
   }
 
   void scrollToTop() {
@@ -181,7 +182,7 @@ class ChatSearchController extends State<ChatSearch> {
 
   @override
   void setState(fn) {
-    if(mounted) {
+    if (mounted) {
       super.setState(fn);
     }
   }

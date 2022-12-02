@@ -287,7 +287,8 @@ class BootstrapDialogState extends State<BootstrapDialog> {
                                   _recoveryKeyInputLoading = true;
                                 });
                                 try {
-                                 final key = _recoveryKeyTextEditingController.text;
+                                  final key =
+                                      _recoveryKeyTextEditingController.text;
                                   await bootstrap.newSsssKey!.unlock(
                                     keyOrPassphrase: key,
                                   );

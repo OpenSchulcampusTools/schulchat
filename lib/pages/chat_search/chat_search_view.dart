@@ -37,16 +37,15 @@ class ChatSearchView extends StatelessWidget {
           builder: (BuildContext context, snapshot) {
             return Scaffold(
               floatingActionButton: controller.showScrollToTopButton
-                ?Padding(
-                  padding: const EdgeInsets.only(bottom: 56.0),
-                  child: FloatingActionButton(
-                    heroTag: "searchBackToTop",
-                    onPressed: controller.scrollToTop,
-                    mini: true,
-                    child: const Icon(Icons.arrow_upward_outlined),
-                  )
-                )
-              : null,
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 56.0),
+                      child: FloatingActionButton(
+                        heroTag: "searchBackToTop",
+                        onPressed: controller.scrollToTop,
+                        mini: true,
+                        child: const Icon(Icons.arrow_upward_outlined),
+                      ))
+                  : null,
               body: NestedScrollView(
                 controller: controller.scrollController,
                 headerSliverBuilder:
@@ -91,73 +90,78 @@ class ChatSearchView extends StatelessWidget {
                   ),
                 ],
                 body: MaxWidthBody(
-
-                    child: StreamBuilder<List<Event>>(
-                        stream: controller.searchResultStreamController.stream,
-                        builder: (context, snapshot) {
-                          // put search field and button inside ListView, this way they are scrollable and
-                          // pixel overflow errors on small screens are avoided (as anything is scrollable)
-                          return ListView.builder(
-                              itemCount: (snapshot.hasData
-                                  ? snapshot.data!.length + 1
-                                  : 1),
-                              itemBuilder: (BuildContext context, int i) => i == 0
-                                  ? Column(children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextField(
-                                          controller:
-                                              controller.searchController,
-                                          onSubmitted: (value) {
-                                            controller.search();
-                                          },
-                                          autofocus: true,
-                                          decoration: InputDecoration(
-                                            prefixIcon: const Icon(Icons.label),
-                                            label:
-                                                Text(L10n.of(context)!.search),
-                                            errorText: controller.searchError,
-                                          ),
+                  child: StreamBuilder<List<Event>>(
+                      stream: controller.searchResultStreamController.stream,
+                      builder: (context, snapshot) {
+                        // put search field and button inside ListView, this way they are scrollable and
+                        // pixel overflow errors on small screens are avoided (as anything is scrollable)
+                        return ListView.builder(
+                            itemCount: (snapshot.hasData
+                                ? snapshot.data!.length + 1
+                                : 1),
+                            itemBuilder: (BuildContext context, int i) => i == 0
+                                ? Column(children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextField(
+                                        controller: controller.searchController,
+                                        onSubmitted: (value) {
+                                          controller.search();
+                                        },
+                                        autofocus: true,
+                                        decoration: InputDecoration(
+                                          prefixIcon: const Icon(Icons.label),
+                                          label: Text(L10n.of(context)!.search),
+                                          errorText: controller.searchError,
                                         ),
                                       ),
-                                      ButtonBar(
-                                        children: [
-                                          TextButton(
-                                            onPressed: controller.search,
-                                            child:
-                                                Text(L10n.of(context)!.search),
-                                          ),
-                                        ],
-                                      ),
-                                      if(!controller.searchResultsFound)
-                                        if (controller.searchState == SearchState.noResult ||
-                                                  controller.searchState == SearchState.finished)
-                                          ListTile(
-                                              title: Text(L10n.of(context)!.noSearchResult))
-                                        else if(controller.searchState == SearchState.searching)
-                                          Center(
-                                              child: CircularProgressIndicator.adaptive(strokeWidth: 2),
-                                            ),
-                                    ])
-                                  : controller.searchResultsFound
-                                      ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: <Widget>[
-                                              Message(snapshot.data![i - 1],
-                                                  onSwipe: (direction) => {},
-                                                  unfold: controller.unfold,
-                                                  onSelect: controller.onSelectMessage,
-                                                  scrollToEventId: controller.scrollToEventId,
-                                                  timeline: controller.timeline!),
-                                              if(i == snapshot.data?.length && controller.searchState == SearchState.searching)
-                                                  Center(
-                                                      child: CircularProgressIndicator.adaptive(strokeWidth: 2),
-                                                    ),
-                                            ])
-                                      : Container());
-                        }),
-
+                                    ),
+                                    ButtonBar(
+                                      children: [
+                                        TextButton(
+                                          onPressed: controller.search,
+                                          child: Text(L10n.of(context)!.search),
+                                        ),
+                                      ],
+                                    ),
+                                    if (!controller.searchResultsFound)
+                                      if (controller.searchState ==
+                                              SearchState.noResult ||
+                                          controller.searchState ==
+                                              SearchState.finished)
+                                        ListTile(
+                                            title: Text(L10n.of(context)!
+                                                .noSearchResult))
+                                      else if (controller.searchState ==
+                                          SearchState.searching)
+                                        Center(
+                                          child: CircularProgressIndicator
+                                              .adaptive(strokeWidth: 2),
+                                        ),
+                                  ])
+                                : controller.searchResultsFound
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: <Widget>[
+                                            Message(snapshot.data![i - 1],
+                                                onSwipe: (direction) => {},
+                                                unfold: controller.unfold,
+                                                onSelect:
+                                                    controller.onSelectMessage,
+                                                scrollToEventId:
+                                                    controller.scrollToEventId,
+                                                timeline: controller.timeline!),
+                                            if (i == snapshot.data?.length &&
+                                                controller.searchState ==
+                                                    SearchState.searching)
+                                              Center(
+                                                child: CircularProgressIndicator
+                                                    .adaptive(strokeWidth: 2),
+                                              ),
+                                          ])
+                                    : Container());
+                      }),
                 ),
               ),
             );

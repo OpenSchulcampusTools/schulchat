@@ -89,7 +89,7 @@ class AppRoutes {
               VWidget(
                 path: 'search',
                 widget: const ChatSearch(),
-               // stackedRoutes: _chatDetailsRoutes,
+                // stackedRoutes: _chatDetailsRoutes,
               ),
             ]),
             VWidget(
@@ -195,7 +195,7 @@ class AppRoutes {
                       path: 'search',
                       widget: const ChatSearch(),
                       buildTransition: _fadeTransition,
-                    //  stackedRoutes: _chatDetailsRoutes,
+                      //  stackedRoutes: _chatDetailsRoutes,
                     ),
                     VWidget(
                       path: 'invite',

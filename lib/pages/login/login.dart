@@ -33,7 +33,6 @@ class LoginController extends State<Login> {
   void login([_]) async {
     final matrix = Matrix.of(context);
 
-
     if (usernameController.text.isEmpty) {
       setState(() => usernameError = L10n.of(context)!.pleaseEnterYourUsername);
     } else {
