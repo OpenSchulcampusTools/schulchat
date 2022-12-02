@@ -16,6 +16,8 @@ ENV PATH=${PATH}:/tmp/flutter/bin
 RUN git clone https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
 WORKDIR ./fluffychat
 RUN git checkout $CI_COMMIT_SHA
+RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/#g" pubspec.yaml
+RUN rm pubspec.lock || true
 
 RUN sdkmanager \
   "tools" \
