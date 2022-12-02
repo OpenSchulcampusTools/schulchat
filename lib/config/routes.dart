@@ -1,4 +1,3 @@
-import 'package:fluffychat/pages/chat_search/chat_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:vrouter/vrouter.dart';
@@ -10,6 +9,7 @@ import 'package:fluffychat/pages/chat_details/chat_details.dart';
 import 'package:fluffychat/pages/chat_encryption_settings/chat_encryption_settings.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/pages/chat_permissions_settings/chat_permissions_settings.dart';
+import 'package:fluffychat/pages/chat_search/chat_search.dart';
 import 'package:fluffychat/pages/connect/connect_page.dart';
 import 'package:fluffychat/pages/device_settings/device_settings.dart';
 import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';

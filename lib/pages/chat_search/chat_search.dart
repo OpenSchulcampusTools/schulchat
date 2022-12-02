@@ -1,12 +1,14 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+
+import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:matrix/matrix.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:vrouter/vrouter.dart';
+
 import 'package:fluffychat/pages/chat_search/chat_search_view.dart';
 import 'package:fluffychat/widgets/matrix.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:matrix/matrix.dart';
-import 'package:vrouter/vrouter.dart';
-import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 
 enum SearchState { searching, finished, noResult }
 
