@@ -146,7 +146,6 @@ class ChatSearchView extends StatelessWidget {
                                         children: <Widget>[
                                             Message(snapshot.data![i - 1],
                                                 onSwipe: (direction) => {},
-                                                unfold: controller.unfold,
                                                 onSelect:
                                                     controller.onSelectMessage,
                                                 scrollToEventId:

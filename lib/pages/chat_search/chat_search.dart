@@ -156,8 +156,6 @@ class ChatSearchController extends State<ChatSearch> {
     }
   }
 
-  void unfold(String eventId) {}
-
   void onSelectMessage(Event event) {
     scrollToEventId(event.eventId);
   }
