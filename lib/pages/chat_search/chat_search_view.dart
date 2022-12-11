@@ -102,20 +102,21 @@ class ChatSearchView extends StatelessWidget {
                             itemBuilder: (BuildContext context, int i) => i == 0
                                 ? Column(children: <Widget>[
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextField(
-                                        controller: controller.searchController,
-                                        onSubmitted: (value) {
-                                          controller.search();
-                                        },
-                                        autofocus: true,
-                                        decoration: InputDecoration(
-                                          prefixIcon: const Icon(Icons.label),
-                                          label: Text(L10n.of(context)!.search),
-                                          errorText: controller.searchError,
-                                        ),
-                                      ),
-                                    ),
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextField(
+                                          controller:
+                                              controller.searchController,
+                                          onSubmitted: (value) {
+                                            controller.search();
+                                          },
+                                          autofocus: true,
+                                          decoration: InputDecoration(
+                                            prefixIcon: const Icon(Icons.label),
+                                            label:
+                                                Text(L10n.of(context)!.search),
+                                            errorText: controller.searchError,
+                                          ),
+                                        )),
                                     ButtonBar(
                                       children: [
                                         TextButton(
@@ -134,7 +135,7 @@ class ChatSearchView extends StatelessWidget {
                                                 .noSearchResult))
                                       else if (controller.searchState ==
                                           SearchState.searching)
-                                        Center(
+                                        const Center(
                                           child: CircularProgressIndicator
                                               .adaptive(strokeWidth: 2),
                                         ),
@@ -154,7 +155,7 @@ class ChatSearchView extends StatelessWidget {
                                             if (i == snapshot.data?.length &&
                                                 controller.searchState ==
                                                     SearchState.searching)
-                                              Center(
+                                              const Center(
                                                 child: CircularProgressIndicator
                                                     .adaptive(strokeWidth: 2),
                                               ),

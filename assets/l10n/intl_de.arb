@@ -65,7 +65,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "allChats": "Alle Chats",
+  "allChats": "Räume",
   "@allChats": {
     "type": "text",
     "placeholders": {}

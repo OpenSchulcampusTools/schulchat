@@ -93,7 +93,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "allChats": "All chats",
+  "allChats": "Rooms",
   "@allChats": {
     "type": "text",
     "placeholders": {}

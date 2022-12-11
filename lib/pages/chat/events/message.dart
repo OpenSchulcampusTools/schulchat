@@ -27,7 +27,7 @@ class Message extends StatelessWidget {
   final void Function(Event)? onInfoTab;
   final void Function(String)? scrollToEventId;
   final void Function(SwipeDirection) onSwipe;
-  final void Function(Event) onReadReceipt;
+  final void Function(Event)? onReadReceipt;
   final bool longPressSelect;
   final bool selected;
   final Timeline timeline;
@@ -40,7 +40,7 @@ class Message extends StatelessWidget {
       this.onAvatarTab,
       this.scrollToEventId,
       required this.onSwipe,
-      required this.onReadReceipt,
+      this.onReadReceipt,
       this.selected = false,
       required this.timeline,
       Key? key})
@@ -329,7 +329,8 @@ class Message extends StatelessWidget {
               Icons.mark_chat_read,
               color: AppConfig.primaryColor,
             ),
-            onPressed: () => onReadReceipt(displayEvent),
+            onPressed: () =>
+                {if (onReadReceipt != null) onReadReceipt!(displayEvent)},
           ),
         )
     ];

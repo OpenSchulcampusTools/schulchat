@@ -18,6 +18,7 @@ import 'package:fluffychat/pages/login/login.dart';
 import 'package:fluffychat/pages/new_group/new_group.dart';
 import 'package:fluffychat/pages/new_private_chat/new_private_chat.dart';
 import 'package:fluffychat/pages/new_space/new_space.dart';
+import 'package:fluffychat/pages/read_receipt_overview/read_receipt_overview.dart';
 import 'package:fluffychat/pages/settings/settings.dart';
 import 'package:fluffychat/pages/settings_3pid/settings_3pid.dart';
 import 'package:fluffychat/pages/settings_account/settings_account.dart';
@@ -56,6 +57,10 @@ class AppRoutes {
             VWidget(
               path: '/stories/create',
               widget: const AddStoryPage(),
+            ),
+            VWidget(
+              path: '/readreceipts',
+              widget: const ReadReceiptOverviewPage(),
             ),
             VWidget(
               path: '/stories/:roomid',
@@ -134,6 +139,10 @@ class AppRoutes {
                   path: '/stories/create',
                   buildTransition: _fadeTransition,
                   widget: const AddStoryPage(),
+                ),
+                VWidget(
+                  path: '/readreceipts',
+                  widget: const ReadReceiptOverviewPage(),
                 ),
                 VWidget(
                   path: '/stories/:roomid',

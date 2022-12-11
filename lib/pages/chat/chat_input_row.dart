@@ -264,23 +264,24 @@ class ChatInputRow extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Row(
                     children: [
-                      controller.requirereadReceipt
-                          ? IconButton(
-                              tooltip: L10n.of(context)!.readReceiptOff,
-                              icon: const Icon(
-                                Icons.mark_chat_read,
-                                color: AppConfig.primaryColor,
+                      if (controller.showReadReceiptButton())
+                        controller.requireReadReceipt
+                            ? IconButton(
+                                tooltip: L10n.of(context)!.readReceiptOff,
+                                icon: const Icon(
+                                  Icons.mark_chat_read,
+                                  color: AppConfig.primaryColor,
+                                ),
+                                onPressed: controller.toggleReadReceiptAction,
+                              )
+                            : IconButton(
+                                tooltip: L10n.of(context)!.readReceiptOn,
+                                icon: const Icon(
+                                  Icons.mark_chat_read_outlined,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: controller.toggleReadReceiptAction,
                               ),
-                              onPressed: controller.toggleReadReceiptAction,
-                            )
-                          : IconButton(
-                              tooltip: L10n.of(context)!.readReceiptOn,
-                              icon: const Icon(
-                                Icons.mark_chat_read_outlined,
-                                color: Colors.grey,
-                              ),
-                              onPressed: controller.toggleReadReceiptAction,
-                            ),
                       IconButton(
                           icon: const Icon(Icons.send_outlined),
                           onPressed: controller.send,

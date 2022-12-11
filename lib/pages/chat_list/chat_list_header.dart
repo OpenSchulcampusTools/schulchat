@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/pages/chat_list/client_chooser_button.dart';
+import 'package:vrouter/vrouter.dart';
 import '../../widgets/matrix.dart';
 
 class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -84,10 +85,20 @@ class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
                                     maxLines: 2,
                                   ),
                                 )
-                          : SizedBox(
-                              width: 0,
-                              child: ClientChooserButton(controller),
-                            ),
+                          : [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.mark_chat_read_outlined,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
+                                  size: 21,
+                                ),
+                                tooltip: L10n.of(context)!.readReceipts,
+                                onPressed: () =>
+                                    VRouter.of(context).to('/readreceipts'),
+                              ),
+                            ],
                     ),
                   ),
                 ),

@@ -21,7 +21,7 @@ import 'package:vrouter/vrouter.dart';
 import 'package:fluffychat/config/edu_settings.dart';
 import 'package:fluffychat/pages/chat/chat_view.dart';
 import 'package:fluffychat/pages/chat/event_info_dialog.dart';
-import 'package:fluffychat/pages/chat/read_receipt_list_dialog.dart';
+import 'package:fluffychat/pages/chat/read_receipt/read_receipt_list_dialog.dart';
 import 'package:fluffychat/pages/chat/recording_dialog.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/event_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/ios_badge_client_extension.dart';
@@ -34,8 +34,6 @@ import '../../utils/matrix_sdk_extensions.dart/matrix_file_extension.dart';
 import 'send_file_dialog.dart';
 import 'send_location_dialog.dart';
 import 'sticker_picker_dialog.dart';
-
-// edu imports
 
 class Chat extends StatefulWidget {
   final Widget? sideView;
@@ -66,7 +64,7 @@ class ChatController extends State<Chat> {
   bool currentlyTyping = false;
   bool dragging = false;
 
-  bool requirereadReceipt = false;
+  bool requireReadReceipt = false;
   String? lastSentEventId;
 
   void onDragEntered(_) => setState(() => dragging = true);
@@ -292,16 +290,21 @@ class ChatController extends State<Chat> {
     }
 
     Map<String, String>? readReceipt = null;
-    if (requirereadReceipt) {
+    if (requireReadReceipt) {
       readReceipt = {EduSettings.eduNamespace: EduSettings.requireReadReceipt};
     }
 
     // ignore: unawaited_futures
-    await room!.sendTextEvent(sendController.text,
+    String? eventId = await room!.sendTextEvent(sendController.text,
         inReplyTo: replyEvent,
         editEventId: editEvent?.eventId,
         parseCommands: parseCommands,
         additionalContent: readReceipt);
+
+    if (requireReadReceipt && eventId != null) {
+      final client = Matrix.of(context).client;
+      await client.database?.addReadReceiptRequiredEvent(eventId, room!.id);
+    }
 
     sendController.value = TextEditingValue(
       text: pendingText,
@@ -313,7 +316,7 @@ class ChatController extends State<Chat> {
       replyEvent = null;
       editEvent = null;
       pendingText = '';
-      requirereadReceipt = false;
+      requireReadReceipt = false;
     });
   }
 
@@ -492,8 +495,13 @@ class ChatController extends State<Chat> {
 
   void toggleReadReceiptAction() {
     setState(() {
-      requirereadReceipt = !requirereadReceipt;
+      requireReadReceipt = !requireReadReceipt;
     });
+  }
+
+  bool showReadReceiptButton() {
+    // only admin is allowed to request read receipt
+    return room!.ownPowerLevel == 100;
   }
 
   void onReadReceipt(Event event) async {
@@ -519,7 +527,7 @@ class ChatController extends State<Chat> {
                 userId)
             .toList();
 
-        if (userReadReceipt.length < 1) {
+        if (userReadReceipt.isEmpty) {
           await room!.sendReadReceipt(event.eventId, userId);
         }
       }
@@ -637,6 +645,12 @@ class ChatController extends State<Chat> {
     });
   }
 
+  void showReadReceiptAction() {
+    if (selectedEvents.isNotEmpty) {
+      selectedEvents.first.showReadReceiptListDialog(context, room!, timeline!);
+    }
+  }
+
   List<Client?> get currentRoomBundle {
     final clients = matrix!.currentBundle!;
     clients.removeWhere((c) => c!.getRoomById(roomId!) == null);
@@ -658,6 +672,16 @@ class ChatController extends State<Chat> {
     }
     return currentRoomBundle
         .any((cl) => selectedEvents.first.senderId == cl!.userID);
+  }
+
+  bool get canViewReadReceiptsOfSelectedEvents {
+    if (selectedEvents.length == 1) {
+      return selectedEvents.first.content.keys
+              .contains(EduSettings.eduNamespace) &&
+          selectedEvents.first.content[EduSettings.eduNamespace] ==
+              EduSettings.requireReadReceipt;
+    }
+    return false;
   }
 
   void forwardEventsAction() async {

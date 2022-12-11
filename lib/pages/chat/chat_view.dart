@@ -61,6 +61,12 @@ class ChatView extends StatelessWidget {
             tooltip: L10n.of(context)!.redactMessage,
             onPressed: controller.redactEventsAction,
           ),
+        if (controller.canViewReadReceiptsOfSelectedEvents)
+          IconButton(
+            icon: const Icon(Icons.mark_chat_read_outlined),
+            tooltip: L10n.of(context)!.readReceipts,
+            onPressed: controller.showReadReceiptAction,
+          ),
         IconButton(
           icon: const Icon(Icons.push_pin_outlined),
           onPressed: controller.pinEvent,
