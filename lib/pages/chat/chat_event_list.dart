@@ -99,6 +99,7 @@ class ChatEventList extends StatelessWidget {
                           ),
                         ),
                     onSelect: controller.onSelectMessage,
+                    onReadReceipt: (event) => controller.onReadReceipt(event),
                     scrollToEventId: (String eventId) =>
                         controller.scrollToEventId(eventId),
                     longPressSelect: controller.selectedEvents.isEmpty,

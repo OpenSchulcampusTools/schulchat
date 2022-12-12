@@ -2995,5 +2995,17 @@
   "noSearchResult": "Keine Suchergebnisse gefunden",
   "@noSearchResult": {},
   "searchError": "Bei der Suche ist ein Fehler aufgetreten",
-  "@searchError": {}
+  "@searchError": {},
+  "readReceiptOn": "Lesebestätigung ein",
+  "@readReceiptOn": {},
+  "readReceiptOff": "Lesebestätigung aus",
+  "@readReceiptOff": {},
+  "readReceiptRequired": "Lesebestätigung von allen Mitgliedern einfordern",
+  "@readReceiptRequired": {},
+  "readReceipts": "Lesebestätigungen",
+  "@readReceipts": {},
+  "readReceiptGive": "Lesebestätigung geben",
+  "@readReceiptGive": {},
+  "readReceiptGiven": "Lesebestätigung gegeben",
+  "@readReceiptGiven": {}
 }

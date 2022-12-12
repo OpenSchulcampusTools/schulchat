@@ -2979,5 +2979,17 @@
   "noSearchResult": "No search results found",
   "@noSearchResult": {},
   "searchError": "An error occurred while searching",
-  "@searchError": {}
+  "@searchError": {},
+  "readReceiptOn": "Read receipt on",
+  "@readReceiptOn": {},
+  "readReceiptOff": "Read receipt off",
+  "@readReceiptOff": {},
+  "readReceiptRequired": "Require read receipt from all members",
+  "@readReceiptRequired": {},
+  "readReceipts": "Read receipts",
+  "@readReceipts": {},
+  "readReceiptGive": "Give read receipt",
+  "@readReceiptGive": {},
+  "readReceiptGiven": "Read receipt given",
+  "@readReceiptGiven": {}
 }

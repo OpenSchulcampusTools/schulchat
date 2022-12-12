@@ -18,8 +18,10 @@ import 'package:record/record.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:vrouter/vrouter.dart';
 
+import 'package:fluffychat/config/edu_settings.dart';
 import 'package:fluffychat/pages/chat/chat_view.dart';
 import 'package:fluffychat/pages/chat/event_info_dialog.dart';
+import 'package:fluffychat/pages/chat/read_receipt_list_dialog.dart';
 import 'package:fluffychat/pages/chat/recording_dialog.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/event_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/ios_badge_client_extension.dart';
@@ -32,6 +34,8 @@ import '../../utils/matrix_sdk_extensions.dart/matrix_file_extension.dart';
 import 'send_file_dialog.dart';
 import 'send_location_dialog.dart';
 import 'sticker_picker_dialog.dart';
+
+// edu imports
 
 class Chat extends StatefulWidget {
   final Widget? sideView;
@@ -61,6 +65,9 @@ class ChatController extends State<Chat> {
   Timer? typingTimeout;
   bool currentlyTyping = false;
   bool dragging = false;
+
+  bool requirereadReceipt = false;
+  String? lastSentEventId;
 
   void onDragEntered(_) => setState(() => dragging = true);
 
@@ -257,29 +264,45 @@ class ChatController extends State<Chat> {
 
   Future<void> send() async {
     if (sendController.text.trim().isEmpty) return;
-    var parseCommands = true;
+    var parseCommands = false;
 
-    final commandMatch = RegExp(r'^\/(\w+)').firstMatch(sendController.text);
-    if (commandMatch != null &&
-        !room!.client.commands.keys.contains(commandMatch[1]!.toLowerCase())) {
-      final l10n = L10n.of(context)!;
-      final dialogResult = await showOkCancelAlertDialog(
-        context: context,
-        useRootNavigator: false,
-        title: l10n.commandInvalid,
-        message: l10n.commandMissing(commandMatch[0]!),
-        okLabel: l10n.sendAsText,
-        cancelLabel: l10n.cancel,
-      );
-      if (dialogResult == OkCancelResult.cancel) return;
-      parseCommands = false;
+    final commandMatch =
+        RegExp(r'^\/(\w+)').firstMatch(sendController.text.trim());
+    // command syntax was found
+    if (commandMatch != null) {
+      // command not found
+      if (!room!.client.commands.keys
+          .contains(commandMatch[1]!.toLowerCase())) {
+        final l10n = L10n.of(context)!;
+        final dialogResult = await showOkCancelAlertDialog(
+          context: context,
+          useRootNavigator: false,
+          title: l10n.commandInvalid,
+          message: l10n.commandMissing(commandMatch[0]!),
+          okLabel: l10n.sendAsText,
+          cancelLabel: l10n.cancel,
+        );
+        if (dialogResult == OkCancelResult.cancel) return;
+        parseCommands = false;
+      }
+      // command found - mark for execution
+      else {
+        parseCommands = true;
+      }
+    }
+
+    Map<String, String>? readReceipt = null;
+    if (requirereadReceipt) {
+      readReceipt = {EduSettings.eduNamespace: EduSettings.requireReadReceipt};
     }
 
     // ignore: unawaited_futures
-    room!.sendTextEvent(sendController.text,
+    await room!.sendTextEvent(sendController.text,
         inReplyTo: replyEvent,
         editEventId: editEvent?.eventId,
-        parseCommands: parseCommands);
+        parseCommands: parseCommands,
+        additionalContent: readReceipt);
+
     sendController.value = TextEditingValue(
       text: pendingText,
       selection: const TextSelection.collapsed(offset: 0),
@@ -290,6 +313,7 @@ class ChatController extends State<Chat> {
       replyEvent = null;
       editEvent = null;
       pendingText = '';
+      requirereadReceipt = false;
     });
   }
 
@@ -464,6 +488,42 @@ class ChatController extends State<Chat> {
       useRootNavigator: false,
       builder: (c) => SendLocationDialog(room: room!),
     );
+  }
+
+  void toggleReadReceiptAction() {
+    setState(() {
+      requirereadReceipt = !requirereadReceipt;
+    });
+  }
+
+  void onReadReceipt(Event event) async {
+    final requiresReadReceipt =
+        event.content.keys.contains(EduSettings.eduNamespace) &&
+            event.content[EduSettings.eduNamespace] ==
+                EduSettings.requireReadReceipt;
+
+    final String? userId = Matrix.of(context).client.userID;
+
+    if (requiresReadReceipt && userId != null) {
+      // if event was sent by current user
+      if (event.senderId == userId) {
+        // show list of all room members
+        event.showReadReceiptListDialog(context, room!, timeline!);
+      } else {
+        final userReadReceipt = event
+            .aggregatedEvents(timeline!, RelationshipTypes.readReceipt)
+            .where((e) =>
+                e.content
+                    .tryGetMap<String, dynamic>('m.relates_to')
+                    ?.tryGet<String>('user_id') ==
+                userId)
+            .toList();
+
+        if (userReadReceipt.length < 1) {
+          await room!.sendReadReceipt(event.eventId, userId);
+        }
+      }
+    }
   }
 
   String _getSelectedEventString() {
@@ -693,7 +753,7 @@ class ChatController extends State<Chat> {
   void onEmojiSelected(_, Emoji? emoji) {
     switch (emojiPickerType) {
       case EmojiPickerType.reaction:
-        senEmojiReaction(emoji);
+        sendEmojiReaction(emoji);
         break;
       case EmojiPickerType.keyboard:
         typeEmoji(emoji);
@@ -702,7 +762,7 @@ class ChatController extends State<Chat> {
     }
   }
 
-  void senEmojiReaction(Emoji? emoji) {
+  void sendEmojiReaction(Emoji? emoji) {
     setState(() => showEmojiPicker = false);
     if (emoji == null) return;
     // make sure we don't send the same emoji twice
@@ -880,6 +940,9 @@ class ChatController extends State<Chat> {
     }
     if (choice == 'location') {
       sendLocationAction();
+    }
+    if (choice == 'reading-receipt') {
+      toggleReadReceiptAction();
     }
   }
 

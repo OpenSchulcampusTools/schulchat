@@ -262,10 +262,30 @@ class ChatInputRow extends StatelessWidget {
                 Container(
                   height: 56,
                   alignment: Alignment.center,
-                  child: IconButton(
-                    icon: const Icon(Icons.send_outlined),
-                    onPressed: controller.send,
-                    tooltip: L10n.of(context)!.send,
+                  child: Row(
+                    children: [
+                      controller.requirereadReceipt
+                          ? IconButton(
+                              tooltip: L10n.of(context)!.readReceiptOff,
+                              icon: const Icon(
+                                Icons.mark_chat_read,
+                                color: AppConfig.primaryColor,
+                              ),
+                              onPressed: controller.toggleReadReceiptAction,
+                            )
+                          : IconButton(
+                              tooltip: L10n.of(context)!.readReceiptOn,
+                              icon: const Icon(
+                                Icons.mark_chat_read_outlined,
+                                color: Colors.grey,
+                              ),
+                              onPressed: controller.toggleReadReceiptAction,
+                            ),
+                      IconButton(
+                          icon: const Icon(Icons.send_outlined),
+                          onPressed: controller.send,
+                          tooltip: L10n.of(context)!.send)
+                    ],
                   ),
                 ),
             ],

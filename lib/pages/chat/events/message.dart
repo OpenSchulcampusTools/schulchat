@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 import 'package:swipe_to_action/swipe_to_action.dart';
 
+import 'package:fluffychat/config/edu_settings.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/string_color.dart';
@@ -15,6 +17,8 @@ import 'reply_content.dart';
 import 'state_message.dart';
 import 'verification_request_content.dart';
 
+// edu imports
+
 class Message extends StatelessWidget {
   final Event event;
   final Event? nextEvent;
@@ -23,6 +27,7 @@ class Message extends StatelessWidget {
   final void Function(Event)? onInfoTab;
   final void Function(String)? scrollToEventId;
   final void Function(SwipeDirection) onSwipe;
+  final void Function(Event) onReadReceipt;
   final bool longPressSelect;
   final bool selected;
   final Timeline timeline;
@@ -35,6 +40,7 @@ class Message extends StatelessWidget {
       this.onAvatarTab,
       this.scrollToEventId,
       required this.onSwipe,
+      required this.onReadReceipt,
       this.selected = false,
       required this.timeline,
       Key? key})
@@ -110,7 +116,45 @@ class Message extends StatelessWidget {
           : Theme.of(context).colorScheme.primary;
     }
 
+    // add reading recipt for edu
+    final requiresReadReceipt =
+        event.content.keys.contains(EduSettings.eduNamespace) &&
+            event.content[EduSettings.eduNamespace] ==
+                EduSettings.requireReadReceipt;
+
+    final readReceiptGiven = event
+        .aggregatedEvents(timeline, RelationshipTypes.readReceipt)
+        .where((e) =>
+            e.content
+                .tryGetMap<String, dynamic>('m.relates_to')
+                ?.tryGet<String>('user_id') ==
+            client.userID)
+        .toList()
+        .isNotEmpty;
+
     final rowChildren = <Widget>[
+      if (requiresReadReceipt && !ownMessage)
+        Padding(
+          padding: EdgeInsets.all(
+            8.0 * AppConfig.bubbleSizeFactor,
+          ),
+          child: readReceiptGiven
+              ? Tooltip(
+                  message: L10n.of(context)!.readReceiptGiven,
+                  child: const Icon(
+                    Icons.mark_chat_read,
+                    color: AppConfig.primaryColor,
+                  ))
+              : IconButton(
+                  tooltip: L10n.of(context)!.readReceiptGive,
+                  padding: const EdgeInsets.all(0),
+                  icon: const Icon(
+                    Icons.mark_chat_read_outlined,
+                    color: AppConfig.primaryColor,
+                  ),
+                  onPressed: () => onReadReceipt(displayEvent),
+                ),
+        ),
       sameSender || ownMessage
           ? SizedBox(
               width: Avatar.defaultSize,
@@ -275,12 +319,27 @@ class Message extends StatelessWidget {
           ],
         ),
       ),
+      if (requiresReadReceipt && ownMessage)
+        Padding(
+          padding:
+              EdgeInsets.symmetric(vertical: 8.0 * AppConfig.bubbleSizeFactor),
+          child: IconButton(
+            tooltip: L10n.of(context)!.readReceipts,
+            icon: const Icon(
+              Icons.mark_chat_read,
+              color: AppConfig.primaryColor,
+            ),
+            onPressed: () => onReadReceipt(displayEvent),
+          ),
+        )
     ];
+
     final row = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: rowMainAxisAlignment,
       children: rowChildren,
     );
+
     Widget container;
     if (event.hasAggregatedEvents(timeline, RelationshipTypes.reaction) ||
         displayTime ||
