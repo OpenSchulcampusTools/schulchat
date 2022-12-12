@@ -172,3 +172,6 @@ dependency_overrides:
     git:
       url: https://github.com/TheOneWithTheBraid/keyboard_shortcuts.git
       ref: null-safety
+  matrix_api_lite:
+    git:
+      url: git@git.fairkom.net:clients/rlp/client/matrix_api_lite
