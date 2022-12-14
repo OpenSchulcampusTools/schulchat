@@ -57,6 +57,7 @@ build_web:
     flutter clean
     flutter pub get
     flutter build web --release --verbose --source-maps
+    cp config.sample.json build/web/config.json
   after_script:
     #until https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1057 is implemented
     - apt download zip && dpkg -x zip_*.deb .
@@ -76,6 +77,7 @@ build_web_profile:
     flutter clean
     flutter pub get
     flutter build web --verbose --source-maps --profile --dart-define=Dart2jsOptimization=O1 #as per https://github.com/flutter/flutter/blob/master/packages/flutter_tools/lib/src/build_system/targets/web.dart is O0 possible? does it matter?
+    cp config.sample.json build/web/config.json
   after_script:
     #until https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1057 is implemented
     - apt download zip && dpkg -x zip_*.deb .
@@ -84,6 +86,7 @@ build_web_profile:
     paths:
       - build/web/webbuild.zip
 
+# TODO include config.sample.json?
 build_android_apk:
   #stage: build
   tags: [docker]
