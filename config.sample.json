@@ -1,7 +1,7 @@
 {
   "application_name": "Klassenfunk",
   "application_welcome_message": null,
-  "default_homeserver": "fairmatrix.net",
+  "default_homeserver": "rlp.fairmatrix.net",
   "web_base_url": "https://web.rlp.fairmatrix.net/web",
   "privacy_url": "https://fluffychat.im/en/privacy.html",
   "render_html": false,
