@@ -17,8 +17,6 @@ import 'reply_content.dart';
 import 'state_message.dart';
 import 'verification_request_content.dart';
 
-// edu imports
-
 class Message extends StatelessWidget {
   final Event event;
   final Event? nextEvent;
@@ -152,7 +150,7 @@ class Message extends StatelessWidget {
                     Icons.mark_chat_read_outlined,
                     color: AppConfig.primaryColor,
                   ),
-                  onPressed: () => onReadReceipt(displayEvent),
+                  onPressed: () => onReadReceipt?.call(displayEvent),
                 ),
         ),
       sameSender || ownMessage
@@ -329,8 +327,7 @@ class Message extends StatelessWidget {
               Icons.mark_chat_read,
               color: AppConfig.primaryColor,
             ),
-            onPressed: () =>
-                {if (onReadReceipt != null) onReadReceipt!(displayEvent)},
+            onPressed: () => onReadReceipt?.call(displayEvent),
           ),
         )
     ];
