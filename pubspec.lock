@@ -855,7 +855,7 @@ packages:
       name: image_picker_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.5+3"
+    version: "0.8.5+4"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1007,8 +1007,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "04194dc194861b00a6c23178c832f3a5e3125500"
+      ref: main
+      resolved-ref: c26c5be8b59bbdd507f08b6877108d99a03d5280
       url: "git@git.fairkom.net:clients/rlp/client/famedlysdk.git"
     source: git
     version: "0.15.7"
@@ -1024,9 +1024,11 @@ packages:
   matrix_homeserver_recommendations:
     dependency: "direct main"
     description:
-      name: matrix_homeserver_recommendations
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "5f543bce7094734b46b92d942d60910d215d993f"
+      url: "git@git.fairkom.net:clients/rlp/client/matrix_homeserver_recommendations.git"
+    source: git
     version: "0.3.0"
   matrix_link_text:
     dependency: "direct main"
@@ -1344,7 +1346,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.4"
+    version: "6.0.5"
   pub_semver:
     dependency: transitive
     description:
@@ -1547,7 +1549,7 @@ packages:
       name: shared_preferences_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   shared_preferences_macos:
     dependency: transitive
     description:
@@ -1575,7 +1577,7 @@ packages:
       name: shared_preferences_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1867,35 +1869,35 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.9"
+    version: "2.4.10"
   video_player_android:
     dependency: transitive
     description:
       name: video_player_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.9"
+    version: "2.3.10"
   video_player_avfoundation:
     dependency: transitive
     description:
       name: video_player_avfoundation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.7"
+    version: "2.3.8"
   video_player_platform_interface:
     dependency: transitive
     description:
       name: video_player_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.4"
+    version: "6.0.1"
   video_player_web:
     dependency: transitive
     description:
       name: video_player_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.12"
+    version: "2.0.13"
   visibility_detector:
     dependency: transitive
     description:

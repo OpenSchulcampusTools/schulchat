@@ -69,7 +69,11 @@ dependencies:
   matrix:
     git:
       url: git@git.fairkom.net:clients/rlp/client/famedlysdk.git
-  matrix_homeserver_recommendations: ^0.3.0
+      ref: main
+  matrix_homeserver_recommendations:
+    git:
+      url: git@git.fairkom.net:clients/rlp/client/matrix_homeserver_recommendations.git
+      ref: main
   matrix_link_text: ^1.0.2
   native_imaging:
     git:
