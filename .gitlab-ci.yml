@@ -4,6 +4,7 @@ variables:
 stages:
   - analyze
   - build
+  - test
 #  - upload #FIXME upload webbuild and android package
 
 # fetch and extract flutter
@@ -37,14 +38,33 @@ dart_code_metrics_analyze:
     reports:
       codequality: code-quality-report.json
 
-#widget_test:
-#  stage: test
-#  before_script:
-#    - curl -s https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz | tar xfJ -
-#    - export PATH="$PATH:`pwd`/flutter/bin"
-#    - git show
-#    - flutter --version
-#  script: [flutter test]
+widget_test:
+  stage: test
+  extends:
+    - .flutter_deps_and_format
+  script: |
+    flutter pub get
+    flutter pub global activate junitreport
+    flutter test --coverage --machine > TEST-report.json
+    exit_code=$?
+    flutter pub global run junitreport:tojunit --input TEST-report.json --output TEST-report.xml
+    sed 's/&#x1B;//g' -i TEST-report.xml
+    #genhtml -o coverage coverage/lcov.info || true
+    curl https://raw.githubusercontent.com/eriwen/lcov-to-cobertura-xml/master/lcov_cobertura/lcov_cobertura.py > lcov_cobertura.py #TODO how to install package without migrating to docker images?
+    chmod +x lcov_cobertura.py
+    ./lcov_cobertura.py coverage/lcov.info || true
+    exit $exit_code
+  artifacts:
+    when: always
+    paths:
+      - coverage/
+      - coverage.xml
+      - TEST-report.xml
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+      junit: TEST-report.xml
 
 build_web:
   stage: build
