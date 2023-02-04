@@ -11,19 +11,11 @@ RUN apt install --no-install-recommends -y ninja-build curl xz-utils git sdkmana
 #RUN apt install --no-install-recommends -y ninja-build curl xz-utils git sdkmanager openjdk-11-jdk-headless android-sdk
 RUN export ANDROID_HOME=/usr/lib/android-sdk
 RUN yes | sdkmanager --licenses
-RUN curl -s https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz | tar xfJ - -C /tmp
-ENV PATH=${PATH}:/tmp/flutter/bin
-RUN git clone https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
-WORKDIR ./fluffychat
-RUN git checkout $CI_COMMIT_SHA
-RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/#g" pubspec.yaml
-RUN rm pubspec.lock || true
-
 RUN sdkmanager \
   "tools" \
   "platform-tools" \
   "build-tools;29.0.3" \
-  "build-tools;30.0.2" \
+  "build-tools;30.0.3" \
   "cmake;3.18.1" \
   "cmake;3.10.2.4988404" \
   "platforms;android-28" \
@@ -34,6 +26,19 @@ RUN sdkmanager \
   "platforms;android-33" \
   "ndk;21.4.7075529"
 RUN yes | sdkmanager --licenses
+RUN useradd -m -s /bin/bash fluffy
+
+USER fluffy
+WORKDIR /home/fluffy
+RUN curl -s https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz | tar xfJ - -C /tmp
+ENV PATH=${PATH}:/tmp/flutter/bin
+RUN git clone https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
+WORKDIR ./fluffychat
+RUN git checkout $CI_COMMIT_SHA
+RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/#g" pubspec.yaml
+RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/#g" pubspec.lock
+#RUN rm pubspec.lock || true
+
 RUN flutter pub get
 ENV ANDROID_SDK_ROOT=/opt/android-sdk/
 RUN flutter build apk --debug #FIXME release needs some additional files (signature etc)

@@ -111,9 +111,10 @@ build_android_apk:
   stage: build
   tags: [docker]
   script: |
+    docker container rm androidimage || true
     docker build -f docker/Dockerfile.android -t fluffy-android --build-arg CI_JOB_TOKEN=$CI_JOB_TOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA .
     docker create --name androidimage fluffy-android
-    docker cp androidimage:fluffychat/build/app/outputs/flutter-apk/app-debug.apk .
+    docker cp androidimage:/home/fluffy/fluffychat/build/app/outputs/flutter-apk/app-debug.apk .
     docker rm androidimage
   artifacts:
     when: on_success
