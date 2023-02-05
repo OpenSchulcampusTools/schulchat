@@ -109,7 +109,7 @@ build_web_profile:
 # TODO include config.sample.json?
 build_android_apk:
   stage: build
-  tags: [docker]
+  tags: [docker, rlp]
   script: |
     docker container rm androidimage || true
     docker build -f docker/Dockerfile.android -t fluffy-android --build-arg CI_JOB_TOKEN=$CI_JOB_TOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA .
