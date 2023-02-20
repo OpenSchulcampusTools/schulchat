@@ -25,9 +25,10 @@ class MessageContent extends StatelessWidget {
   final Event event;
   final Color textColor;
   final void Function(Event)? onInfoTab;
+  final String? searchTerm;
 
   const MessageContent(this.event,
-      {this.onInfoTab, Key? key, required this.textColor})
+      {this.onInfoTab, Key? key, required this.textColor, this.searchTerm})
       : super(key: key);
 
   void _verifyOrRequestKey(BuildContext context) async {
@@ -89,6 +90,17 @@ class MessageContent extends StatelessWidget {
     );
   }
 
+  String _getEventTextFormatted() {
+    var text = event.formattedText;
+    if (searchTerm != null && searchTerm!.isNotEmpty) {
+      text = text.replaceAll(searchTerm!,
+          "<span style='background-color:$AppConfig.primaryColorLight'>$searchTerm</span>");
+      return text;
+    } else {
+      return text;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final fontSize = AppConfig.messageFontSize * AppConfig.fontSizeFactor;
@@ -133,7 +145,7 @@ class MessageContent extends StatelessWidget {
             if (AppConfig.renderHtml &&
                 !event.redacted &&
                 event.isRichMessage) {
-              var html = event.formattedText;
+              var html = _getEventTextFormatted();
               if (event.messageType == MessageTypes.Emote) {
                 html = '* $html';
               }

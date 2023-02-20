@@ -30,6 +30,7 @@ class Message extends StatelessWidget {
   final bool longPressSelect;
   final bool selected;
   final Timeline timeline;
+  final String? searchTerm;
 
   const Message(this.event,
       {this.nextEvent,
@@ -42,6 +43,7 @@ class Message extends StatelessWidget {
       this.onReadReceipt,
       this.selected = false,
       required this.timeline,
+      this.searchTerm,
       Key? key})
       : super(key: key);
 
@@ -282,6 +284,7 @@ class Message extends StatelessWidget {
                               displayEvent,
                               textColor: textColor,
                               onInfoTab: onInfoTab,
+                              searchTerm: searchTerm,
                             ),
                             if (event.hasAggregatedEvents(
                                 timeline, RelationshipTypes.edit))
