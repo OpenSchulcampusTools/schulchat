@@ -145,13 +145,16 @@ class ChatSearchView extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
                                         children: <Widget>[
-                                            Message(snapshot.data![i - 1],
-                                                onSwipe: (direction) => {},
-                                                onSelect:
-                                                    controller.onSelectMessage,
-                                                scrollToEventId:
-                                                    controller.scrollToEventId,
-                                                timeline: controller.timeline!),
+                                            Message(
+                                              snapshot.data![i - 1],
+                                              onSwipe: (direction) => {},
+                                              onSelect:
+                                                  controller.onSelectMessage,
+                                              scrollToEventId:
+                                                  controller.scrollToEventId,
+                                              timeline: controller.timeline!,
+                                              searchTerm: controller.searchTerm,
+                                            ),
                                             if (i == snapshot.data?.length &&
                                                 controller.searchState ==
                                                     SearchState.searching)

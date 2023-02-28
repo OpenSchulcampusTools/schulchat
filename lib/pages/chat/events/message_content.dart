@@ -90,15 +90,31 @@ class MessageContent extends StatelessWidget {
     );
   }
 
+  bool _isSearchResult() {
+    return searchTerm != null && searchTerm!.isNotEmpty;
+  }
+
   String _getEventTextFormatted() {
     var text = event.formattedText;
-    if (searchTerm != null && searchTerm!.isNotEmpty) {
-      text = text.replaceAll(searchTerm!,
-          "<span style='background-color:$AppConfig.primaryColorLight'>$searchTerm</span>");
-      return text;
+    if (_isSearchResult()) {
+      // search result messages may not be formatted-messages originally
+      // -> take normal text in this case
+      if (text.isEmpty) {
+        text = event.text;
+      }
+
+      return _replaceSearchResults(text);
     } else {
       return text;
     }
+  }
+
+  String _replaceSearchResults(String text) {
+    final searchExp = RegExp(searchTerm!, caseSensitive: false);
+    text = text.replaceAllMapped(
+        searchExp, (match) => "<b><i>${match[0]}</i></b>");
+
+    return text;
   }
 
   @override
@@ -144,8 +160,8 @@ class MessageContent extends StatelessWidget {
           case MessageTypes.Emote:
             if (AppConfig.renderHtml &&
                 !event.redacted &&
-                event.isRichMessage) {
-              var html = _getEventTextFormatted();
+                (event.isRichMessage || _isSearchResult())) {
+              String html = _getEventTextFormatted();
               if (event.messageType == MessageTypes.Emote) {
                 html = '* $html';
               }
