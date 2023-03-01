@@ -5,6 +5,7 @@ import 'package:matrix/matrix.dart';
 import 'package:matrix_link_text/link_text.dart';
 
 import 'package:fluffychat/pages/chat/events/video_player.dart';
+import 'package:fluffychat/pages/chat_search/search_result_formatter.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
 import 'package:fluffychat/widgets/avatar.dart';
@@ -90,35 +91,9 @@ class MessageContent extends StatelessWidget {
     );
   }
 
-  bool _isSearchResult() {
-    return searchTerm != null && searchTerm!.isNotEmpty;
-  }
-
-  String _getEventTextFormatted() {
-    var text = event.formattedText;
-    if (_isSearchResult()) {
-      // search result messages may not be formatted-messages originally
-      // -> take normal text in this case
-      if (text.isEmpty) {
-        text = event.text;
-      }
-
-      return _replaceSearchResults(text);
-    } else {
-      return text;
-    }
-  }
-
-  String _replaceSearchResults(String text) {
-    final searchExp = RegExp(searchTerm!, caseSensitive: false);
-    text = text.replaceAllMapped(
-        searchExp, (match) => "<b><i>${match[0]}</i></b>");
-
-    return text;
-  }
-
   @override
   Widget build(BuildContext context) {
+    final textFormatter = SearchResultFormatter(searchTerm);
     final fontSize = AppConfig.messageFontSize * AppConfig.fontSizeFactor;
     final buttonTextColor =
         event.senderId == Matrix.of(context).client.userID ? textColor : null;
@@ -160,8 +135,8 @@ class MessageContent extends StatelessWidget {
           case MessageTypes.Emote:
             if (AppConfig.renderHtml &&
                 !event.redacted &&
-                (event.isRichMessage || _isSearchResult())) {
-              String html = _getEventTextFormatted();
+                (event.isRichMessage || textFormatter.isSearchResult())) {
+              String html = textFormatter.getEventTextFormatted(event);
               if (event.messageType == MessageTypes.Emote) {
                 html = '* $html';
               }

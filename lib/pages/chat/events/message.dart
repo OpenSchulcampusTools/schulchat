@@ -272,9 +272,12 @@ class Message extends StatelessWidget {
                                         margin: EdgeInsets.symmetric(
                                             vertical: 4.0 *
                                                 AppConfig.bubbleSizeFactor),
-                                        child: ReplyContent(replyEvent,
-                                            ownMessage: ownMessage,
-                                            timeline: timeline),
+                                        child: ReplyContent(
+                                          replyEvent,
+                                          ownMessage: ownMessage,
+                                          timeline: timeline,
+                                          searchTerm: searchTerm,
+                                        ),
                                       ),
                                     ),
                                   );

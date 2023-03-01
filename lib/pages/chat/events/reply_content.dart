@@ -5,24 +5,24 @@ import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
 import '../../../config/app_config.dart';
+import '../../chat_search/search_result_formatter.dart';
 import 'html_message.dart';
 
 class ReplyContent extends StatelessWidget {
   final Event replyEvent;
   final bool ownMessage;
   final Timeline? timeline;
+  final String? searchTerm;
 
-  const ReplyContent(
-    this.replyEvent, {
-    this.ownMessage = false,
-    Key? key,
-    this.timeline,
-  }) : super(key: key);
+  const ReplyContent(this.replyEvent,
+      {this.ownMessage = false, Key? key, this.timeline, this.searchTerm})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Widget replyBody;
     final timeline = this.timeline;
+    final textFormatter = SearchResultFormatter(searchTerm);
     final displayEvent =
         timeline != null ? replyEvent.getDisplayEvent(timeline) : replyEvent;
     final fontSize = AppConfig.messageFontSize * AppConfig.fontSizeFactor;
@@ -32,14 +32,16 @@ class ReplyContent extends StatelessWidget {
         [MessageTypes.Text, MessageTypes.Notice, MessageTypes.Emote]
             .contains(displayEvent.messageType) &&
         !displayEvent.redacted &&
-        displayEvent.content['format'] == 'org.matrix.custom.html' &&
-        displayEvent.content['formatted_body'] is String) {
-      String? html = displayEvent.content['formatted_body'];
+        (displayEvent.content['format'] == 'org.matrix.custom.html' &&
+                displayEvent.content['formatted_body'] is String ||
+            textFormatter.isSearchResult())) {
+      String html = textFormatter.getEventTextFormatted(displayEvent);
+
       if (displayEvent.messageType == MessageTypes.Emote) {
         html = '* $html';
       }
       replyBody = HtmlMessage(
-        html: html!,
+        html: html,
         defaultTextStyle: TextStyle(
           color: ownMessage
               ? Theme.of(context).colorScheme.onPrimary
