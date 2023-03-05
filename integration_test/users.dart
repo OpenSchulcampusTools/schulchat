@@ -1,16 +1,10 @@
-import 'dart:io';
-
 abstract class Users {
   const Users._();
 
-  static final user1 = User(
-    Platform.environment['USER1_NAME'] ?? 'alice',
-    Platform.environment['USER1_PW'] ?? 'AliceInWonderland',
-  );
-  static final user2 = User(
-    Platform.environment['USER2_NAME'] ?? 'bob',
-    Platform.environment['USER2_PW'] ?? 'JoWirSchaffenDas',
-  );
+  static const user1 = User(String.fromEnvironment('INTEGRATION_USER1'),
+      String.fromEnvironment('INTEGRATION_PASSWORD1'));
+  static const user2 = User(String.fromEnvironment('INTEGRATION_USER2'),
+      String.fromEnvironment('INTEGRATION_PASSWORD2'));
 }
 
 class User {
@@ -20,5 +14,4 @@ class User {
   const User(this.name, this.password);
 }
 
-final homeserver =
-    'http://${Platform.environment['HOMESERVER'] ?? 'localhost'}';
+final homeserver = 'devmh.fairmatrix.net';

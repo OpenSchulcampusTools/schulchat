@@ -3007,5 +3007,19 @@
   "readReceiptGive": "Lesebestätigung geben",
   "@readReceiptGive": {},
   "readReceiptGiven": "Lesebestätigung gegeben",
-  "@readReceiptGiven": {}
+  "@readReceiptGiven": {},
+  "noReadReceiptRequestsFound": "Keine Nachrichten mit Lesebestätigung gefunden",
+  "@noReadReceiptRequestsFound": {},
+  "sendFileWithReadReceiptRequests": "Datei mit Lesebestätigung senden",
+  "@sendFileWithReadReceiptRequests": {},
+  "sendImageWithReadReceiptRequests": "Bild mit Lesebestätigung senden",
+  "@sendImageWithReadReceiptRequests": {},
+  "sendAudioWithReadReceiptRequests": "Audiodatei mit Lesebestätigung senden",
+  "@sendAudioWithReadReceiptRequests": {},
+  "sendVideoWithReadReceiptRequests": "Video mit Lesebestätigung senden",
+  "@sendVideoWithReadReceiptRequests": {},
+  "open": "offen",
+  "@open": {},
+  "confirmed": "bestätigt",
+  "@confirmed": {}
 }

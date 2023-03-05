@@ -10,10 +10,12 @@ import '../../utils/resize_image.dart';
 class SendFileDialog extends StatefulWidget {
   final Room room;
   final List<MatrixFile> files;
+  final bool requireReadReceipt;
 
   const SendFileDialog({
     required this.room,
     required this.files,
+    required this.requireReadReceipt,
     Key? key,
   }) : super(key: key);
 
@@ -49,6 +51,10 @@ class SendFileDialogState extends State<SendFileDialog> {
         scaffoldMessenger.showSnackBar(
           SnackBar(content: Text(e.toLocalizedString())),
         );
+      }).then((eventId) async {
+        if (widget.requireReadReceipt && eventId != null) {
+          await widget.room.sendReadReceiptRequired(eventId);
+        }
       });
     }
     Navigator.of(context, rootNavigator: false).pop();
@@ -58,7 +64,9 @@ class SendFileDialogState extends State<SendFileDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var sendStr = L10n.of(context)!.sendFile;
+    var sendStr = (widget.requireReadReceipt)
+        ? L10n.of(context)!.sendFileWithReadReceiptRequests
+        : L10n.of(context)!.sendFile;
     final bool allFilesAreImages =
         widget.files.every((file) => file is MatrixImageFile);
     final sizeString = widget.files
@@ -69,11 +77,17 @@ class SendFileDialogState extends State<SendFileDialog> {
         : L10n.of(context)!.countFiles(widget.files.length.toString());
 
     if (allFilesAreImages) {
-      sendStr = L10n.of(context)!.sendImage;
+      sendStr = (widget.requireReadReceipt)
+          ? L10n.of(context)!.sendImageWithReadReceiptRequests
+          : L10n.of(context)!.sendImage;
     } else if (widget.files.every((file) => file is MatrixAudioFile)) {
-      sendStr = L10n.of(context)!.sendAudio;
+      sendStr = (widget.requireReadReceipt)
+          ? L10n.of(context)!.sendAudioWithReadReceiptRequests
+          : L10n.of(context)!.sendAudio;
     } else if (widget.files.every((file) => file is MatrixVideoFile)) {
-      sendStr = L10n.of(context)!.sendVideo;
+      (widget.requireReadReceipt)
+          ? L10n.of(context)!.sendVideoWithReadReceiptRequests
+          : L10n.of(context)!.sendVideo;
     }
     Widget contentWidget;
     if (allFilesAreImages) {

@@ -1,0 +1,60 @@
+FROM debian:bullseye-slim
+
+#FIXME hardcoded dependencies below...
+
+ENV FLUTTER_VERSION=3.3.8
+ENV ANDROID_SDK_ROOT=/opt/android-sdk
+ENV PATH=${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/emulator:/tmp/flutter/bin
+
+ARG TEST_DEVICE=nexus-5
+ARG TEST_PACKAGE='system-images;android-33;google_apis;x86_64'
+
+ARG CI_COMMIT_SHA
+ARG CI_JOB_TOKEN
+
+ARG INTEGRATION_USER1
+ARG INTEGRATION_PASSWORD1
+ARG INTEGRATION_USER2
+ARG INTEGRATION_PASSWORD2
+
+ENV INTEGRATION_USER1=$INTEGRATION_USER1
+ENV INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1
+ENV INTEGRATION_USER2=$INTEGRATION_USER2
+ENV INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2
+
+RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' >> /etc/apt/sources.list
+RUN apt update
+RUN apt install -y curl unzip openjdk-11-jdk-headless libgl1 git xz-utils cmake clang ninja-build adb lcov python --no-install-recommends
+RUN curl https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip > cmdline-tools.zip \
+    && unzip cmdline-tools.zip \
+    && mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools \
+    && mv cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/tools \
+    && rm cmdline-tools.zip
+RUN yes | sdkmanager --licenses
+#emulator seems already be included?
+RUN sdkmanager \
+  "platform-tools" \
+  "${TEST_PACKAGE}" \
+  "platforms;android-33" \
+  "tools" \
+  "build-tools;29.0.3" \
+  "build-tools;30.0.3" \
+  "cmake;3.18.1" \
+  "cmake;3.10.2.4988404" \
+  "ndk;21.4.7075529"
+RUN yes | sdkmanager --licenses
+RUN avdmanager create avd --force --name "${TEST_DEVICE}" -k "${TEST_PACKAGE}" -d 7
+
+RUN git clone https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/clients/rlp/client/flutter.git /tmp/flutter
+
+RUN git clone https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
+WORKDIR ./fluffychat
+RUN git checkout $CI_COMMIT_SHA
+RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/#g" pubspec.yaml
+
+RUN flutter pub get
+ENV ANDROID_SDK_ROOT=/opt/android-sdk/
+RUN flutter build apk --debug
+
+COPY ./docker/run-integration-android.sh /
+ENTRYPOINT ["/run-integration-android.sh"]

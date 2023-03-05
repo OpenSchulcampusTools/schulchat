@@ -4,7 +4,6 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 import 'package:swipe_to_action/swipe_to_action.dart';
 
-import 'package:fluffychat/config/edu_settings.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/string_color.dart';
@@ -16,6 +15,8 @@ import 'message_reactions.dart';
 import 'reply_content.dart';
 import 'state_message.dart';
 import 'verification_request_content.dart';
+
+// import 'package:fluffychat/config/edu_settings.dart';
 
 class Message extends StatelessWidget {
   final Event event;
@@ -114,11 +115,10 @@ class Message extends StatelessWidget {
           : Theme.of(context).colorScheme.primary;
     }
 
-    // add reading recipt for edu
-    final requiresReadReceipt =
-        event.content.keys.contains(EduSettings.eduNamespace) &&
-            event.content[EduSettings.eduNamespace] ==
-                EduSettings.requireReadReceipt;
+    // add reading receipt for edu
+    final requiresReadReceipt = event
+        .aggregatedEvents(timeline, RelationshipTypes.readReceiptRequired)
+        .isNotEmpty;
 
     final readReceiptGiven = event
         .aggregatedEvents(timeline, RelationshipTypes.readReceipt)

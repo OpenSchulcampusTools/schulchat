@@ -242,8 +242,13 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
 
   bool webHasFocus = true;
 
-  String? get activeRoomId =>
-      VRouter.of(navigatorContext).pathParameters['roomid'];
+  String? get activeRoomId {
+    try {
+      return VRouter.of(navigatorContext).pathParameters['roomid'];
+    } catch (_) {
+      return null;
+    }
+  }
 
   final linuxNotifications =
       PlatformInfos.isLinux ? NotificationsClient() : null;
@@ -329,20 +334,20 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         );
 
         if (state != LoginState.loggedIn) {
-          widget.router!.currentState!.to(
+          widget.router?.currentState?.to(
             '/rooms',
-            queryParameters: widget.router!.currentState!.queryParameters,
+            queryParameters: widget.router?.currentState?.queryParameters ?? {},
           );
         }
       } else {
-        widget.router!.currentState!.to(
+        widget.router?.currentState?.to(
           state == LoginState.loggedIn ? '/rooms' : '/home',
-          queryParameters: widget.router!.currentState!.queryParameters,
+          queryParameters: widget.router?.currentState?.queryParameters ?? {},
         );
       }
     });
     onUiaRequest[name] ??= c.onUiaRequest.stream.listen(uiaRequestHandler);
-    if (PlatformInfos.isWeb || PlatformInfos.isLinux) {
+    if (PlatformInfos.isLinux) {
       c.onSync.stream.first.then((s) {
         html.Notification.requestPermission();
         onNotification[name] ??= c.onEvent.stream

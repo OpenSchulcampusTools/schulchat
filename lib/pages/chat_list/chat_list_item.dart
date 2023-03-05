@@ -106,6 +106,7 @@ class ChatListItem extends StatelessWidget {
             builder: (c) => SendFileDialog(
               files: [shareFile],
               room: room,
+              requireReadReceipt: false,
             ),
           );
         } else {

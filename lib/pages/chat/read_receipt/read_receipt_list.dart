@@ -22,22 +22,39 @@ class ReadReceiptList extends StatefulWidget {
 }
 
 class ReadReceiptListController extends State<ReadReceiptList> {
-  Event? event;
-  Room? room;
+  Event event;
+  Room room;
   Timeline? timeline;
   List<User> members = [];
-  Set<Event>? readReceipts;
+  List<MatrixEvent>? readReceipts;
   String filter = "all";
+  bool membersLoaded = false;
 
-  ReadReceiptListController(
-      Event this.event, Room this.room, Timeline this.timeline);
+  ReadReceiptListController(this.event, this.room, Timeline this.timeline);
+
+  void initReadReceipts() async {
+    // use requestParticipants instead of getParticipants in case not all participants are yet loaded
+    members = await room.requestParticipants([Membership.join]);
+
+    members = members.where((user) {
+      final membership = user.content.tryGet('membership');
+      return (membership != null && membership == "join");
+    }).toList();
+
+    // read all read receipts from server as there are possibly not all events already loaded in the timeline
+    readReceipts =
+        await event.getRelations(relType: RelationshipTypes.readReceipt);
+
+    setState(() {
+      members;
+      readReceipts;
+      membersLoaded = true;
+    });
+  }
 
   @override
   void initState() {
-    members = room!.getParticipants();
-    readReceipts =
-        event!.aggregatedEvents(timeline!, RelationshipTypes.readReceipt);
-
+    initReadReceipts();
     super.initState();
   }
 
@@ -56,7 +73,7 @@ class ReadReceiptListController extends State<ReadReceiptList> {
 
   bool userIsVisible(int index) {
     // don't show user who has requested read receipt
-    if (event!.senderId == members[index].id) {
+    if (event.senderId == members[index].id) {
       return false;
     } else if (filter == "all") {
       return true;

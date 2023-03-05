@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_gen/gen_l10n/l10n.dart';
+
 import 'package:fluffychat/pages/chat/read_receipt/read_receipt_list.dart';
 import '../../../config/app_config.dart';
 import '../../chat_details/participant_list_item.dart';
@@ -11,52 +13,56 @@ class ReadReceiptListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: controller.members.length + 1,
-        itemBuilder: (BuildContext context, int i) => i == 0
-            ? Row(
-                // padding: EdgeInsets.all(8.0),
-                children: [
-                  Expanded(
-                      child: RadioListTile(
-                          title: Text("alle"),
-                          value: "all",
-                          groupValue: controller.filter,
-                          onChanged: (value) =>
-                              controller.changeFilter(value))),
-                  Expanded(
-                      child: RadioListTile(
-                    title: Text("offen"),
-                    value: "open",
-                    groupValue: controller.filter,
-                    onChanged: (value) => controller.changeFilter(value),
-                  )),
-                  Expanded(
-                      child: RadioListTile(
-                    title: Text("abgegeben"),
-                    value: "given",
-                    groupValue: controller.filter,
-                    onChanged: (value) => controller.changeFilter(value),
-                  )),
-                ],
-              )
-            : controller.userIsVisible(i - 1)
+    return controller.membersLoaded
+        ? ListView.builder(
+            itemCount: controller.members.length + 1,
+            itemBuilder: (BuildContext context, int i) => i == 0
                 ? Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
+                    // padding: EdgeInsets.all(8.0),
                     children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: controller.userHasGivenReadReceipt(i - 1)
-                              ? const Icon(Icons.mark_chat_read,
-                                  color: AppConfig.primaryColor)
-                              : const Icon(Icons.mark_chat_read_outlined,
-                                  color: AppConfig.primaryColor),
-                        ),
-                        Expanded(
-                            child:
-                                ParticipantListItem(controller.members[i - 1]))
-                      ])
-                : Container());
+                      Expanded(
+                          child: RadioListTile(
+                              title: Text(L10n.of(context)!.all),
+                              value: "all",
+                              groupValue: controller.filter,
+                              onChanged: (value) =>
+                                  controller.changeFilter(value))),
+                      Expanded(
+                          child: RadioListTile(
+                        title: Text(L10n.of(context)!.open),
+                        value: "open",
+                        groupValue: controller.filter,
+                        onChanged: (value) => controller.changeFilter(value),
+                      )),
+                      Expanded(
+                          child: RadioListTile(
+                        title: Text(L10n.of(context)!.confirmed),
+                        value: "given",
+                        groupValue: controller.filter,
+                        onChanged: (value) => controller.changeFilter(value),
+                      )),
+                    ],
+                  )
+                : controller.userIsVisible(i - 1)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 18),
+                              child: controller.userHasGivenReadReceipt(i - 1)
+                                  ? const Icon(Icons.mark_chat_read,
+                                      color: AppConfig.primaryColor)
+                                  : const Icon(Icons.mark_chat_read_outlined,
+                                      color: AppConfig.primaryColor),
+                            ),
+                            Expanded(
+                                child: ParticipantListItem(
+                                    controller.members[i - 1]))
+                          ])
+                    : Container())
+        : const Center(
+            child: CircularProgressIndicator.adaptive(strokeWidth: 2),
+          );
   }
 }

@@ -347,6 +347,8 @@ class ChatListController extends State<ChatList>
     }
   }
 
+  bool hasToGiveReadReceipt = false;
+
   @override
   void initState() {
     _initReceiveSharingIntent();
@@ -360,6 +362,10 @@ class ChatListController extends State<ChatList>
     });
 
     _checkTorBrowser();
+
+    Matrix.of(context).client.loadReadReceiptRequests(
+        (bool hasToGiveReadReceipt) =>
+            setState(() => this.hasToGiveReadReceipt = hasToGiveReadReceipt));
 
     super.initState();
   }

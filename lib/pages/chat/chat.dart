@@ -21,7 +21,7 @@ import 'package:vrouter/vrouter.dart';
 import 'package:fluffychat/config/edu_settings.dart';
 import 'package:fluffychat/pages/chat/chat_view.dart';
 import 'package:fluffychat/pages/chat/event_info_dialog.dart';
-import 'package:fluffychat/pages/chat/read_receipt/read_receipt_list_dialog.dart';
+import 'package:fluffychat/pages/chat/read_receipt/read_receipt_extension.dart';
 import 'package:fluffychat/pages/chat/recording_dialog.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/event_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions.dart/ios_badge_client_extension.dart';
@@ -97,8 +97,12 @@ class ChatController extends State<Chat> {
       builder: (c) => SendFileDialog(
         files: matrixFiles,
         room: room!,
+        requireReadReceipt: requireReadReceipt,
       ),
     );
+    setState(() {
+      requireReadReceipt = false;
+    });
   }
 
   bool get canSaveSelectedEvent =>
@@ -289,21 +293,15 @@ class ChatController extends State<Chat> {
       }
     }
 
-    Map<String, String>? readReceipt = null;
-    if (requireReadReceipt) {
-      readReceipt = {EduSettings.eduNamespace: EduSettings.requireReadReceipt};
-    }
-
-    // ignore: unawaited_futures
-    String? eventId = await room!.sendTextEvent(sendController.text,
-        inReplyTo: replyEvent,
-        editEventId: editEvent?.eventId,
-        parseCommands: parseCommands,
-        additionalContent: readReceipt);
+    final String? eventId = await room!.sendTextEvent(
+      sendController.text,
+      inReplyTo: replyEvent,
+      editEventId: editEvent?.eventId,
+      parseCommands: parseCommands,
+    );
 
     if (requireReadReceipt && eventId != null) {
-      final client = Matrix.of(context).client;
-      await client.database?.addReadReceiptRequiredEvent(eventId, room!.id);
+      await room!.sendReadReceiptRequired(eventId);
     }
 
     sendController.value = TextEditingValue(
@@ -336,8 +334,13 @@ class ChatController extends State<Chat> {
                 ).detectFileType)
             .toList(),
         room: room!,
+        requireReadReceipt: requireReadReceipt,
       ),
     );
+
+    setState(() {
+      requireReadReceipt = false;
+    });
   }
 
   void sendImageAction() async {
@@ -357,8 +360,13 @@ class ChatController extends State<Chat> {
                 ).detectFileType)
             .toList(),
         room: room!,
+        requireReadReceipt: requireReadReceipt,
       ),
     );
+
+    setState(() {
+      requireReadReceipt = false;
+    });
   }
 
   void openCameraAction() async {
@@ -378,8 +386,13 @@ class ChatController extends State<Chat> {
           )
         ],
         room: room!,
+        requireReadReceipt: requireReadReceipt,
       ),
     );
+
+    setState(() {
+      requireReadReceipt = false;
+    });
   }
 
   void openVideoCameraAction() async {
@@ -399,8 +412,13 @@ class ChatController extends State<Chat> {
           )
         ],
         room: room!,
+        requireReadReceipt: requireReadReceipt,
       ),
     );
+
+    setState(() {
+      requireReadReceipt = false;
+    });
   }
 
   void sendStickerAction() async {
@@ -505,33 +523,7 @@ class ChatController extends State<Chat> {
   }
 
   void onReadReceipt(Event event) async {
-    final requiresReadReceipt =
-        event.content.keys.contains(EduSettings.eduNamespace) &&
-            event.content[EduSettings.eduNamespace] ==
-                EduSettings.requireReadReceipt;
-
-    final String? userId = Matrix.of(context).client.userID;
-
-    if (requiresReadReceipt && userId != null) {
-      // if event was sent by current user
-      if (event.senderId == userId) {
-        // show list of all room members
-        event.showReadReceiptListDialog(context, room!, timeline!);
-      } else {
-        final userReadReceipt = event
-            .aggregatedEvents(timeline!, RelationshipTypes.readReceipt)
-            .where((e) =>
-                e.content
-                    .tryGetMap<String, dynamic>('m.relates_to')
-                    ?.tryGet<String>('user_id') ==
-                userId)
-            .toList();
-
-        if (userReadReceipt.isEmpty) {
-          await room!.sendReadReceipt(event.eventId, userId);
-        }
-      }
-    }
+    event.onReadReceiptIconClick(event, timeline!, context);
   }
 
   String _getSelectedEventString() {

@@ -8,6 +8,7 @@ import 'package:vrouter/vrouter.dart';
 
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import '../../config/app_config.dart';
 import '../../utils/fluffy_share.dart';
 import '../../widgets/m2_popup_menu_button.dart';
 import 'chat_list.dart';
@@ -73,6 +74,16 @@ class ClientChooserButton extends StatelessWidget {
             const Icon(Icons.settings_outlined),
             const SizedBox(width: 18),
             Text(L10n.of(context)!.settings),
+          ],
+        ),
+      ),
+      PopupMenuItem(
+        value: SettingsAction.requireReadReceipt,
+        child: Row(
+          children: [
+            const Icon(Icons.mark_chat_read_outlined),
+            const SizedBox(width: 18),
+            Text(L10n.of(context)!.readReceipts),
           ],
         ),
       ),
@@ -195,17 +206,29 @@ class ClientChooserButton extends StatelessWidget {
           M2PopupMenuButton<Object>(
             onSelected: (o) => _clientSelected(o, context),
             itemBuilder: _bundleMenuItems,
-            child: Material(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(99),
-              child: Avatar(
-                mxContent: snapshot.data?.avatarUrl,
-                name: snapshot.data?.displayName ??
-                    matrix.client.userID!.localpart,
-                size: 28,
-                fontSize: 12,
-              ),
-            ),
+            child: Stack(children: [
+              Padding(
+                  padding: const EdgeInsets.only(right: 6, bottom: 4),
+                  child: Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(99),
+                      child: Avatar(
+                        mxContent: snapshot.data?.avatarUrl,
+                        name: snapshot.data?.displayName ??
+                            matrix.client.userID!.localpart,
+                        size: 28,
+                        fontSize: 12,
+                      ))),
+              if (controller.hasToGiveReadReceipt)
+                const Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Icon(
+                      Icons.mark_chat_read,
+                      color: AppConfig.primaryColor,
+                      size: 16,
+                    ))
+            ]),
           ),
         ],
       ),
@@ -253,6 +276,9 @@ class ClientChooserButton extends StatelessWidget {
           break;
         case SettingsAction.settings:
           VRouter.of(context).to('/settings');
+          break;
+        case SettingsAction.requireReadReceipt:
+          VRouter.of(context).to('/readreceipts');
           break;
       }
     }
@@ -331,4 +357,5 @@ enum SettingsAction {
   newSpace,
   invite,
   settings,
+  requireReadReceipt
 }

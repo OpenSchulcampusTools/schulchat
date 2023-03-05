@@ -1,0 +1,41 @@
+FROM debian:bullseye-slim
+
+ARG CI_COMMIT_SHA
+ARG CI_JOB_TOKEN
+ARG INTEGRATION_USER1
+ARG INTEGRATION_PASSWORD1
+ARG INTEGRATION_USER2
+ARG INTEGRATION_PASSWORD2
+
+ENV FLUTTER_VERSION=3.3.8
+ENV INTEGRATION_USER1=$INTEGRATION_USER1
+ENV INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1
+ENV INTEGRATION_USER2=$INTEGRATION_USER2
+ENV INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2
+
+RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' >> /etc/apt/sources.list
+RUN apt update
+RUN apt install --no-install-recommends -y ninja-build curl xz-utils git unzip gnupg ca-certificates
+RUN curl -L -sS https://dl.google.com/linux/linux_signing_key.pub| gpg --dearmor | tee /etc/apt/trusted.gpg.d/google.gpg
+RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >>/etc/apt/sources.list
+RUN apt update
+RUN apt install google-chrome-stable -y --no-install-recommends
+RUN useradd -m -s /bin/bash fluffy
+USER fluffy
+WORKDIR /home/fluffy
+RUN git clone https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/clients/rlp/client/flutter.git /tmp/flutter
+RUN cd /tmp/flutter && git checkout main
+
+# triggers rebuilt
+RUN rm -rf /tmp/flutter/bin
+RUN cd /tmp/flutter && git checkout bin
+ENV PATH=${PATH}:/tmp/flutter/bin
+RUN git clone https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
+WORKDIR ./fluffychat
+RUN git checkout $CI_COMMIT_SHA
+RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/#g" pubspec.yaml
+RUN curl -s 'https://chromedriver.storage.googleapis.com/110.0.5481.77/chromedriver_linux64.zip' >/tmp/chromedriver.zip && unzip /tmp/chromedriver.zip && rm /tmp/chromedriver.zip
+RUN chmod +x chromedriver
+RUN flutter config --enable-web
+COPY ./docker/run-integration-web.sh /
+ENTRYPOINT ["/run-integration-web.sh"]

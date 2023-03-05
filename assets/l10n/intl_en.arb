@@ -2991,5 +2991,19 @@
   "readReceiptGive": "Give read receipt",
   "@readReceiptGive": {},
   "readReceiptGiven": "Read receipt given",
-  "@readReceiptGiven": {}
+  "@readReceiptGiven": {},
+  "noReadReceiptRequestsFound": "No messages with read receipts found",
+  "@noReadReceiptRequestsFound": {},
+  "sendFileWithReadReceiptRequests": "Send file with read receipt request",
+  "@sendFileWithReadReceiptRequests": {},
+  "sendImageWithReadReceiptRequests": "Send image with read receipt request",
+  "@sendImageWithReadReceiptRequests": {},
+  "sendAudioWithReadReceiptRequests": "Send audio with read receipt request",
+  "@sendAudioWithReadReceiptRequests": {},
+  "sendVideoWithReadReceiptRequests": "Send video with read receipt request",
+  "@sendVideoWithReadReceiptRequests": {},
+  "open": "offen",
+  "@open": {},
+  "confirmed": "bestätigt",
+  "@confirmed": {}
 }
