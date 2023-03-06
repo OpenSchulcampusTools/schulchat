@@ -363,11 +363,17 @@ class ChatListController extends State<ChatList>
 
     _checkTorBrowser();
 
-    Matrix.of(context).client.loadReadReceiptRequests(
-        (bool hasToGiveReadReceipt) =>
-            setState(() => this.hasToGiveReadReceipt = hasToGiveReadReceipt));
+    Matrix.of(context)
+        .client
+        .loadReadReceiptRequests(_updateHasToGiveReadReceipt);
 
     super.initState();
+  }
+
+  void _updateHasToGiveReadReceipt(bool hasToGiveReadReceipt) {
+    if (mounted) {
+      setState(() => this.hasToGiveReadReceipt = hasToGiveReadReceipt);
+    }
   }
 
   @override
