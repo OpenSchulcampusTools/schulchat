@@ -303,7 +303,10 @@ class ChatController extends State<Chat> {
     if (requireReadReceipt && eventId != null) {
       await room!.sendReadReceiptRequired(eventId);
     }
-
+    /*  if (requireReadReceipt && eventId != null) {
+      final client = Matrix.of(context).client;
+      await client.database?.addReadReceiptRequiredEvent(eventId!, room!.id);
+    */
     sendController.value = TextEditingValue(
       text: pendingText,
       selection: const TextSelection.collapsed(offset: 0),
