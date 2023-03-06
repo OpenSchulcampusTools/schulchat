@@ -42,7 +42,7 @@ class ChatSearchController extends State<ChatSearch> {
 
   static const fixedWidth = 360.0;
 
-  String get searchTerm{
+  String get searchTerm {
     return _searchTerm;
   }
 
@@ -82,7 +82,8 @@ class ChatSearchController extends State<ChatSearch> {
     if (searchState == SearchState.searching &&
         event.type == EventTypes.Message &&
         !_foundMessages.contains(event.eventId)) {
-      final bool found = event.body.toLowerCase().contains(_searchTerm.toLowerCase());
+      final bool found =
+          event.body.toLowerCase().contains(_searchTerm.toLowerCase());
       if (found) {
         _foundMessages.add(event.eventId);
 
