@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
+
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 
 extension ClientStoriesExtension on Client {
   static const String storiesRoomType = 'msc3588.stories.stories-room';
@@ -12,8 +15,10 @@ extension ClientStoriesExtension on Client {
 
   List<User> get contacts => rooms
       .where((room) => room.isDirectChat)
-      .map((room) =>
-          room.unsafeGetUserFromMemoryOrFallback(room.directChatMatrixID!))
+      .map(
+        (room) =>
+            room.unsafeGetUserFromMemoryOrFallback(room.directChatMatrixID!),
+      )
       .toList();
 
   List<Room> get storiesRooms =>
@@ -75,19 +80,30 @@ extension ClientStoriesExtension on Client {
   }
 
   Future<Room?> getStoriesRoom(BuildContext context) async {
-    final candidates = rooms.where((room) =>
-        room.getState(EventTypes.RoomCreate)?.content.tryGet<String>('type') ==
-            storiesRoomType &&
-        room.ownPowerLevel >= 100);
+    final candidates = rooms.where(
+      (room) =>
+          room
+                  .getState(EventTypes.RoomCreate)
+                  ?.content
+                  .tryGet<String>('type') ==
+              storiesRoomType &&
+          room.ownPowerLevel >= 100,
+    );
     if (candidates.isEmpty) return null;
     if (candidates.length == 1) return candidates.single;
     return await showModalActionSheet<Room>(
-        context: context,
-        actions: candidates
-            .map(
-              (room) => SheetAction(label: room.displayname, key: room),
-            )
-            .toList());
+      context: context,
+      actions: candidates
+          .map(
+            (room) => SheetAction(
+              label: room.getLocalizedDisplayname(
+                MatrixLocals(L10n.of(context)!),
+              ),
+              key: room,
+            ),
+          )
+          .toList(),
+    );
   }
 }
 

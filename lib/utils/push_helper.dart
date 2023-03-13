@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/setting_keys.dart';
 import 'package:fluffychat/utils/client_manager.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/utils/voip/callkeep_manager.dart';
 
@@ -43,21 +43,24 @@ Future<void> pushHelper(
       onDidReceiveNotificationResponse: onSelectNotification,
       onDidReceiveBackgroundNotificationResponse: onSelectNotification,
     );
+
+    l10n ??= lookupL10n(const Locale('en'));
     flutterLocalNotificationsPlugin.show(
       0,
-      l10n?.newMessageInFluffyChat,
-      l10n?.openAppToReadMessages,
+      l10n.newMessageInFluffyChat,
+      l10n.openAppToReadMessages,
       NotificationDetails(
-          iOS: const DarwinNotificationDetails(),
-          android: AndroidNotificationDetails(
-            AppConfig.pushNotificationsChannelId,
-            AppConfig.pushNotificationsChannelName,
-            channelDescription: AppConfig.pushNotificationsChannelDescription,
-            number: notification.counts?.unread,
-            ticker: l10n!.unreadChats(notification.counts?.unread ?? 1),
-            importance: Importance.max,
-            priority: Priority.high,
-          )),
+        iOS: const DarwinNotificationDetails(),
+        android: AndroidNotificationDetails(
+          AppConfig.pushNotificationsChannelId,
+          AppConfig.pushNotificationsChannelName,
+          channelDescription: AppConfig.pushNotificationsChannelDescription,
+          number: notification.counts?.unread,
+          ticker: l10n.unreadChats(notification.counts?.unread ?? 1),
+          importance: Importance.max,
+          priority: Priority.high,
+        ),
+      ),
     );
     rethrow;
   }
@@ -108,7 +111,9 @@ Future<void> _tryPushHelper(
         await flutterLocalNotificationsPlugin.cancelAll();
         final store = await SharedPreferences.getInstance();
         await store.setString(
-            SettingKeys.notificationCurrentIds, json.encode({}));
+          SettingKeys.notificationCurrentIds,
+          json.encode({}),
+        );
       }
     }
     return;
@@ -199,7 +204,9 @@ Future<void> _tryPushHelper(
     styleInformation: messagingStyleInformation ??
         MessagingStyleInformation(
           Person(name: event.room.client.userID),
-          conversationTitle: event.room.displayname,
+          conversationTitle: event.room.getLocalizedDisplayname(
+            MatrixLocals(l10n),
+          ),
           groupConversation: !event.room.isDirectChat,
           messages: [newMessage],
         ),
@@ -216,7 +223,9 @@ Future<void> _tryPushHelper(
 
   await flutterLocalNotificationsPlugin.show(
     id,
-    event.room.displayname,
+    event.room.getLocalizedDisplayname(
+      MatrixLocals(l10n),
+    ),
     body,
     platformChannelSpecifics,
     payload: event.roomId,
@@ -230,7 +239,8 @@ Future<void> _tryPushHelper(
 Future<int> mapRoomIdToInt(String roomId) async {
   final store = await SharedPreferences.getInstance();
   final idMap = Map<String, int>.from(
-      jsonDecode(store.getString(SettingKeys.notificationCurrentIds) ?? '{}'));
+    jsonDecode(store.getString(SettingKeys.notificationCurrentIds) ?? '{}'),
+  );
   int? currentInt;
   try {
     currentInt = idMap[roomId];

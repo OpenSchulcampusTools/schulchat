@@ -10,7 +10,7 @@ import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
-import '../../widgets/m2_popup_menu_button.dart';
+import '../../config/themes.dart';
 import 'chat.dart';
 import 'input_bar.dart';
 
@@ -84,13 +84,14 @@ class ChatInputRow extends StatelessWidget {
                     controller.onAddPopupMenuButtonSelected('file'),
                 helpLabel: L10n.of(context)!.sendFile,
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
+                  duration: FluffyThemes.animationDuration,
+                  curve: FluffyThemes.animationCurve,
                   height: 56,
                   width: controller.inputText.isEmpty ? 56 : 0,
                   alignment: Alignment.center,
                   clipBehavior: Clip.hardEdge,
                   decoration: const BoxDecoration(),
-                  child: M2PopupMenuButton<String>(
+                  child: PopupMenuButton<String>(
                     icon: const Icon(Icons.add_outlined),
                     onSelected: controller.onAddPopupMenuButtonSelected,
                     itemBuilder: (BuildContext context) =>
@@ -317,26 +318,27 @@ class _ChatAccountPicker extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: FutureBuilder<Profile>(
         future: controller.sendingClient!.fetchOwnProfile(),
-        builder: (context, snapshot) => M2PopupMenuButton<String>(
+        builder: (context, snapshot) => PopupMenuButton<String>(
           onSelected: _popupMenuButtonSelected,
           itemBuilder: (BuildContext context) => clients
-              .map((client) => PopupMenuItem<String>(
-                    value: client!.userID,
-                    child: FutureBuilder<Profile>(
-                      future: client.fetchOwnProfile(),
-                      builder: (context, snapshot) => ListTile(
-                        leading: Avatar(
-                          mxContent: snapshot.data?.avatarUrl,
-                          name: snapshot.data?.displayName ??
-                              client.userID!.localpart,
-                          size: 20,
-                        ),
-                        title:
-                            Text(snapshot.data?.displayName ?? client.userID!),
-                        contentPadding: const EdgeInsets.all(0),
+              .map(
+                (client) => PopupMenuItem<String>(
+                  value: client!.userID,
+                  child: FutureBuilder<Profile>(
+                    future: client.fetchOwnProfile(),
+                    builder: (context, snapshot) => ListTile(
+                      leading: Avatar(
+                        mxContent: snapshot.data?.avatarUrl,
+                        name: snapshot.data?.displayName ??
+                            client.userID!.localpart,
+                        size: 20,
                       ),
+                      title: Text(snapshot.data?.displayName ?? client.userID!),
+                      contentPadding: const EdgeInsets.all(0),
                     ),
-                  ))
+                  ),
+                ),
+              )
               .toList(),
           child: Avatar(
             mxContent: snapshot.data?.avatarUrl,

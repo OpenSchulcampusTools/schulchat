@@ -10,6 +10,17 @@ import 'package:fluffychat/widgets/permission_slider_dialog.dart';
 import '../../widgets/matrix.dart';
 import 'user_bottom_sheet_view.dart';
 
+enum UserBottomSheetAction {
+  report,
+  mention,
+  ban,
+  kick,
+  unban,
+  permission,
+  message,
+  ignore,
+}
+
 class UserBottomSheet extends StatefulWidget {
   final User user;
   final Function? onMention;
@@ -27,7 +38,7 @@ class UserBottomSheet extends StatefulWidget {
 }
 
 class UserBottomSheetController extends State<UserBottomSheet> {
-  void participantAction(String action) async {
+  void participantAction(UserBottomSheetAction action) async {
     // ignore: prefer_function_declarations_over_variables
     final Function askConfirmation = () async => (await showOkCancelAlertDialog(
           useRootNavigator: false,
@@ -38,36 +49,38 @@ class UserBottomSheetController extends State<UserBottomSheet> {
         ) ==
         OkCancelResult.ok);
     switch (action) {
-      case 'report':
+      case UserBottomSheetAction.report:
         final event = widget.user;
         final score = await showConfirmationDialog<int>(
-            context: context,
-            title: L10n.of(context)!.reportUser,
-            message: L10n.of(context)!.howOffensiveIsThisContent,
-            cancelLabel: L10n.of(context)!.cancel,
-            okLabel: L10n.of(context)!.ok,
-            actions: [
-              AlertDialogAction(
-                key: -100,
-                label: L10n.of(context)!.extremeOffensive,
-              ),
-              AlertDialogAction(
-                key: -50,
-                label: L10n.of(context)!.offensive,
-              ),
-              AlertDialogAction(
-                key: 0,
-                label: L10n.of(context)!.inoffensive,
-              ),
-            ]);
+          context: context,
+          title: L10n.of(context)!.reportUser,
+          message: L10n.of(context)!.howOffensiveIsThisContent,
+          cancelLabel: L10n.of(context)!.cancel,
+          okLabel: L10n.of(context)!.ok,
+          actions: [
+            AlertDialogAction(
+              key: -100,
+              label: L10n.of(context)!.extremeOffensive,
+            ),
+            AlertDialogAction(
+              key: -50,
+              label: L10n.of(context)!.offensive,
+            ),
+            AlertDialogAction(
+              key: 0,
+              label: L10n.of(context)!.inoffensive,
+            ),
+          ],
+        );
         if (score == null) return;
         final reason = await showTextInputDialog(
-            useRootNavigator: false,
-            context: context,
-            title: L10n.of(context)!.whyDoYouWantToReportThis,
-            okLabel: L10n.of(context)!.ok,
-            cancelLabel: L10n.of(context)!.cancel,
-            textFields: [DialogTextField(hintText: L10n.of(context)!.reason)]);
+          useRootNavigator: false,
+          context: context,
+          title: L10n.of(context)!.whyDoYouWantToReportThis,
+          okLabel: L10n.of(context)!.ok,
+          cancelLabel: L10n.of(context)!.cancel,
+          textFields: [DialogTextField(hintText: L10n.of(context)!.reason)],
+        );
         if (reason == null || reason.single.isEmpty) return;
         final result = await showFutureLoadingDialog(
           context: context,
@@ -80,13 +93,14 @@ class UserBottomSheetController extends State<UserBottomSheet> {
         );
         if (result.error != null) return;
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(L10n.of(context)!.contentHasBeenReported)));
+          SnackBar(content: Text(L10n.of(context)!.contentHasBeenReported)),
+        );
         break;
-      case 'mention':
+      case UserBottomSheetAction.mention:
         Navigator.of(context, rootNavigator: false).pop();
         widget.onMention!();
         break;
-      case 'ban':
+      case UserBottomSheetAction.ban:
         if (await askConfirmation()) {
           await showFutureLoadingDialog(
             context: context,
@@ -95,7 +109,7 @@ class UserBottomSheetController extends State<UserBottomSheet> {
           Navigator.of(context, rootNavigator: false).pop();
         }
         break;
-      case 'unban':
+      case UserBottomSheetAction.unban:
         if (await askConfirmation()) {
           await showFutureLoadingDialog(
             context: context,
@@ -104,7 +118,7 @@ class UserBottomSheetController extends State<UserBottomSheet> {
           Navigator.of(context, rootNavigator: false).pop();
         }
         break;
-      case 'kick':
+      case UserBottomSheetAction.kick:
         if (await askConfirmation()) {
           await showFutureLoadingDialog(
             context: context,
@@ -113,7 +127,7 @@ class UserBottomSheetController extends State<UserBottomSheet> {
           Navigator.of(context, rootNavigator: false).pop();
         }
         break;
-      case 'permission':
+      case UserBottomSheetAction.permission:
         final newPermission = await showPermissionChooser(
           context,
           currentLevel: widget.user.powerLevel,
@@ -127,7 +141,7 @@ class UserBottomSheetController extends State<UserBottomSheet> {
           Navigator.of(context, rootNavigator: false).pop();
         }
         break;
-      case 'message':
+      case UserBottomSheetAction.message:
         final roomIdResult = await showFutureLoadingDialog(
           context: context,
           future: () => widget.user.startDirectChat(),
@@ -137,12 +151,12 @@ class UserBottomSheetController extends State<UserBottomSheet> {
             .toSegments(['rooms', roomIdResult.result!]);
         Navigator.of(context, rootNavigator: false).pop();
         break;
-      case 'ignore':
+      case UserBottomSheetAction.ignore:
         if (await askConfirmation()) {
           await showFutureLoadingDialog(
-              context: context,
-              future: () =>
-                  Matrix.of(context).client.ignoreUser(widget.user.id));
+            context: context,
+            future: () => Matrix.of(context).client.ignoreUser(widget.user.id),
+          );
         }
     }
   }

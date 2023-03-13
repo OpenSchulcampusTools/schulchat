@@ -28,6 +28,7 @@ class ConnectPageView extends StatelessWidget {
         ),
       ),
       body: ListView(
+        key: const Key('ConnectPageListView'),
         children: [
           if (Matrix.of(context).loginRegistrationSupported ?? false) ...[
             Padding(
@@ -40,9 +41,12 @@ class ConnectPageView extends StatelessWidget {
                       elevation: Theme.of(context)
                               .appBarTheme
                               .scrolledUnderElevation ??
-                          4,
+                          10,
                       color: Colors.transparent,
-                      shadowColor: Theme.of(context).appBarTheme.shadowColor,
+                      shadowColor: Theme.of(context)
+                          .colorScheme
+                          .onBackground
+                          .withAlpha(64),
                       clipBehavior: Clip.hardEdge,
                       child: CircleAvatar(
                         radius: 64,
@@ -103,13 +107,14 @@ class ConnectPageView extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: Hero(
                 tag: 'loginButton',
-                child: ElevatedButton(
+                child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: controller.loading ? () {} : controller.signUp,
-                  child: controller.loading
+                  icon: const Icon(Icons.person_add_outlined),
+                  label: controller.loading
                       ? const LinearProgressIndicator()
                       : Text(L10n.of(context)!.signUp),
                 ),
@@ -169,17 +174,20 @@ class ConnectPageView extends StatelessWidget {
                                     )
                                   : Image.network(
                                       Uri.parse(identityProviders.single.icon!)
-                                          .getDownloadLink(Matrix.of(context)
-                                              .getLoginClient())
+                                          .getDownloadLink(
+                                            Matrix.of(context).getLoginClient(),
+                                          )
                                           .toString(),
                                       width: 32,
                                       height: 32,
                                     ),
                               onPressed: () => controller
                                   .ssoLoginAction(identityProviders.single.id!),
-                              label: Text(identityProviders.single.name ??
-                                  identityProviders.single.brand ??
-                                  L10n.of(context)!.loginWithOneClick),
+                              label: Text(
+                                identityProviders.single.name ??
+                                    identityProviders.single.brand ??
+                                    L10n.of(context)!.loginWithOneClick,
+                              ),
                             ),
                           )
                         : Wrap(
@@ -198,7 +206,8 @@ class ConnectPageView extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: Hero(
                 tag: 'signinButton',
-                child: ElevatedButton(
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.login_outlined),
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
                         Theme.of(context).colorScheme.primaryContainer,
@@ -206,7 +215,7 @@ class ConnectPageView extends StatelessWidget {
                         Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                   onPressed: controller.loading ? () {} : controller.login,
-                  child: Text(L10n.of(context)!.login),
+                  label: Text(L10n.of(context)!.login),
                 ),
               ),
             ),

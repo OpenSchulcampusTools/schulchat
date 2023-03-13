@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'constants.dart';
+import 'package:fluffychat/config/themes.dart';
 import 'dismiss_keyboard.dart';
 
 class PIPView extends StatefulWidget {
@@ -45,11 +45,11 @@ class PIPViewState extends State<PIPView> with TickerProviderStateMixin {
     super.initState();
     _corner = widget.initialCorner;
     _toggleFloatingAnimationController = AnimationController(
-      duration: defaultAnimationDuration,
+      duration: FluffyThemes.animationDuration,
       vsync: this,
     );
     _dragAnimationController = AnimationController(
-      duration: defaultAnimationDuration,
+      duration: FluffyThemes.animationDuration,
       vsync: this,
     );
   }
@@ -198,9 +198,11 @@ class PIPViewState extends State<PIPView> with TickerProviderStateMixin {
                     : Tween<Offset>(
                         begin: _dragOffset,
                         end: calculatedOffset,
-                      ).transform(_dragAnimationController.isAnimating
-                        ? dragAnimationValue
-                        : toggleFloatingAnimationValue);
+                      ).transform(
+                        _dragAnimationController.isAnimating
+                            ? dragAnimationValue
+                            : toggleFloatingAnimationValue,
+                      );
                 final borderRadius = Tween<double>(
                   begin: 0,
                   end: 10,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 import 'package:fluffychat/widgets/layouts/max_width_body.dart';
@@ -15,7 +14,6 @@ class SettingsStyleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.currentTheme ??= AdaptiveTheme.of(context).mode;
     const colorPickerSize = 32.0;
     final wallpaper = Matrix.of(context).wallpaper;
     return Scaffold(
@@ -61,17 +59,18 @@ class SettingsStyleView extends StatelessWidget {
                                   borderRadius:
                                       BorderRadius.circular(colorPickerSize),
                                   child: SizedBox(
-                                      width: colorPickerSize,
-                                      height: colorPickerSize,
-                                      child: AppConfig.colorSchemeSeed?.value ==
-                                              color.value
-                                          ? const Center(
-                                              child: Icon(
+                                    width: colorPickerSize,
+                                    height: colorPickerSize,
+                                    child: controller.currentColor == color
+                                        ? const Center(
+                                            child: Icon(
                                               Icons.check,
                                               size: 16,
                                               color: Colors.white,
-                                            ))
-                                          : null),
+                                            ),
+                                          )
+                                        : null,
+                                  ),
                                 ),
                         ),
                       ),
@@ -80,21 +79,21 @@ class SettingsStyleView extends StatelessWidget {
               ),
             ),
             const Divider(height: 1),
-            RadioListTile<AdaptiveThemeMode>(
+            RadioListTile<ThemeMode>(
               groupValue: controller.currentTheme,
-              value: AdaptiveThemeMode.system,
+              value: ThemeMode.system,
               title: Text(L10n.of(context)!.systemTheme),
               onChanged: controller.switchTheme,
             ),
-            RadioListTile<AdaptiveThemeMode>(
+            RadioListTile<ThemeMode>(
               groupValue: controller.currentTheme,
-              value: AdaptiveThemeMode.light,
+              value: ThemeMode.light,
               title: Text(L10n.of(context)!.lightTheme),
               onChanged: controller.switchTheme,
             ),
-            RadioListTile<AdaptiveThemeMode>(
+            RadioListTile<ThemeMode>(
               groupValue: controller.currentTheme,
-              value: AdaptiveThemeMode.dark,
+              value: ThemeMode.dark,
               title: Text(L10n.of(context)!.darkTheme),
               onChanged: controller.switchTheme,
             ),
@@ -121,16 +120,18 @@ class SettingsStyleView extends StatelessWidget {
                 ),
                 onTap: controller.deleteWallpaperAction,
               ),
-            Builder(builder: (context) {
-              return ListTile(
-                title: Text(L10n.of(context)!.changeWallpaper),
-                trailing: Icon(
-                  Icons.photo_outlined,
-                  color: Theme.of(context).textTheme.bodyText1?.color,
-                ),
-                onTap: controller.setWallpaperAction,
-              );
-            }),
+            Builder(
+              builder: (context) {
+                return ListTile(
+                  title: Text(L10n.of(context)!.changeWallpaper),
+                  trailing: Icon(
+                    Icons.photo_outlined,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ),
+                  onTap: controller.setWallpaperAction,
+                );
+              },
+            ),
             const Divider(height: 1),
             ListTile(
               title: Text(

@@ -107,9 +107,13 @@ class Message extends StatelessWidget {
     final noBubble = {
           MessageTypes.Video,
           MessageTypes.Image,
-          MessageTypes.Sticker,
+          MessageTypes.Sticker
         }.contains(event.messageType) &&
         !event.redacted;
+    final noPadding = {
+      MessageTypes.File,
+      MessageTypes.Audio,
+    }.contains(event.messageType);
 
     if (ownMessage) {
       color = displayEvent.status.isError
@@ -166,13 +170,15 @@ class Message extends StatelessWidget {
                     height: 16 * AppConfig.bubbleSizeFactor,
                     child: event.status == EventStatus.sending
                         ? const CircularProgressIndicator.adaptive(
-                            strokeWidth: 2)
+                            strokeWidth: 2,
+                          )
                         : event.status == EventStatus.error
                             ? const Icon(Icons.error, color: Colors.red)
                             : null,
                   ),
                 ),
-              ))
+              ),
+            )
           : FutureBuilder<User?>(
               future: event.fetchSenderUser(),
               builder: (context, snapshot) {
@@ -182,7 +188,8 @@ class Message extends StatelessWidget {
                   name: user.calcDisplayname(),
                   onTap: () => onAvatarTab!(event),
                 );
-              }),
+              },
+            ),
       Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,10 +212,14 @@ class Message extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: displayname.color,
+                              color: (Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? displayname.color
+                                  : displayname.lightColorText),
                             ),
                           );
-                        }),
+                        },
+                      ),
               ),
             Container(
               alignment: alignment,
@@ -231,11 +242,12 @@ class Message extends StatelessWidget {
                       borderRadius:
                           BorderRadius.circular(AppConfig.borderRadius),
                     ),
-                    padding: noBubble
+                    padding: noBubble || noPadding
                         ? EdgeInsets.zero
                         : EdgeInsets.all(16 * AppConfig.bubbleSizeFactor),
                     constraints: const BoxConstraints(
-                        maxWidth: FluffyThemes.columnWidth * 1.5),
+                      maxWidth: FluffyThemes.columnWidth * 1.5,
+                    ),
                     child: Stack(
                       children: <Widget>[
                         Column(
@@ -290,10 +302,13 @@ class Message extends StatelessWidget {
                               searchTerm: searchTerm,
                             ),
                             if (event.hasAggregatedEvents(
-                                timeline, RelationshipTypes.edit))
+                              timeline,
+                              RelationshipTypes.edit,
+                            ))
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top: 4.0 * AppConfig.bubbleSizeFactor),
+                                  top: 4.0 * AppConfig.bubbleSizeFactor,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -357,23 +372,29 @@ class Message extends StatelessWidget {
             Padding(
               padding: displayTime
                   ? EdgeInsets.symmetric(
-                      vertical: 8.0 * AppConfig.bubbleSizeFactor)
+                      vertical: 8.0 * AppConfig.bubbleSizeFactor,
+                    )
                   : EdgeInsets.zero,
               child: Center(
-                  child: Material(
-                color: displayTime
-                    ? Theme.of(context).backgroundColor
-                    : Theme.of(context).backgroundColor.withOpacity(0.33),
-                borderRadius: BorderRadius.circular(AppConfig.borderRadius / 2),
-                clipBehavior: Clip.antiAlias,
-                child: Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Text(
-                    event.originServerTs.localizedTime(context),
-                    style: TextStyle(fontSize: 14 * AppConfig.fontSizeFactor),
+                child: Material(
+                  color: displayTime
+                      ? Theme.of(context).colorScheme.background
+                      : Theme.of(context)
+                          .colorScheme
+                          .background
+                          .withOpacity(0.33),
+                  borderRadius:
+                      BorderRadius.circular(AppConfig.borderRadius / 2),
+                  clipBehavior: Clip.antiAlias,
+                  child: Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Text(
+                      event.originServerTs.localizedTime(context),
+                      style: TextStyle(fontSize: 14 * AppConfig.fontSizeFactor),
+                    ),
                   ),
                 ),
-              )),
+              ),
             ),
           row,
           if (event.hasAggregatedEvents(timeline, RelationshipTypes.reaction))

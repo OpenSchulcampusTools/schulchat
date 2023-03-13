@@ -89,11 +89,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "invalidEmail": "올바르지 않은 이메일",
-  "@invalidEmail": {
-    "type": "text",
-    "placeholders": {}
-  },
   "help": "도움",
   "@help": {
     "type": "text",
@@ -144,11 +139,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "friends": "친구",
-  "@friends": {
-    "type": "text",
-    "placeholders": {}
-  },
   "friday": "금요일",
   "@friday": {
     "type": "text",
@@ -166,11 +156,6 @@
   },
   "fluffychat": "FluffyChat",
   "@fluffychat": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "fileSize": "파일 크기",
-  "@fileSize": {
     "type": "text",
     "placeholders": {}
   },
@@ -196,11 +181,6 @@
   },
   "homeserver": "홈서버",
   "@homeserver": {},
-  "enterAUsername": "유저 이름 입력",
-  "@enterAUsername": {
-    "type": "text",
-    "placeholders": {}
-  },
   "enterASpacepName": "스페이스 이름 입력",
   "@enterASpacepName": {},
   "enterAnEmailAddress": "이메일 주소 입력",
@@ -220,18 +200,8 @@
       "senderName": {}
     }
   },
-  "end2endEncryptionSettings": "종단간 암호화 설정`",
-  "@end2endEncryptionSettings": {
-    "type": "text",
-    "placeholders": {}
-  },
   "encryptionNotEnabled": "암호화가 비활성화됨",
   "@encryptionNotEnabled": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "encryptionAlgorithm": "암호화 알고리즘",
-  "@encryptionAlgorithm": {
     "type": "text",
     "placeholders": {}
   },
@@ -257,11 +227,6 @@
   },
   "enableEmotesGlobally": "이모트 팩 항상 사용하기",
   "@enableEmotesGlobally": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "enableChatBackup": "채팅을 잃지 않으려면 채팅 백업을 켜세요.",
-  "@enableChatBackup": {
     "type": "text",
     "placeholders": {}
   },
@@ -310,11 +275,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "editJitsiInstance": "Jitsi 인스턴스 수정",
-  "@editJitsiInstance": {
-    "type": "text",
-    "placeholders": {}
-  },
   "editDisplayname": "표시 이름 수정",
   "@editDisplayname": {
     "type": "text",
@@ -335,33 +295,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "dontAskAgain": "취소하고 다시 묻지 않기",
-  "@dontAskAgain": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "donate": "후원",
-  "@donate": {
-    "type": "text",
-    "placeholders": {}
-  },
   "displaynameHasBeenChanged": "표시 이름이 변경되었습니다",
   "@displaynameHasBeenChanged": {
     "type": "text",
     "placeholders": {}
   },
-  "discoverGroups": "그룹 발견",
-  "@discoverGroups": {
-    "type": "text",
-    "placeholders": {}
-  },
   "discover": "발견",
   "@discover": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "deviceVerifyDescription": "암호화는 모든 기기들이 확인되었을 때만 안전합니다.",
-  "@deviceVerifyDescription": {
     "type": "text",
     "placeholders": {}
   },
@@ -425,17 +365,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "createdTheChat": "{username}이 채팅을 생성함",
+  "createdTheChat": "💬 {username}님이 채팅을 생성함",
   "@createdTheChat": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
-  },
-  "createAccountNow": "지금 계정 생성하기",
-  "@createAccountNow": {
-    "type": "text",
-    "placeholders": {}
   },
   "create": "생성",
   "@create": {
@@ -448,16 +383,6 @@
     "placeholders": {
       "count": {}
     }
-  },
-  "couldNotSetDisplayname": "표시 이름 설정할 수 없음`",
-  "@couldNotSetDisplayname": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "couldNotSetAvatar": "아바타 설정할 수 없음",
-  "@couldNotSetAvatar": {
-    "type": "text",
-    "placeholders": {}
   },
   "couldNotDecryptMessage": "메시지 복호화할 수 없음: {error}",
   "@couldNotDecryptMessage": {
@@ -498,11 +423,6 @@
   },
   "contactHasBeenInvitedToTheGroup": "연락처가 그룹에 초대되었습니다",
   "@contactHasBeenInvitedToTheGroup": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "connectionAttemptFailed": "연결 시도 실패",
-  "@connectionAttemptFailed": {
     "type": "text",
     "placeholders": {}
   },
@@ -578,11 +498,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "clearText": "문자 지우기",
-  "@clearText": {
-    "type": "text",
-    "placeholders": {}
-  },
   "clearArchive": "저장 지우기",
   "@clearArchive": {},
   "chooseAUsername": "닉네임 고르기",
@@ -595,11 +510,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "chatHasBeenRemovedFromThisSpace": "이 스페이스에서 채팅이 삭제되었습니다",
-  "@chatHasBeenRemovedFromThisSpace": {
-    "type": "text",
-    "placeholders": {}
-  },
   "chatHasBeenAddedToThisSpace": "이 스페이스에 채팅이 추가되었습니다",
   "@chatHasBeenAddedToThisSpace": {},
   "chatDetails": "채팅 정보",
@@ -607,7 +517,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "chatBackupDescription": "당신의 채팅 백업은 보안 키로 암호화됩니다. 이 키를 잃어버리지 마세요.",
+  "chatBackupDescription": "당신의 오래된 메시지는 보안 키로 보호됩니다. 이 키를 잃어버리지 마세요.",
   "@chatBackupDescription": {
     "type": "text",
     "placeholders": {}
@@ -637,11 +547,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "changeTheServer": "서버 바꾸기",
-  "@changeTheServer": {
-    "type": "text",
-    "placeholders": {}
-  },
   "changeTheNameOfTheGroup": "그룹의 이름 바꾸기",
   "@changeTheNameOfTheGroup": {
     "type": "text",
@@ -657,18 +562,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "changesHaveBeenSaved": "변경들이 저장되었습니다",
-  "@changesHaveBeenSaved": {
-    "type": "text",
-    "placeholders": {}
-  },
   "changePassword": "비밀번호 바꾸기",
   "@changePassword": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "changelog": "변경 기록",
-  "@changelog": {
     "type": "text",
     "placeholders": {}
   },
@@ -786,11 +681,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "cachedKeys": "키 캐시됨",
-  "@cachedKeys": {
-    "type": "text",
-    "placeholders": {}
-  },
   "botMessages": "봇 메시지",
   "@botMessages": {
     "type": "text",
@@ -842,30 +732,10 @@
       "supportedVersions": {}
     }
   },
-  "avatarHasBeenChanged": "아바타 바뀜",
-  "@avatarHasBeenChanged": {
-    "type": "text",
-    "placeholders": {}
-  },
   "autoplayImages": "자동으로 움직이는 스티커와 이모트 재생",
   "@autoplayImages": {
     "type": "text",
     "placeholder": {}
-  },
-  "authentication": "인증",
-  "@authentication": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "audioPlayerPlay": "재생",
-  "@audioPlayerPlay": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "audioPlayerPause": "일시정지",
-  "@audioPlayerPause": {
-    "type": "text",
-    "placeholders": {}
   },
   "askVerificationRequest": "{username}의 인증 요청을 수락할까요?",
   "@askVerificationRequest": {
@@ -874,18 +744,8 @@
       "username": {}
     }
   },
-  "askSSSSVerify": "당신의 세션을 인증하기 위해 저장 비밀번호나 복구 키를 입력해주세요.",
-  "@askSSSSVerify": {
-    "type": "text",
-    "placeholders": {}
-  },
   "askSSSSSign": "다른 사람을 서명하기 위해서, 저장 비밀번호나 복구 키를 입력해주세요.",
   "@askSSSSSign": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "askSSSSCache": "키를 캐시하기 위해 저장 비밀번호나 복구 키를 입력해주세요.",
-  "@askSSSSCache": {
     "type": "text",
     "placeholders": {}
   },
@@ -931,11 +791,6 @@
       "senderName": {}
     }
   },
-  "alreadyHaveAnAccount": "이미 계정이 있나요?",
-  "@alreadyHaveAnAccount": {
-    "type": "text",
-    "placeholders": {}
-  },
   "alias": "별명",
   "@alias": {
     "type": "text",
@@ -948,11 +803,6 @@
   },
   "addToSpace": "스페이스에 추가",
   "@addToSpace": {},
-  "addNewFriend": "새 친구 추가",
-  "@addNewFriend": {
-    "type": "text",
-    "placeholders": {}
-  },
   "addGroupDescription": "그룹 소개 추가",
   "@addGroupDescription": {
     "type": "text",
@@ -963,24 +813,19 @@
     "type": "text",
     "placeholders": {}
   },
-  "activatedEndToEndEncryption": "{username}가 종단간 암호화를 활성화함",
+  "activatedEndToEndEncryption": "🔐 {username}님이 종단간 암호화를 활성화함",
   "@activatedEndToEndEncryption": {
     "type": "text",
     "placeholders": {
       "username": {}
     }
   },
-  "accountInformation": "계정 정보",
-  "@accountInformation": {
-    "type": "text",
-    "placeholders": {}
-  },
   "account": "계정",
   "@account": {
     "type": "text",
     "placeholders": {}
   },
-  "acceptedTheInvitation": "{username}가 초대를 수락함",
+  "acceptedTheInvitation": "👍 {username}님이 초대를 수락함",
   "@acceptedTheInvitation": {
     "type": "text",
     "placeholders": {
@@ -1004,11 +849,6 @@
   },
   "howOffensiveIsThisContent": "이 콘텐츠가 얼마나 모욕적인가요?",
   "@howOffensiveIsThisContent": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "homeserverIsNotCompatible": "홈서버가 호환되지 않음",
-  "@homeserverIsNotCompatible": {
     "type": "text",
     "placeholders": {}
   },
@@ -1089,11 +929,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "contentViewer": "콘텐츠 뷰어",
-  "@contentViewer": {
-    "type": "text",
-    "placeholders": {}
-  },
   "youAreInvitedToThisChat": "당신은 이 채팅에 초대되었습니다",
   "@youAreInvitedToThisChat": {
     "type": "text",
@@ -1139,18 +974,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "welcomeText": "Matrix 네트워크에서 가장 귀여운 인스턴트 메신저에 오신 걸 환영해요.",
-  "@welcomeText": {
-    "type": "text",
-    "placeholders": {}
-  },
   "wednesday": "수요일",
   "@wednesday": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "warningEncryptionInBeta": "종단간 암호화는 현재 베타입니다! 주의하여 사용하십시오!",
-  "@warningEncryptionInBeta": {
     "type": "text",
     "placeholders": {}
   },
@@ -1199,11 +1024,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "verifyUser": "유저 확인",
-  "@verifyUser": {
-    "type": "text",
-    "placeholders": {}
-  },
   "verifyTitle": "다른 계정 확인 중",
   "@verifyTitle": {
     "type": "text",
@@ -1219,33 +1039,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "verifyManual": "직접 확인",
-  "@verifyManual": {
-    "type": "text",
-    "placeholders": {}
-  },
   "verify": "확인",
   "@verify": {
     "type": "text",
     "placeholders": {}
   },
-  "verifiedSession": "세션을 성공적으로 확인했어요!",
-  "@verifiedSession": {
-    "type": "text",
-    "placeholders": {}
-  },
   "verified": "확인됨",
   "@verified": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "userVerified": "유저가 확인됨",
-  "@userVerified": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "userNotVerified": "유저가 확인되지 않음",
-  "@userNotVerified": {
     "type": "text",
     "placeholders": {}
   },
@@ -1289,11 +1089,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "unlockChatBackup": "채팅 백업 잠금 해제",
-  "@unlockChatBackup": {
-    "type": "text",
-    "placeholders": {}
-  },
   "unknownEncryptionAlgorithm": "알 수 없는 암호화 알고리즘",
   "@unknownEncryptionAlgorithm": {
     "type": "text",
@@ -1306,11 +1101,6 @@
   },
   "tuesday": "화요일",
   "@tuesday": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "publicGroups": "공개 그룹",
-  "@publicGroups": {
     "type": "text",
     "placeholders": {}
   },
@@ -1408,18 +1198,6 @@
       "count": {}
     }
   },
-  "numberSelected": "{number} 선택됨",
-  "@numberSelected": {
-    "type": "text",
-    "placeholders": {
-      "number": {}
-    }
-  },
-  "notSupportedInWeb": "웹에서 지원되지 않음",
-  "@notSupportedInWeb": {
-    "type": "text",
-    "placeholders": {}
-  },
   "notificationsEnabledForThisAccount": "이 계정에서 알림이 활성화되었습니다",
   "@notificationsEnabledForThisAccount": {
     "type": "text",
@@ -1441,8 +1219,6 @@
   "@typeInInviteLinkManually": {},
   "shareYourInviteLink": "당신의 초대 링크 공유",
   "@shareYourInviteLink": {},
-  "createNewChatExplaination": "서로 가깝지 않다면 초대 링크를 공유하거나 QR 코드를 스캔하세요.",
-  "@createNewChatExplaination": {},
   "noMatrixServer": "{server1}은 matrix 서버가 아닙니다, {server2}를 대신 사용할까요?",
   "@noMatrixServer": {
     "type": "text",
@@ -1530,45 +1306,16 @@
     "type": "text",
     "placeholders": {}
   },
-  "makeAModerator": "관리자로 만들기",
-  "@makeAModerator": {
-    "type": "text",
-    "placeholders": {}
-  },
   "logout": "로그아웃",
   "@logout": {
     "type": "text",
     "placeholders": {}
-  },
-  "moreEvents": "{count,plural, =1{1개 이상 이벤트} other{{count} 이벤트}}",
-  "@moreEvents": {
-    "type": "text",
-    "placeholders": {
-      "count": {}
-    }
-  },
-  "unreadMessages": "{unreadEvents, plural, =1{1개의 읽지 않은 메시지} other{{unreadEvents} 개}}",
-  "@unreadMessages": {
-    "type": "text",
-    "placeholders": {
-      "unreadEvents": {}
-    }
   },
   "unreadChats": "{unreadCount, plural, =1{읽지 않은 채팅 1} other{{unreadCount} 개}}",
   "@unreadChats": {
     "type": "text",
     "placeholders": {
       "unreadCount": {}
-    }
-  },
-  "timeOfDay": "{hours24}시 {minutes}분",
-  "@timeOfDay": {
-    "type": "text",
-    "placeholders": {
-      "hours12": {},
-      "hours24": {},
-      "minutes": {},
-      "suffix": {}
     }
   },
   "renderRichContent": "풍부한 메시지 콘텐츠 렌더링",
@@ -1581,23 +1328,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "noCrossSignBootstrap": "Fluffychat은 현재 교차 서명을 활성화하는 것을 지원하지 않습니다. Element에서 활성화해주세요.",
-  "@noCrossSignBootstrap": {
-    "type": "text",
-    "placeholders": {}
-  },
   "makeSureTheIdentifierIsValid": "식별자가 유효한지 확인하세요",
   "@makeSureTheIdentifierIsValid": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "makeAnAdmin": "운영자 만들기",
-  "@makeAnAdmin": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "discardPicture": "사진 삭제",
-  "@discardPicture": {
     "type": "text",
     "placeholders": {}
   },
@@ -1606,45 +1338,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "crossSigningDisabled": "교차 서명 꺼짐",
-  "@crossSigningDisabled": {
-    "type": "text",
-    "placeholders": {}
-  },
   "all": "모두",
   "@all": {
     "type": "text",
     "placeholders": {}
   },
-  "zoomOut": "축소",
-  "@zoomOut": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "zoomIn": "확대",
-  "@zoomIn": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "youWillBeConnectedTo": "{homeserver} 에 연결됩니다",
-  "@youWillBeConnectedTo": {
-    "type": "text",
-    "placeholders": {
-      "homeserver": {}
-    }
-  },
   "yourPublicKey": "당신의 공개 키",
   "@yourPublicKey": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "yourOwnUsername": "당신의 유저 이름",
-  "@yourOwnUsername": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "yourChatsAreBeingSynced": "당신의 채팅이 동기화되는 중…",
-  "@yourChatsAreBeingSynced": {
     "type": "text",
     "placeholders": {}
   },
@@ -1673,11 +1373,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "userUnknownVerification": "사용자가 알 수 없는 확인 상태를 가짐",
-  "@userUnknownVerification": {
-    "type": "text",
-    "placeholders": {}
-  },
   "userSentUnknownEvent": "{username}이 {type} 이벤트 보냄",
   "@userSentUnknownEvent": {
     "type": "text",
@@ -1686,18 +1381,8 @@
       "type": {}
     }
   },
-  "useAmoledTheme": "AMOLED 호환 색을 사용할까요?",
-  "@useAmoledTheme": {
-    "type": "text",
-    "placeholders": {}
-  },
   "unmuteChat": "음소거 해제",
   "@unmuteChat": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "unknownSessionVerify": "알 수 없는 세션, 확인해주세요",
-  "@unknownSessionVerify": {
     "type": "text",
     "placeholders": {}
   },
@@ -1777,21 +1462,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "tapToShowMenu": "탭하여 메뉴 표시",
-  "@tapToShowMenu": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "tapToShowImage": "탭하여 이미지 표시",
-  "@tapToShowImage": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "tapOnDeviceToVerify": "확인할 기기를 탭하세요",
-  "@tapOnDeviceToVerify": {
-    "type": "text",
-    "placeholders": {}
-  },
   "systemTheme": "시스템",
   "@systemTheme": {
     "type": "text",
@@ -1819,11 +1489,6 @@
   },
   "status": "상태",
   "@status": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "startYourFirstChat": "당신의 처음 채팅을 바로 시작하세요! 🙂\n- '새로운 채팅' 버튼을 누르고\n- 친구의 유저 이름 입력\n- 채팅을 즐기세요",
-  "@startYourFirstChat": {
     "type": "text",
     "placeholders": {}
   },
@@ -1864,16 +1529,6 @@
   },
   "pleaseEnterAMatrixIdentifier": "Matrix ID를 입력해주세요.",
   "@pleaseEnterAMatrixIdentifier": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "participatingUserDevices": "참여한 사용자 기기",
-  "@participatingUserDevices": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "lastSeenIp": "마지막 활동 IP",
-  "@lastSeenIp": {
     "type": "text",
     "placeholders": {}
   },
@@ -1950,23 +1605,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "onlineKeyBackupDisabled": "온라인 키 백업이 비활성화됨",
-  "@onlineKeyBackupDisabled": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "noStatusesFound": "아무 상태도 발견되지 않음.",
-  "@noStatusesFound": {
-    "type": "text",
-    "placeholders": {}
-  },
   "noRoomsFound": "아무 방도 발견되지 않았어요…",
   "@noRoomsFound": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "noPublicRoomsFound": "아무 공개 방도 발견되지 않았어요…",
-  "@noPublicRoomsFound": {
     "type": "text",
     "placeholders": {}
   },
@@ -1975,17 +1615,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "newUsernameDescription": "당신의 사용자 ID는 @사용자 이름:서버 이름 의 형식을 가질 것입니다",
-  "@newUsernameDescription": {},
-  "newPasswordDescription": "비밀번호를 복구하기 위해서는, 당신의 계정에 이메일 주소를 추가해야합니다.",
-  "@newPasswordDescription": {},
   "none": "없음",
   "@none": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "noMegolmBootstrap": "온라인 키 백업을 Element에서 켜주세요.",
-  "@noMegolmBootstrap": {
     "type": "text",
     "placeholders": {}
   },
@@ -2001,11 +1632,6 @@
   },
   "noEmotesFound": "이모트 발견되지 않음. 😕",
   "@noEmotesFound": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "noDescription": "설명 없음",
-  "@noDescription": {
     "type": "text",
     "placeholders": {}
   },
@@ -2051,11 +1677,6 @@
   },
   "sourceCode": "소스 코드",
   "@sourceCode": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "soundVibrationLedColor": "소리, 진동 LED-색",
-  "@soundVibrationLedColor": {
     "type": "text",
     "placeholders": {}
   },
@@ -2126,21 +1747,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "setAProfilePicture": "프로필 사진 설정",
-  "@setAProfilePicture": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "sessionVerified": "세션이 확인됨",
-  "@sessionVerified": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "sentryInfo": "당신의 프라이버시에 대한 정보: https://sentry.io/security/",
-  "@sentryInfo": {
-    "type": "text",
-    "placeholders": {}
-  },
   "sentCallInformations": "{senderName} 이 통화 정보 보냄",
   "@sentCallInformations": {
     "type": "text",
@@ -2172,11 +1778,6 @@
   },
   "sendFile": "파일 보내기",
   "@sendFile": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "sendBugReports": "sentry.io로 버그 제보 허용",
-  "@sendBugReports": {
     "type": "text",
     "placeholders": {}
   },
@@ -2214,23 +1815,8 @@
       "username": {}
     }
   },
-  "securityKeyLost": "보안 키를 잃어버렸나요?",
-  "@securityKeyLost": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "securityKey": "보안 키",
-  "@securityKey": {
-    "type": "text",
-    "placeholders": {}
-  },
   "security": "보안",
   "@security": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "searchForAChat": "채팅 검색",
-  "@searchForAChat": {
     "type": "text",
     "placeholders": {}
   },
@@ -2239,22 +1825,10 @@
     "type": "text",
     "placeholders": {}
   },
-  "saveFileToFolder": "파일 이 폴더에 저장",
-  "@saveFileToFolder": {
-    "type": "text",
-    "placeholders": {}
-  },
   "saveFile": "파일 저장",
   "@saveFile": {
     "type": "text",
     "placeholders": {}
-  },
-  "savedFileAs": "파일 {filename} 으로 저장함",
-  "@savedFileAs": {
-    "type": "text",
-    "placeholders": {
-      "filename": {}
-    }
   },
   "saturday": "토요일",
   "@saturday": {
@@ -2271,16 +1845,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "revokeAllPermissions": "모든 권한 취소",
-  "@revokeAllPermissions": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "requestToReadOlderMessages": "오래된 메시지 읽도록 요청",
-  "@requestToReadOlderMessages": {
-    "type": "text",
-    "placeholders": {}
-  },
   "requestPermission": "권한 요청",
   "@requestPermission": {
     "type": "text",
@@ -2291,18 +1855,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "publicSpace": "공개 스페이스",
-  "@publicSpace": {
-    "type": "text",
-    "placeholders": {}
-  },
   "publicRooms": "공개 방",
   "@publicRooms": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "publicKey": "공개 키",
-  "@publicKey": {
     "type": "text",
     "placeholders": {}
   },
@@ -2331,16 +1885,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "pleaseEnterSecurityKey": "보안 키를 입력해주세요:",
-  "@pleaseEnterSecurityKey": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "keysMissing": "키가 없음",
-  "@keysMissing": {
-    "type": "text",
-    "placeholders": {}
-  },
   "keysCached": "키가 캐시됨",
   "@keysCached": {
     "type": "text",
@@ -2351,7 +1895,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "{username}이 채팅에 참가함",
+  "joinedTheChat": "👋 {username}님이 채팅에 참가함",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -2360,11 +1904,6 @@
   },
   "isTyping": "가 입력 중…",
   "@isTyping": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "isDeviceKeyCorrect": "아래 기기 키가 맞습니까?",
-  "@isDeviceKeyCorrect": {
     "type": "text",
     "placeholders": {}
   },
@@ -2386,7 +1925,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "invitedUser": "{username}이 {targetName}을 초대함",
+  "invitedUser": "📩 {username}님이 {targetName}님을 초대함",
   "@invitedUser": {
     "type": "text",
     "placeholders": {
@@ -2494,11 +2033,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "removeMessage": "메시지 지우기",
-  "@removeMessage": {
-    "type": "text",
-    "placeholders": {}
-  },
   "unbanFromChat": "채팅에서 밴 해제",
   "@unbanFromChat": {
     "type": "text",
@@ -2580,7 +2114,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kickedAndBanned": "{username}이 {targetName}을 추방하고 밴함",
+  "kickedAndBanned": "🙅 {username}님이 {targetName}님을 추방하고 차단함",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -2588,7 +2122,7 @@
       "targetName": {}
     }
   },
-  "kicked": "{username}이 {targetName}을 추방함",
+  "kicked": "👞 {username}님이 {targetName}님을 추방함",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -2602,14 +2136,8 @@
   "@yourUserId": {},
   "unverified": "확인되지 않음",
   "@unverified": {},
-  "setupChatBackup": "채팅 백업 설정",
-  "@setupChatBackup": {},
   "yourChatBackupHasBeenSetUp": "당신의 채팅 백업이 설정되었습니다.",
   "@yourChatBackupHasBeenSetUp": {},
-  "iWroteDownTheKey": "키를 적었습니다",
-  "@iWroteDownTheKey": {},
-  "setupChatBackupDescription": "당신의 메시지를 보호하기 위해서, 보안 키를 생성했습니다.\n비밀번호 관리자와 같이 안전한 곳에 저장해주세요.",
-  "@setupChatBackupDescription": {},
   "time": "시간",
   "@time": {},
   "messageType": "메시지 유형",
@@ -2637,18 +2165,10 @@
   "@loginWithOneClick": {},
   "start": "시작",
   "@start": {},
-  "setupChatBackupNow": "당신의 채팅 백업을 지금 설정하세요",
-  "@setupChatBackupNow": {},
   "removeFromSpace": "스페이스에서 삭제",
   "@removeFromSpace": {},
-  "removeFromSpaceDescription": "이것은 현재 채팅을 현재 스페이스로부터 지웁니다. 여전히 '모든 채팅'에서 접근할 수 있습니다.",
-  "@removeFromSpaceDescription": {},
   "addToSpaceDescription": "이 채팅을 추가할 스페이스를 선택하세요.",
   "@addToSpaceDescription": {},
-  "pleaseEnterSecurityKeyDescription": "채팅 백업을 잠금 해제하려면, 이전 세션에서 생성된 보안 키를 입력해주세요. 보안 키는 비밀번호가 아닙니다.",
-  "@pleaseEnterSecurityKeyDescription": {},
-  "saveTheSecurityKeyNow": "보안 키를 지금 저장",
-  "@saveTheSecurityKeyNow": {},
   "commandHint_discardsession": "세션 삭제",
   "@commandHint_discardsession": {
     "type": "text",
@@ -2718,10 +2238,6 @@
   "@dismiss": {},
   "matrixWidgets": "Matrix 위젯",
   "@matrixWidgets": {},
-  "integrationsNotImplemented": "아직 위젯과 통합을 편집하는 것은 가능하지 않습니다.",
-  "@integrationsNotImplemented": {},
-  "editIntegrations": "위젯과 통합 편집",
-  "@editIntegrations": {},
   "markAsRead": "읽음으로 표시하기",
   "@markAsRead": {},
   "reportUser": "사용자 신고",
@@ -2744,8 +2260,6 @@
   "@confirmEventUnpin": {},
   "pinMessage": "방에 고정",
   "@pinMessage": {},
-  "pinnedEventsError": "고정된 메시지 불러오는 중 오류",
-  "@pinnedEventsError": {},
   "emojis": "이모지",
   "@emojis": {},
   "voiceCall": "음성 통화",
@@ -2761,5 +2275,28 @@
   "videoCallsBetaWarning": "영상 통화는 베타임을 확인해주세요. 의도한 대로 작동하지 않거나 모든 플랫폼에서 작동하지 않을 수 있습니다.",
   "@videoCallsBetaWarning": {},
   "emailOrUsername": "이메일이나 유저 이름",
-  "@emailOrUsername": {}
+  "@emailOrUsername": {},
+  "updateAvailable": "FluffyChat 업데이트 이용가능",
+  "@updateAvailable": {},
+  "updateNow": "백그라운드에서 업데이트 시작",
+  "@updateNow": {},
+  "confirmMatrixId": "계정을 삭제하려면 Matrix ID를 확인해 주세요.",
+  "@confirmMatrixId": {},
+  "commandHint_googly": "왕눈이 눈알 보내기",
+  "@commandHint_googly": {},
+  "googlyEyesContent": "{senderName} 님이 왕눈이 눈알을 보냈습니다",
+  "@googlyEyesContent": {
+    "type": "text",
+    "placeholders": {
+      "senderName": {}
+    }
+  },
+  "commandHint_markasgroup": "",
+  "@commandHint_markasgroup": {},
+  "dehydrate": "세션을 내보내고 기기 초기화 하기",
+  "@dehydrate": {},
+  "dehydrateWarning": "이 동작은 되돌릴 수 없습니다. 백업 파일을 꼭 안전하게 보관하세요.",
+  "@dehydrateWarning": {},
+  "dehydrateShare": "FluffyChat 개인 내보내기 파일입니다. 분실하지 않도록 하시고 비공개로 보관하세요.",
+  "@dehydrateShare": {}
 }

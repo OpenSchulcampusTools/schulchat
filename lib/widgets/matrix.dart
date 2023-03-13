@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:collection/collection.dart';
 import 'package:desktop_notifications/desktop_notifications.dart';
 import 'package:flutter_app_lock/flutter_app_lock.dart';
@@ -20,10 +19,9 @@ import 'package:matrix/matrix.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart' as html;
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:vrouter/vrouter.dart';
 
-import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/utils/client_manager.dart';
 import 'package:fluffychat/utils/localized_exception_extension.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
@@ -78,7 +76,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   String? loginUsername;
   bool? loginRegistrationSupported;
 
-  BackgroundPush? _backgroundPush;
+  BackgroundPush? backgroundPush;
 
   Client get client {
     if (widget.clients.isEmpty) {
@@ -137,18 +135,22 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
           continue;
         }
         resBundles[bundle.name] ??= [];
-        resBundles[bundle.name]!.add(_AccountBundleWithClient(
-          client: widget.clients[i],
-          bundle: bundle,
-        ));
+        resBundles[bundle.name]!.add(
+          _AccountBundleWithClient(
+            client: widget.clients[i],
+            bundle: bundle,
+          ),
+        );
       }
     }
     for (final b in resBundles.values) {
-      b.sort((a, b) => a.bundle!.priority == null
-          ? 1
-          : b.bundle!.priority == null
-              ? -1
-              : a.bundle!.priority!.compareTo(b.bundle!.priority!));
+      b.sort(
+        (a, b) => a.bundle!.priority == null
+            ? 1
+            : b.bundle!.priority == null
+                ? -1
+                : a.bundle!.priority!.compareTo(b.bundle!.priority!),
+      );
     }
     return resBundles
         .map((k, v) => MapEntry(k, v.map((vv) => vv.client).toList()));
@@ -163,8 +165,8 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
       return client;
     }
     final candidate = _loginClientCandidate ??= ClientManager.createClient(
-        '${AppConfig.applicationName}-${DateTime.now().millisecondsSinceEpoch}')
-      ..onLoginStateChanged
+      '${AppConfig.applicationName}-${DateTime.now().millisecondsSinceEpoch}',
+    )..onLoginStateChanged
           .stream
           .where((l) => l == LoginState.loggedIn)
           .first
@@ -293,16 +295,20 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     final c = getClientByName(name);
     if (c == null) {
       Logs().w(
-          'Attempted to register subscriptions for non-existing client $name');
+        'Attempted to register subscriptions for non-existing client $name',
+      );
       return;
     }
     onRoomKeyRequestSub[name] ??=
         c.onRoomKeyRequest.stream.listen((RoomKeyRequest request) async {
-      if (widget.clients.any(((cl) =>
-          cl.userID == request.requestingDevice.userId &&
-          cl.identityKey == request.requestingDevice.curve25519Key))) {
+      if (widget.clients.any(
+        ((cl) =>
+            cl.userID == request.requestingDevice.userId &&
+            cl.identityKey == request.requestingDevice.curve25519Key),
+      )) {
         Logs().i(
-            '[Key Request] Request is from one of our own clients, forwarding the key...');
+          '[Key Request] Request is from one of our own clients, forwarding the key...',
+        );
         await request.forwardKey();
       }
     });
@@ -351,11 +357,13 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
       c.onSync.stream.first.then((s) {
         html.Notification.requestPermission();
         onNotification[name] ??= c.onEvent.stream
-            .where((e) =>
-                e.type == EventUpdateType.timeline &&
-                [EventTypes.Message, EventTypes.Sticker, EventTypes.Encrypted]
-                    .contains(e.content['type']) &&
-                e.content['sender'] != c.userID)
+            .where(
+              (e) =>
+                  e.type == EventUpdateType.timeline &&
+                  [EventTypes.Message, EventTypes.Sticker, EventTypes.Encrypted]
+                      .contains(e.content['type']) &&
+                  e.content['sender'] != c.userID,
+            )
             .listen(showLocalNotification);
       });
     }
@@ -402,7 +410,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     }
 
     if (PlatformInfos.isMobile) {
-      _backgroundPush = BackgroundPush(
+      backgroundPush = BackgroundPush(
         client,
         context,
         widget.router,
@@ -417,7 +425,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
             cancelLabel: L10n.of(context)!.doNotShowAgain,
           );
           if (result == OkCancelResult.ok && link != null) {
-            launch(link.toString());
+            launchUrlString(link.toString());
           }
           if (result == OkCancelResult.cancel) {
             await store.setItemBool(SettingKeys.showNoGoogle, true);
@@ -437,8 +445,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     voipPlugin = webrtcIsSupported ? VoipPlugin(client) : null;
   }
 
-  bool _firstStartup = true;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Logs().v('AppLifecycleState = $state');
@@ -447,10 +453,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     client.backgroundSync = foreground;
     client.syncPresence = foreground ? null : PresenceType.unavailable;
     client.requestHistoryOnLimitedTimeline = !foreground;
-    if (_firstStartup) {
-      _firstStartup = false;
-      _backgroundPush?.setupPush();
-    }
   }
 
   void initSettings() {
@@ -461,25 +463,31 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         wallpaper = file;
       }
     });
-    store.getItem(SettingKeys.fontSizeFactor).then((value) =>
-        AppConfig.fontSizeFactor =
-            double.tryParse(value ?? '') ?? AppConfig.fontSizeFactor);
-    store.getItem(SettingKeys.bubbleSizeFactor).then((value) =>
-        AppConfig.bubbleSizeFactor =
-            double.tryParse(value ?? '') ?? AppConfig.bubbleSizeFactor);
+    store.getItem(SettingKeys.fontSizeFactor).then(
+          (value) => AppConfig.fontSizeFactor =
+              double.tryParse(value ?? '') ?? AppConfig.fontSizeFactor,
+        );
+    store.getItem(SettingKeys.bubbleSizeFactor).then(
+          (value) => AppConfig.bubbleSizeFactor =
+              double.tryParse(value ?? '') ?? AppConfig.bubbleSizeFactor,
+        );
     store
         .getItemBool(SettingKeys.renderHtml, AppConfig.renderHtml)
         .then((value) => AppConfig.renderHtml = value);
     store
         .getItemBool(
-            SettingKeys.hideRedactedEvents, AppConfig.hideRedactedEvents)
+          SettingKeys.hideRedactedEvents,
+          AppConfig.hideRedactedEvents,
+        )
         .then((value) => AppConfig.hideRedactedEvents = value);
     store
         .getItemBool(SettingKeys.hideUnknownEvents, AppConfig.hideUnknownEvents)
         .then((value) => AppConfig.hideUnknownEvents = value);
     store
-        .getItemBool(SettingKeys.showDirectChatsInSpaces,
-            AppConfig.showDirectChatsInSpaces)
+        .getItemBool(
+          SettingKeys.showDirectChatsInSpaces,
+          AppConfig.showDirectChatsInSpaces,
+        )
         .then((value) => AppConfig.showDirectChatsInSpaces = value);
     store
         .getItemBool(SettingKeys.separateChatTypes, AppConfig.separateChatTypes)
@@ -493,19 +501,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     store
         .getItemBool(SettingKeys.experimentalVoip, AppConfig.experimentalVoip)
         .then((value) => AppConfig.experimentalVoip = value);
-    store.getItem(SettingKeys.chatColor).then((value) {
-      if (value != null && int.tryParse(value) != null) {
-        AppConfig.colorSchemeSeed = Color(int.parse(value));
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) {
-            AdaptiveTheme.of(context).setTheme(
-              light: FluffyThemes.buildTheme(Brightness.light),
-              dark: FluffyThemes.buildTheme(Brightness.dark),
-            );
-          }
-        });
-      }
-    });
   }
 
   @override
@@ -519,7 +514,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     client.httpClient.close();
     onFocusSub?.cancel();
     onBlurSub?.cancel();
-    _backgroundPush?.onLogin?.cancel();
+    backgroundPush?.onRoomSync?.cancel();
 
     linuxNotifications?.close();
 

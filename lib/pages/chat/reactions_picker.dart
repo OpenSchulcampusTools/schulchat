@@ -6,6 +6,7 @@ import 'package:matrix/matrix.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/app_emojis.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
+import '../../config/themes.dart';
 
 class ReactionsPicker extends StatelessWidget {
   final ChatController controller;
@@ -20,41 +21,50 @@ class ReactionsPicker extends StatelessWidget {
         controller.room!.canSendDefaultMessages &&
         controller.selectedEvents.isNotEmpty;
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
+      duration: FluffyThemes.animationDuration,
+      curve: FluffyThemes.animationCurve,
       height: (display) ? 56 : 0,
       child: Material(
         color: Colors.transparent,
-        child: Builder(builder: (context) {
-          if (!display) {
-            return Container();
-          }
-          final proposals = proposeEmojis(
+        child: Builder(
+          builder: (context) {
+            if (!display) {
+              return Container();
+            }
+            final proposals = proposeEmojis(
               controller.selectedEvents.first.plaintextBody,
               number: 25,
-              languageCodes: EmojiProposalLanguageCodes.values.toSet());
-          final emojis = proposals.isNotEmpty
-              ? proposals.map((e) => e.char).toList()
-              : List<String>.from(AppEmojis.emojis);
-          final allReactionEvents = controller.selectedEvents.first
-              .aggregatedEvents(
-                  controller.timeline!, RelationshipTypes.reaction)
-              .where((event) =>
-                  event.senderId == event.room.client.userID &&
-                  event.type == 'm.reaction');
+              languageCodes: EmojiProposalLanguageCodes.values.toSet(),
+            );
+            final emojis = proposals.isNotEmpty
+                ? proposals.map((e) => e.char).toList()
+                : List<String>.from(AppEmojis.emojis);
+            final allReactionEvents = controller.selectedEvents.first
+                .aggregatedEvents(
+                  controller.timeline!,
+                  RelationshipTypes.reaction,
+                )
+                .where(
+                  (event) =>
+                      event.senderId == event.room.client.userID &&
+                      event.type == 'm.reaction',
+                );
 
-          for (final event in allReactionEvents) {
-            try {
-              emojis.remove(event.content['m.relates_to']['key']);
-            } catch (_) {}
-          }
-          return Row(children: [
-            Expanded(
-                child: Container(
+            for (final event in allReactionEvents) {
+              try {
+                emojis.remove(event.content['m.relates_to']['key']);
+              } catch (_) {}
+            }
+            return Row(
+              children: [
+                Expanded(
+                  child: Container(
                     decoration: BoxDecoration(
-                        color: Theme.of(context).secondaryHeaderColor,
-                        borderRadius: const BorderRadius.only(
-                            bottomRight:
-                                Radius.circular(AppConfig.borderRadius))),
+                      color: Theme.of(context).secondaryHeaderColor,
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(AppConfig.borderRadius),
+                      ),
+                    ),
                     padding: const EdgeInsets.only(right: 1),
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -72,23 +82,28 @@ class ReactionsPicker extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ))),
-            InkWell(
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  width: 36,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).secondaryHeaderColor,
-                    shape: BoxShape.circle,
+                    ),
                   ),
-                  child: const Icon(Icons.add_outlined),
                 ),
-                onTap: () =>
-                    controller.pickEmojiReactionAction(allReactionEvents))
-          ]);
-        }),
+                InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    width: 36,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).secondaryHeaderColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.add_outlined),
+                  ),
+                  onTap: () =>
+                      controller.pickEmojiReactionAction(allReactionEvents),
+                )
+              ],
+            );
+          },
+        ),
       ),
     );
   }

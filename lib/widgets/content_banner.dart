@@ -11,18 +11,18 @@ class ContentBanner extends StatelessWidget {
   final void Function()? onEdit;
   final Client? client;
   final double opacity;
-  final String heroTag;
+  final WidgetBuilder? placeholder;
 
-  const ContentBanner(
-      {this.mxContent,
-      this.height = 400,
-      this.defaultIcon = Icons.account_circle_outlined,
-      this.onEdit,
-      this.client,
-      this.opacity = 0.75,
-      this.heroTag = 'content_banner',
-      Key? key})
-      : super(key: key);
+  const ContentBanner({
+    this.mxContent,
+    this.height = 400,
+    this.defaultIcon = Icons.account_circle_outlined,
+    this.onEdit,
+    this.client,
+    this.opacity = 0.75,
+    this.placeholder,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,20 +42,24 @@ class ContentBanner extends StatelessWidget {
             bottom: 0,
             child: Opacity(
               opacity: opacity,
-              child: LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                return Hero(
-                  tag: heroTag,
-                  child: MxcImage(
-                    key: Key(mxContent?.toString() ?? 'NoKey'),
-                    uri: mxContent,
-                    animated: true,
-                    fit: BoxFit.cover,
-                    height: 400,
-                    width: 800,
-                  ),
-                );
-              }),
+              child: mxContent == null
+                  ? Center(
+                      child: Icon(
+                        defaultIcon,
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
+                        size: 128,
+                      ),
+                    )
+                  : MxcImage(
+                      key: Key(mxContent?.toString() ?? 'NoKey'),
+                      uri: mxContent,
+                      animated: true,
+                      fit: BoxFit.cover,
+                      placeholder: placeholder,
+                      height: 400,
+                      width: 800,
+                    ),
             ),
           ),
           if (onEdit != null)
@@ -64,9 +68,10 @@ class ContentBanner extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: FloatingActionButton(
                 mini: true,
+                heroTag: null,
                 onPressed: onEdit,
-                backgroundColor: Theme.of(context).backgroundColor,
-                foregroundColor: Theme.of(context).textTheme.bodyText1?.color,
+                backgroundColor: Theme.of(context).colorScheme.background,
+                foregroundColor: Theme.of(context).textTheme.bodyLarge?.color,
                 child: const Icon(Icons.camera_alt_outlined),
               ),
             ),

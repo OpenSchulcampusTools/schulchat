@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import '../../config/themes.dart';
 import 'chat.dart';
 import 'events/reply_content.dart';
 
@@ -14,7 +15,8 @@ class ReplyDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
+      duration: FluffyThemes.animationDuration,
+      curve: FluffyThemes.animationCurve,
       height: controller.editEvent != null || controller.replyEvent != null
           ? 56
           : 0,
@@ -31,10 +33,14 @@ class ReplyDisplay extends StatelessWidget {
             ),
             Expanded(
               child: controller.replyEvent != null
-                  ? ReplyContent(controller.replyEvent!,
-                      timeline: controller.timeline!)
-                  : _EditContent(controller.editEvent
-                      ?.getDisplayEvent(controller.timeline!)),
+                  ? ReplyContent(
+                      controller.replyEvent!,
+                      timeline: controller.timeline!,
+                    )
+                  : _EditContent(
+                      controller.editEvent
+                          ?.getDisplayEvent(controller.timeline!),
+                    ),
             ),
           ],
         ),
@@ -62,26 +68,27 @@ class _EditContent extends StatelessWidget {
         ),
         Container(width: 15.0),
         FutureBuilder<String>(
-            future: event.calcLocalizedBody(
-              MatrixLocals(L10n.of(context)!),
-              withSenderNamePrefix: false,
-              hideReply: true,
-            ),
-            builder: (context, snapshot) {
-              return Text(
-                snapshot.data ??
-                    event.calcLocalizedBodyFallback(
-                      MatrixLocals(L10n.of(context)!),
-                      withSenderNamePrefix: false,
-                      hideReply: true,
-                    ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText2!.color,
-                ),
-              );
-            }),
+          future: event.calcLocalizedBody(
+            MatrixLocals(L10n.of(context)!),
+            withSenderNamePrefix: false,
+            hideReply: true,
+          ),
+          builder: (context, snapshot) {
+            return Text(
+              snapshot.data ??
+                  event.calcLocalizedBodyFallback(
+                    MatrixLocals(L10n.of(context)!),
+                    withSenderNamePrefix: false,
+                    hideReply: true,
+                  ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodyMedium!.color,
+              ),
+            );
+          },
+        ),
       ],
     );
   }

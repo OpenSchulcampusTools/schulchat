@@ -129,6 +129,6 @@ extension DefaultFlowExtensions on WidgetTester {
       );
     }
 
-   // await tester.acceptPushWarning();
+    await tester.acceptPushWarning();
   }
 }

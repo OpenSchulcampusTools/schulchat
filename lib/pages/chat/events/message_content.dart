@@ -6,8 +6,9 @@ import 'package:matrix_link_text/link_text.dart';
 
 import 'package:fluffychat/pages/chat/events/video_player.dart';
 import 'package:fluffychat/pages/chat_search/search_result_formatter.dart';
+import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import '../../../config/app_config.dart';
@@ -35,14 +36,17 @@ class MessageContent extends StatelessWidget {
   void _verifyOrRequestKey(BuildContext context) async {
     final l10n = L10n.of(context)!;
     if (event.content['can_request_session'] != true) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
           content: Text(
-        event.type == EventTypes.Encrypted
-            ? l10n.needPantalaimonWarning
-            : event.calcLocalizedBodyFallback(
-                MatrixLocals(l10n),
-              ),
-      )));
+            event.type == EventTypes.Encrypted
+                ? l10n.needPantalaimonWarning
+                : event.calcLocalizedBodyFallback(
+                    MatrixLocals(l10n),
+                  ),
+          ),
+        ),
+      );
       return;
     }
     final client = Matrix.of(context).client;
@@ -54,7 +58,7 @@ class MessageContent extends StatelessWidget {
     }
     event.requestKey();
     final sender = event.senderFromMemoryOrFallback;
-    await showModalBottomSheet(
+    await showAdaptiveBottomSheet(
       context: context,
       builder: (context) => Scaffold(
         appBar: AppBar(
@@ -115,7 +119,13 @@ class MessageContent extends StatelessWidget {
           case CuteEventContent.eventType:
             return CuteContent(event);
           case MessageTypes.Audio:
-            if (PlatformInfos.isMobile || PlatformInfos.isMacOS) {
+            if (PlatformInfos.isMobile ||
+                    PlatformInfos.isMacOS ||
+                    PlatformInfos.isWeb
+                // Disabled until https://github.com/bleonard252/just_audio_mpv/issues/3
+                // is fixed
+                //   || PlatformInfos.isLinux
+                ) {
               return AudioPlayerWidget(
                 event,
                 color: textColor,
@@ -153,6 +163,7 @@ class MessageContent extends StatelessWidget {
                   color: textColor.withAlpha(150),
                   fontSize: bigEmotes ? fontSize * 3 : fontSize,
                   decoration: TextDecoration.underline,
+                  decorationColor: textColor.withAlpha(150),
                 ),
                 room: event.room,
                 emoteSize: bigEmotes ? fontSize * 3 : fontSize * 1.5,
@@ -208,72 +219,83 @@ class MessageContent extends StatelessWidget {
           default:
             if (event.redacted) {
               return FutureBuilder<User?>(
-                  future: event.fetchSenderUser(),
-                  builder: (context, snapshot) {
-                    return _ButtonContent(
-                      label: L10n.of(context)!.redactedAnEvent(snapshot.data
-                              ?.calcDisplayname() ??
-                          event.senderFromMemoryOrFallback.calcDisplayname()),
-                      icon: const Icon(Icons.delete_outlined),
-                      textColor: buttonTextColor,
-                      onPressed: () => onInfoTab!(event),
-                    );
-                  });
+                future: event.redactedBecause?.fetchSenderUser(),
+                builder: (context, snapshot) {
+                  return _ButtonContent(
+                    label: L10n.of(context)!.redactedAnEvent(
+                      snapshot.data?.calcDisplayname() ??
+                          event.senderFromMemoryOrFallback.calcDisplayname(),
+                    ),
+                    icon: const Icon(Icons.delete_outlined),
+                    textColor: buttonTextColor,
+                    onPressed: () => onInfoTab!(event),
+                  );
+                },
+              );
             }
             final bigEmotes = event.onlyEmotes &&
                 event.numberEmotes > 0 &&
                 event.numberEmotes <= 10;
             return FutureBuilder<String>(
-                future: event.calcLocalizedBody(MatrixLocals(L10n.of(context)!),
-                    hideReply: true),
-                builder: (context, snapshot) {
-                  return LinkText(
-                    text: snapshot.data ??
-                        event.calcLocalizedBodyFallback(
-                            MatrixLocals(L10n.of(context)!),
-                            hideReply: true),
-                    textStyle: TextStyle(
-                      color: textColor,
-                      fontSize: bigEmotes ? fontSize * 3 : fontSize,
-                      decoration:
-                          event.redacted ? TextDecoration.lineThrough : null,
-                    ),
-                    linkStyle: TextStyle(
-                      color: textColor.withAlpha(150),
-                      fontSize: bigEmotes ? fontSize * 3 : fontSize,
-                      decoration: TextDecoration.underline,
-                    ),
-                    onLinkTap: (url) => UrlLauncher(context, url).launchUrl(),
-                  );
-                });
+              future: event.calcLocalizedBody(
+                MatrixLocals(L10n.of(context)!),
+                hideReply: true,
+              ),
+              builder: (context, snapshot) {
+                return LinkText(
+                  text: snapshot.data ??
+                      event.calcLocalizedBodyFallback(
+                        MatrixLocals(L10n.of(context)!),
+                        hideReply: true,
+                      ),
+                  textStyle: TextStyle(
+                    color: textColor,
+                    fontSize: bigEmotes ? fontSize * 3 : fontSize,
+                    decoration:
+                        event.redacted ? TextDecoration.lineThrough : null,
+                  ),
+                  linkStyle: TextStyle(
+                    color: textColor.withAlpha(150),
+                    fontSize: bigEmotes ? fontSize * 3 : fontSize,
+                    decoration: TextDecoration.underline,
+                    decorationColor: textColor.withAlpha(150),
+                  ),
+                  onLinkTap: (url) => UrlLauncher(context, url).launchUrl(),
+                );
+              },
+            );
         }
       case EventTypes.CallInvite:
         return FutureBuilder<User?>(
-            future: event.fetchSenderUser(),
-            builder: (context, snapshot) {
-              return _ButtonContent(
-                label: L10n.of(context)!.startedACall(
-                    snapshot.data?.calcDisplayname() ??
-                        event.senderFromMemoryOrFallback.calcDisplayname()),
-                icon: const Icon(Icons.phone_outlined),
-                textColor: buttonTextColor,
-                onPressed: () => onInfoTab!(event),
-              );
-            });
+          future: event.fetchSenderUser(),
+          builder: (context, snapshot) {
+            return _ButtonContent(
+              label: L10n.of(context)!.startedACall(
+                snapshot.data?.calcDisplayname() ??
+                    event.senderFromMemoryOrFallback.calcDisplayname(),
+              ),
+              icon: const Icon(Icons.phone_outlined),
+              textColor: buttonTextColor,
+              onPressed: () => onInfoTab!(event),
+            );
+          },
+        );
       default:
         return FutureBuilder<User?>(
-            future: event.fetchSenderUser(),
-            builder: (context, snapshot) {
-              return _ButtonContent(
-                label: L10n.of(context)!.userSentUnknownEvent(
-                    snapshot.data?.calcDisplayname() ??
-                        event.senderFromMemoryOrFallback.calcDisplayname(),
-                    event.type),
-                icon: const Icon(Icons.info_outlined),
-                textColor: buttonTextColor,
-                onPressed: () => onInfoTab!(event),
-              );
-            });
+          future: event.fetchSenderUser(),
+          builder: (context, snapshot) {
+            return _ButtonContent(
+              label: L10n.of(context)!.userSentUnknownEvent(
+                snapshot.data?.calcDisplayname() ??
+                    event.senderFromMemoryOrFallback.calcDisplayname(),
+                event.type,
+              ),
+              icon: const Icon(Icons.info_outlined),
+              textColor: buttonTextColor,
+              onPressed: () => onInfoTab!(event),
+            );
+          },
+        );
     }
   }
 }

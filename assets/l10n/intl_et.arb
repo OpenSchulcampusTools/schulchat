@@ -23,11 +23,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "accountInformation": "Kasutajakonto teave",
-  "@accountInformation": {
-    "type": "text",
-    "placeholders": {}
-  },
   "activatedEndToEndEncryption": "🔐{username} võttis kasutusele läbiva krüptimise",
   "@activatedEndToEndEncryption": {
     "type": "text",
@@ -42,11 +37,6 @@
   },
   "addGroupDescription": "Lisa vestlusrühma kirjeldus",
   "@addGroupDescription": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "addNewFriend": "Lisa uus sõber",
-  "@addNewFriend": {
     "type": "text",
     "placeholders": {}
   },
@@ -67,11 +57,6 @@
   },
   "allChats": "Kõik vestlused",
   "@allChats": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "alreadyHaveAnAccount": "Sul juba on kasutajakonto olemas?",
-  "@alreadyHaveAnAccount": {
     "type": "text",
     "placeholders": {}
   },
@@ -117,18 +102,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "askSSSSCache": "Krüptovõtmete puhverdamiseks palun sisesta oma turvahoidla paroolifraas või taastevõti.",
-  "@askSSSSCache": {
-    "type": "text",
-    "placeholders": {}
-  },
   "askSSSSSign": "Selleks, et teist osapoolt identifitseerivat allkirja anda, palun sisesta oma turvahoidla paroolifraas või taastevõti.",
   "@askSSSSSign": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "askSSSSVerify": "Oma sessiooni verifitseerimiseks palun sisesta oma turvahoidla paroolifraas või taastevõti.",
-  "@askSSSSVerify": {
     "type": "text",
     "placeholders": {}
   },
@@ -139,30 +114,10 @@
       "username": {}
     }
   },
-  "audioPlayerPause": "Peata",
-  "@audioPlayerPause": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "audioPlayerPlay": "Esita",
-  "@audioPlayerPlay": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "authentication": "Autentimine",
-  "@authentication": {
-    "type": "text",
-    "placeholders": {}
-  },
   "autoplayImages": "Esita liikuvad kleepse ja emotikone automaatselt",
   "@autoplayImages": {
     "type": "text",
     "placeholder": {}
-  },
-  "avatarHasBeenChanged": "Tunnuspilt on muutunud",
-  "@avatarHasBeenChanged": {
-    "type": "text",
-    "placeholders": {}
   },
   "badServerLoginTypesException": "See koduserver toetab Matrixi võrku sisselogimiseks:\n{serverVersions}\nAga see rakendus toetab vaid järgmisi võimalusi:\n{supportedVersions}",
   "@badServerLoginTypesException": {
@@ -210,11 +165,6 @@
   },
   "botMessages": "Robotite sõnumid",
   "@botMessages": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "cachedKeys": "Puhverdatud krüptovõtmed",
-  "@cachedKeys": {
     "type": "text",
     "placeholders": {}
   },
@@ -339,18 +289,8 @@
       "username": {}
     }
   },
-  "changelog": "Muudatuste logi",
-  "@changelog": {
-    "type": "text",
-    "placeholders": {}
-  },
   "changePassword": "Muuda salasõna",
   "@changePassword": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "changesHaveBeenSaved": "Salvestasin muudatused",
-  "@changesHaveBeenSaved": {
     "type": "text",
     "placeholders": {}
   },
@@ -366,11 +306,6 @@
   },
   "changeTheNameOfTheGroup": "Muuda vestlusrühma nime",
   "@changeTheNameOfTheGroup": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "changeTheServer": "Muuda serverit",
-  "@changeTheServer": {
     "type": "text",
     "placeholders": {}
   },
@@ -426,11 +361,6 @@
   },
   "clearArchive": "Kustuta arhiiv",
   "@clearArchive": {},
-  "clearText": "Kustuta tekst",
-  "@clearText": {
-    "type": "text",
-    "placeholders": {}
-  },
   "close": "Sulge",
   "@close": {
     "type": "text",
@@ -518,12 +448,12 @@
     },
     "description": "State that {command} is not a valid /command."
   },
-  "compareEmojiMatch": "Võrdle ja kontrolli, et emotikonid on teises seadmes täpselt samad:",
+  "compareEmojiMatch": "Palun võrdle emotikone",
   "@compareEmojiMatch": {
     "type": "text",
     "placeholders": {}
   },
-  "compareNumbersMatch": "Võrdle ja kontrolli, et järgnevad numbrid on teises seadmes täpselt samad:",
+  "compareNumbersMatch": "Palun võrdle numbreid",
   "@compareNumbersMatch": {
     "type": "text",
     "placeholders": {}
@@ -540,11 +470,6 @@
   },
   "connect": "Ühenda",
   "@connect": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "connectionAttemptFailed": "Ühenduse loomise katse ebaõnnestus",
-  "@connectionAttemptFailed": {
     "type": "text",
     "placeholders": {}
   },
@@ -565,11 +490,6 @@
   },
   "contentHasBeenReported": "Saatsime selle sisu kohta teate koduserveri haldajate",
   "@contentHasBeenReported": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "contentViewer": "Sisukuvaja",
-  "@contentViewer": {
     "type": "text",
     "placeholders": {}
   },
@@ -595,16 +515,6 @@
       "error": {}
     }
   },
-  "couldNotSetAvatar": "Tunnuspildi seadmine ei õnnestunud",
-  "@couldNotSetAvatar": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "couldNotSetDisplayname": "Kuvatava nime määramine ei õnnestunud",
-  "@couldNotSetDisplayname": {
-    "type": "text",
-    "placeholders": {}
-  },
   "countParticipants": "{count} osalejat",
   "@countParticipants": {
     "type": "text",
@@ -614,11 +524,6 @@
   },
   "create": "Loo",
   "@create": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "createAccountNow": "Tee nüüd kasutajakonto",
-  "@createAccountNow": {
     "type": "text",
     "placeholders": {}
   },
@@ -636,11 +541,6 @@
   },
   "createNewSpace": "Uus kogukond",
   "@createNewSpace": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "crossSigningDisabled": "Risttunnustamine ei ole kasutusel",
-  "@crossSigningDisabled": {
     "type": "text",
     "placeholders": {}
   },
@@ -729,18 +629,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "deviceVerifyDescription": "Krüptimisel on mõte vaid siis, kui ka kõik vestlusega seotud seadmed on verifitseeritud.",
-  "@deviceVerifyDescription": {
-    "type": "text",
-    "placeholders": {}
-  },
   "directChats": "Otsevestlused",
   "@directChats": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "discardPicture": "Emalda pilt",
-  "@discardPicture": {
     "type": "text",
     "placeholders": {}
   },
@@ -749,23 +639,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "discoverGroups": "Otsi vestlusrühmi",
-  "@discoverGroups": {
-    "type": "text",
-    "placeholders": {}
-  },
   "displaynameHasBeenChanged": "Kuvatav nimi on muudetud",
   "@displaynameHasBeenChanged": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "donate": "Toeta",
-  "@donate": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "dontAskAgain": "Katkesta ja ära küsi enam uuesti",
-  "@dontAskAgain": {
     "type": "text",
     "placeholders": {}
   },
@@ -791,11 +666,6 @@
   },
   "editDisplayname": "Muuda kuvatavat nime",
   "@editDisplayname": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "editJitsiInstance": "Muuda Jitsi liidestust",
-  "@editJitsiInstance": {
     "type": "text",
     "placeholders": {}
   },
@@ -844,11 +714,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "enableChatBackup": "Selleks, et sa ei kaotaks ligipääsu oma vestlustele, palun võta kasutusele vestluste varundamine.",
-  "@enableChatBackup": {
-    "type": "text",
-    "placeholders": {}
-  },
   "enableEmotesGlobally": "Võta emotsioonitegevuste pakid läbivalt kasutusele",
   "@enableEmotesGlobally": {
     "type": "text",
@@ -874,18 +739,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "encryptionAlgorithm": "Krüptoalgoritm",
-  "@encryptionAlgorithm": {
-    "type": "text",
-    "placeholders": {}
-  },
   "encryptionNotEnabled": "Krüptimine ei ole kasutusel",
   "@encryptionNotEnabled": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "end2endEncryptionSettings": "Läbiva krüptimise seadistused",
-  "@end2endEncryptionSettings": {
     "type": "text",
     "placeholders": {}
   },
@@ -908,11 +763,6 @@
   },
   "enterASpacepName": "Sisesta kogukonna nimi",
   "@enterASpacepName": {},
-  "enterAUsername": "Sisesta kasutajanimi",
-  "@enterAUsername": {
-    "type": "text",
-    "placeholders": {}
-  },
   "enterYourHomeserver": "Sisesta oma koduserveri aadress",
   "@enterYourHomeserver": {
     "type": "text",
@@ -940,11 +790,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "fileSize": "Faili suurus",
-  "@fileSize": {
-    "type": "text",
-    "placeholders": {}
-  },
   "fluffychat": "FluffyChat",
   "@fluffychat": {
     "type": "text",
@@ -962,11 +807,6 @@
   },
   "friday": "Reede",
   "@friday": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "friends": "Sõbrad",
-  "@friends": {
     "type": "text",
     "placeholders": {}
   },
@@ -1050,11 +890,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "homeserverIsNotCompatible": "Koduserver ei ole ühilduv",
-  "@homeserverIsNotCompatible": {
-    "type": "text",
-    "placeholders": {}
-  },
   "howOffensiveIsThisContent": "Kui solvav see sisu on?",
   "@howOffensiveIsThisContent": {
     "type": "text",
@@ -1105,11 +940,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "invalidEmail": "Vigane e-posti aadress",
-  "@invalidEmail": {
-    "type": "text",
-    "placeholders": {}
-  },
   "inviteContact": "Kutsu sõpru ja tuttavaid",
   "@inviteContact": {
     "type": "text",
@@ -1153,11 +983,6 @@
       "link": {}
     }
   },
-  "isDeviceKeyCorrect": "Kas järgnev seadmevõti on õige?",
-  "@isDeviceKeyCorrect": {
-    "type": "text",
-    "placeholders": {}
-  },
   "isTyping": "kirjutab…",
   "@isTyping": {
     "type": "text",
@@ -1177,11 +1002,6 @@
   },
   "keysCached": "Krüptovõtmed on puhverdatud",
   "@keysCached": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "keysMissing": "Krüptovõtmed on puudu",
-  "@keysMissing": {
     "type": "text",
     "placeholders": {}
   },
@@ -1212,11 +1032,6 @@
     "placeholders": {
       "localizedTimeShort": {}
     }
-  },
-  "lastSeenIp": "Viimati nähtud IP-aadress",
-  "@lastSeenIp": {
-    "type": "text",
-    "placeholders": {}
   },
   "lastSeenLongTimeAgo": "Nähtud ammu aega tagasi",
   "@lastSeenLongTimeAgo": {
@@ -1294,16 +1109,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "makeAModerator": "Määra moderaatoriks",
-  "@makeAModerator": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "makeAnAdmin": "Määra peakasutajaks",
-  "@makeAnAdmin": {
-    "type": "text",
-    "placeholders": {}
-  },
   "makeSureTheIdentifierIsValid": "Kontrolli, et see tunnus oleks õige",
   "@makeSureTheIdentifierIsValid": {
     "type": "text",
@@ -1338,13 +1143,6 @@
   "@monday": {
     "type": "text",
     "placeholders": {}
-  },
-  "moreEvents": "{count,plural, =1{Veel 1 sündmus} other{Veel {count} sündmust}}",
-  "@moreEvents": {
-    "type": "text",
-    "placeholders": {
-      "count": {}
-    }
   },
   "muteChat": "Summuta vestlus",
   "@muteChat": {
@@ -1386,16 +1184,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "noCrossSignBootstrap": "FluffyChat ei toeta hetkel risttunnustamist. Palun võta ta kasutusele Element'i vahendusel.",
-  "@noCrossSignBootstrap": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "noDescription": "Kirjeldus puudub",
-  "@noDescription": {
-    "type": "text",
-    "placeholders": {}
-  },
   "noEmotesFound": "Ühtegi emotsioonitegevust ei leidunud. 😕",
   "@noEmotesFound": {
     "type": "text",
@@ -1419,11 +1207,6 @@
       "server2": {}
     }
   },
-  "noMegolmBootstrap": "Palun võta krüptovõtmete võrgupõhine varundus kasutusele vestusrakenduse Element vahendusel.",
-  "@noMegolmBootstrap": {
-    "type": "text",
-    "placeholders": {}
-  },
   "none": "Mitte midagi",
   "@none": {
     "type": "text",
@@ -1439,18 +1222,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "noPublicRoomsFound": "Avalikke jututubasid ei leidunud…",
-  "@noPublicRoomsFound": {
-    "type": "text",
-    "placeholders": {}
-  },
   "noRoomsFound": "Jututubasid ei leidunud…",
   "@noRoomsFound": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "noStatusesFound": "Pole veel ühtegi olekut leidnud.",
-  "@noStatusesFound": {
     "type": "text",
     "placeholders": {}
   },
@@ -1463,18 +1236,6 @@
   "@notificationsEnabledForThisAccount": {
     "type": "text",
     "placeholders": {}
-  },
-  "notSupportedInWeb": "See funktsionaalsus ei ole veebiliideses toetatud",
-  "@notSupportedInWeb": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "numberSelected": "{number} valitud",
-  "@numberSelected": {
-    "type": "text",
-    "placeholders": {
-      "number": {}
-    }
   },
   "numUsersTyping": "{count} kasutajat kirjutavad…",
   "@numUsersTyping": {
@@ -1508,11 +1269,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "onlineKeyBackupDisabled": "Krüptovõtmete veebipõhine varundus ei ole kasutusel",
-  "@onlineKeyBackupDisabled": {
-    "type": "text",
-    "placeholders": {}
-  },
   "onlineKeyBackupEnabled": "Krüptovõtmete veebipõhine varundus on kasutusel",
   "@onlineKeyBackupEnabled": {
     "type": "text",
@@ -1543,11 +1299,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "optionalAddEmail": "Sinu e-posti aadress (kui soovid lisada)",
-  "@optionalAddEmail": {
-    "type": "text",
-    "placeholders": {}
-  },
   "optionalGroupName": "(Kui soovid) Vestlusrühma nimi",
   "@optionalGroupName": {
     "type": "text",
@@ -1560,11 +1311,6 @@
   },
   "participant": "Osaleja",
   "@participant": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "participatingUserDevices": "Kaasatud kasutajate seadmed",
-  "@participatingUserDevices": {
     "type": "text",
     "placeholders": {}
   },
@@ -1645,11 +1391,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "pleaseEnterSecurityKey": "Palun sisesta oma turvavõti:",
-  "@pleaseEnterSecurityKey": {
-    "type": "text",
-    "placeholders": {}
-  },
   "pleaseEnterYourPassword": "Palun sisesta oma salasõna",
   "@pleaseEnterYourPassword": {
     "type": "text",
@@ -1675,23 +1416,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "publicGroups": "Avalikud vestlusrühmad",
-  "@publicGroups": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "publicKey": "Avalik võti",
-  "@publicKey": {
-    "type": "text",
-    "placeholders": {}
-  },
   "publicRooms": "Avalikud jututoad",
   "@publicRooms": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "publicSpace": "Avalik kogukond",
-  "@publicSpace": {
     "type": "text",
     "placeholders": {}
   },
@@ -1771,11 +1497,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "removeMessage": "Eemalda sõnum",
-  "@removeMessage": {
-    "type": "text",
-    "placeholders": {}
-  },
   "removeYourAvatar": "Kustuta oma tunnuspilt",
   "@removeYourAvatar": {
     "type": "text",
@@ -1806,16 +1527,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "requestToReadOlderMessages": "Palu õigust lugeda vanu sõnumeid",
-  "@requestToReadOlderMessages": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "revokeAllPermissions": "Tühista kõik õigused",
-  "@revokeAllPermissions": {
-    "type": "text",
-    "placeholders": {}
-  },
   "roomHasBeenUpgraded": "Jututoa vesrioon on uuendatud",
   "@roomHasBeenUpgraded": {
     "type": "text",
@@ -1831,20 +1542,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "savedFileAs": "Salvestasin faili nimega {filename}",
-  "@savedFileAs": {
-    "type": "text",
-    "placeholders": {
-      "filename": {}
-    }
-  },
   "saveFile": "Salvesta fail",
   "@saveFile": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "saveFileToFolder": "Salvesta fail sellesse kausta",
-  "@saveFileToFolder": {
     "type": "text",
     "placeholders": {}
   },
@@ -1853,23 +1552,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "searchForAChat": "Otsi vestlust",
-  "@searchForAChat": {
-    "type": "text",
-    "placeholders": {}
-  },
   "security": "Turvalisus",
   "@security": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "securityKey": "Turvavõti",
-  "@securityKey": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "securityKeyLost": "Kas kaotasid turvavõtme?",
-  "@securityKeyLost": {
     "type": "text",
     "placeholders": {}
   },
@@ -1912,11 +1596,6 @@
   },
   "sendAudio": "Saada helifail",
   "@sendAudio": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "sendBugReports": "Luba veateadete saatmist sentry.io vahendusel",
-  "@sendBugReports": {
     "type": "text",
     "placeholders": {}
   },
@@ -1992,21 +1671,6 @@
       "senderName": {}
     }
   },
-  "sentryInfo": "Teave sinu privaatsuse kohta: https://sentry.io/security/",
-  "@sentryInfo": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "sessionVerified": "Sessioon on verifitseeritud",
-  "@sessionVerified": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "setAProfilePicture": "Seadista profiilipilt",
-  "@setAProfilePicture": {
-    "type": "text",
-    "placeholders": {}
-  },
   "setAsCanonicalAlias": "Määra põhinimeks",
   "@setAsCanonicalAlias": {
     "type": "text",
@@ -2079,11 +1743,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "soundVibrationLedColor": "Heli, värin, LED-värvid",
-  "@soundVibrationLedColor": {
-    "type": "text",
-    "placeholders": {}
-  },
   "sourceCode": "Lähtekood",
   "@sourceCode": {
     "type": "text",
@@ -2105,11 +1764,6 @@
     "placeholders": {
       "senderName": {}
     }
-  },
-  "startYourFirstChat": "Alusta oma esimest vestlust kohe nüüd 🙂\n- klõpsi nuppu „Uus vestlus“\n- skaneeri teise osapoole QR-koodi\n- ja lase vestlusel kulgeda",
-  "@startYourFirstChat": {
-    "type": "text",
-    "placeholders": {}
   },
   "status": "Olek",
   "@status": {
@@ -2141,21 +1795,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "tapOnDeviceToVerify": "Verifitseerimiseks klõpsi seadme nime",
-  "@tapOnDeviceToVerify": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "tapToShowImage": "Pildi vaatamiseks klõpsi",
-  "@tapToShowImage": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "tapToShowMenu": "Menüü kuvamiseks puuduta",
-  "@tapToShowMenu": {
-    "type": "text",
-    "placeholders": {}
-  },
   "theyDontMatch": "Nad ei klapi omavahel",
   "@theyDontMatch": {
     "type": "text",
@@ -2175,16 +1814,6 @@
   "@thursday": {
     "type": "text",
     "placeholders": {}
-  },
-  "timeOfDay": "{hours24}:{minutes}",
-  "@timeOfDay": {
-    "type": "text",
-    "placeholders": {
-      "hours12": {},
-      "hours24": {},
-      "minutes": {},
-      "suffix": {}
-    }
   },
   "title": "FluffyChat",
   "@title": {
@@ -2262,16 +1891,6 @@
       "type": {}
     }
   },
-  "unknownSessionVerify": "Tundmatu sessioon, palun tee talle verifitseerimine",
-  "@unknownSessionVerify": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "unlockChatBackup": "Krüpti lahti oma vestluste varukoopia",
-  "@unlockChatBackup": {
-    "type": "text",
-    "placeholders": {}
-  },
   "unmuteChat": "Lõpeta vestluse vaigistamine",
   "@unmuteChat": {
     "type": "text",
@@ -2288,18 +1907,6 @@
     "placeholders": {
       "unreadCount": {}
     }
-  },
-  "unreadMessages": "{unreadEvents, plural, =1{1 lugemata sõnum} other{{unreadEvents} lugemata sõnumit}}",
-  "@unreadMessages": {
-    "type": "text",
-    "placeholders": {
-      "unreadEvents": {}
-    }
-  },
-  "useAmoledTheme": "Kas kasutame AMOLED-tehnoloogiaga ühilduvaid värve?",
-  "@useAmoledTheme": {
-    "type": "text",
-    "placeholders": {}
   },
   "userAndOthersAreTyping": "{username} ja {count} muud kirjutavad…",
   "@userAndOthersAreTyping": {
@@ -2336,11 +1943,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "userNotVerified": "Kasutaja on verifitseerimata",
-  "@userNotVerified": {
-    "type": "text",
-    "placeholders": {}
-  },
   "userSentUnknownEvent": "{username} saatis {type} sündmuse",
   "@userSentUnknownEvent": {
     "type": "text",
@@ -2349,33 +1951,13 @@
       "type": {}
     }
   },
-  "userUnknownVerification": "Kasutaja verifitseerimisolek on teadmata",
-  "@userUnknownVerification": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "userVerified": "Kasutaja on verifitseeritud",
-  "@userVerified": {
-    "type": "text",
-    "placeholders": {}
-  },
   "verified": "Verifitseeritud",
   "@verified": {
     "type": "text",
     "placeholders": {}
   },
-  "verifiedSession": "Sessiooni verifitseerimine õnnestus!",
-  "@verifiedSession": {
-    "type": "text",
-    "placeholders": {}
-  },
   "verify": "Verifitseeri",
   "@verify": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "verifyManual": "Verifitseeri käsitsi",
-  "@verifyManual": {
     "type": "text",
     "placeholders": {}
   },
@@ -2391,11 +1973,6 @@
   },
   "verifyTitle": "Verifitseerin teist kasutajakontot",
   "@verifyTitle": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "verifyUser": "Verifitseeri kasutajat",
-  "@verifyUser": {
     "type": "text",
     "placeholders": {}
   },
@@ -2449,18 +2026,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "warningEncryptionInBeta": "Läbiv krüptimine on parasjagu beetatestimise faasis! Kasuta seda omal vastutusel!",
-  "@warningEncryptionInBeta": {
-    "type": "text",
-    "placeholders": {}
-  },
   "wednesday": "Kolmapäev",
   "@wednesday": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "welcomeText": "Tere tulemast kasutama kõige vahvamat sõnumiklienti Matrix'i võrgus.",
-  "@welcomeText": {
     "type": "text",
     "placeholders": {}
   },
@@ -2529,40 +2096,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "yourChatsAreBeingSynced": "Sünkroniseerin sinu vestlusi…",
-  "@yourChatsAreBeingSynced": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "yourOwnUsername": "Sinu oma kasutajanimi",
-  "@yourOwnUsername": {
-    "type": "text",
-    "placeholders": {}
-  },
   "yourPublicKey": "Sinu avalik võti",
   "@yourPublicKey": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "youWillBeConnectedTo": "Sinu ühendus on koduserveriga {homeserver}",
-  "@youWillBeConnectedTo": {
-    "type": "text",
-    "placeholders": {
-      "homeserver": {}
-    }
-  },
-  "zoomIn": "Suumi sisse",
-  "@zoomIn": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "zoomOut": "Suumi välja",
-  "@zoomOut": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "chatHasBeenRemovedFromThisSpace": "Eemaldasime vestluse kogukonnast",
-  "@chatHasBeenRemovedFromThisSpace": {
     "type": "text",
     "placeholders": {}
   },
@@ -2576,18 +2111,12 @@
   "@typeInInviteLinkManually": {},
   "shareYourInviteLink": "Jaga oma kutselinki",
   "@shareYourInviteLink": {},
-  "createNewChatExplaination": "Lihtsalt skaneeri QR-koodi või kui te pole kõrvuti, siis jaga kutse linki.",
-  "@createNewChatExplaination": {},
   "sendOnEnter": "Saada sõnum sisestusklahvi vajutusel",
   "@sendOnEnter": {},
   "homeserver": "Koduserver",
   "@homeserver": {},
   "serverRequiresEmail": "See koduserver eeldab registreerimisel kasutatava e-postiaadressi kinnitamist.",
   "@serverRequiresEmail": {},
-  "newUsernameDescription": "Sinu Matrix'i kasutajatunnus saab olema vormingus @kasutajanimi:koduserver",
-  "@newUsernameDescription": {},
-  "newPasswordDescription": "Selleks, et saaksid vajadusel oma salasõna taastada, peaksid hiljem lisama oma kasutajakontole e-posti aadressi.",
-  "@newPasswordDescription": {},
   "enableMultiAccounts": "(KATSELINE) Pruugi selles seadmes mitut Matrix'i kasutajakontot",
   "@enableMultiAccounts": {},
   "bundleName": "Köite nimi",
@@ -2604,14 +2133,8 @@
   "@oneClientLoggedOut": {},
   "link": "Link",
   "@link": {},
-  "setupChatBackup": "Võta kasutusele vestluste varundus",
-  "@setupChatBackup": {},
-  "iWroteDownTheKey": "Panin krüptovõtme kirja",
-  "@iWroteDownTheKey": {},
   "yourChatBackupHasBeenSetUp": "Sinu vestluste varundus on seadistatud.",
   "@yourChatBackupHasBeenSetUp": {},
-  "setupChatBackupDescription": "Et sinu sõnumid ei oleks võõrastele loetavad, me genereerisime taastamiseks mõeldud krüptovõtme.\nPalun hoia seda turvalises kohas, näiteks salasõnade halduris.",
-  "@setupChatBackupDescription": {},
   "yourUserId": "Sinu kasutajatunnus:",
   "@yourUserId": {},
   "unverified": "Verifitseerimata",
@@ -2645,16 +2168,8 @@
   "@loginWithOneClick": {},
   "removeFromSpace": "Eemalda kogukonnast",
   "@removeFromSpace": {},
-  "removeFromSpaceDescription": "Järgnevaga eemaldad antud vestluse sellest kogukonnast. Vestlus on jätkuvalt leitav vaatest „Kõik vestlused“.",
-  "@removeFromSpaceDescription": {},
   "start": "Alusta",
   "@start": {},
-  "setupChatBackupNow": "Seadista oma vestluste varundus",
-  "@setupChatBackupNow": {},
-  "saveTheSecurityKeyNow": "Salvesta turvavõti nüüd",
-  "@saveTheSecurityKeyNow": {},
-  "pleaseEnterSecurityKeyDescription": "Kui soovid vestluste varundust kasutada, siis palun sisesta oma turvavõti, mille me varasemas sessioonis tegime. Turvavõti EI OLE sama kui salasõna.",
-  "@pleaseEnterSecurityKeyDescription": {},
   "commandHint_discardsession": "Loobu sessioonist",
   "@commandHint_discardsession": {
     "type": "text",
@@ -2697,10 +2212,6 @@
   "@reportUser": {},
   "openChat": "Ava vestlus",
   "@openChat": {},
-  "editIntegrations": "Muuda vidinaid ja lõiminguid",
-  "@editIntegrations": {},
-  "integrationsNotImplemented": "Vidinate ja lõimingute muutmine pole veel võimalik.",
-  "@integrationsNotImplemented": {},
   "matrixWidgets": "Matrix'i vidinad",
   "@matrixWidgets": {},
   "dismiss": "Loobu",
@@ -2723,8 +2234,6 @@
   "@voiceCall": {},
   "confirmEventUnpin": "Kas sa oled kindel, et tahad klammerdatud sündmuse eemaldada?",
   "@confirmEventUnpin": {},
-  "pinnedEventsError": "Viga klammerdatud sõnumite laadimisel",
-  "@pinnedEventsError": {},
   "pinMessage": "Klammerda sõnum jututuppa",
   "@pinMessage": {},
   "videoCallsBetaWarning": "Palun arvesta, et videokõned on veel beetajärgus. Nad ei pruugi veel toimida kõikidel platvormidel korrektselt.",
@@ -2857,16 +2366,12 @@
   "@unsubscribeStories": {},
   "yourStory": "Sinu jutustused",
   "@yourStory": {},
-  "showSpaces": "Näita kogukondade loendit",
-  "@showSpaces": {},
   "noEmailWarning": "Palun sisesta korrektne e-posti aadress. Vastasel juhul ei saa te oma salasõna taastada. Kui te seda ei soovi, siis jätkamiseks klõpsige nuppu uuesti.",
   "@noEmailWarning": {},
   "pleaseEnterRecoveryKey": "Palun sisesta oma taastevõti:",
   "@pleaseEnterRecoveryKey": {},
   "recoveryKey": "Taastevõti",
   "@recoveryKey": {},
-  "saveTheRecoveryKeyNow": "Salvesta taastevõti nüüd",
-  "@saveTheRecoveryKeyNow": {},
   "users": "Kasutajad",
   "@users": {},
   "enableAutoBackups": "Võta kasutusele automaatne varundus",
@@ -2905,8 +2410,6 @@
   "@hydrateTor": {},
   "hydrateTorLong": "Kui viimati TOR'i võrku kasutasid, siis kas sa eksportisid oma sessiooni andmed? Kui jah, siis impordi nad mugavasti ja jätka suhtlemist.",
   "@hydrateTorLong": {},
-  "advanced": "Lisaseadistused",
-  "@advanced": {},
   "indexedDbErrorTitle": "Brauseri privaatse akna kasutamisega seotud asjaolud",
   "@indexedDbErrorTitle": {},
   "dehydrateWarning": "Seda tegevust ei saa tagasi pöörata. Palun kontrolli, et sa oled varukoopia turvaliselt salvestanud.",
@@ -2921,19 +2424,8 @@
   "@user": {},
   "custom": "Kohandatud",
   "@custom": {},
-  "numberRoomMembers": "{number} liiget",
-  "@numberRoomMembers": {
-    "type": "number",
-    "placeholders": {
-      "number": {}
-    }
-  },
-  "suggestedRooms": "Otsi jututube selles kogukonnas",
-  "@suggestedRooms": {},
   "updateNow": "Alusta uuendamist taustal",
   "@updateNow": {},
-  "allSuggestedRoomsJoined": "Sa liitusid kõikide soovitatud jututubadega",
-  "@allSuggestedRoomsJoined": {},
   "updateAvailable": "On olemas FluffyChat'i uuendus",
   "@updateAvailable": {},
   "confirmMatrixId": "Konto kustutamiseks palun kinnitage oma Matrix'i ID.",
@@ -3018,5 +2510,40 @@
     }
   },
   "commandHint_googly": "Saada ühed otsivad silmad",
-  "@commandHint_googly": {}
+  "@commandHint_googly": {},
+  "wasDirectChatDisplayName": "Sõnumiteta vestlus (vana nimega {oldDisplayName})",
+  "@wasDirectChatDisplayName": {
+    "type": "text",
+    "placeholders": {
+      "oldDisplayName": {}
+    }
+  },
+  "startFirstChat": "Alusta oma esimest vestlust",
+  "@startFirstChat": {},
+  "encryptThisChat": "Krüpti see vestlus",
+  "@encryptThisChat": {},
+  "endToEndEncryption": "Läbiv krüptimine",
+  "@endToEndEncryption": {},
+  "disableEncryptionWarning": "Kui vestluses on krüptimine kasutusele võetud, siis turvalisuse huvides ei saa seda hiljem välja lülitada.",
+  "@disableEncryptionWarning": {},
+  "sorryThatsNotPossible": "Vabandust... see ei ole võimalik",
+  "@sorryThatsNotPossible": {},
+  "deviceKeys": "Seadme võtmed:",
+  "@deviceKeys": {},
+  "newSpaceDescription": "Kogukonnad võimaldavad sul koondada erinevaid vestlusi ning korraldada avalikku või privaatset ühistegevust.",
+  "@newSpaceDescription": {},
+  "noSearchResult": "Sobivaid otsingutulemusi ei leidu.",
+  "@noSearchResult": {},
+  "enterInviteLinkOrMatrixId": "Sisesta kutse link või Matrix ID...",
+  "@enterInviteLinkOrMatrixId": {},
+  "letsStart": "Sõidame!",
+  "@letsStart": {},
+  "reopenChat": "Alusta vestlust uuesti",
+  "@reopenChat": {},
+  "noOtherDevicesFound": "Muid seadmeid ei leidu",
+  "@noOtherDevicesFound": {},
+  "noBackupWarning": "Hoiatus! Kui sa ei lülita sisse vestluse varundust, siis sul puudub hiljem ligipääs krüptitud sõnumitele. Me tungivalt soovitame, et palun lülita vestluse varundamine sisse enne väljalogimist.",
+  "@noBackupWarning": {},
+  "fileIsTooBigForServer": "Serveri seadistuste alusel on see fail saatmiseks liiga suur.",
+  "@fileIsTooBigForServer": {}
 }

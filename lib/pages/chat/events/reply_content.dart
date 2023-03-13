@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import '../../../config/app_config.dart';
 import '../../chat_search/search_result_formatter.dart';
 import 'html_message.dart';
@@ -86,21 +86,22 @@ class ReplyContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               FutureBuilder<User?>(
-                  future: displayEvent.fetchSenderUser(),
-                  builder: (context, snapshot) {
-                    return Text(
-                      '${snapshot.data?.calcDisplayname() ?? displayEvent.senderFromMemoryOrFallback.calcDisplayname()}:',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: ownMessage
-                            ? Theme.of(context).colorScheme.onPrimary
-                            : Theme.of(context).colorScheme.onBackground,
-                        fontSize: fontSize,
-                      ),
-                    );
-                  }),
+                future: displayEvent.fetchSenderUser(),
+                builder: (context, snapshot) {
+                  return Text(
+                    '${snapshot.data?.calcDisplayname() ?? displayEvent.senderFromMemoryOrFallback.calcDisplayname()}:',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: ownMessage
+                          ? Theme.of(context).colorScheme.onPrimary
+                          : Theme.of(context).colorScheme.onBackground,
+                      fontSize: fontSize,
+                    ),
+                  );
+                },
+              ),
               replyBody,
             ],
           ),

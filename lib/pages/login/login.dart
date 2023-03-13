@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
 
+import 'package:fluffychat/utils/localized_exception_extension.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import '../../utils/platform_infos.dart';
 import 'login_view.dart';
@@ -30,7 +30,7 @@ class LoginController extends State<Login> {
   void toggleShowPassword() =>
       setState(() => showPassword = !loading && !showPassword);
 
-  void login([_]) async {
+  void login() async {
     final matrix = Matrix.of(context);
 
     if (usernameController.text.isEmpty) {
@@ -49,6 +49,9 @@ class LoginController extends State<Login> {
     }
 
     setState(() => loading = true);
+
+    _coolDown?.cancel();
+
     try {
       final username = usernameController.text;
       AuthenticationIdentifier identifier;
@@ -98,8 +101,8 @@ class LoginController extends State<Login> {
   void _checkWellKnown(String userId) async {
     if (mounted) setState(() => usernameError = null);
     if (!userId.isValidMatrixId) return;
+    final oldHomeserver = Matrix.of(context).getLoginClient().homeserver;
     try {
-      final oldHomeserver = Matrix.of(context).getLoginClient().homeserver;
       var newDomain = Uri.https(userId.domain!, '');
       Matrix.of(context).getLoginClient().homeserver = newDomain;
       DiscoveryInformation? wellKnownInformation;
@@ -113,19 +116,14 @@ class LoginController extends State<Login> {
         // do nothing, newDomain is already set to a reasonable fallback
       }
       if (newDomain != oldHomeserver) {
-        await showFutureLoadingDialog(
-          context: context,
-          // do nothing if we error, we'll handle it below
-          future: () => Matrix.of(context)
-              .getLoginClient()
-              .checkHomeserver(newDomain)
-              .catchError((e) {}),
-        );
+        await Matrix.of(context).getLoginClient().checkHomeserver(newDomain);
+
         if (Matrix.of(context).getLoginClient().homeserver == null) {
           Matrix.of(context).getLoginClient().homeserver = oldHomeserver;
           // okay, the server we checked does not appear to be a matrix server
           Logs().v(
-              '$newDomain is not running a homeserver, asking to use $oldHomeserver');
+            '$newDomain is not running a homeserver, asking to use $oldHomeserver',
+          );
           final dialogResult = await showOkCancelAlertDialog(
             context: context,
             useRootNavigator: false,
@@ -141,15 +139,18 @@ class LoginController extends State<Login> {
             return;
           }
         }
-        if (mounted) setState(() => usernameError = null);
+        usernameError = null;
+        if (mounted) setState(() {});
       } else {
+        Matrix.of(context).getLoginClient().homeserver = oldHomeserver;
         if (mounted) {
-          setState(() =>
-              Matrix.of(context).getLoginClient().homeserver = oldHomeserver);
+          setState(() {});
         }
       }
     } catch (e) {
-      if (mounted) setState(() => usernameError = e.toString());
+      Matrix.of(context).getLoginClient().homeserver = oldHomeserver;
+      usernameError = e.toLocalizedString(context);
+      if (mounted) setState(() {});
     }
   }
 
@@ -231,7 +232,8 @@ class LoginController extends State<Login> {
     );
     if (success.error == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(L10n.of(context)!.passwordHasBeenChanged)));
+        SnackBar(content: Text(L10n.of(context)!.passwordHasBeenChanged)),
+      );
       usernameController.text = input.single;
       passwordController.text = password.single;
       login();
@@ -247,8 +249,9 @@ class LoginController extends State<Login> {
 extension on String {
   static final RegExp _phoneRegex =
       RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
+  static final RegExp _emailRegex = RegExp(r'(.+)@(.+)\.(.+)');
 
-  bool get isEmail => EmailValidator.validate(this);
+  bool get isEmail => _emailRegex.hasMatch(this);
 
   bool get isPhoneNumber => _phoneRegex.hasMatch(this);
 }

@@ -14,7 +14,7 @@ import 'package:vrouter/vrouter.dart';
 import 'package:fluffychat/pages/chat/cupertino_widgets_bottom_sheet.dart';
 import 'package:fluffychat/pages/chat/edit_widgets_dialog.dart';
 import 'package:fluffychat/pages/chat/widgets_bottom_sheet.dart';
-import 'm2_popup_menu_button.dart';
+import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'matrix.dart';
 
 class ChatSettingsPopupMenu extends StatefulWidget {
@@ -136,7 +136,7 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
           onKeysPressed: _showWidgets,
           child: Container(),
         ),
-        M2PopupMenuButton(
+        PopupMenuButton(
           onSelected: (String choice) async {
             switch (choice) {
               case 'widgets':
@@ -160,7 +160,9 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
                 );
                 if (confirmed == OkCancelResult.ok) {
                   final success = await showFutureLoadingDialog(
-                      context: context, future: () => widget.room.leave());
+                    context: context,
+                    future: () => widget.room.leave(),
+                  );
                   if (success.error == null) {
                     VRouter.of(context).to('/rooms');
                   }
@@ -168,15 +170,17 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
                 break;
               case 'mute':
                 await showFutureLoadingDialog(
-                    context: context,
-                    future: () => widget.room
-                        .setPushRuleState(PushRuleState.mentionsOnly));
+                  context: context,
+                  future: () =>
+                      widget.room.setPushRuleState(PushRuleState.mentionsOnly),
+                );
                 break;
               case 'unmute':
                 await showFutureLoadingDialog(
-                    context: context,
-                    future: () =>
-                        widget.room.setPushRuleState(PushRuleState.notify));
+                  context: context,
+                  future: () =>
+                      widget.room.setPushRuleState(PushRuleState.notify),
+                );
                 break;
               case 'details':
                 _showChatDetails();
@@ -203,7 +207,7 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
           context: context,
           builder: (context) => CupertinoWidgetsBottomSheet(room: widget.room),
         )
-      : showModalBottomSheet(
+      : showAdaptiveBottomSheet(
           context: context,
           builder: (context) => WidgetsBottomSheet(room: widget.room),
         );

@@ -21,7 +21,6 @@ import 'package:fluffychat/pages/new_space/new_space.dart';
 import 'package:fluffychat/pages/read_receipt_overview/read_receipt_overview.dart';
 import 'package:fluffychat/pages/settings/settings.dart';
 import 'package:fluffychat/pages/settings_3pid/settings_3pid.dart';
-import 'package:fluffychat/pages/settings_account/settings_account.dart';
 import 'package:fluffychat/pages/settings_chat/settings_chat.dart';
 import 'package:fluffychat/pages/settings_emotes/settings_emotes.dart';
 import 'package:fluffychat/pages/settings_ignore_list/settings_ignore_list.dart';
@@ -105,6 +104,13 @@ class AppRoutes {
             VWidget(
               path: '/archive',
               widget: const Archive(),
+              stackedRoutes: [
+                VWidget(
+                  path: ':roomid',
+                  widget: const Chat(),
+                  buildTransition: _dynamicTransition,
+                ),
+              ],
             ),
             VWidget(
               path: '/newprivatechat',
@@ -241,13 +247,25 @@ class AppRoutes {
                 ),
               ],
             ),
-            VWidget(
+            VNester(
               path: '/archive',
-              widget: const TwoColumnLayout(
-                mainView: Archive(),
-                sideView: EmptyPage(),
+              widgetBuilder: (child) => TwoColumnLayout(
+                mainView: const Archive(),
+                sideView: child,
               ),
               buildTransition: _fadeTransition,
+              nestedRoutes: [
+                VWidget(
+                  path: '',
+                  widget: const EmptyPage(),
+                  buildTransition: _dynamicTransition,
+                ),
+                VWidget(
+                  path: ':roomid',
+                  widget: const Chat(),
+                  buildTransition: _dynamicTransition,
+                ),
+              ],
             ),
           ],
         ),
@@ -266,21 +284,22 @@ class AppRoutes {
               buildTransition: _fadeTransition,
             ),
             VWidget(
-                path: 'connect',
-                widget: const ConnectPage(),
-                buildTransition: _fadeTransition,
-                stackedRoutes: [
-                  VWidget(
-                    path: 'login',
-                    widget: const Login(),
-                    buildTransition: _fadeTransition,
-                  ),
-                  VWidget(
-                    path: 'signup',
-                    widget: const SignupPage(),
-                    buildTransition: _fadeTransition,
-                  ),
-                ]),
+              path: 'connect',
+              widget: const ConnectPage(),
+              buildTransition: _fadeTransition,
+              stackedRoutes: [
+                VWidget(
+                  path: 'login',
+                  widget: const Login(),
+                  buildTransition: _fadeTransition,
+                ),
+                VWidget(
+                  path: 'signup',
+                  widget: const SignupPage(),
+                  buildTransition: _fadeTransition,
+                ),
+              ],
+            ),
             VWidget(
               path: 'logs',
               widget: const LogViewer(),
@@ -347,13 +366,18 @@ class AppRoutes {
           ],
         ),
         VWidget(
-          path: 'account',
-          widget: const SettingsAccount(),
-          buildTransition: _dynamicTransition,
+          path: 'addaccount',
+          widget: const HomeserverPicker(),
+          buildTransition: _fadeTransition,
           stackedRoutes: [
             VWidget(
-              path: 'add',
-              widget: const HomeserverPicker(),
+              path: 'login',
+              widget: const Login(),
+              buildTransition: _fadeTransition,
+            ),
+            VWidget(
+              path: 'connect',
+              widget: const ConnectPage(),
               buildTransition: _fadeTransition,
               stackedRoutes: [
                 VWidget(
@@ -362,21 +386,10 @@ class AppRoutes {
                   buildTransition: _fadeTransition,
                 ),
                 VWidget(
-                    path: 'connect',
-                    widget: const ConnectPage(),
-                    buildTransition: _fadeTransition,
-                    stackedRoutes: [
-                      VWidget(
-                        path: 'login',
-                        widget: const Login(),
-                        buildTransition: _fadeTransition,
-                      ),
-                      VWidget(
-                        path: 'signup',
-                        widget: const SignupPage(),
-                        buildTransition: _fadeTransition,
-                      ),
-                    ]),
+                  path: 'signup',
+                  widget: const SignupPage(),
+                  buildTransition: _fadeTransition,
+                ),
               ],
             ),
           ],

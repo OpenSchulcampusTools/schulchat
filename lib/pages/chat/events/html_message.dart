@@ -8,7 +8,7 @@ import 'package:fluffychat/widgets/matrix.dart';
 import '../../../config/app_config.dart';
 import '../../../config/setting_keys.dart';
 import '../../../pages/image_viewer/image_viewer.dart';
-import '../../../utils/matrix_sdk_extensions.dart/matrix_locals.dart';
+import '../../../utils/matrix_sdk_extensions/matrix_locals.dart';
 import '../../../utils/url_launcher.dart';
 
 class HtmlMessage extends StatelessWidget {
@@ -38,9 +38,14 @@ class HtmlMessage extends StatelessWidget {
     // miss-matching tags, and this way we actually correctly identify what we want to strip and, well,
     // strip it.
     final renderHtml = html.replaceAll(
-        RegExp('<mx-reply>.*</mx-reply>',
-            caseSensitive: false, multiLine: false, dotAll: true),
-        '');
+      RegExp(
+        '<mx-reply>.*</mx-reply>',
+        caseSensitive: false,
+        multiLine: false,
+        dotAll: true,
+      ),
+      '',
+    );
 
     // there is no need to pre-validate the html, as we validate it while rendering
 
@@ -52,16 +57,21 @@ class HtmlMessage extends StatelessWidget {
       defaultTextStyle: defaultTextStyle,
       emoteSize: emoteSize,
       linkStyle: linkStyle ??
-          themeData.textTheme.bodyText2!.copyWith(
+          themeData.textTheme.bodyMedium!.copyWith(
             color: themeData.colorScheme.secondary,
             decoration: TextDecoration.underline,
+            decorationColor: themeData.colorScheme.secondary,
           ),
       shrinkToFit: true,
       maxLines: maxLines,
       onLinkTap: (url) => UrlLauncher(context, url).launchUrl(),
       onPillTap: (url) => UrlLauncher(context, url).launchUrl(),
-      getMxcUrl: (String mxc, double? width, double? height,
-          {bool? animated = false}) {
+      getMxcUrl: (
+        String mxc,
+        double? width,
+        double? height, {
+        bool? animated = false,
+      }) {
         final ratio = MediaQuery.of(context).devicePixelRatio;
         return Uri.parse(mxc)
             .getThumbnail(
@@ -74,19 +84,23 @@ class HtmlMessage extends StatelessWidget {
             .toString();
       },
       onImageTap: (String mxc) => showDialog(
-          context: Matrix.of(context).navigatorContext,
-          useRootNavigator: false,
-          builder: (_) => ImageViewer(Event(
-              type: EventTypes.Message,
-              content: <String, dynamic>{
-                'body': mxc,
-                'url': mxc,
-                'msgtype': MessageTypes.Image,
-              },
-              senderId: room.client.userID!,
-              originServerTs: DateTime.now(),
-              eventId: 'fake_event',
-              room: room))),
+        context: Matrix.of(context).navigatorContext,
+        useRootNavigator: false,
+        builder: (_) => ImageViewer(
+          Event(
+            type: EventTypes.Message,
+            content: <String, dynamic>{
+              'body': mxc,
+              'url': mxc,
+              'msgtype': MessageTypes.Image,
+            },
+            senderId: room.client.userID!,
+            originServerTs: DateTime.now(),
+            eventId: 'fake_event',
+            room: room,
+          ),
+        ),
+      ),
       setCodeLanguage: (String key, String value) async {
         await matrix.store.setItem('${SettingKeys.codeLanguage}.$key', value);
       },

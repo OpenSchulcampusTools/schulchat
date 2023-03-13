@@ -21,10 +21,14 @@ class ArchiveView extends StatelessWidget {
           leading: const BackButton(),
           title: Text(L10n.of(context)!.archive),
           actions: [
-            if (snapshot.hasData && archive != null && archive!.isNotEmpty)
-              TextButton(
-                onPressed: controller.forgetAllAction,
-                child: Text(L10n.of(context)!.clearArchive),
+            if (snapshot.data?.isNotEmpty ?? false)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton.icon(
+                  onPressed: controller.forgetAllAction,
+                  label: Text(L10n.of(context)!.clearArchive),
+                  icon: const Icon(Icons.cleaning_services_outlined),
+                ),
               )
           ],
         ),
@@ -32,25 +36,27 @@ class ArchiveView extends StatelessWidget {
           builder: (BuildContext context) {
             if (snapshot.hasError) {
               return Center(
-                  child: Text(
-                L10n.of(context)!.oopsSomethingWentWrong,
-                textAlign: TextAlign.center,
-              ));
+                child: Text(
+                  L10n.of(context)!.oopsSomethingWentWrong,
+                  textAlign: TextAlign.center,
+                ),
+              );
             }
             if (!snapshot.hasData) {
               return const Center(
-                  child: CircularProgressIndicator.adaptive(strokeWidth: 2));
+                child: CircularProgressIndicator.adaptive(strokeWidth: 2),
+              );
             } else {
               archive = snapshot.data;
               if (archive == null || archive!.isEmpty) {
                 return const Center(
-                    child: Icon(Icons.archive_outlined, size: 80));
+                  child: Icon(Icons.archive_outlined, size: 80),
+                );
               }
               return ListView.builder(
                 itemCount: archive!.length,
                 itemBuilder: (BuildContext context, int i) => ChatListItem(
                   archive![i],
-                  onForget: controller.forgetAction,
                 ),
               );
             }

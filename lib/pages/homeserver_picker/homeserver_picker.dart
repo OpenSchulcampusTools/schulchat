@@ -15,6 +15,7 @@ import 'package:vrouter/vrouter.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/pages/homeserver_picker/homeserver_bottom_sheet.dart';
 import 'package:fluffychat/pages/homeserver_picker/homeserver_picker_view.dart';
+import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import '../../utils/localized_exception_extension.dart';
 
@@ -50,10 +51,11 @@ class HomeserverPickerController extends State<HomeserverPicker> {
     Hive.openBox('test').then((value) => null).catchError(
       (e, s) async {
         await showOkAlertDialog(
-            context: context,
-            title: L10n.of(context)!.indexedDbErrorTitle,
-            message: L10n.of(context)!.indexedDbErrorLong,
-            onWillPop: () async => false);
+          context: context,
+          title: L10n.of(context)!.indexedDbErrorTitle,
+          message: L10n.of(context)!.indexedDbErrorLong,
+          onWillPop: () async => false,
+        );
         _checkTorBrowser();
       },
     );
@@ -71,7 +73,8 @@ class HomeserverPickerController extends State<HomeserverPicker> {
     }
   }
 
-  void showServerInfo(HomeserverBenchmarkResult server) => showModalBottomSheet(
+  void showServerInfo(HomeserverBenchmarkResult server) =>
+      showAdaptiveBottomSheet(
         context: context,
         builder: (_) => HomeserverBottomSheet(
           homeserver: server,
@@ -83,9 +86,11 @@ class HomeserverPickerController extends State<HomeserverPicker> {
       });
 
   List<HomeserverBenchmarkResult> get filteredHomeservers => benchmarkResults!
-      .where((element) =>
-          element.homeserver.baseUrl.host.contains(searchTerm) ||
-          (element.homeserver.description?.contains(searchTerm) ?? false))
+      .where(
+        (element) =>
+            element.homeserver.baseUrl.host.contains(searchTerm) ||
+            (element.homeserver.description?.contains(searchTerm) ?? false),
+      )
       .toList();
 
   void _loadHomeserverList() async {
@@ -184,15 +189,16 @@ class HomeserverPickerController extends State<HomeserverPicker> {
     final file = await FilePickerCross.importFromStorage();
     if (file.fileName == null) return;
     await showFutureLoadingDialog(
-        context: context,
-        future: () async {
-          try {
-            final client = Matrix.of(context).getLoginClient();
-            await client.importDump(file.toString());
-            Matrix.of(context).initMatrix();
-          } catch (e, s) {
-            Logs().e('Future error:', e, s);
-          }
-        });
+      context: context,
+      future: () async {
+        try {
+          final client = Matrix.of(context).getLoginClient();
+          await client.importDump(file.toString());
+          Matrix.of(context).initMatrix();
+        } catch (e, s) {
+          Logs().e('Future error:', e, s);
+        }
+      },
+    );
   }
 }

@@ -67,8 +67,17 @@ class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
                             ),
                       suffixIcon: controller.isSearchMode
                           ? controller.isSearching
-                              ? const CircularProgressIndicator.adaptive(
-                                  strokeWidth: 2,
+                              ? const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 10.0,
+                                    horizontal: 12,
+                                  ),
+                                  child: SizedBox.square(
+                                    dimension: 24,
+                                    child: CircularProgressIndicator.adaptive(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
                                 )
                               : TextButton(
                                   onPressed: controller.setServer,
@@ -111,22 +120,28 @@ class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   IconButton(
                     tooltip: L10n.of(context)!.toggleUnread,
-                    icon: Icon(controller.anySelectedRoomNotMarkedUnread
-                        ? Icons.mark_chat_read_outlined
-                        : Icons.mark_chat_unread_outlined),
+                    icon: Icon(
+                      controller.anySelectedRoomNotMarkedUnread
+                          ? Icons.mark_chat_read_outlined
+                          : Icons.mark_chat_unread_outlined,
+                    ),
                     onPressed: controller.toggleUnread,
                   ),
                   IconButton(
                     tooltip: L10n.of(context)!.toggleFavorite,
-                    icon: Icon(controller.anySelectedRoomNotFavorite
-                        ? Icons.push_pin_outlined
-                        : Icons.push_pin),
+                    icon: Icon(
+                      controller.anySelectedRoomNotFavorite
+                          ? Icons.push_pin_outlined
+                          : Icons.push_pin,
+                    ),
                     onPressed: controller.toggleFavouriteRoom,
                   ),
                   IconButton(
-                    icon: Icon(controller.anySelectedRoomNotMuted
-                        ? Icons.notifications_off_outlined
-                        : Icons.notifications_outlined),
+                    icon: Icon(
+                      controller.anySelectedRoomNotMuted
+                          ? Icons.notifications_off_outlined
+                          : Icons.notifications_outlined,
+                    ),
                     tooltip: L10n.of(context)!.toggleMuted,
                     onPressed: controller.toggleMuted,
                   ),

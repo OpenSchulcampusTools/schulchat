@@ -15,18 +15,19 @@ import 'package:vrouter/vrouter.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_view.dart';
+import 'package:fluffychat/pages/settings_security/settings_security.dart';
 import 'package:fluffychat/utils/famedlysdk_store.dart';
 import 'package:fluffychat/utils/localized_exception_extension.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions.dart/client_stories_extension.dart';
+import 'package:fluffychat/utils/matrix_sdk_extensions/client_stories_extension.dart';
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import '../../../utils/account_bundles.dart';
-import '../../utils/matrix_sdk_extensions.dart/matrix_file_extension.dart';
+import '../../utils/matrix_sdk_extensions/matrix_file_extension.dart';
 import '../../utils/url_launcher.dart';
 import '../../utils/voip/callkeep_manager.dart';
 import '../../widgets/fluffy_chat_app.dart';
 import '../../widgets/matrix.dart';
 import '../bootstrap/bootstrap_dialog.dart';
-import '../settings_account/settings_account.dart';
 
 import 'package:fluffychat/utils/tor_stub.dart'
     if (dart.library.html) 'package:tor_detector_web/tor_detector_web.dart';
@@ -55,6 +56,7 @@ enum ActiveFilter {
 
 class ChatList extends StatefulWidget {
   static BuildContext? contextForVoip;
+
   const ChatList({Key? key}) : super(key: key);
 
   @override
@@ -162,19 +164,21 @@ class ChatListController extends State<ChatList>
 
   void setServer() async {
     final newServer = await showTextInputDialog(
-        useRootNavigator: false,
-        title: L10n.of(context)!.changeTheHomeserver,
-        context: context,
-        okLabel: L10n.of(context)!.ok,
-        cancelLabel: L10n.of(context)!.cancel,
-        textFields: [
-          DialogTextField(
-              prefixText: 'https://',
-              hintText: Matrix.of(context).client.homeserver?.host,
-              initialText: searchServer,
-              keyboardType: TextInputType.url,
-              autocorrect: false)
-        ]);
+      useRootNavigator: false,
+      title: L10n.of(context)!.changeTheHomeserver,
+      context: context,
+      okLabel: L10n.of(context)!.ok,
+      cancelLabel: L10n.of(context)!.cancel,
+      textFields: [
+        DialogTextField(
+          prefixText: 'https://',
+          hintText: Matrix.of(context).client.homeserver?.host,
+          initialText: searchServer,
+          keyboardType: TextInputType.url,
+          autocorrect: false,
+        )
+      ],
+    );
     if (newServer == null) return;
     Store().setItem(_serverStoreNamespace, newServer.single);
     setState(() {
@@ -224,7 +228,7 @@ class ChatListController extends State<ChatList>
 
   void onSearchEnter(String text) {
     if (text.isEmpty) {
-      cancelSearch();
+      cancelSearch(unfocus: false);
       return;
     }
 
@@ -235,12 +239,15 @@ class ChatListController extends State<ChatList>
     _coolDown = Timer(const Duration(milliseconds: 500), _search);
   }
 
-  void cancelSearch() => setState(() {
-        searchController.clear();
-        isSearchMode = false;
-        roomSearchResult = userSearchResult = null;
-        isSearching = false;
-      });
+  void cancelSearch({bool unfocus = true}) {
+    setState(() {
+      searchController.clear();
+      isSearchMode = false;
+      roomSearchResult = userSearchResult = null;
+      isSearching = false;
+    });
+    if (unfocus) FocusManager.instance.primaryFocus?.unfocus();
+  }
 
   bool isTorBrowser = false;
 
@@ -358,7 +365,10 @@ class ChatListController extends State<ChatList>
     _hackyWebRTCFixForWeb();
     CallKeepManager().initialize();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      searchServer = await Store().getItem(_serverStoreNamespace);
+      if (mounted) {
+        searchServer = await Store().getItem(_serverStoreNamespace);
+        Matrix.of(context).backgroundPush?.setupPush();
+      }
     });
 
     _checkTorBrowser();
@@ -386,9 +396,11 @@ class ChatListController extends State<ChatList>
   }
 
   void toggleSelection(String roomId) {
-    setState(() => selectedRoomIds.contains(roomId)
-        ? selectedRoomIds.remove(roomId)
-        : selectedRoomIds.add(roomId));
+    setState(
+      () => selectedRoomIds.contains(roomId)
+          ? selectedRoomIds.remove(roomId)
+          : selectedRoomIds.add(roomId),
+    );
   }
 
   Future<void> toggleUnread() async {
@@ -460,16 +472,17 @@ class ChatListController extends State<ChatList>
 
   void setStatus() async {
     final input = await showTextInputDialog(
-        useRootNavigator: false,
-        context: context,
-        title: L10n.of(context)!.setStatus,
-        okLabel: L10n.of(context)!.ok,
-        cancelLabel: L10n.of(context)!.cancel,
-        textFields: [
-          DialogTextField(
-            hintText: L10n.of(context)!.statusExampleMessage,
-          ),
-        ]);
+      useRootNavigator: false,
+      context: context,
+      title: L10n.of(context)!.setStatus,
+      okLabel: L10n.of(context)!.ok,
+      cancelLabel: L10n.of(context)!.cancel,
+      textFields: [
+        DialogTextField(
+          hintText: L10n.of(context)!.statusExampleMessage,
+        ),
+      ],
+    );
     if (input == null) return;
     await showFutureLoadingDialog(
       context: context,
@@ -495,21 +508,23 @@ class ChatListController extends State<ChatList>
 
   Future<void> addToSpace() async {
     final selectedSpace = await showConfirmationDialog<String>(
-        context: context,
-        title: L10n.of(context)!.addToSpace,
-        message: L10n.of(context)!.addToSpaceDescription,
-        fullyCapitalizedForMaterial: false,
-        actions: Matrix.of(context)
-            .client
-            .rooms
-            .where((r) => r.isSpace)
-            .map(
-              (space) => AlertDialogAction(
-                key: space.id,
-                label: space.displayname,
-              ),
-            )
-            .toList());
+      context: context,
+      title: L10n.of(context)!.addToSpace,
+      message: L10n.of(context)!.addToSpaceDescription,
+      fullyCapitalizedForMaterial: false,
+      actions: Matrix.of(context)
+          .client
+          .rooms
+          .where((r) => r.isSpace)
+          .map(
+            (space) => AlertDialogAction(
+              key: space.id,
+              label: space
+                  .getLocalizedDisplayname(MatrixLocals(L10n.of(context)!)),
+            ),
+          )
+          .toList(),
+    );
     if (selectedSpace == null) return;
     final result = await showFutureLoadingDialog(
       context: context,
@@ -535,14 +550,19 @@ class ChatListController extends State<ChatList>
   }
 
   bool get anySelectedRoomNotMarkedUnread => selectedRoomIds.any(
-      (roomId) => !Matrix.of(context).client.getRoomById(roomId)!.markedUnread);
+        (roomId) =>
+            !Matrix.of(context).client.getRoomById(roomId)!.markedUnread,
+      );
 
   bool get anySelectedRoomNotFavorite => selectedRoomIds.any(
-      (roomId) => !Matrix.of(context).client.getRoomById(roomId)!.isFavourite);
+        (roomId) => !Matrix.of(context).client.getRoomById(roomId)!.isFavourite,
+      );
 
-  bool get anySelectedRoomNotMuted => selectedRoomIds.any((roomId) =>
-      Matrix.of(context).client.getRoomById(roomId)!.pushRuleState ==
-      PushRuleState.notify);
+  bool get anySelectedRoomNotMuted => selectedRoomIds.any(
+        (roomId) =>
+            Matrix.of(context).client.getRoomById(roomId)!.pushRuleState ==
+            PushRuleState.notify,
+      );
 
   bool waitForFirstSync = false;
 
@@ -627,9 +647,10 @@ class ChatListController extends State<ChatList>
     switch (action) {
       case EditBundleAction.addToBundle:
         final bundle = await showTextInputDialog(
-            context: context,
-            title: l10n.bundleName,
-            textFields: [DialogTextField(hintText: l10n.bundleName)]);
+          context: context,
+          title: l10n.bundleName,
+          textFields: [DialogTextField(hintText: l10n.bundleName)],
+        );
         if (bundle == null || bundle.isEmpty || bundle.single.isEmpty) return;
         await showFutureLoadingDialog(
           context: context,
@@ -684,7 +705,7 @@ class ChatListController extends State<ChatList>
   }
 
   Future<void> dehydrate() =>
-      SettingsAccountController.dehydrateDevice(context);
+      SettingsSecurityController.dehydrateDevice(context);
 }
 
 enum EditBundleAction { addToBundle, removeFromBundle }

@@ -9,6 +9,8 @@ import 'package:vrouter/vrouter.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
+import 'package:fluffychat/pages/chat_list/navi_rail_item.dart';
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/unread_rooms_badge.dart';
 import '../../widgets/matrix.dart';
@@ -107,146 +109,101 @@ class ChatListView extends StatelessWidget {
             children: [
               if (FluffyThemes.isColumnMode(context) &&
                   FluffyThemes.getDisplayNavigationRail(context)) ...[
-                Builder(builder: (context) {
-                  final allSpaces = client.rooms.where((room) => room.isSpace);
-                  final rootSpaces = allSpaces
-                      .where(
-                        (space) => !allSpaces.any(
-                          (parentSpace) => parentSpace.spaceChildren
-                              .any((child) => child.roomId == space.id),
-                        ),
-                      )
-                      .toList();
-                  final destinations = getNavigationDestinations(context);
-
-                  return SizedBox(
-                    width: 64,
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: rootSpaces.length + destinations.length,
-                      itemBuilder: (context, i) {
-                        if (i < destinations.length) {
-                          final isSelected = i == controller.selectedIndex;
-                          return Container(
-                            height: 64,
-                            width: 64,
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: i == (destinations.length - 1)
-                                    ? BorderSide(
-                                        width: 1,
-                                        color: Theme.of(context).dividerColor,
-                                      )
-                                    : BorderSide.none,
-                                left: BorderSide(
-                                  color: isSelected
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Colors.transparent,
-                                  width: 4,
-                                ),
-                                right: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 4,
-                                ),
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                            child: IconButton(
-                              color: isSelected
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : null,
-                              icon: CircleAvatar(
-                                  backgroundColor: isSelected
-                                      ? Theme.of(context).colorScheme.secondary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .background,
-                                  foregroundColor: isSelected
-                                      ? Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onBackground,
-                                  child: i == controller.selectedIndex
-                                      ? destinations[i].selectedIcon ??
-                                          destinations[i].icon
-                                      : destinations[i].icon),
-                              tooltip: destinations[i].label,
-                              onPressed: () =>
-                                  controller.onDestinationSelected(i),
-                            ),
-                          );
-                        }
-                        i -= destinations.length;
-                        final isSelected =
-                            controller.activeFilter == ActiveFilter.spaces &&
-                                rootSpaces[i].id == controller.activeSpaceId;
-                        return Container(
-                          height: 64,
-                          width: 64,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              left: BorderSide(
-                                color: isSelected
-                                    ? Theme.of(context).colorScheme.secondary
-                                    : Colors.transparent,
-                                width: 4,
-                              ),
-                              right: const BorderSide(
-                                color: Colors.transparent,
-                                width: 4,
-                              ),
-                            ),
+                Builder(
+                  builder: (context) {
+                    final allSpaces =
+                        client.rooms.where((room) => room.isSpace);
+                    final rootSpaces = allSpaces
+                        .where(
+                          (space) => !allSpaces.any(
+                            (parentSpace) => parentSpace.spaceChildren
+                                .any((child) => child.roomId == space.id),
                           ),
-                          alignment: Alignment.center,
-                          child: IconButton(
-                            tooltip: rootSpaces[i].displayname,
+                        )
+                        .toList();
+                    final destinations = getNavigationDestinations(context);
+
+                    return SizedBox(
+                      width: 64,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: rootSpaces.length + destinations.length,
+                        itemBuilder: (context, i) {
+                          if (i < destinations.length) {
+                            return NaviRailItem(
+                              isSelected: i == controller.selectedIndex,
+                              onTap: () => controller.onDestinationSelected(i),
+                              icon: destinations[i].icon,
+                              selectedIcon: destinations[i].selectedIcon,
+                              toolTip: destinations[i].label,
+                            );
+                          }
+                          i -= destinations.length;
+                          final isSelected =
+                              controller.activeFilter == ActiveFilter.spaces &&
+                                  rootSpaces[i].id == controller.activeSpaceId;
+                          return NaviRailItem(
+                            toolTip: rootSpaces[i].getLocalizedDisplayname(
+                              MatrixLocals(L10n.of(context)!),
+                            ),
+                            isSelected: isSelected,
+                            onTap: () =>
+                                controller.setActiveSpace(rootSpaces[i].id),
                             icon: Avatar(
                               mxContent: rootSpaces[i].avatar,
-                              name: rootSpaces[i].displayname,
+                              name: rootSpaces[i].getLocalizedDisplayname(
+                                MatrixLocals(L10n.of(context)!),
+                              ),
                               size: 32,
                               fontSize: 12,
                             ),
-                            onPressed: () =>
-                                controller.setActiveSpace(rootSpaces[i].id),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
                 Container(
                   color: Theme.of(context).dividerColor,
                   width: 1,
                 ),
               ],
               Expanded(
-                child: Scaffold(
-                  appBar: ChatListHeader(controller: controller),
-                  body: ChatListViewBody(controller),
-                  bottomNavigationBar: controller.displayNavigationBar
-                      ? NavigationBar(
-                          height: 64,
-                          selectedIndex: controller.selectedIndex,
-                          onDestinationSelected:
-                              controller.onDestinationSelected,
-                          destinations: getNavigationDestinations(context),
-                        )
-                      : null,
-                  floatingActionButton: selectMode == SelectMode.normal
-                      ? KeyBoardShortcuts(
-                          keysToPress: {
-                            LogicalKeyboardKey.controlLeft,
-                            LogicalKeyboardKey.keyN
-                          },
-                          onKeysPressed: () =>
-                              VRouter.of(context).to('/newprivatechat'),
-                          helpLabel: L10n.of(context)!.newChat,
-                          child: StartChatFloatingActionButton(
-                              controller: controller),
-                        )
-                      : null,
+                child: GestureDetector(
+                  onTap: FocusManager.instance.primaryFocus?.unfocus,
+                  excludeFromSemantics: true,
+                  behavior: HitTestBehavior.translucent,
+                  child: Scaffold(
+                    appBar: ChatListHeader(controller: controller),
+                    body: ChatListViewBody(controller),
+                    bottomNavigationBar: controller.displayNavigationBar
+                        ? NavigationBar(
+                            height: 64,
+                            selectedIndex: controller.selectedIndex,
+                            onDestinationSelected:
+                                controller.onDestinationSelected,
+                            destinations: getNavigationDestinations(context),
+                          )
+                        : null,
+                    floatingActionButtonLocation:
+                        controller.filteredRooms.isEmpty
+                            ? FloatingActionButtonLocation.centerFloat
+                            : null,
+                    floatingActionButton: selectMode == SelectMode.normal
+                        ? KeyBoardShortcuts(
+                            keysToPress: {
+                              LogicalKeyboardKey.controlLeft,
+                              LogicalKeyboardKey.keyN
+                            },
+                            onKeysPressed: () =>
+                                VRouter.of(context).to('/newprivatechat'),
+                            helpLabel: L10n.of(context)!.newChat,
+                            child: StartChatFloatingActionButton(
+                              controller: controller,
+                            ),
+                          )
+                        : null,
+                  ),
                 ),
               ),
             ],
@@ -255,13 +212,4 @@ class ChatListView extends StatelessWidget {
       },
     );
   }
-}
-
-enum ChatListPopupMenuItemActions {
-  createGroup,
-  createSpace,
-  discover,
-  setStatus,
-  inviteContact,
-  settings,
 }

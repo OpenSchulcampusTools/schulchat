@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
 
+import 'package:fluffychat/utils/localized_exception_extension.dart';
 import 'package:fluffychat/utils/size_string.dart';
 import '../../utils/resize_image.dart';
 
@@ -34,11 +35,12 @@ class SendFileDialogState extends State<SendFileDialog> {
       MatrixImageFile? thumbnail;
       if (file is MatrixVideoFile && file.bytes.length > minSizeToCompress) {
         await showFutureLoadingDialog(
-            context: context,
-            future: () async {
-              file = await file.resizeVideo();
-              thumbnail = await file.getVideoThumbnail();
-            });
+          context: context,
+          future: () async {
+            file = await file.resizeVideo();
+            thumbnail = await file.getVideoThumbnail();
+          },
+        );
       }
       final scaffoldMessenger = ScaffoldMessenger.of(context);
       widget.room
@@ -49,7 +51,7 @@ class SendFileDialogState extends State<SendFileDialog> {
       )
           .catchError((e) {
         scaffoldMessenger.showSnackBar(
-          SnackBar(content: Text(e.toLocalizedString())),
+          SnackBar(content: Text((e as Object).toLocalizedString(context))),
         );
       }).then((eventId) async {
         if (widget.requireReadReceipt && eventId != null) {
@@ -91,26 +93,29 @@ class SendFileDialogState extends State<SendFileDialog> {
     }
     Widget contentWidget;
     if (allFilesAreImages) {
-      contentWidget = Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        Flexible(
-          child: Image.memory(
-            widget.files.first.bytes,
-            fit: BoxFit.contain,
+      contentWidget = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Flexible(
+            child: Image.memory(
+              widget.files.first.bytes,
+              fit: BoxFit.contain,
+            ),
           ),
-        ),
-        Row(
-          children: <Widget>[
-            Checkbox(
-              value: origImage,
-              onChanged: (v) => setState(() => origImage = v ?? false),
-            ),
-            InkWell(
-              onTap: () => setState(() => origImage = !origImage),
-              child: Text('${L10n.of(context)!.sendOriginal} ($sizeString)'),
-            ),
-          ],
-        )
-      ]);
+          Row(
+            children: <Widget>[
+              Checkbox(
+                value: origImage,
+                onChanged: (v) => setState(() => origImage = v ?? false),
+              ),
+              InkWell(
+                onTap: () => setState(() => origImage = !origImage),
+                child: Text('${L10n.of(context)!.sendOriginal} ($sizeString)'),
+              ),
+            ],
+          )
+        ],
+      );
     } else {
       contentWidget = Text('$fileName ($sizeString)');
     }

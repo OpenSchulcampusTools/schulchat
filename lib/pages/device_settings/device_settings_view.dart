@@ -35,7 +35,8 @@ class DevicesSettingsView extends StatelessWidget {
             }
             if (!snapshot.hasData || controller.devices == null) {
               return const Center(
-                  child: CircularProgressIndicator.adaptive(strokeWidth: 2));
+                child: CircularProgressIndicator.adaptive(strokeWidth: 2),
+              );
             }
             return ListView.builder(
               itemCount: controller.notThisDevice.length + 1,
@@ -63,12 +64,21 @@ class DevicesSettingsView extends StatelessWidget {
                           ),
                           trailing: controller.loadingDeletingDevices
                               ? const CircularProgressIndicator.adaptive(
-                                  strokeWidth: 2)
+                                  strokeWidth: 2,
+                                )
                               : const Icon(Icons.delete_outline),
                           onTap: controller.loadingDeletingDevices
                               ? null
                               : () => controller.removeDevicesAction(
-                                  controller.notThisDevice),
+                                    controller.notThisDevice,
+                                  ),
+                        )
+                      else
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(L10n.of(context)!.noOtherDevicesFound),
+                          ),
                         ),
                       const Divider(height: 1),
                     ],

@@ -12,7 +12,7 @@ import 'package:universal_html/html.dart' as html;
 import 'package:vrouter/vrouter.dart';
 
 import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions.dart/matrix_locals.dart';
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 
@@ -44,12 +44,17 @@ extension LocalNotificationsExtension on MatrixState {
       removeMarkdown: true,
     );
     final icon = event.senderFromMemoryOrFallback.avatarUrl?.getThumbnail(
-            client,
-            width: 64,
-            height: 64,
-            method: ThumbnailMethod.crop) ??
-        room.avatar?.getThumbnail(client,
-            width: 64, height: 64, method: ThumbnailMethod.crop);
+          client,
+          width: 64,
+          height: 64,
+          method: ThumbnailMethod.crop,
+        ) ??
+        room.avatar?.getThumbnail(
+          client,
+          width: 64,
+          height: 64,
+          method: ThumbnailMethod.crop,
+        );
     if (kIsWeb) {
       html.AudioElement()
         ..src =
@@ -73,7 +78,8 @@ extension LocalNotificationsExtension on MatrixState {
         final avatarDirectory =
             await Directory('${tempDirectory.path}/notiavatars/').create();
         appIconFile = File(
-            '${avatarDirectory.path}/${Uri.encodeComponent(appIconUrl.toString())}');
+          '${avatarDirectory.path}/${Uri.encodeComponent(appIconUrl.toString())}',
+        );
         if (await appIconFile.exists() == false) {
           final response = await http.get(appIconUrl);
           await appIconFile.writeAsBytes(response.bodyBytes);

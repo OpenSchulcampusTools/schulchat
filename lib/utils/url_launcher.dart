@@ -6,10 +6,11 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
 import 'package:punycode/punycode.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:vrouter/vrouter.dart';
 
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:fluffychat/widgets/profile_bottom_sheet.dart';
 import 'package:fluffychat/widgets/public_room_bottom_sheet.dart';
@@ -32,7 +33,8 @@ class UrlLauncher {
     if (uri == null) {
       // we can't open this thing
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(L10n.of(context)!.cantOpenUri(url!))));
+        SnackBar(content: Text(L10n.of(context)!.cantOpenUri(url!))),
+      );
       return;
     }
     if (!{'https', 'http'}.contains(uri.scheme)) {
@@ -55,22 +57,24 @@ class UrlLauncher {
             // to an apple maps thingy
             // https://developer.apple.com/library/archive/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
             final ll = '${latlong.first},${latlong.last}';
-            launch('https://maps.apple.com/?q=$ll&sll=$ll');
+            launchUrlString('https://maps.apple.com/?q=$ll&sll=$ll');
           } else {
             // transmute geo URIs on desktop to openstreetmap links, as those usually can't handle
             // geo URIs
-            launch(
-                'https://www.openstreetmap.org/?mlat=${latlong.first}&mlon=${latlong.last}#map=16/${latlong.first}/${latlong.last}');
+            launchUrlString(
+              'https://www.openstreetmap.org/?mlat=${latlong.first}&mlon=${latlong.last}#map=16/${latlong.first}/${latlong.last}',
+            );
           }
           return;
         }
       }
-      launch(url!);
+      launchUrlString(url!);
       return;
     }
     if (uri.host.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(L10n.of(context)!.cantOpenUri(url!))));
+        SnackBar(content: Text(L10n.of(context)!.cantOpenUri(url!))),
+      );
       return;
     }
     // okay, we have either an http or an https URI.
@@ -83,7 +87,12 @@ class UrlLauncher {
           ? 'xn--$hostPartPunycode'
           : hostPart;
     }).join('.');
-    launch(uri.replace(host: newHost).toString());
+    // Force LaunchMode.externalApplication, otherwise url_launcher will default
+    // to opening links in a webview on mobile platforms.
+    launchUrlString(
+      uri.replace(host: newHost).toString(),
+      mode: LaunchMode.externalApplication,
+    );
   }
 
   void openMatrixToUrl() async {
@@ -138,14 +147,16 @@ class UrlLauncher {
         }
         // we have the room, so....just open it
         if (event != null) {
-          VRouter.of(context).toSegments(['rooms', room.id],
-              queryParameters: {'event': event});
+          VRouter.of(context).toSegments(
+            ['rooms', room.id],
+            queryParameters: {'event': event},
+          );
         } else {
           VRouter.of(context).toSegments(['rooms', room.id]);
         }
         return;
       } else {
-        await showModalBottomSheet(
+        await showAdaptiveBottomSheet(
           context: context,
           builder: (c) => PublicRoomBottomSheet(
             roomAlias: identityParts.primaryIdentifier,
@@ -171,18 +182,21 @@ class UrlLauncher {
           if (response.error != null) return;
           // wait for two seconds so that it probably came down /sync
           await showFutureLoadingDialog(
-              context: context,
-              future: () => Future.delayed(const Duration(seconds: 2)));
+            context: context,
+            future: () => Future.delayed(const Duration(seconds: 2)),
+          );
           if (event != null) {
-            VRouter.of(context).toSegments(['rooms', response.result!],
-                queryParameters: {'event': event});
+            VRouter.of(context).toSegments(
+              ['rooms', response.result!],
+              queryParameters: {'event': event},
+            );
           } else {
             VRouter.of(context).toSegments(['rooms', response.result!]);
           }
         }
       }
     } else if (identityParts.primaryIdentifier.sigil == '@') {
-      await showModalBottomSheet(
+      await showAdaptiveBottomSheet(
         context: context,
         builder: (c) => ProfileBottomSheet(
           userId: identityParts.primaryIdentifier,
