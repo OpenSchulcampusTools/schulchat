@@ -11,7 +11,6 @@ dependencies:
     git:
       url: git@git.fairkom.net:clients/rlp/client/adaptive_dialog
       ref: main
-  adaptive_theme: ^3.0.0
   animations: ^2.0.7
   badges: ^2.0.3
   blurhash_dart: ^1.1.0
@@ -43,7 +42,7 @@ dependencies:
   flutter_local_notifications: ^12.0.2
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^2.2.0
+  flutter_map: ^3.1.0
   flutter_matrix_html:
     git:
       url: git@git.fairkom.net:clients/rlp/client/flutter_matrix_html.git
@@ -70,7 +69,7 @@ dependencies:
   matrix:
     git:
       url: git@git.fairkom.net:clients/rlp/client/famedlysdk.git
-      ref: main
+      ref: 0.17.1
   matrix_homeserver_recommendations:
     git:
       url: git@git.fairkom.net:clients/rlp/client/matrix_homeserver_recommendations.git
@@ -189,4 +188,4 @@ dependency_overrides:
   matrix_api_lite:
     git:
       url: git@git.fairkom.net:clients/rlp/client/matrix_api_lite
-      ref: main
+      ref: upstream-1.9.0
