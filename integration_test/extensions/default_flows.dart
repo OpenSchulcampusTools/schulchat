@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:fluffychat/pages/chat_list/chat_list_body.dart';
 import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
-import 'package:fluffychat/pages/settings_account/settings_account_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
