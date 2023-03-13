@@ -2,7 +2,7 @@ FROM debian:bullseye-slim
 
 #FIXME hardcoded dependencies below...
 
-ENV FLUTTER_VERSION=3.3.8
+ENV FLUTTER_VERSION=3.7.7
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 ENV PATH=${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/emulator:/tmp/flutter/bin
 

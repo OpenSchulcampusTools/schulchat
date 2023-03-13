@@ -3,7 +3,7 @@ FROM debian:bullseye-slim
 ARG CI_COMMIT_SHA
 ARG CI_JOB_TOKEN
 
-ENV FLUTTER_VERSION=3.3.8
+ENV FLUTTER_VERSION=3.7.7
 
 RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' >> /etc/apt/sources.list
 RUN apt update
