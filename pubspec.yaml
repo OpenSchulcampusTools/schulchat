@@ -183,8 +183,8 @@ dependency_overrides:
   # Upstream pull request: https://github.com/AntoineMarcel/keyboard_shortcuts/pull/13
   keyboard_shortcuts:
     git:
-      url: https://github.com/TheOneWithTheBraid/keyboard_shortcuts.git
-      ref: null-safety
+      url: git@git.fairkom.net:clients/rlp/client/keyboard_shortcuts.git
+      ref: fix-typing-in-chat
   matrix_api_lite:
     git:
       url: git@git.fairkom.net:clients/rlp/client/matrix_api_lite

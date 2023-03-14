@@ -1037,10 +1037,10 @@ packages:
     dependency: "direct main"
     description:
       name: just_audio
-      sha256: "7a5057a4d05c8f88ee968cec6fdfe1015577d5184e591d5ac15ab16d8f5ecb17"
+      sha256: "7e6d31508dacd01a066e3889caf6282e5f1eb60707c230203b21a83af5c55586"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.31"
+    version: "0.9.32"
   just_audio_mpv:
     dependency: "direct main"
     description:
@@ -1069,9 +1069,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: null-safety
-      resolved-ref: a3d4020911860ff091d90638ab708604b71d2c5a
-      url: "https://github.com/TheOneWithTheBraid/keyboard_shortcuts.git"
+      ref: fix-typing-in-chat
+      resolved-ref: baedbae35e26131d454309fb8c62921b2270bbc4
+      url: "git@git.fairkom.net:clients/rlp/client/keyboard_shortcuts.git"
     source: git
     version: "0.1.4"
   latlong2:
