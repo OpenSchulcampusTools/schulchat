@@ -188,4 +188,4 @@ dependency_overrides:
   matrix_api_lite:
     git:
       url: git@git.fairkom.net:clients/rlp/client/matrix_api_lite
-      ref: upstream-1.9.0
+      ref: upstream-1.1.10
