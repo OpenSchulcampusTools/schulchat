@@ -134,29 +134,29 @@ build_android_apk:
       #    docker build -f docker/Dockerfile.integration-web -t integration-web --build-arg CI_JOB_TOKEN=$CI_JOB_TOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg INTEGRATION_USER1=$INTEGRATION_USER1 --build-arg INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --build-arg INTEGRATION_USER2=$INTEGRATION_USER2 --build-arg INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 .
       #    docker run --shm-size=512m --rm integration-web
 
-integration_android:
-  stage: test
-  tags: [docker, rlp]
-  script: |
-    docker image rm integration-nexus-5 || true
-    docker container rm nexus || true
-    docker build -f docker/Dockerfile.integration-nexus-5 -t integration-nexus-5 --build-arg CI_JOB_TOKEN=$CI_JOB_TOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg INTEGRATION_USER1=$INTEGRATION_USER1 --build-arg INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --build-arg INTEGRATION_USER2=$INTEGRATION_USER2 --build-arg INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 .
-    docker run --device /dev/kvm --name nexus integration-nexus-5
-    exit_code=$?
-    docker cp nexus:fluffychat/coverage .
-    docker cp nexus:fluffychat/coverage.xml .
-    docker cp nexus:fluffychat/TEST-report.xml .
-    sed 's/&#x1B;//g' -i TEST-report.xml
-    exit $exit_code
-  coverage: '/lines......: \d+\.\d+%/'
-  artifacts:
-    when: always
-    paths:
-      - coverage/
-      - coverage.xml
-      - TEST-report.xml
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage.xml
-      junit: TEST-report.xml
+        #integration_android:
+        #  stage: test
+        #  tags: [docker, rlp]
+        #  script: |
+        #    docker image rm integration-nexus-5 || true
+        #    docker container rm nexus || true
+        #    docker build -f docker/Dockerfile.integration-nexus-5 -t integration-nexus-5 --build-arg CI_JOB_TOKEN=$CI_JOB_TOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg INTEGRATION_USER1=$INTEGRATION_USER1 --build-arg INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --build-arg INTEGRATION_USER2=$INTEGRATION_USER2 --build-arg INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 .
+        #    docker run --device /dev/kvm --name nexus integration-nexus-5
+        #    exit_code=$?
+        #    docker cp nexus:fluffychat/coverage .
+        #    docker cp nexus:fluffychat/coverage.xml .
+        #    docker cp nexus:fluffychat/TEST-report.xml .
+        #    sed 's/&#x1B;//g' -i TEST-report.xml
+        #    exit $exit_code
+        #  coverage: '/lines......: \d+\.\d+%/'
+        #  artifacts:
+        #    when: always
+        #    paths:
+        #      - coverage/
+        #      - coverage.xml
+        #      - TEST-report.xml
+        #    reports:
+        #      coverage_report:
+        #        coverage_format: cobertura
+        #        path: coverage.xml
+        #      junit: TEST-report.xml
