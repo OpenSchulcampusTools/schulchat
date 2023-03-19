@@ -1,5 +1,10 @@
 variables:
   FLUTTER_VERSION: 3.7.7
+  INTEGRATION_USER1: $INTEGRATION_USER1
+  INTEGRATION_PASSWORD1: $INTEGRATION_PASSWORD1
+  INTEGRATION_USER2: $INTEGRATION_USER2
+  INTEGRATION_PASSWORD2: $INTEGRATION_PASSWORD2
+  HOMESERVER: synapse
 
 stages:
   - analyze
@@ -7,9 +12,6 @@ stages:
   - test
 #  - upload #FIXME upload webbuild and android package
 
-    #variables:
-    #  INTEGRATION_USER1: $INTEGRATION_USER1
-    #  INTEGRATION_PASSWORD1: $INTEGRATION_PASSWORD1
 
 # fetch and extract flutter
 .prepare_flutter:
@@ -26,6 +28,7 @@ stages:
     - flutter pub get
     - flutter pub run import_sorter:main --no-comments --exit-if-changed
     - flutter format lib/ test/ --set-exit-if-changed
+    - mkdir -p assets/js/package
 
 flutter_analyze:
   stage: analyze
@@ -136,29 +139,71 @@ build_android_apk:
       #    docker build -f docker/Dockerfile.integration-web -t integration-web --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg INTEGRATION_USER1=$INTEGRATION_USER1 --build-arg INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --build-arg INTEGRATION_USER2=$INTEGRATION_USER2 --build-arg INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 .
       #    docker run --shm-size=512m --rm integration-web
 
-        #integration_android:
-        #  stage: test
-        #  tags: [docker, rlp]
-        #  script: |
-        #    docker image rm integration-nexus-5 || true
-        #    docker container rm nexus || true
-        #    docker build -f docker/Dockerfile.integration-nexus-5 -t integration-nexus-5 --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg INTEGRATION_USER1=$INTEGRATION_USER1 --build-arg INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --build-arg INTEGRATION_USER2=$INTEGRATION_USER2 --build-arg INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 .
-        #    docker run --device /dev/kvm --name nexus integration-nexus-5
-        #    exit_code=$?
-        #    docker cp nexus:fluffychat/coverage .
-        #    docker cp nexus:fluffychat/coverage.xml .
-        #    docker cp nexus:fluffychat/TEST-report.xml .
-        #    sed 's/&#x1B;//g' -i TEST-report.xml
-        #    exit $exit_code
-        #  coverage: '/lines......: \d+\.\d+%/'
-        #  artifacts:
-        #    when: always
-        #    paths:
-        #      - coverage/
-        #      - coverage.xml
-        #      - TEST-report.xml
-        #    reports:
-        #      coverage_report:
-        #        coverage_format: cobertura
-        #        path: coverage.xml
-        #      junit: TEST-report.xml
+integration_android:
+  stage: test
+  tags: [docker, rlp]
+  variables:
+    FF_NETWORK_PER_BUILD: "true"
+  script: |
+    apk add curl jq
+    docker image rm integration-nexus-5 || true
+    docker container rm nexus || true
+    docker stop synapse || true
+    docker stop nexus || true
+    docker container rm synapse || true
+    rm -rf /builds/shared/fluffy || true
+    mkdir -p /builds/shared/fluffy
+    cp integration_test/synapse/data/* /builds/shared/fluffy
+    chmod 0777 /builds/shared/fluffy
+    #FIXME we need to use our synapse build instead!
+    docker run -d --name synapse -h $HOMESERVER -v /builds/shared/fluffy:/data matrixdotorg/synapse:latest
+    SYNAPSE_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' synapse)
+    echo "${SYNAPSE_IP} synapse" >> /etc/hosts
+    #docker run --name synapse -v synapse_data:/data -p 80:80 matrixdotorg/synapse:latest
+    timeout 30s ./scripts/integration-prepare-homeserver.sh
+    docker build -f docker/Dockerfile.integration-nexus-5 -t integration-nexus-5 --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg INTEGRATION_USER1=$INTEGRATION_USER1 --build-arg INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --build-arg INTEGRATION_USER2=$INTEGRATION_USER2 --build-arg INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 .
+    docker run --add-host=${HOMESERVER}:${SYNAPSE_IP} --device /dev/kvm --name nexus integration-nexus-5 || true
+    docker stop synapse
+    docker cp nexus:fluffychat/coverage .
+    docker cp nexus:fluffychat/coverage.xml .
+    docker cp nexus:fluffychat/TEST-report.xml .
+    docker cp nexus:fluffychat/video.mkv .
+    docker cp nexus:fluffychat/exit_code .
+    sed 's/&#x1B;//g' -i TEST-report.xml
+    exit $(cat exit_code)
+  coverage: '/lines......: \d+\.\d+%/'
+  artifacts:
+    when: always
+    paths:
+      - coverage/
+      - coverage.xml
+      - TEST-report.xml
+      - video.mkv
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+      junit: TEST-report.xml
+
+integration_web:
+  stage: test
+  tags: [docker, rlp]
+  variables:
+    FF_NETWORK_PER_BUILD: "true"
+  script: |
+    docker stop synapse-for-web || true
+    docker stop synapse || true
+    docker container rm -f synapse-for-web || true
+    docker container rm -f integration-web-run || true
+    docker container rm -f synapse || true
+    docker image rm integration-web || true
+    rm -rf /builds/shared/fluffy || true
+    docker build -f docker/Dockerfile.integration-web -t integration-web --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg INTEGRATION_USER1=$INTEGRATION_USER1 --build-arg INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --build-arg INTEGRATION_USER2=$INTEGRATION_USER2 --build-arg INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 --build-arg HOMESERVER=$HOMESERVER .
+    mkdir -p /builds/shared/fluffy
+    cp integration_test/synapse/data/* /builds/shared/fluffy
+    chmod 0777 /builds/shared/fluffy
+    #FIXME we need to use our synapse build instead!
+    docker run -d --name synapse-for-web -h $HOMESERVER -v /builds/shared/fluffy:/data matrixdotorg/synapse:latest
+    SYNAPSE_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' synapse-for-web)
+    docker run --add-host=${HOMESERVER}:${SYNAPSE_IP} --shm-size=4096m --name integration-web-run integration-web
+    docker stop synapse-for-web

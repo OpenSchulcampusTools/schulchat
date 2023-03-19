@@ -6,16 +6,18 @@ ARG INTEGRATION_USER1
 ARG INTEGRATION_PASSWORD1
 ARG INTEGRATION_USER2
 ARG INTEGRATION_PASSWORD2
+ARG HOMESERVER
 
 ENV FLUTTER_VERSION=3.7.7
 ENV INTEGRATION_USER1=$INTEGRATION_USER1
 ENV INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1
 ENV INTEGRATION_USER2=$INTEGRATION_USER2
 ENV INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2
+ENV HOMESERVER=$HOMESERVER
 
 RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' >> /etc/apt/sources.list
 RUN apt update
-RUN apt install --no-install-recommends -y ninja-build curl xz-utils git unzip gnupg ca-certificates
+RUN apt install --no-install-recommends -y ninja-build curl xz-utils git unzip gnupg ca-certificates jq
 RUN curl -L -sS https://dl.google.com/linux/linux_signing_key.pub| gpg --dearmor | tee /etc/apt/trusted.gpg.d/google.gpg
 RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >>/etc/apt/sources.list
 RUN apt update
@@ -24,7 +26,7 @@ RUN useradd -m -s /bin/bash fluffy
 USER fluffy
 WORKDIR /home/fluffy
 RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/flutter.git /tmp/flutter
-RUN cd /tmp/flutter && git checkout main
+RUN cd /tmp/flutter && git checkout -b upstream-${FLUTTER_VERSION} origin/upstream-${FLUTTER_VERSION}
 
 # triggers rebuilt
 RUN rm -rf /tmp/flutter/bin
@@ -34,7 +36,15 @@ RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/clien
 WORKDIR ./fluffychat
 RUN git checkout $CI_COMMIT_SHA
 RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
-RUN curl -s 'https://chromedriver.storage.googleapis.com/110.0.5481.77/chromedriver_linux64.zip' >/tmp/chromedriver.zip && unzip /tmp/chromedriver.zip && rm /tmp/chromedriver.zip
+RUN sed -i "s#test.schulchat.rlp.de#synapse#g" config.sample.json lib/config/app_config.dart
+# no https support for our local synapse
+RUN sed -i 's#homeserver = Uri.https#homeserver = Uri.http#g' lib/pages/homeserver_picker/homeserver_picker.dart
+RUN sed -i 's#var newDomain = Uri.https#var newDomain = Uri.http#g' lib/pages/login/login.dart
+
+RUN mkdir -p assets/js/package
+RUN ./scripts/prepare-web.sh
+
+RUN curl -s 'https://chromedriver.storage.googleapis.com/113.0.5672.63/chromedriver_linux64.zip' >/tmp/chromedriver.zip && unzip /tmp/chromedriver.zip && rm /tmp/chromedriver.zip
 RUN chmod +x chromedriver
 RUN flutter config --enable-web
 COPY ./docker/run-integration-web.sh /

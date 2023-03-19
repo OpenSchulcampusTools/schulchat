@@ -1,6 +1,5 @@
 import 'package:fluffychat/config/setting_keys.dart';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:integration_test/integration_test.dart';
@@ -10,32 +9,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'extensions/default_flows.dart';
 import 'extensions/wait_for.dart';
+import 'extensions/create_private_room.dart';
+import 'extensions/leave_rooms.dart';
 import 'users.dart';
+import 'dart:math';
 
-Future<void> waitFor(tester, condition, expectation, duration) async {
-  const defaultDelay = 100;
-  final iterations = duration / defaultDelay;
-  var found = false;
-  var lastException;
-  for (var i = 0; i < iterations; i++) {
-    await Future.delayed(const Duration(milliseconds: defaultDelay));
-    final pumpedFrames = await tester.pumpAndSettle();
-    print('pumped $pumpedFrames after $i iterations');
-    try {
-      expect(condition, expectation);
-      found = true;
-      break;
-    } catch (exception) {
-      print('not found $i');
-      lastException = exception;
-    }
-  }
-  if (!found) throw lastException;
+/*
+TODO:
+ - chat backup (after first login, click settings->chat backup; store the recovery key in a group scoped variable so it can be accessed from all remaining tests), during later logins ensure the recovery key is set
+ - login via SC (needs another oauth2 client, hard coded domain)
+
+*/
+
+String random(int length) {
+  var rand = Random();
+  return String.fromCharCodes(
+    List.generate(length, (index) => rand.nextInt(33) + 89),
+  );
 }
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   binding.testTextInput.register(); // makes enterText work
+
+  final uniqueMessage = 'Test message ${random(10)}';
 
   group(
     'Integration Test',
@@ -54,116 +51,90 @@ void main() {
       );
 
       testWidgets(
-        'Start app, login and logout',
+        'Login as user 1, leave all chats, logout',
         (WidgetTester tester) async {
           app.main();
-          await tester.ensureAppStartedHomescreen();
+          await tester.ensureLoggedOut();
+          await tester.ensureAppStartedHomescreen(
+            loginUsername: Users.user1.name,
+            loginPassword: Users.user1.password,
+          );
+          await tester.leaveAllRooms();
+//          await tester.removeAllDevices(Users.user1.password);
           await tester.ensureLoggedOut();
         },
       );
 
       testWidgets(
-        'Login again',
+        'Login as user 2, leave all chats, logout',
         (WidgetTester tester) async {
           app.main();
-          await tester.ensureAppStartedHomescreen();
+          await tester.ensureLoggedOut();
+          await tester.ensureAppStartedHomescreen(
+            loginUsername: Users.user2.name,
+            loginPassword: Users.user2.password,
+          );
+          await tester.leaveAllRooms();
+//          await tester.removeAllDevices(Users.user2.password);
+          await tester.ensureLoggedOut();
         },
       );
 
-      testWidgets('Start a new chat with the integration user 02',
+      testWidgets('User 1 starts a new chat with user 2',
           (WidgetTester tester) async {
         app.main();
-        await tester.ensureAppStartedHomescreen();
-        await pumpX(tester);
-        await tester.tap(find.text('New chat'));
-        await pumpX(tester);
-        final inviteLink = find.byType(TextField);
-        await waitForFairkom(tester, inviteLink, findsOneWidget, 2000);
-        await tester.enterText(inviteLink,
-            "https://matrix.to/#/@${Users.user2.name}:devmh.fairmatrix.net");
-        await tester.pump(const Duration(seconds: 2));
-        await tester.testTextInput.receiveAction(TextInputAction.done);
-        await pumpX(tester);
-        await tester.tap(find.widgetWithText(Row, 'New chat'));
-        await pumpX(tester);
+        await tester.ensureLoggedOut();
+        await tester.ensureAppStartedHomescreen(
+          loginUsername: Users.user1.name,
+          loginPassword: Users.user1.password,
+        );
+        await tester.createPrivateRoom(Users.user2.name);
+        await tester.ensureLoggedOut();
       });
 
       testWidgets(
-        'Start chat and send message',
+        'User 2 accepts invite',
         (WidgetTester tester) async {
           app.main();
-          await tester.ensureAppStartedHomescreen();
-          await tester.enterText(find.byType(TextField), Users.user2.name);
-          await tester.testTextInput.receiveAction(TextInputAction.done);
-          await pumpX(tester);
-
-          // await tester.scrollUntilVisible(
-          //   find.text(Users.user2.name).first,
-          //   500,
-          //   scrollable: find.descendant(
-          //     of: find.byType(ChatListViewBody),
-          //     matching: find.byType(Scrollable),
-          //   ),
-          // );
-          // for (int i = 0; i < 5; i++) {
-          //   // because pumpAndSettle doesn't work
-          //   await tester.pump(const Duration(seconds: 1));
-          // }
-          await tester.tap(find.widgetWithText(ListTile, Users.user2.name).first);
-          await pumpX(tester);
-          await tester.enterText(find.byType(EditableText), "Test message");
-          await pumpX(tester);
-          await tester.tap(find.byTooltip('Read receipt on'));
-          await pumpX(tester);
-          await tester.tap(find.byTooltip('Send'));
-          await pumpX(tester);
+          await tester.ensureLoggedOut();
+          await tester.ensureAppStartedHomescreen(
+            loginUsername: Users.user2.name,
+            loginPassword: Users.user2.password,
+          );
+          await tester.openChatByName('room with ${Users.user1.name}');
+          await tester.ensureLoggedOut();
         },
+        semanticsEnabled: false,
       );
 
       testWidgets(
-        'Logout, login with second test user and look for a chat with user1',
-            (WidgetTester tester) async {
+        'User 1 sends a message with read receipt',
+        (WidgetTester tester) async {
           app.main();
-          await tester.ensureAppStartedHomescreen();
           await tester.ensureLoggedOut();
-          await tester.ensureAppStartedHomescreen(loginUsername: Users.user2.name, loginPassword: Users.user2.password);
-
-          await tester.enterText(find.byType(TextField), Users.user1.name);
-          await tester.testTextInput.receiveAction(TextInputAction.done);
-          await pumpX(tester);
-          await tester.tap(find.text(Users.user1.name).first);
-          await pumpX(tester);
-          expect(find.text("Test message"), findsAtLeastNWidgets(1));
-          // todo click on open Lesebestätigung
-
-          await pumpX(tester);
-
+          await tester.ensureAppStartedHomescreen(
+            loginUsername: Users.user1.name,
+            loginPassword: Users.user1.password,
+          );
+          await tester.openChatByName('room with ${Users.user1.name}');
+          await tester.sendMessage(uniqueMessage);
+          await tester.ensureLoggedOut();
         },
+        semanticsEnabled: false,
       );
 
       testWidgets(
-        'Delete chat with user integration1',
-            (WidgetTester tester) async {
+        'User 2 checks if message was received',
+        (WidgetTester tester) async {
           app.main();
-          await tester.ensureAppStartedHomescreen();
           await tester.ensureLoggedOut();
-          await tester.ensureAppStartedHomescreen(loginUsername: Users.user2.name, loginPassword: Users.user2.password);
-
-          await tester.enterText(find.byType(TextField), Users.user1.name);
-          // todo get number of widgets so we can expect -1 later
-          await tester.testTextInput.receiveAction(TextInputAction.done);
-          await pumpX(tester);
-          await tester.longPress(find.text(Users.user1.name).first);
-          await pumpX(tester);
-          // todo tap on delete button
-          await pumpX(tester);
-          await tester.tap(find.text("YES"));
-          await pumpX(tester);
-          // todo expect that there is -1 chat
-          expect(find.text("Test message"), findsAtLeastNWidgets(1));
-
-          await pumpX(tester);
-
+          await tester.ensureAppStartedHomescreen(
+            loginUsername: Users.user2.name,
+            loginPassword: Users.user2.password,
+          );
+          await tester.openChatByName('room with ${Users.user1.name}');
+          await tester.waitFor(find.text(uniqueMessage));
+          // TODO click on open Lesebestätigung
         },
       );
     },

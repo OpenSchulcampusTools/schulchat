@@ -25,6 +25,11 @@ ENV INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2
 RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' >> /etc/apt/sources.list
 RUN apt update
 RUN apt install -y curl unzip openjdk-11-jdk-headless libgl1 git xz-utils cmake clang ninja-build adb lcov python --no-install-recommends
+
+#only for scrcpy
+RUN echo 'deb http://deb.debian.org/debian sid main' >> /etc/apt/sources.list
+RUN apt update
+RUN apt install -y -t sid scrcpy --no-install-recommends
 RUN curl https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip > cmdline-tools.zip \
     && unzip cmdline-tools.zip \
     && mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools \
@@ -46,11 +51,17 @@ RUN yes | sdkmanager --licenses
 RUN avdmanager create avd --force --name "${TEST_DEVICE}" -k "${TEST_PACKAGE}" -d 7
 
 RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/flutter.git /tmp/flutter
+RUN cd /tmp/flutter && git checkout -b upstream-${FLUTTER_VERSION} origin/upstream-${FLUTTER_VERSION}
+#RUN curl -s https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz | tar xfJ - -C /tmp
 
 RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
 WORKDIR ./fluffychat
 RUN git checkout $CI_COMMIT_SHA
 RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
+RUN sed -i "s#test.schulchat.rlp.de#synapse#g" config.sample.json lib/config/app_config.dart
+# no https support for our local synapse
+RUN sed -i 's#homeserver = Uri.https#homeserver = Uri.http#g' lib/pages/homeserver_picker/homeserver_picker.dart
+RUN sed -i 's#var newDomain = Uri.https#var newDomain = Uri.http#g' lib/pages/login/login.dart
 
 RUN flutter pub get
 ENV ANDROID_SDK_ROOT=/opt/android-sdk/

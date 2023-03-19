@@ -22,35 +22,6 @@ extension WaitForExtension on WidgetTester {
   }
 }
 
-Future<void> waitForFairkom(tester, condition, expectation, duration) async {
-  const defaultDelay = 100;
-  final iterations = duration/defaultDelay;
-  var found = false;
-  var lastException;
-  for (var i = 0; i < iterations; i++) {
-    await Future.delayed(const Duration(milliseconds: defaultDelay));
-    await tester.pumpAndSettle();
-    try {
-      expect(condition, expectation);
-      found = true;
-      break;
-    } catch (exception){
-      print('not found $i');
-      lastException = exception;
-    }
-  }
-  if (!found) {
-    throw lastException;
-  }
-}
-
-Future<void> pumpX(WidgetTester tester, {int rounds = 5}) async {
-  for (int i = 0; i < rounds; i++) {
-    // because pumpAndSettle doesn't work
-    await tester.pump(const Duration(seconds: 1));
-  }
-}
-
 extension MaybeUppercaseFinder on CommonFinders {
   /// On Android some button labels are in uppercase while on iOS they
   /// are not. This method tries both.

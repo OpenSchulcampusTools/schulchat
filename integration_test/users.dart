@@ -1,10 +1,14 @@
 abstract class Users {
   const Users._();
 
-  static const user1 = User(String.fromEnvironment('INTEGRATION_USER1'),
-      String.fromEnvironment('INTEGRATION_PASSWORD1'));
-  static const user2 = User(String.fromEnvironment('INTEGRATION_USER2'),
-      String.fromEnvironment('INTEGRATION_PASSWORD2'));
+  static const user1 = User(
+    String.fromEnvironment('INTEGRATION_USER1'),
+    String.fromEnvironment('INTEGRATION_PASSWORD1'),
+  );
+  static const user2 = User(
+    String.fromEnvironment('INTEGRATION_USER2'),
+    String.fromEnvironment('INTEGRATION_PASSWORD2'),
+  );
 }
 
 class User {
@@ -14,4 +18,4 @@ class User {
   const User(this.name, this.password);
 }
 
-final homeserver = 'devmh.fairmatrix.net';
+final homeserver = 'synapse';
