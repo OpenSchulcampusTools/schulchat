@@ -18,10 +18,11 @@ class ReadReceiptOverviewView extends StatelessWidget {
     return Scaffold(
       //backgroundColor: color,
       appBar: AppBar(
+        leading: const BackButton(color: Colors.black),
         systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+       // iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           L10n.of(context)!.readReceipts,
         ),
