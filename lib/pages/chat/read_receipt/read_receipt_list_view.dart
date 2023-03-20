@@ -13,54 +13,82 @@ class ReadReceiptListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallScreen = false;
+    final mediaQueryData = MediaQuery.maybeOf(context);
+    if (mediaQueryData != null) {
+      isSmallScreen = mediaQueryData.size.width < 468;
+    }
+
     return controller.membersLoaded
         ? ListView.builder(
             itemCount: controller.members.length + 1,
             itemBuilder: (BuildContext context, int i) => i == 0
-                ? Row(
-                    // padding: EdgeInsets.all(8.0),
-                    children: [
-                      Expanded(
-                          child: RadioListTile(
-                              title: Text(L10n.of(context)!.all),
-                              value: "all",
-                              groupValue: controller.filter,
-                              onChanged: (value) =>
-                                  controller.changeFilter(value))),
-                      Expanded(
-                          child: RadioListTile(
-                        title: Text(L10n.of(context)!.open),
-                        value: "open",
-                        groupValue: controller.filter,
-                        onChanged: (value) => controller.changeFilter(value),
-                      )),
-                      Expanded(
-                          child: RadioListTile(
-                        title: Text(L10n.of(context)!.confirmed),
-                        value: "given",
-                        groupValue: controller.filter,
-                        onChanged: (value) => controller.changeFilter(value),
-                      )),
-                    ],
-                  )
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: SizedBox(
+                        height: (isSmallScreen) ? 105 : 55,
+                        child: Flex(
+                          direction:
+                              (isSmallScreen) ? Axis.vertical : Axis.horizontal,
+                          mainAxisAlignment: (isSmallScreen)
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: RadioListTile(
+                                title: Text(L10n.of(context)!.all),
+                                value: "all",
+                                groupValue: controller.filter,
+                                onChanged: (value) =>
+                                    controller.changeFilter(value),
+                              ),
+                            ),
+                            Expanded(
+                              child: RadioListTile(
+                                title: Text(L10n.of(context)!.open),
+                                value: "open",
+                                groupValue: controller.filter,
+                                onChanged: (value) =>
+                                    controller.changeFilter(value),
+                              ),
+                            ),
+                            Expanded(
+                              child: RadioListTile(
+                                title: Text(L10n.of(context)!.confirmed),
+                                value: "given",
+                                groupValue: controller.filter,
+                                onChanged: (value) =>
+                                    controller.changeFilter(value),
+                              ),
+                            ),
+                          ],
+                        )))
                 : controller.userIsVisible(i - 1)
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 18),
-                              child: controller.userHasGivenReadReceipt(i - 1)
-                                  ? const Icon(Icons.mark_chat_read,
-                                      color: AppConfig.primaryColor)
-                                  : const Icon(Icons.mark_chat_read_outlined,
-                                      color: AppConfig.primaryColor),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18),
+                            child: controller.userHasGivenReadReceipt(i - 1)
+                                ? const Icon(
+                                    Icons.mark_chat_read,
+                                    color: AppConfig.primaryColor,
+                                  )
+                                : const Icon(
+                                    Icons.mark_chat_read_outlined,
+                                    color: AppConfig.primaryColor,
+                                  ),
+                          ),
+                          Expanded(
+                            child: ParticipantListItem(
+                              controller.members[i - 1],
                             ),
-                            Expanded(
-                                child: ParticipantListItem(
-                                    controller.members[i - 1]))
-                          ])
-                    : Container())
+                          )
+                        ],
+                      )
+                    : Container(),
+          )
         : const Center(
             child: CircularProgressIndicator.adaptive(strokeWidth: 2),
           );
