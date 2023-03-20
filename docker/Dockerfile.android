@@ -1,7 +1,7 @@
 FROM debian:bullseye-slim
 
 ARG CI_COMMIT_SHA
-ARG CI_JOB_TOKEN
+ARG CITOKEN
 
 ENV FLUTTER_VERSION=3.7.7
 
@@ -32,11 +32,11 @@ USER fluffy
 WORKDIR /home/fluffy
 RUN curl -s https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz | tar xfJ - -C /tmp
 ENV PATH=${PATH}:/tmp/flutter/bin:/tmp/flutter/.pub-cache/bin
-RUN git clone https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
+RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
 WORKDIR ./fluffychat
 RUN git checkout $CI_COMMIT_SHA
-RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/#g" pubspec.yaml
-RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CI_JOB_TOKEN@git.fairkom.net/#g" pubspec.lock
+RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
+RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.lock
 #RUN rm pubspec.lock || true
 
 RUN flutter pub get
