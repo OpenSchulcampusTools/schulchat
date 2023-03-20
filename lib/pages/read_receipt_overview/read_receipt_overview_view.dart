@@ -25,7 +25,7 @@ class ReadReceiptOverviewView extends StatelessWidget {
         title: Text(
           L10n.of(context)!.readReceipts,
         ),
-        actions: [],
+        actions: const [],
       ),
       extendBodyBehindAppBar: false,
       body: MaxWidthBody(
@@ -33,80 +33,110 @@ class ReadReceiptOverviewView extends StatelessWidget {
         maxWidth: 800,
         child: controller.roomsLoaded
             ? controller.panelItems.isNotEmpty
-                ? Column(mainAxisSize: MainAxisSize.min, children: [
-                    ExpansionPanelList(
-                      dividerColor: AppConfig.primaryColorLight,
-                      expansionCallback: controller.expansionCallback,
-                      children: controller.panelItems.values
-                          .toList()
-                          .asMap()
-                          .keys
-                          .toList()
-                          .map((var index) {
-                        final item =
-                            controller.panelItems.values.elementAt(index);
-                        final room = item.room!;
-                        return ExpansionPanel(
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ExpansionPanelList(
+                        dividerColor: AppConfig.primaryColorLight,
+                        expansionCallback: controller.expansionCallback,
+                        children: controller.panelItems.values
+                            .toList()
+                            .asMap()
+                            .keys
+                            .toList()
+                            .map((var index) {
+                          final item =
+                              controller.panelItems.values.elementAt(index);
+                          final room = item.room!;
+                          return ExpansionPanel(
                             canTapOnHeader: true,
                             isExpanded: item.isExpanded,
                             headerBuilder: (context, isExpanded) {
                               return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: ListTile(
-                                      tileColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondaryContainer
-                                          .withAlpha(210),
-                                      leading: Avatar(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: ListTile(
+                                  tileColor: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer
+                                      .withAlpha(210),
+                                  leading: Stack(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 6, bottom: 4),
+                                      child: Avatar(
                                         mxContent: room.avatar,
-                                        name: room.displayname,
+                                        name: room.getLocalizedDisplayname(),
+                                        size: 38,
+                                        fontSize: 16,
                                       ),
-                                      title: Row(children: [
-                                        Text(room.displayname),
-                                        if (item.hasToGiveReadReceipt)
-                                          const Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 10),
-                                              child: Icon(
-                                                Icons.mark_chat_read_outlined,
-                                                color: AppConfig.primaryColor,
-                                                size: 20,
-                                              ))
-                                      ])));
+                                    ),
+                                    if (item.hasToGiveReadReceipt)
+                                      const Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Icon(
+                                            Icons.mark_chat_read,
+                                            color: AppConfig.primaryColor,
+                                            size: 20,
+                                          ))
+                                  ]),
+                                  title: Wrap(
+                                    children: [
+                                      Text(
+                                        room.getLocalizedDisplayname(),
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
                             },
                             body: Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: item.messagesLoaded == true
-                                    ? Column(children: [
+                              padding: const EdgeInsets.only(bottom: 15),
+                              child: item.messagesLoaded == true
+                                  ? Column(
+                                      children: [
                                         if (item.messages.isEmpty)
-                                          Text(L10n.of(context)!
-                                              .noReadReceiptRequestsFound)
+                                          Text(
+                                            L10n.of(context)!
+                                                .noReadReceiptRequestsFound,
+                                          )
                                         else
                                           for (var message in item.messages)
                                             Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 25),
-                                                child: Message(message,
-                                                    onSwipe:
-                                                        (swipeDirection) {},
-                                                    onReadReceipt: (event) =>
-                                                        controller
-                                                            .onReadReceiptClick(
-                                                                event, item),
-                                                    onSelect: (event) {},
-                                                    timeline: item.timeline!)),
-                                      ])
-                                    : const Center(
-                                        child:
-                                            CircularProgressIndicator.adaptive(
-                                                strokeWidth: 2),
-                                      )));
-                      }).toList(),
-                    ),
-                  ])
+                                              padding: const EdgeInsets.only(
+                                                right: 25,
+                                              ),
+                                              child: Message(
+                                                message,
+                                                onSwipe: (swipeDirection) {},
+                                                onReadReceipt: (event) =>
+                                                    controller
+                                                        .onReadReceiptClick(
+                                                  event,
+                                                  item,
+                                                ),
+                                                onSelect: (event) {},
+                                                timeline: item.timeline!,
+                                              ),
+                                            ),
+                                      ],
+                                    )
+                                  : const Center(
+                                      child: CircularProgressIndicator.adaptive(
+                                        strokeWidth: 2,
+                                      ),
+                                    ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  )
                 : Center(
-                    child: Text(L10n.of(context)!.noReadReceiptRequestsFound))
+                    child: Text(L10n.of(context)!.noReadReceiptRequestsFound),
+                  )
             : const Center(
                 child: CircularProgressIndicator.adaptive(strokeWidth: 2),
               ),
