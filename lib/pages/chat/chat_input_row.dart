@@ -13,6 +13,7 @@ import 'package:fluffychat/widgets/matrix.dart';
 import '../../config/themes.dart';
 import 'chat.dart';
 import 'input_bar.dart';
+import 'read_receipt/chat_input_row_read_receipt_button.dart';
 
 class ChatInputRow extends StatelessWidget {
   final ChatController controller;
@@ -253,11 +254,14 @@ class ChatInputRow extends StatelessWidget {
                 Container(
                   height: 56,
                   alignment: Alignment.center,
-                  child: IconButton(
-                    tooltip: L10n.of(context)!.voiceMessage,
-                    icon: const Icon(Icons.mic_none_outlined),
-                    onPressed: controller.voiceMessageAction,
-                  ),
+                  child: Row(children: [
+                    ChatInputRowReadReceiptButton(controller),
+                    IconButton(
+                      tooltip: L10n.of(context)!.voiceMessage,
+                      icon: const Icon(Icons.mic_none_outlined),
+                      onPressed: controller.voiceMessageAction,
+                    )
+                  ]),
                 ),
               if (!PlatformInfos.isMobile || controller.inputText.isNotEmpty)
                 Container(
@@ -265,24 +269,7 @@ class ChatInputRow extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Row(
                     children: [
-                      if (controller.showReadReceiptButton())
-                        controller.requireReadReceipt
-                            ? IconButton(
-                                tooltip: L10n.of(context)!.readReceiptOff,
-                                icon: const Icon(
-                                  Icons.mark_chat_read,
-                                  color: AppConfig.primaryColor,
-                                ),
-                                onPressed: controller.toggleReadReceiptAction,
-                              )
-                            : IconButton(
-                                tooltip: L10n.of(context)!.readReceiptOn,
-                                icon: const Icon(
-                                  Icons.mark_chat_read_outlined,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: controller.toggleReadReceiptAction,
-                              ),
+                      ChatInputRowReadReceiptButton(controller),
                       IconButton(
                           icon: const Icon(Icons.send_outlined),
                           onPressed: controller.send,
