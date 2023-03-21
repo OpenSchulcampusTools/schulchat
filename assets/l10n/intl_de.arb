@@ -67,7 +67,7 @@
       "senderName": {}
     }
   },
-  "anyoneCanJoin": "Jeder darf beitreten",
+  "anyoneCanJoin": "Jede:r darf beitreten",
   "@anyoneCanJoin": {
     "type": "text",
     "placeholders": {}
@@ -329,7 +329,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "chatBackupDescription": "Deine alten Nachrichten sind mit einem Wiederherstellungsschlüssel gesichert. Bitte stellen sicher, dass du ihn nicht verlierst.",
+  "chatBackupDescription": "Deine alten Nachrichten sind mit einem Wiederherstellungsschlüssel gesichert. Bitte stelle sicher, dass du ihn nicht verlierst.",
   "@chatBackupDescription": {
     "type": "text",
     "placeholders": {}
@@ -371,7 +371,7 @@
     "type": "text",
     "description": "Usage hint for the command /html"
   },
-  "commandHint_invite": "Lade den Benutzer in diesen Raum ein",
+  "commandHint_invite": "Lade Benutzer:in in diesen Raum ein",
   "@commandHint_invite": {
     "type": "text",
     "description": "Usage hint for the command /invite"
@@ -483,7 +483,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "contentHasBeenReported": "Der Inhalt wurde den Serveradministratoren gemeldet",
+  "contentHasBeenReported": "Der Inhalt wurde den Administratoren gemeldet",
   "@contentHasBeenReported": {
     "type": "text",
     "placeholders": {}
@@ -785,7 +785,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "fluffychat": "FluffyChat",
+  "fluffychat": "Schulchat",
   "@fluffychat": {
     "type": "text",
     "placeholders": {}
@@ -970,7 +970,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "inviteText": "{username} hat Dich zu FluffyChat eingeladen. \n1. Installiere FluffyChat: https://fluffychat.im \n2. Melde Dich in der App an \n3. Öffne den Einladungslink: {link}",
+  "inviteText": "{username} hat dich eingeladen. \n1. Installiere den Messenger: https://schulchat.rlp.de \n2. Melde dich in der App an \n3. Öffne den Einladungslink: {link}",
   "@inviteText": {
     "type": "text",
     "placeholders": {
@@ -1154,7 +1154,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "💬 Neue Nachricht in FluffyChat",
+  "newMessageInFluffyChat": "💬 Neue Nachricht im Schulmessenger",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -1189,7 +1189,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "noGoogleServicesWarning": "Es sieht so aus, als hättest du keine Google-Dienste auf deinem Gerät. Das ist eine gute Entscheidung für deine Privatsphäre! Um Push-Benachrichtigungen in FluffyChat zu erhalten, empfehlen wir die Verwendung von microG https://microg.org/ oder Unified Push https://unifiedpush.org/.",
+  "noGoogleServicesWarning": "Es sieht so aus, als hättest du keine Google-Dienste auf deinem Gerät. Das ist eine gute Entscheidung für deine Privatsphäre! Um Push-Benachrichtigungen zu erhalten, empfehlen wir die Verwendung von microG https://microg.org/ oder installiere die ntfy App aus deinem App Store (geamcht von Unified Push https://unifiedpush.org/).",
   "@noGoogleServicesWarning": {
     "type": "text",
     "placeholders": {}
@@ -2038,7 +2038,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "wipeChatBackup": "Den Chat-Backup löschen, um einen neuen Wiederherstellungsschlüssel zu erstellen?",
+  "wipeChatBackup": "Das Chat-Backup löschen, um einen neuen Wiederherstellungsschlüssel zu erstellen?",
   "@wipeChatBackup": {
     "type": "text",
     "placeholders": {}
@@ -2368,7 +2368,7 @@
   },
   "noEmailWarning": "Bitte gib eine gültige E-Mail-Adresse ein. Andernfalls kannst du dein Passwort nicht zurücksetzen. Wenn du das nicht möchtest, tippe erneut auf die Schaltfläche, um fortzufahren.",
   "@noEmailWarning": {},
-  "updateAvailable": "FluffyChat-Update verfügbar",
+  "updateAvailable": "App-Update verfügbar",
   "@updateAvailable": {},
   "updateNow": "Update im Hintergrund starten",
   "@updateNow": {},
@@ -2390,7 +2390,7 @@
   "@dehydrate": {},
   "dehydrateWarning": "Diese Aktion kann nicht rückgängig gemacht werden. Stelle sicher, dass du die Sicherungsdatei sicher aufbewahrst.",
   "@dehydrateWarning": {},
-  "dehydrateShare": "Dies ist dein privater FluffyChat-Export. Stelle sicher, dass du ihn nicht verlierst und bewahre ihn privat auf.",
+  "dehydrateShare": "Dies ist dein privater Messenger-Export. Stelle sicher, dass du ihn nicht verlierst und bewahre ihn privat auf.",
   "@dehydrateShare": {},
   "dehydrateTor": "TOR-Benutzer: Sitzung exportieren",
   "@dehydrateTor": {},
@@ -2424,7 +2424,7 @@
   "@storeInSecureStorageDescription": {},
   "storeInAppleKeyChain": "Im Apple KeyChain speichern",
   "@storeInAppleKeyChain": {},
-  "indexedDbErrorLong": "Die Nachrichtenspeicherung ist im privaten Modus standardmäßig leider nicht aktiviert.\nBitte besuche\n- about:config\n- Setze dom.indexedDB.privateBrowsing.enabled auf true\nAndernfalls ist es nicht möglich, FluffyChat auszuführen.",
+  "indexedDbErrorLong": "Die Nachrichtenspeicherung ist im privaten Modus standardmäßig leider nicht aktiviert.\nBitte besuche\n- about:config\n- Setze dom.indexedDB.privateBrowsing.enabled auf true\nAndernfalls ist es nicht möglich, den Messenger auszuführen.",
   "@indexedDbErrorLong": {},
   "stories": "Status",
   "@stories": {},
@@ -2445,7 +2445,7 @@
   "@hideUnimportantStateEvents": {},
   "doNotShowAgain": "Nicht mehr anzeigen",
   "@doNotShowAgain": {},
-  "appearOnTopDetails": "Ermöglicht, dass die App oben angezeigt wird (nicht erforderlich, wenn Sie Fluffychat bereits als Anrufkonto eingerichtet haben)",
+  "appearOnTopDetails": "Ermöglicht, dass die App oben angezeigt wird (nicht erforderlich, wenn du den Messenger bereits als Anrufkonto eingerichtet hast)",
   "@appearOnTopDetails": {},
   "noKeyForThisMessage": "Dies kann passieren, wenn die Nachricht gesendet wurde, bevor du dich auf diesem Gerät bei deinem Konto angemeldet hast.\n\nEs ist auch möglich, dass der Absender dein Gerät blockiert hat oder etwas mit der Internetverbindung schief gelaufen ist.\n\nKannst du die Nachricht in einer anderen Sitzung lesen? Dann kannst du die Nachricht davon übertragen! Gehe zu denEinstellungen > Geräte und vergewissere dich, dass sich deine Geräte gegenseitig verifiziert haben. Wenn du den Raum das nächste Mal öffnest und beide Sitzungen im Vordergrund sind, werden die Schlüssel automatisch übertragen.\n\nDu möchtest die Schlüssel beim Abmelden oder Gerätewechsel nicht verlieren? Stelle sicher, dass du das Chat-Backup in den Einstellungen aktiviert hast.",
   "@noKeyForThisMessage": {},
@@ -2457,11 +2457,11 @@
   "@callingPermissions": {},
   "callingAccount": "Anrufkonto",
   "@callingAccount": {},
-  "callingAccountDetails": "Ermöglicht FluffyChat, die native Android-Dialer-App zu verwenden.",
+  "callingAccountDetails": "Ermöglicht dem Messenger, die native Android-Dialer-App zu verwenden.",
   "@callingAccountDetails": {},
   "appearOnTop": "Oben erscheinen",
   "@appearOnTop": {},
-  "otherCallingPermissions": "Mikrofon, Kamera und andere FluffyChat-Berechtigungen",
+  "otherCallingPermissions": "Mikrofon, Kamera und andere Berechtigungen",
   "@otherCallingPermissions": {},
   "whyIsThisMessageEncrypted": "Warum ist diese Nachricht nicht lesbar?",
   "@whyIsThisMessageEncrypted": {},
@@ -2475,7 +2475,7 @@
   "@enterRoom": {},
   "allSpaces": "Alle Spaces",
   "@allSpaces": {},
-  "screenSharingDetail": "Du teilst deinen Bildschirm in FuffyChat",
+  "screenSharingDetail": "Du teilst deinen Bildschirm",
   "@screenSharingDetail": {},
   "numChats": "{number} Chats",
   "@numChats": {
