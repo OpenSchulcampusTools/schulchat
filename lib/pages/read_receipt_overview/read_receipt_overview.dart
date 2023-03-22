@@ -280,51 +280,30 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     return parentEvent;
   }
 
-  void onReadReceiptClick(Event event, ExpansionPanelItem panelItem,
-      MessageItem messageItem) async {
-    if (!messageItem.readReceiptInProgress) {
+  void onReadReceiptClick(Event event, ExpansionPanelItem panelItem) async {
+    final String? readReceiptEventId =
+        await event.onReadReceiptIconClick(event, panelItem.timeline!, context);
+
+    // if readReceiptEventId is !null, then the user has given a new read receipt
+    if (readReceiptEventId != null) {
+      final MatrixEvent readReceiptEvent = await panelItem.room!.client
+          .getOneRoomEvent(panelItem.room!.id, readReceiptEventId);
+
+      _addAggregatedEventsToTimeline(
+        event,
+        readReceiptEvent,
+        panelItem.timeline!,
+        panelItem.room!,
+      );
+
+      await _client!.updateOpenReadReceipts(panelItem.room!.id);
+      _updateOpenReadReceipt(panelItem);
+      _sortPanelItems();
+
       setState(() {
-        messageItem.readReceiptInProgress = true;
+        panelItems;
       });
-
-      final String? readReceiptEventId = await event.onReadReceiptIconClick(
-          event, panelItem.timeline!, context);
-
-      // if readReceiptEventId is !null, then the user has given a new read receipt
-      if (readReceiptEventId != null) {
-        final MatrixEvent readReceiptEvent = await panelItem.room!.client
-            .getOneRoomEvent(panelItem.room!.id, readReceiptEventId);
-
-        _addAggregatedEventsToTimeline(
-          event,
-          readReceiptEvent,
-          panelItem.timeline!,
-          panelItem.room!,
-        );
-
-        await _client!.updateOpenReadReceipts(panelItem.room!.id);
-        _updateOpenReadReceipt(panelItem);
-        _sortPanelItems();
-
-        messageItem.readReceiptInProgress = false;
-        setState(() {
-          messageItem;
-        });
-      }
     }
-  }
-
-  // returns true if process of giving read receipt for current user is in progress
-  bool readReceiptInProgress(Event event) {
-    for (final panelItem in panelItems.values) {
-      for (final messageItem in panelItem.messageItems) {
-        if (messageItem.message.eventId == event.eventId) {
-          return messageItem.readReceiptInProgress;
-        }
-      }
-    }
-
-    return false;
   }
 
   void expansionCallback(panelIndex, isExpanded) {

@@ -107,24 +107,47 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                           for (var messageItem
                                               in item.messageItems)
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                right: 25,
-                                              ),
-                                              child: Message(
-                                                messageItem.message,
-                                                onSwipe: (swipeDirection) {},
-                                                onReadReceipt: (event) =>
-                                                    controller
-                                                        .onReadReceiptClick(
-                                                            event,
-                                                            item,
-                                                            messageItem),
-                                                onSelect: (event) {},
-                                                timeline: item.timeline!,
-                                                readReceiptOverviewController:
-                                                    controller,
-                                              ),
-                                            ),
+                                                padding: const EdgeInsets.only(
+                                                  right: 25,
+                                                ),
+                                                child: Stack(children: [
+                                                  Message(
+                                                    messageItem.message,
+                                                    onSwipe:
+                                                        (swipeDirection) {},
+                                                    onReadReceipt: (event) =>
+                                                        controller
+                                                            .onReadReceiptClick(
+                                                                event,
+                                                                item,
+                                                                messageItem),
+                                                    onSelect: (event) {},
+                                                    timeline: item.timeline!,
+                                                  ),
+                                                  if (messageItem
+                                                      .readReceiptInProgress)
+                                                    Container(
+                                                      width: 500,
+                                                      height: 150,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      foregroundDecoration:
+                                                          const BoxDecoration(
+                                                        color: Colors.grey,
+                                                        backgroundBlendMode:
+                                                            BlendMode
+                                                                .saturation,
+                                                      ),
+                                                    ),
+                                                  const Align(
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      child:
+                                                          CircularProgressIndicator
+                                                              .adaptive(
+                                                        strokeWidth: 2,
+                                                      ))
+                                                ])),
                                       ],
                                     )
                                   : const Center(
