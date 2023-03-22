@@ -1,7 +1,5 @@
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:matrix/matrix.dart';
 
 abstract class AppConfig {

@@ -1,15 +1,14 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-// Project imports:
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/widgets/layouts/login_scaffold.dart';
 import '../../config/themes.dart';
 import 'homeserver_picker.dart';
+
+//import 'homeserver_app_bar.dart';
 
 class HomeserverPickerView extends StatelessWidget {
   final HomeserverPickerController controller;
