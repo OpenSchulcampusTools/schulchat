@@ -98,28 +98,31 @@ class ReadReceiptOverviewView extends StatelessWidget {
                               child: item.messagesLoaded == true
                                   ? Column(
                                       children: [
-                                        if (item.messages.isEmpty)
+                                        if (item.messageItems.isEmpty)
                                           Text(
                                             L10n.of(context)!
                                                 .noReadReceiptRequestsFound,
                                           )
                                         else
-                                          for (var message in item.messages)
+                                          for (var messageItem
+                                              in item.messageItems)
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                 right: 25,
                                               ),
                                               child: Message(
-                                                message,
+                                                messageItem.message,
                                                 onSwipe: (swipeDirection) {},
                                                 onReadReceipt: (event) =>
                                                     controller
                                                         .onReadReceiptClick(
-                                                  event,
-                                                  item,
-                                                ),
+                                                            event,
+                                                            item,
+                                                            messageItem),
                                                 onSelect: (event) {},
                                                 timeline: item.timeline!,
+                                                readReceiptOverviewController:
+                                                    controller,
                                               ),
                                             ),
                                       ],

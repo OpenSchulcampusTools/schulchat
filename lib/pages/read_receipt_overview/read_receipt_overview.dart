@@ -18,7 +18,7 @@ class ReadReceiptOverviewPage extends StatefulWidget {
 
 class ExpansionPanelItem {
   List<Event> readReceiptRequests = [];
-  List<Event> messages = [];
+  List<MessageItem> messageItems = [];
   bool messagesLoaded = false;
   Timeline? timeline;
   Room? room;
@@ -29,9 +29,16 @@ class ExpansionPanelItem {
   ExpansionPanelItem(Room this.room);
 }
 
+class MessageItem {
+  final Event message;
+  bool readReceiptInProgress = false;
+
+  MessageItem(this.message);
+}
+
 class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
   Map<String, ExpansionPanelItem> panelItems = {};
-  Map<String, Map<String, Event>> _localStorageEvents = {};
+  final Map<String, Map<String, Event>> _localStorageEvents = {};
   bool roomsLoaded = false;
   Client? _client;
 
@@ -177,7 +184,9 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
   }
 
   Future<bool> _addParentToMessages(
-      MatrixEvent mEvent, ExpansionPanelItem panelItem) async {
+    MatrixEvent mEvent,
+    ExpansionPanelItem panelItem,
+  ) async {
     final String? parentId = mEvent.content
         .tryGetMap<String, dynamic>('m.relates_to')
         ?.tryGet<String>("event_id");
@@ -190,7 +199,11 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
       if (parentEvent != null) {
         // add related events as aggregated events to timeline
         await _addAggregatedEventsToTimeline(
-            parentEvent, mEvent, panelItem.timeline!, room);
+          parentEvent,
+          mEvent,
+          panelItem.timeline!,
+          room,
+        );
 
         // events from sync are sorted chronologically up
         // but we need latest event first -> therefore insert(0, ...
@@ -202,8 +215,12 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     return false;
   }
 
-  Future<void> _addAggregatedEventsToTimeline(Event parentEvent,
-      MatrixEvent aggregatedEvent, Timeline timeline, Room room) async {
+  Future<void> _addAggregatedEventsToTimeline(
+    Event parentEvent,
+    MatrixEvent aggregatedEvent,
+    Timeline timeline,
+    Room room,
+  ) async {
     final relations = await parentEvent.getRelations();
 
     for (final relation in relations) {
@@ -263,26 +280,51 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     return parentEvent;
   }
 
-  void onReadReceiptClick(Event event, ExpansionPanelItem panelItem) async {
-    final String? readReceiptEventId =
-        await event.onReadReceiptIconClick(event, panelItem.timeline!, context);
-
-    // if readReceiptEventId is !null, then the user has given a new read receipt
-    if (readReceiptEventId != null) {
-      final MatrixEvent readReceiptEvent = await panelItem.room!.client
-          .getOneRoomEvent(panelItem.room!.id, readReceiptEventId);
-
-      _addAggregatedEventsToTimeline(
-          event, readReceiptEvent, panelItem.timeline!, panelItem.room!);
-
-      await _client!.updateOpenReadReceipts(panelItem.room!.id);
-      _updateOpenReadReceipt(panelItem);
-      _sortPanelItems();
-
+  void onReadReceiptClick(Event event, ExpansionPanelItem panelItem,
+      MessageItem messageItem) async {
+    if (!messageItem.readReceiptInProgress) {
       setState(() {
-        panelItems;
+        messageItem.readReceiptInProgress = true;
       });
+
+      final String? readReceiptEventId = await event.onReadReceiptIconClick(
+          event, panelItem.timeline!, context);
+
+      // if readReceiptEventId is !null, then the user has given a new read receipt
+      if (readReceiptEventId != null) {
+        final MatrixEvent readReceiptEvent = await panelItem.room!.client
+            .getOneRoomEvent(panelItem.room!.id, readReceiptEventId);
+
+        _addAggregatedEventsToTimeline(
+          event,
+          readReceiptEvent,
+          panelItem.timeline!,
+          panelItem.room!,
+        );
+
+        await _client!.updateOpenReadReceipts(panelItem.room!.id);
+        _updateOpenReadReceipt(panelItem);
+        _sortPanelItems();
+
+        messageItem.readReceiptInProgress = false;
+        setState(() {
+          messageItem;
+        });
+      }
     }
+  }
+
+  // returns true if process of giving read receipt for current user is in progress
+  bool readReceiptInProgress(Event event) {
+    for (final panelItem in panelItems.values) {
+      for (final messageItem in panelItem.messageItems) {
+        if (messageItem.message.eventId == event.eventId) {
+          return messageItem.readReceiptInProgress;
+        }
+      }
+    }
+
+    return false;
   }
 
   void expansionCallback(panelIndex, isExpanded) {

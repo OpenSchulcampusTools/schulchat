@@ -10,6 +10,7 @@ import 'package:fluffychat/utils/string_color.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import '../../../config/app_config.dart';
+import '../../read_receipt_overview/read_receipt_overview.dart';
 import 'message_content.dart';
 import 'message_reactions.dart';
 import 'reply_content.dart';
@@ -31,22 +32,23 @@ class Message extends StatelessWidget {
   final bool selected;
   final Timeline timeline;
   final String? searchTerm;
+  final ReadReceiptOverviewController? readReceiptOverviewController;
 
-  const Message(
-    this.event, {
-    this.nextEvent,
-    this.longPressSelect = false,
-    this.onSelect,
-    this.onInfoTab,
-    this.onAvatarTab,
-    this.scrollToEventId,
-    required this.onSwipe,
-    this.onReadReceipt,
-    this.selected = false,
-    required this.timeline,
-    this.searchTerm,
-    Key? key,
-  }) : super(key: key);
+  const Message(this.event,
+      {this.nextEvent,
+      this.longPressSelect = false,
+      this.onSelect,
+      this.onInfoTab,
+      this.onAvatarTab,
+      this.scrollToEventId,
+      required this.onSwipe,
+      this.onReadReceipt,
+      this.selected = false,
+      required this.timeline,
+      this.searchTerm,
+      this.readReceiptOverviewController,
+      Key? key})
+      : super(key: key);
 
   /// Indicates wheither the user may use a mouse instead
   /// of touchscreen.
@@ -129,40 +131,47 @@ class Message extends StatelessWidget {
 
     final readReceiptGiven = event
         .aggregatedEvents(timeline, RelationshipTypes.readReceipt)
-        .where(
-          (e) =>
-              e.content
-                  .tryGetMap<String, dynamic>('m.relates_to')
-                  ?.tryGet<String>('user_id') ==
-              client.userID,
-        )
+        .where((e) =>
+            e.content
+                .tryGetMap<String, dynamic>('m.relates_to')
+                ?.tryGet<String>('user_id') ==
+            client.userID)
         .toList()
         .isNotEmpty;
 
     final rowChildren = <Widget>[
       if (requiresReadReceipt && !ownMessage)
         Padding(
-          padding: EdgeInsets.all(
-            8.0 * AppConfig.bubbleSizeFactor,
-          ),
-          child: readReceiptGiven
-              ? Tooltip(
-                  message: L10n.of(context)!.readReceiptGiven,
-                  child: const Icon(
-                    Icons.mark_chat_read,
-                    color: AppConfig.primaryColor,
-                  ),
-                )
-              : IconButton(
-                  tooltip: L10n.of(context)!.readReceiptGive,
-                  padding: const EdgeInsets.all(0),
-                  icon: const Icon(
-                    Icons.mark_chat_read_outlined,
-                    color: AppConfig.primaryColor,
-                  ),
-                  onPressed: () => onReadReceipt?.call(displayEvent),
-                ),
-        ),
+            padding: EdgeInsets.all(
+              8.0 * AppConfig.bubbleSizeFactor,
+            ),
+            child: readReceiptGiven
+                ? Tooltip(
+                    message: L10n.of(context)!.readReceiptGiven,
+                    child: const Icon(
+                      Icons.mark_chat_read,
+                      color: AppConfig.primaryColor,
+                    ),
+                  )
+                : (readReceiptOverviewController != null &&
+                        readReceiptOverviewController!
+                            .readReceiptInProgress(event))
+                    ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator.adaptive(
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : IconButton(
+                        tooltip: L10n.of(context)!.readReceiptGive,
+                        padding: const EdgeInsets.all(0),
+                        icon: const Icon(
+                          Icons.mark_chat_read_outlined,
+                          color: AppConfig.primaryColor,
+                        ),
+                        onPressed: () => onReadReceipt?.call(displayEvent),
+                      )),
       sameSender || ownMessage
           ? SizedBox(
               width: Avatar.defaultSize,
@@ -286,9 +295,8 @@ class Message extends StatelessWidget {
                                     child: AbsorbPointer(
                                       child: Container(
                                         margin: EdgeInsets.symmetric(
-                                          vertical:
-                                              4.0 * AppConfig.bubbleSizeFactor,
-                                        ),
+                                            vertical: 4.0 *
+                                                AppConfig.bubbleSizeFactor),
                                         child: ReplyContent(
                                           replyEvent,
                                           ownMessage: ownMessage,
