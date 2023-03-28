@@ -399,7 +399,7 @@ class ChatDetailsView extends StatelessWidget {
                           ),
                           room.canInvite
                               ? ListTile(
-                                  title: Text(L10n.of(context)!.inviteContact),
+                                  title: Text('Einladen via Adressbuch'),
                                   leading: CircleAvatar(
                                     backgroundColor:
                                         Theme.of(context).primaryColor,
@@ -407,7 +407,8 @@ class ChatDetailsView extends StatelessWidget {
                                     radius: Avatar.defaultSize / 2,
                                     child: const Icon(Icons.add_outlined),
                                   ),
-                                  onTap: () => VRouter.of(context).to('invite'),
+                                  onTap: () =>
+                                      VRouter.of(context).to('addressbook'),
                                 )
                               : Container(),
                         ],

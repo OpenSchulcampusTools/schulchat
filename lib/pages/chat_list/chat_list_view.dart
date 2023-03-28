@@ -196,8 +196,8 @@ class ChatListView extends StatelessWidget {
                               LogicalKeyboardKey.keyN
                             },
                             onKeysPressed: () =>
-                                VRouter.of(context).to('/newprivatechat'),
-                            helpLabel: L10n.of(context)!.newChat,
+                                VRouter.of(context).to('/newgroupchat'),
+                            helpLabel: L10n.of(context)!.createNewGroup,
                             child: StartChatFloatingActionButton(
                               controller: controller,
                             ),

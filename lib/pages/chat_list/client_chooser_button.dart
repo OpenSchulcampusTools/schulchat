@@ -99,6 +99,16 @@ class ClientChooserButton extends StatelessWidget {
           ],
         ),
       ),
+      PopupMenuItem(
+        value: SettingsAction.showAddressbook,
+        child: Row(
+          children: [
+            const Icon(Icons.contacts),
+            const SizedBox(width: 18),
+            Text(L10n.of(context)!.addressbook),
+          ],
+        ),
+      ),
       const PopupMenuItem(
         value: null,
         child: Divider(height: 1),
@@ -314,6 +324,9 @@ class ClientChooserButton extends StatelessWidget {
         case SettingsAction.requireReadReceipt:
           VRouter.of(context).to('/readreceipts');
           break;
+        case SettingsAction.showAddressbook:
+          VRouter.of(context).to('/addressbook');
+          break;
       }
     }
   }
@@ -396,5 +409,6 @@ enum SettingsAction {
   invite,
   settings,
   archive,
-  requireReadReceipt
+  requireReadReceipt,
+  showAddressbook
 }

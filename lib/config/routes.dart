@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vrouter/vrouter.dart';
 
 import 'package:fluffychat/pages/add_story/add_story.dart';
+import 'package:fluffychat/pages/addressbook/addressbook.dart';
 import 'package:fluffychat/pages/archive/archive.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
 import 'package:fluffychat/pages/chat_details/chat_details.dart';
@@ -62,6 +63,10 @@ class AppRoutes {
               widget: const ReadReceiptOverviewPage(),
             ),
             VWidget(
+              path: '/addressbook',
+              widget: const AddressbookPage(),
+            ),
+            VWidget(
               path: '/stories/:roomid',
               widget: const StoryPage(),
               stackedRoutes: [
@@ -84,6 +89,10 @@ class AppRoutes {
               VWidget(
                 path: 'invite',
                 widget: const InvitationSelection(),
+              ),
+              VWidget(
+                path: 'addressbook',
+                widget: const AddressbookPage(),
               ),
               VWidget(
                 path: 'details',
@@ -151,6 +160,10 @@ class AppRoutes {
                   widget: const ReadReceiptOverviewPage(),
                 ),
                 VWidget(
+                  path: '/addressbook',
+                  widget: const AddressbookPage(),
+                ),
+                VWidget(
                   path: '/stories/:roomid',
                   buildTransition: _fadeTransition,
                   widget: const StoryPage(),
@@ -215,6 +228,11 @@ class AppRoutes {
                     VWidget(
                       path: 'invite',
                       widget: const InvitationSelection(),
+                      buildTransition: _fadeTransition,
+                    ),
+                    VWidget(
+                      path: 'addressbook',
+                      widget: const AddressbookPage(),
                       buildTransition: _fadeTransition,
                     ),
                   ],
@@ -318,6 +336,11 @@ class AppRoutes {
         VWidget(
           path: 'invite',
           widget: const InvitationSelection(),
+          buildTransition: _dynamicTransition,
+        ),
+        VWidget(
+          path: 'addressbook',
+          widget: const AddressbookPage(),
           buildTransition: _dynamicTransition,
         ),
         VWidget(

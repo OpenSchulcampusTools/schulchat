@@ -16,7 +16,7 @@ class StartChatFloatingActionButton extends StatelessWidget {
     switch (controller.activeFilter) {
       case ActiveFilter.allChats:
       case ActiveFilter.messages:
-        VRouter.of(context).to('/newprivatechat');
+        VRouter.of(context).to('/newgroup');
         break;
       case ActiveFilter.groups:
         VRouter.of(context).to('/newgroup');
@@ -40,17 +40,7 @@ class StartChatFloatingActionButton extends StatelessWidget {
   }
 
   String getLabel(BuildContext context) {
-    switch (controller.activeFilter) {
-      case ActiveFilter.allChats:
-      case ActiveFilter.messages:
-        return controller.filteredRooms.isEmpty
-            ? L10n.of(context)!.startFirstChat
-            : L10n.of(context)!.newChat;
-      case ActiveFilter.groups:
-        return L10n.of(context)!.newGroup;
-      case ActiveFilter.spaces:
-        return L10n.of(context)!.newSpace;
-    }
+    return 'Neuer Raum'; //L10n.of(context)!.newGroup;
   }
 
   @override

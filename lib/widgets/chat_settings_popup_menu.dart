@@ -100,6 +100,16 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
           ],
         ),
       ),
+      PopupMenuItem<String>(
+        value: 'addressbook',
+        child: Row(
+          children: [
+            const Icon(Icons.contacts),
+            const SizedBox(width: 12),
+            Text('Invite using ${L10n.of(context)!.addressbook}'),
+          ],
+        ),
+      ),
     ];
     if (widget.displayChatDetails) {
       items.insert(
@@ -186,6 +196,9 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
               case 'details':
                 _showChatDetails();
                 break;
+              case 'addressbook':
+                _showAddressbook();
+                break;
               case 'search':
                 _showChatSearch();
                 /*showDialog(
@@ -218,6 +231,15 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
       VRouter.of(context).toSegments(['rooms', widget.room.id]);
     } else {
       VRouter.of(context).toSegments(['rooms', widget.room.id, 'details']);
+    }
+  }
+
+  void _showAddressbook() {
+    print('addressbook called');
+    if (VRouter.of(context).path.endsWith('/addressbook')) {
+      VRouter.of(context).toSegments(['rooms', widget.room.id]);
+    } else {
+      VRouter.of(context).toSegments(['rooms', widget.room.id, 'addressbook']);
     }
   }
 
