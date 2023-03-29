@@ -8,6 +8,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:vrouter/vrouter.dart';
 
 import 'package:fluffychat/pages/chat_search/chat_search_view.dart';
+import 'package:fluffychat/pages/chat_search/search_result_formatter.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 
 enum SearchState { searching, finished, noResult }
@@ -32,10 +33,13 @@ class ChatSearchController extends State<ChatSearch> {
   String? searchError;
   SearchState searchState = SearchState.noResult;
   bool searchResultsFound = false;
+  final SearchResultFormatter searchResultFormatter = SearchResultFormatter();
 
   String _searchTerm = "";
   String _lastSearchTerm = "";
-  List<String> _foundMessages = <String>[];
+  final Set<String> _foundMessageIds = <String>{};
+  final Set<String> _editIds = <String>{};
+  final Set<String> _markedForAddition = <String>{};
 
   final AutoScrollController scrollController = AutoScrollController();
   bool showScrollToTopButton = false;
@@ -81,23 +85,86 @@ class ChatSearchController extends State<ChatSearch> {
     // use _foundMessages to filter out messages which have already be found
     if (searchState == SearchState.searching &&
         event.type == EventTypes.Message &&
-        !_foundMessages.contains(event.eventId)) {
-      final bool found =
-          event.body.toLowerCase().contains(_searchTerm.toLowerCase());
-      if (found) {
-        _foundMessages.add(event.eventId);
+        !event.redacted &&
+        !_foundMessageIds.contains(event.eventId)) {
+      final editedEventId = _tryGetEditId(event);
 
-        if (!searchResultsFound) {
-          setState(() {
-            searchResultsFound = true;
-          });
+      if (_isLastEdit(editedEventId, event)) {
+        // don't search in cited message text, so cut citation off first
+        final eventText = searchResultFormatter.getTextWithoutCitation(event);
+
+        final bool found =
+            eventText.toLowerCase().contains(_searchTerm.toLowerCase());
+        if (found) {
+          _foundMessageIds.add(event.eventId);
+          if (!searchResultsFound) {
+            setState(() {
+              searchResultsFound = true;
+            });
+          }
+
+          if (editedEventId != null) {
+            // if this is an edited event, search is performed in latest edition
+            // but to UI the first event has to be added
+            _markedForAddition.add(editedEventId);
+            return false;
+          } else {
+            return true;
+          }
         }
-
-        return found;
+      } else {
+        // check if this event was marked to be added
+        if (_markedForAddition.contains(event.eventId)) {
+          _foundMessageIds.add(event.eventId);
+          _markedForAddition.remove(editedEventId);
+          return true;
+        }
       }
     }
 
     return false;
+  }
+
+  /*
+  * Returns true if an event is not edited or if it is the latest edit of
+  * another event. This function relies on the fact, that events are loaded
+  * along the timeline in decreasing time order.
+  */
+  bool _isLastEdit(String? editedEventId, Event event) {
+    // event is an edit of another event
+    if (editedEventId != null) {
+      timeline!.addAggregatedEvent(event);
+
+      // there exits a later edit
+      if (_editIds.contains(editedEventId)) {
+        return false;
+      } else {
+        // latest edit
+        _editIds.add(editedEventId);
+        return true;
+      }
+    }
+    // event is not an edit of another event, check if it was edited
+    else {
+      return !_editIds.contains(event.eventId);
+    }
+  }
+
+  /*
+   * If event is an edit of another event, return the
+   * id of the edited event.
+   */
+  String? _tryGetEditId(Event event) {
+    final relType = event.content
+        .tryGetMap<String, dynamic>('m.relates_to')
+        ?.tryGet<String>("rel_type");
+
+    if (relType == RelationshipTypes.edit) {
+      return event.content
+          .tryGetMap<String, dynamic>('m.relates_to')
+          ?.tryGet<String>("event_id");
+    }
+    return null;
   }
 
   void search() async {
@@ -107,10 +174,11 @@ class ChatSearchController extends State<ChatSearch> {
       // start search only if a new search term was entered
       if (_searchTerm != _lastSearchTerm) {
         _lastSearchTerm = _searchTerm;
-        _foundMessages.clear();
+        _foundMessageIds.clear();
+        _editIds.clear();
+        _markedForAddition.clear();
 
         searchResultStreamSubscription?.cancel();
-        //searchResultStreamController.close();
 
         setState(() {
           searchResultStreamController = StreamController();
@@ -126,10 +194,11 @@ class ChatSearchController extends State<ChatSearch> {
 
           final Stream<List<Event>>? searchResultStream = timeline
               ?.searchEvent(
-                  searchTerm: _searchTerm,
-                  requestHistoryCount: 30,
-                  maxHistoryRequests: 30,
-                  searchFunc: searchFunction)
+                searchTerm: _searchTerm,
+                requestHistoryCount: 30,
+                maxHistoryRequests: 30,
+                searchFunc: searchFunction,
+              )
               .asBroadcastStream();
 
           searchResultStreamController.addStream(searchResultStream!);
@@ -153,8 +222,6 @@ class ChatSearchController extends State<ChatSearch> {
             searchState = SearchState.noResult;
           });
         }
-
-        //  setState(() {});
       }
     } catch (e) {
       searchError = L10n.of(context)?.searchError;
@@ -168,8 +235,10 @@ class ChatSearchController extends State<ChatSearch> {
   void scrollToEventId(String eventId) {
     VRouter.of(context).path.startsWith('/spaces/')
         ? VRouter.of(context).pop()
-        : VRouter.of(context).toSegments(['rooms', roomId!],
-            queryParameters: {'event': eventId});
+        : VRouter.of(context).toSegments(
+            ['rooms', roomId!],
+            queryParameters: {'event': eventId},
+          );
   }
 
   void scrollToTop() {

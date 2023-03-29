@@ -4,7 +4,7 @@ class SearchResultFormatter {
   String? _searchTerm = "";
   RegExp? _searchExp;
 
-  SearchResultFormatter(String? searchTerm) {
+  SearchResultFormatter({String? searchTerm}) {
     _searchTerm = searchTerm;
     if (isSearchResult()) {
       _searchExp = RegExp(searchTerm!, caseSensitive: false);
@@ -31,24 +31,30 @@ class SearchResultFormatter {
   }
 
   String _replaceSearchResults(String text) {
-    //   final startIndex = _getStartIndex(text);
     text = text.replaceAllMapped(
-        _searchExp!, (match) => "<b><i>${match[0]}</i></b>");
+      _searchExp!,
+      (match) => "<b><i>${match[0]}</i></b>",
+    );
 
     return text;
   }
 
-/*int _getStartIndex(String text) {
-    const replyEndText = "</mx-reply>";
-    final replyIndex = text.indexOf(replyEndText);
+  /* If event text contains a citation, remove it */
+  String getTextWithoutCitation(Event event) {
+    final text = event.formattedText;
 
-    if(replyIndex < 0) {
-      return 0;
-    }
-    else {
-      // if text contains a replay start after reply
-      return replyIndex+replyEndText.length;
+    if (text.isEmpty) {
+      return event.text;
+    } else {
+      return text.replaceAll(
+        RegExp(
+          '<mx-reply>.*</mx-reply>',
+          caseSensitive: false,
+          multiLine: false,
+          dotAll: true,
+        ),
+        '',
+      );
     }
   }
-   */
 }

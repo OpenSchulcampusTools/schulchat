@@ -29,9 +29,13 @@ class MessageContent extends StatelessWidget {
   final void Function(Event)? onInfoTab;
   final String? searchTerm;
 
-  const MessageContent(this.event,
-      {this.onInfoTab, Key? key, required this.textColor, this.searchTerm})
-      : super(key: key);
+  const MessageContent(
+    this.event, {
+    this.onInfoTab,
+    Key? key,
+    required this.textColor,
+    this.searchTerm,
+  }) : super(key: key);
 
   void _verifyOrRequestKey(BuildContext context) async {
     final l10n = L10n.of(context)!;
@@ -97,7 +101,7 @@ class MessageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textFormatter = SearchResultFormatter(searchTerm);
+    final textFormatter = SearchResultFormatter(searchTerm: searchTerm);
     final fontSize = AppConfig.messageFontSize * AppConfig.fontSizeFactor;
     final buttonTextColor =
         event.senderId == Matrix.of(context).client.userID ? textColor : null;

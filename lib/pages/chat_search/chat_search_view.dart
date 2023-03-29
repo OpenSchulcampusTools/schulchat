@@ -33,142 +33,151 @@ class ChatSearchView extends StatelessWidget {
       );
     } else {
       return FutureBuilder<bool>(
-          future: controller.getTimeline(),
-          builder: (BuildContext context, snapshot) {
-            return Scaffold(
-              floatingActionButton: controller.showScrollToTopButton
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 56.0),
-                      child: FloatingActionButton(
-                        heroTag: "searchBackToTop",
-                        onPressed: controller.scrollToTop,
-                        mini: true,
-                        child: const Icon(Icons.arrow_upward_outlined),
-                      ))
-                  : null,
-              body: NestedScrollView(
-                controller: controller.scrollController,
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) => <Widget>[
-                  SliverAppBar(
-                    leading: IconButton(
-                      icon: const Icon(Icons.close_outlined),
-                      onPressed: () =>
-                          VRouter.of(context).path.startsWith('/spaces/')
-                              ? VRouter.of(context).pop()
-                              : VRouter.of(context)
-                                  .toSegments(['rooms', controller.roomId!]),
+        future: controller.getTimeline(),
+        builder: (BuildContext context, snapshot) {
+          return Scaffold(
+            floatingActionButton: controller.showScrollToTopButton
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 56.0),
+                    child: FloatingActionButton(
+                      heroTag: "searchBackToTop",
+                      onPressed: controller.scrollToTop,
+                      mini: true,
+                      child: const Icon(Icons.arrow_upward_outlined),
                     ),
-                    elevation: Theme.of(context).appBarTheme.elevation,
-                    expandedHeight: 300.0,
-                    floating: true,
-                    pinned: true,
-                    actions: <Widget>[
-                      if (room.canonicalAlias.isNotEmpty)
-                        IconButton(
-                          tooltip: L10n.of(context)!.share,
-                          icon: Icon(Icons.adaptive.share_outlined),
-                          onPressed: () => FluffyShare.share(
-                              AppConfig.inviteLinkPrefix + room.canonicalAlias,
-                              context),
+                  )
+                : null,
+            body: NestedScrollView(
+              controller: controller.scrollController,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) => <Widget>[
+                SliverAppBar(
+                  leading: IconButton(
+                    icon: const Icon(Icons.close_outlined),
+                    onPressed: () =>
+                        VRouter.of(context).path.startsWith('/spaces/')
+                            ? VRouter.of(context).pop()
+                            : VRouter.of(context)
+                                .toSegments(['rooms', controller.roomId!]),
+                  ),
+                  elevation: Theme.of(context).appBarTheme.elevation,
+                  expandedHeight: 300.0,
+                  floating: true,
+                  pinned: true,
+                  actions: <Widget>[
+                    if (room.canonicalAlias.isNotEmpty)
+                      IconButton(
+                        tooltip: L10n.of(context)!.share,
+                        icon: Icon(Icons.adaptive.share_outlined),
+                        onPressed: () => FluffyShare.share(
+                          AppConfig.inviteLinkPrefix + room.canonicalAlias,
+                          context,
                         ),
-                      ChatSettingsPopupMenu(room, false)
-                    ],
-                    title: Text(
-                      room.getLocalizedDisplayname(
-                          MatrixLocals(L10n.of(context)!)),
-                    ),
-                    backgroundColor:
-                        Theme.of(context).appBarTheme.backgroundColor,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: ContentBanner(
-                        mxContent: room.avatar,
-                        onEdit: null,
-                        defaultIcon: Icons.group_outlined,
                       ),
+                    ChatSettingsPopupMenu(room, false)
+                  ],
+                  title: Text(
+                    room.getLocalizedDisplayname(
+                      MatrixLocals(L10n.of(context)!),
                     ),
                   ),
-                ],
-                body: MaxWidthBody(
-                  child: StreamBuilder<List<Event>>(
-                      stream: controller.searchResultStreamController.stream,
-                      builder: (context, snapshot) {
-                        // put search field and button inside ListView, this way they are scrollable and
-                        // pixel overflow errors on small screens are avoided (as anything is scrollable)
-                        return ListView.builder(
-                            itemCount: (snapshot.hasData
-                                ? snapshot.data!.length + 1
-                                : 1),
-                            itemBuilder: (BuildContext context, int i) => i == 0
-                                ? Column(children: <Widget>[
-                                    Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextField(
-                                          controller:
-                                              controller.searchController,
-                                          onSubmitted: (value) {
-                                            controller.search();
-                                          },
-                                          autofocus: true,
-                                          decoration: InputDecoration(
-                                            prefixIcon: const Icon(Icons.label),
-                                            label:
-                                                Text(L10n.of(context)!.search),
-                                            errorText: controller.searchError,
-                                          ),
-                                        )),
-                                    ButtonBar(
-                                      children: [
-                                        TextButton(
-                                          onPressed: controller.search,
-                                          child: Text(L10n.of(context)!.search),
-                                        ),
-                                      ],
+                  backgroundColor:
+                      Theme.of(context).appBarTheme.backgroundColor,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: ContentBanner(
+                      mxContent: room.avatar,
+                      onEdit: null,
+                      defaultIcon: Icons.group_outlined,
+                    ),
+                  ),
+                ),
+              ],
+              body: MaxWidthBody(
+                child: StreamBuilder<List<Event>>(
+                  stream: controller.searchResultStreamController.stream,
+                  builder: (context, snapshot) {
+                    // put search field and button inside ListView, this way they are scrollable and
+                    // pixel overflow errors on small screens are avoided (as anything is scrollable)
+                    return ListView.builder(
+                      itemCount:
+                          (snapshot.hasData ? snapshot.data!.length + 1 : 1),
+                      itemBuilder: (BuildContext context, int i) => i == 0
+                          ? Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextField(
+                                    controller: controller.searchController,
+                                    onSubmitted: (value) {
+                                      controller.search();
+                                    },
+                                    autofocus: true,
+                                    decoration: InputDecoration(
+                                      prefixIcon: const Icon(Icons.label),
+                                      label: Text(L10n.of(context)!.search),
+                                      errorText: controller.searchError,
                                     ),
-                                    if (!controller.searchResultsFound)
-                                      if (controller.searchState ==
-                                              SearchState.noResult ||
-                                          controller.searchState ==
-                                              SearchState.finished)
-                                        ListTile(
-                                            title: Text(L10n.of(context)!
-                                                .noSearchResult))
-                                      else if (controller.searchState ==
-                                          SearchState.searching)
-                                        const Center(
-                                          child: CircularProgressIndicator
-                                              .adaptive(strokeWidth: 2),
-                                        ),
-                                  ])
-                                : controller.searchResultsFound
-                                    ? Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: <Widget>[
-                                            Message(
-                                              snapshot.data![i - 1],
-                                              onSwipe: (direction) => {},
-                                              onSelect:
-                                                  controller.onSelectMessage,
-                                              scrollToEventId:
-                                                  controller.scrollToEventId,
-                                              timeline: controller.timeline!,
-                                              searchTerm: controller.searchTerm,
-                                            ),
-                                            if (i == snapshot.data?.length &&
-                                                controller.searchState ==
-                                                    SearchState.searching)
-                                              const Center(
-                                                child: CircularProgressIndicator
-                                                    .adaptive(strokeWidth: 2),
-                                              ),
-                                          ])
-                                    : Container());
-                      }),
+                                  ),
+                                ),
+                                ButtonBar(
+                                  children: [
+                                    TextButton(
+                                      onPressed: controller.search,
+                                      child: Text(L10n.of(context)!.search),
+                                    ),
+                                  ],
+                                ),
+                                if (!controller.searchResultsFound)
+                                  if (controller.searchState ==
+                                          SearchState.noResult ||
+                                      controller.searchState ==
+                                          SearchState.finished)
+                                    ListTile(
+                                      title: Text(
+                                        L10n.of(context)!.noSearchResult,
+                                      ),
+                                    )
+                                  else if (controller.searchState ==
+                                      SearchState.searching)
+                                    const Center(
+                                      child: CircularProgressIndicator.adaptive(
+                                          strokeWidth: 2),
+                                    ),
+                              ],
+                            )
+                          : controller.searchResultsFound
+                              ? Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: <Widget>[
+                                    Message(
+                                      snapshot.data![i - 1],
+                                      onSwipe: (direction) => {},
+                                      onSelect: controller.onSelectMessage,
+                                      scrollToEventId:
+                                          controller.scrollToEventId,
+                                      timeline: controller.timeline!,
+                                      searchTerm: controller.searchTerm,
+                                    ),
+                                    if (i == snapshot.data?.length &&
+                                        controller.searchState ==
+                                            SearchState.searching)
+                                      const Center(
+                                        child:
+                                            CircularProgressIndicator.adaptive(
+                                                strokeWidth: 2),
+                                      ),
+                                  ],
+                                )
+                              : Container(),
+                    );
+                  },
                 ),
               ),
-            );
-          });
+            ),
+          );
+        },
+      );
     }
   }
 }
