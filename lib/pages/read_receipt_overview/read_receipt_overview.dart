@@ -18,7 +18,7 @@ class ReadReceiptOverviewPage extends StatefulWidget {
 
 class ExpansionPanelItem {
   List<Event> readReceiptRequests = [];
-  List<MessageItem> messageItems = [];
+  Map<String, MessageItem> messageItems = {};
   bool messagesLoaded = false;
   Timeline? timeline;
   Room? room;
@@ -147,7 +147,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
         await _addParentToMessages(event, panelItem);
 
         setState(() {
-          panelItem.messages;
+          panelItem.messageItems;
           panelItem.hasToGiveReadReceipt =
               _client!.roomsWithOpenReadReceipts.contains(room.id);
         });
@@ -167,7 +167,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
       final String roomId = panelItem.room!.id;
 
       panelItem.timeline = await _getTimeline(panelItem.room);
-      panelItem.messages.clear();
+      panelItem.messageItems.clear();
 
       if (_client!.readReceiptRequests.containsKey(roomId)) {
         for (final MatrixEvent mEvent
@@ -178,7 +178,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
 
       setState(() {
         panelItem.messagesLoaded = true;
-        panelItem.messages;
+        panelItem.messageItems;
       });
     }
   }
@@ -207,7 +207,8 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
 
         // events from sync are sorted chronologically up
         // but we need latest event first -> therefore insert(0, ...
-        panelItem.messages.insert(0, parentEvent);
+        panelItem.messageItems
+            .addAll({parentEvent.eventId: MessageItem(parentEvent)});
         return true;
       }
     }
@@ -280,30 +281,51 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     return parentEvent;
   }
 
-  void onReadReceiptClick(Event event, ExpansionPanelItem panelItem) async {
-    final String? readReceiptEventId =
-        await event.onReadReceiptIconClick(event, panelItem.timeline!, context);
-
-    // if readReceiptEventId is !null, then the user has given a new read receipt
-    if (readReceiptEventId != null) {
-      final MatrixEvent readReceiptEvent = await panelItem.room!.client
-          .getOneRoomEvent(panelItem.room!.id, readReceiptEventId);
-
-      _addAggregatedEventsToTimeline(
-        event,
-        readReceiptEvent,
-        panelItem.timeline!,
-        panelItem.room!,
-      );
-
-      await _client!.updateOpenReadReceipts(panelItem.room!.id);
-      _updateOpenReadReceipt(panelItem);
-      _sortPanelItems();
-
+  void onReadReceiptClick(Event event, ExpansionPanelItem panelItem,
+      MessageItem messageItem) async {
+    if (!messageItem.readReceiptInProgress) {
       setState(() {
-        panelItems;
+        messageItem.readReceiptInProgress = true;
       });
+
+      final String? readReceiptEventId = await event.onReadReceiptIconClick(
+          event, panelItem.timeline!, context);
+
+      // if readReceiptEventId is !null, then the user has given a new read receipt
+      if (readReceiptEventId != null) {
+        final MatrixEvent readReceiptEvent = await panelItem.room!.client
+            .getOneRoomEvent(panelItem.room!.id, readReceiptEventId);
+
+        _addAggregatedEventsToTimeline(
+          event,
+          readReceiptEvent,
+          panelItem.timeline!,
+          panelItem.room!,
+        );
+
+        await _client!.updateOpenReadReceipts(panelItem.room!.id);
+        _updateOpenReadReceipt(panelItem);
+        _sortPanelItems();
+
+        messageItem.readReceiptInProgress = false;
+        setState(() {
+          messageItem;
+        });
+      }
     }
+  }
+
+  // returns true if process of giving read receipt for current user is in progress
+  bool readReceiptInProgress(Event event) {
+    if (panelItems.containsKey(event.roomId)) {
+      final panelItem = panelItems[event.roomId]!;
+
+      if (panelItem.messageItems.containsKey(event.eventId)) {
+        return panelItem.messageItems[event.eventId]!.readReceiptInProgress;
+      }
+    }
+
+    return false;
   }
 
   void expansionCallback(panelIndex, isExpanded) {
