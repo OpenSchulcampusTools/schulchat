@@ -16,9 +16,9 @@ abstract class AppConfig {
   static const double messageFontSize = 15.75;
   static const bool allowOtherHomeservers = true;
   static const bool enableRegistration = true;
-  static const Color primaryColor = Color(0xFFA92440);
-  static const Color primaryColorLight = Color(0xFFCCBDEA);
-  static const Color secondaryColor = Color(0xFF41a2bc);
+  static const Color primaryColor = Color(0xFFC0CD00);
+  static const Color primaryColorLight = Color(0xFFEAF099);
+  static const Color secondaryColor = Color(0xFF009cee);
   static String _privacyUrl =
       'https://gitlab.com/famedly/fluffychat/-/blob/main/PRIVACY.md';
   static String get privacyUrl => _privacyUrl;
