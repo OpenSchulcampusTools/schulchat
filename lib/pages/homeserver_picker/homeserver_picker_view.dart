@@ -22,7 +22,7 @@ class HomeserverPickerView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            /*  #schulChatSpecific
+            /*#schulChatSpecific
           Padding(
               padding: const EdgeInsets.all(12.0),
               child: HomeserverAppBar(controller: controller),s

@@ -7,9 +7,7 @@ import 'package:vrouter/vrouter.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/setting_keys.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/utils/voip/callkeep_manager.dart';
 import 'package:fluffychat/widgets/layouts/max_width_body.dart';
-import 'package:fluffychat/widgets/matrix.dart';
 import 'package:fluffychat/widgets/settings_switch_list_tile.dart';
 import 'settings_chat.dart';
 
@@ -65,6 +63,7 @@ class SettingsChatView extends StatelessWidget {
                   storeKey: SettingKeys.autoplayImages,
                   defaultValue: AppConfig.autoplayImages,
                 ),
+              /*#schulChatSpecific
               const Divider(),
               SettingsSwitchListTile.adaptive(
                 title: L10n.of(context)!.sendOnEnter,
@@ -92,7 +91,7 @@ class SettingsChatView extends StatelessWidget {
                     padding: EdgeInsets.all(16.0),
                     child: Icon(Icons.call),
                   ),
-                ),
+                ), */
               SettingsSwitchListTile.adaptive(
                 title: L10n.of(context)!.separateChatTypes,
                 onChanged: (b) => AppConfig.separateChatTypes = b,
