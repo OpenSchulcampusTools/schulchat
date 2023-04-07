@@ -1461,6 +1461,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "passwordForgottenStatement": "The password reset takes place on the schulcampus",
+    "@passwordForgottenStatement": {
+        "type": "text",
+        "placeholders": {}
+     },
     "passwordHasBeenChanged": "Password has been changed",
     "@passwordHasBeenChanged": {
         "type": "text",
@@ -1680,6 +1685,11 @@
     "@saveFile": {
         "type": "text",
         "placeholders": {}
+    },
+    "scanExplanation": "Scan the qr-code from Schulcampus",
+    "@scanExplanation": {
+      "type": "text",
+      "placeholders": {}
     },
     "search": "Search",
     "@search": {

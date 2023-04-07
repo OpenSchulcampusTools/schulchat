@@ -1316,6 +1316,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "passwordForgottenStatement": "Das Zurücksetzen des Passworts erfolgt auf dem Schulcampus",
+  "@passwordForgottenStatement": {
+    "type": "text",
+    "placeholders": {}
+  },
   "passwordHasBeenChanged": "Passwort wurde geändert",
   "@passwordHasBeenChanged": {
     "type": "text",
@@ -1531,6 +1536,11 @@
   },
   "saveFile": "Datei speichern",
   "@saveFile": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "scanExplanation": "Scanne den QR-Code von Schulcampus",
+  "@scanExplanation": {
     "type": "text",
     "placeholders": {}
   },

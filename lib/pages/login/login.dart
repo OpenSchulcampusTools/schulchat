@@ -7,7 +7,6 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/utils/localized_exception_extension.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import '../../utils/platform_infos.dart';
 import 'login_view.dart';
@@ -30,7 +29,7 @@ class LoginController extends State<Login> {
   void toggleShowPassword() =>
       setState(() => showPassword = !loading && !showPassword);
 
-  void login() async {
+  void login([_]) async {
     final matrix = Matrix.of(context);
 
     if (usernameController.text.isEmpty) {
@@ -49,9 +48,6 @@ class LoginController extends State<Login> {
     }
 
     setState(() => loading = true);
-
-    _coolDown?.cancel();
-
     try {
       final username = usernameController.text;
       AuthenticationIdentifier identifier;
@@ -101,8 +97,8 @@ class LoginController extends State<Login> {
   void _checkWellKnown(String userId) async {
     if (mounted) setState(() => usernameError = null);
     if (!userId.isValidMatrixId) return;
-    final oldHomeserver = Matrix.of(context).getLoginClient().homeserver;
     try {
+      final oldHomeserver = Matrix.of(context).getLoginClient().homeserver;
       var newDomain = Uri.https(userId.domain!, '');
       Matrix.of(context).getLoginClient().homeserver = newDomain;
       DiscoveryInformation? wellKnownInformation;
@@ -116,14 +112,19 @@ class LoginController extends State<Login> {
         // do nothing, newDomain is already set to a reasonable fallback
       }
       if (newDomain != oldHomeserver) {
-        await Matrix.of(context).getLoginClient().checkHomeserver(newDomain);
-
+        await showFutureLoadingDialog(
+          context: context,
+          // do nothing if we error, we'll handle it below
+          future: () => Matrix.of(context)
+              .getLoginClient()
+              .checkHomeserver(newDomain)
+              .catchError((e) {}),
+        );
         if (Matrix.of(context).getLoginClient().homeserver == null) {
           Matrix.of(context).getLoginClient().homeserver = oldHomeserver;
           // okay, the server we checked does not appear to be a matrix server
           Logs().v(
-            '$newDomain is not running a homeserver, asking to use $oldHomeserver',
-          );
+              '$newDomain is not running a homeserver, asking to use $oldHomeserver');
           final dialogResult = await showOkCancelAlertDialog(
             context: context,
             useRootNavigator: false,
@@ -139,18 +140,15 @@ class LoginController extends State<Login> {
             return;
           }
         }
-        usernameError = null;
-        if (mounted) setState(() {});
+        if (mounted) setState(() => usernameError = null);
       } else {
-        Matrix.of(context).getLoginClient().homeserver = oldHomeserver;
         if (mounted) {
-          setState(() {});
+          setState(() =>
+              Matrix.of(context).getLoginClient().homeserver = oldHomeserver);
         }
       }
     } catch (e) {
-      Matrix.of(context).getLoginClient().homeserver = oldHomeserver;
-      usernameError = e.toLocalizedString(context);
-      if (mounted) setState(() {});
+      if (mounted) setState(() => usernameError = e.toString());
     }
   }
 
@@ -159,85 +157,14 @@ class LoginController extends State<Login> {
       useRootNavigator: false,
       context: context,
       title: L10n.of(context)!.passwordForgotten,
-      message: L10n.of(context)!.enterAnEmailAddress,
+      message:
+          "${L10n.of(context)!.passwordForgottenStatement}: \nhttps://www.schulcampus-rlp.de/password/reset",
       okLabel: L10n.of(context)!.ok,
       cancelLabel: L10n.of(context)!.cancel,
       fullyCapitalizedForMaterial: false,
-      textFields: [
-        DialogTextField(
-          initialText:
-              usernameController.text.isEmail ? usernameController.text : '',
-          hintText: L10n.of(context)!.enterAnEmailAddress,
-          keyboardType: TextInputType.emailAddress,
-        ),
-      ],
+      textFields: [],
     );
     if (input == null) return;
-    final clientSecret = DateTime.now().millisecondsSinceEpoch.toString();
-    final response = await showFutureLoadingDialog(
-      context: context,
-      future: () =>
-          Matrix.of(context).getLoginClient().requestTokenToResetPasswordEmail(
-                clientSecret,
-                input.single,
-                sendAttempt++,
-              ),
-    );
-    if (response.error != null) return;
-    final password = await showTextInputDialog(
-      useRootNavigator: false,
-      context: context,
-      title: L10n.of(context)!.passwordForgotten,
-      message: L10n.of(context)!.chooseAStrongPassword,
-      okLabel: L10n.of(context)!.ok,
-      cancelLabel: L10n.of(context)!.cancel,
-      fullyCapitalizedForMaterial: false,
-      textFields: [
-        const DialogTextField(
-          hintText: '******',
-          obscureText: true,
-          minLines: 1,
-          maxLines: 1,
-        ),
-      ],
-    );
-    if (password == null) return;
-    final ok = await showOkAlertDialog(
-      useRootNavigator: false,
-      context: context,
-      title: L10n.of(context)!.weSentYouAnEmail,
-      message: L10n.of(context)!.pleaseClickOnLink,
-      okLabel: L10n.of(context)!.iHaveClickedOnLink,
-      fullyCapitalizedForMaterial: false,
-    );
-    if (ok != OkCancelResult.ok) return;
-    final data = <String, dynamic>{
-      'new_password': password.single,
-      'logout_devices': false,
-      "auth": AuthenticationThreePidCreds(
-        type: AuthenticationTypes.emailIdentity,
-        threepidCreds: ThreepidCreds(
-          sid: response.result!.sid,
-          clientSecret: clientSecret,
-        ),
-      ).toJson(),
-    };
-    final success = await showFutureLoadingDialog(
-      context: context,
-      future: () => Matrix.of(context).getLoginClient().request(
-            RequestType.POST,
-            '/client/r0/account/password',
-            data: data,
-          ),
-    );
-    if (success.error == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(L10n.of(context)!.passwordHasBeenChanged)),
-      );
-      usernameController.text = input.single;
-      passwordController.text = password.single;
-      login();
-    }
   }
 
   static int sendAttempt = 0;
