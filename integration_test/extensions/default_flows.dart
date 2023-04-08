@@ -13,13 +13,13 @@ extension DefaultFlowExtensions on WidgetTester {
     final tester = this;
 
     await tester.pumpAndSettle();
-    final inputTextField = find.byType(TextField);
-    expect(inputTextField, findsOneWidget);
-    await tester.enterText(inputTextField, 'devmh.fairmatrix.net');
-    await tester.pumpAndSettle();
+    // final inputTextField = find.byType(TextField);
+    // expect(inputTextField, findsOneWidget);
+    // await tester.enterText(inputTextField, 'devmh.fairmatrix.net');
+    // await tester.pumpAndSettle();
 
-    await waitForFairkom(tester, find.text('Connect'), findsOneWidget, 10000);
-    await tester.tap(find.text('Connect'));
+    await waitForFairkom(tester, find.text("Let's start"), findsOneWidget, 10000);
+    await tester.tap(find.text("Let's start"));
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Login'));
@@ -30,7 +30,12 @@ extension DefaultFlowExtensions on WidgetTester {
     await tester.enterText(inputs.first, loginUsername ?? Users.user1.name);
     await tester.enterText(inputs.last, loginPassword ?? Users.user1.password);
     await tester.pumpAndSettle();
+    await tester.tap(find.text('Login'));
+    await tester.pumpAndSettle();
     await tester.testTextInput.receiveAction(TextInputAction.done);
+
+    // todo maybe, we are greeted with a "chat backup screen"
+    // continue with the button "find.byType(IconButton)" or enter the actual key
 
     for (int i = 0; i < 10; i++) {
       // because pumpAndSettle doesn't work with riverpod
@@ -62,30 +67,10 @@ extension DefaultFlowExtensions on WidgetTester {
       await tester.pump(const Duration(seconds: 1));
       await tester.tap(find.text('Settings'));
       await tester.pump(const Duration(seconds: 1));
-      // await tester.scrollUntilVisible(
-      //   find.text('Account'),
-      //   500,
-      //   scrollable: find.descendant(
-      //     of: find.byKey(const Key('SettingsListViewContent')),
-      //     matching: find.byType(Scrollable),
-      //   ),
-      // );
-      await tester.pump(const Duration(seconds: 1));
-      await tester.tap(find.text('Account'));
-      await tester.pump(const Duration(seconds: 1));
-      // await tester.scrollUntilVisible(
-      //   find.text('Logout'),
-      //   500,
-      //   scrollable: find.descendant(
-      //     of: find.byType(SettingsAccountView),
-      //     matching: find.byType(Scrollable),
-      //   ),
-      // );
-      await tester.pump(const Duration(seconds: 1));
       await tester.tap(find.text('Logout'));
       await tester.pump(const Duration(seconds: 1));
-      await tester.tap(find.maybeUppercaseText('Yes'));
-      await tester.pump(const Duration(seconds: 1));
+      await tester.tap(find.maybeUppercaseText('Logout'));
+      await tester.pump(const Duration(seconds: 3));
     }
   }
 

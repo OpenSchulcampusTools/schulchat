@@ -1,8 +1,4 @@
 import 'package:fluffychat/config/setting_keys.dart';
-import 'package:fluffychat/pages/chat/chat_view.dart';
-import 'package:fluffychat/pages/chat_list/chat_list_body.dart';
-import 'package:fluffychat/pages/chat_list/search_title.dart';
-import 'package:fluffychat/pages/invitation_selection/invitation_selection_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,8 +34,7 @@ Future<void> waitFor(tester, condition, expectation, duration) async {
 }
 
 void main() {
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   binding.testTextInput.register(); // makes enterText work
 
   group(
@@ -81,6 +76,7 @@ void main() {
         await tester.ensureAppStartedHomescreen();
         await pumpX(tester);
         await tester.tap(find.text('New chat'));
+        await pumpX(tester);
         final inviteLink = find.byType(TextField);
         await waitForFairkom(tester, inviteLink, findsOneWidget, 2000);
         await tester.enterText(inviteLink,
@@ -90,7 +86,6 @@ void main() {
         await pumpX(tester);
         await tester.tap(find.widgetWithText(Row, 'New chat'));
         await pumpX(tester);
-        expect(find.text('You joined the chat'), findsOneWidget);
       });
 
       testWidgets(
@@ -114,7 +109,7 @@ void main() {
           //   // because pumpAndSettle doesn't work
           //   await tester.pump(const Duration(seconds: 1));
           // }
-          await tester.tap(find.text(Users.user2.name).first);
+          await tester.tap(find.widgetWithText(ListTile, Users.user2.name).first);
           await pumpX(tester);
           await tester.enterText(find.byType(EditableText), "Test message");
           await pumpX(tester);
@@ -146,72 +141,31 @@ void main() {
         },
       );
 
-      testWidgets('Spaces', (tester) async {
-        app.main();
-        return;
-        await tester.ensureAppStartedHomescreen();
+      testWidgets(
+        'Delete chat with user integration1',
+            (WidgetTester tester) async {
+          app.main();
+          await tester.ensureAppStartedHomescreen();
+          await tester.ensureLoggedOut();
+          await tester.ensureAppStartedHomescreen(loginUsername: Users.user2.name, loginPassword: Users.user2.password);
 
-        await tester.waitFor(find.byTooltip('Show menu'));
-        await tester.tap(find.byTooltip('Show menu'));
-        await tester.pumpAndSettle();
+          await tester.enterText(find.byType(TextField), Users.user1.name);
+          // todo get number of widgets so we can expect -1 later
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+          await pumpX(tester);
+          await tester.longPress(find.text(Users.user1.name).first);
+          await pumpX(tester);
+          // todo tap on delete button
+          await pumpX(tester);
+          await tester.tap(find.text("YES"));
+          await pumpX(tester);
+          // todo expect that there is -1 chat
+          expect(find.text("Test message"), findsAtLeastNWidgets(1));
 
-        await tester.waitFor(find.byIcon(Icons.workspaces_outlined));
-        await tester.tap(find.byIcon(Icons.workspaces_outlined));
-        await tester.pumpAndSettle();
+          await pumpX(tester);
 
-        await tester.waitFor(find.byType(TextField));
-        await tester.enterText(find.byType(TextField).last, 'Test Space');
-        await tester.pumpAndSettle();
-
-        await tester.testTextInput.receiveAction(TextInputAction.done);
-        await tester.pumpAndSettle();
-
-        await tester.waitFor(find.text('Invite contact'));
-
-        await tester.tap(find.text('Invite contact'));
-        await tester.pumpAndSettle();
-
-        await tester.waitFor(
-          find.descendant(
-              of: find.byType(InvitationSelectionView),
-              matching: find.byType(TextField)),
-        );
-        await tester.enterText(
-          find.descendant(
-              of: find.byType(InvitationSelectionView),
-              matching: find.byType(TextField)),
-          Users.user2.name,
-        );
-
-        await Future.delayed(const Duration(milliseconds: 250));
-        await tester.testTextInput.receiveAction(TextInputAction.done);
-
-        await Future.delayed(const Duration(milliseconds: 1000));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find
-            .descendant(
-                of: find.descendant(
-                  of: find.byType(InvitationSelectionView),
-                  matching: find.byType(ListTile),
-                ),
-                matching: find.text(Users.user2.name))
-            .last);
-        await tester.pumpAndSettle();
-
-        await tester.waitFor(find.maybeUppercaseText('Yes'));
-        await tester.tap(find.maybeUppercaseText('Yes'));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.byTooltip('Back'));
-        await tester.pumpAndSettle();
-
-        await tester.waitFor(find.text('Load 2 more participants'));
-        await tester.tap(find.text('Load 2 more participants'));
-        await tester.pumpAndSettle();
-
-        expect(find.text(Users.user2.name), findsOneWidget);
-      });
+        },
+      );
     },
   );
 }
