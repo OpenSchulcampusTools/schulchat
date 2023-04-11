@@ -593,7 +593,21 @@ class ChatController extends State<Chat> {
   }
 
   void onReadReceipt(Event event) async {
-    event.onReadReceiptIconClick(event, timeline!, context);
+    if (event.isNotOwnEvent) {
+      if (!event.isReadReceiptGiving) {
+        setState(() {
+          event.isReadReceiptGiving = true;
+        });
+
+        await event.giveReadReceipt(timeline!);
+        event.isReadReceiptGiving = false;
+        setState(() {
+          event;
+        });
+      }
+    } else {
+      event.showReadReceiptListDialog(context, timeline!);
+    }
   }
 
   String _getSelectedEventString() {
@@ -715,7 +729,7 @@ class ChatController extends State<Chat> {
 
   void showReadReceiptAction() {
     if (selectedEvents.isNotEmpty) {
-      selectedEvents.first.showReadReceiptListDialog(context, room!, timeline!);
+      selectedEvents.first.showReadReceiptListDialog(context, timeline!);
     }
   }
 

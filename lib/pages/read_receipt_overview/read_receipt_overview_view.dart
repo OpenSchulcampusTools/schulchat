@@ -116,11 +116,8 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                                 message,
                                                 onSwipe: (swipeDirection) {},
                                                 onReadReceipt: (event) =>
-                                                    controller
-                                                        .onReadReceiptIconClick(
-                                                            event,
-                                                            item,
-                                                            message),
+                                                    controller.onReadReceipt(
+                                                        event, item, message),
                                                 onSelect: (event) {},
                                                 timeline: item.timeline!,
                                               ),

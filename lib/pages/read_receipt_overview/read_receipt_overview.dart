@@ -273,37 +273,42 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     return parentEvent;
   }
 
-  void onReadReceiptIconClick(
+  void onReadReceipt(
       Event event, ExpansionPanelItem panelItem, Event message) async {
-    if (!message.isReadReceiptGiving) {
-      setState(() {
-        message.isReadReceiptGiving = true;
-      });
+    if (message.isNotOwnEvent) {
+      if (!message.isReadReceiptGiving) {
+        setState(() {
+          message.isReadReceiptGiving = true;
+        });
 
-      final String? readReceiptEventId = await event.onReadReceiptIconClick(
-          event, panelItem.timeline!, context);
+        final String? readReceiptEventId =
+            await event.giveReadReceipt(panelItem.timeline!);
 
-      // if readReceiptEventId is !null, then the user has given a new read receipt
-      if (readReceiptEventId != null) {
-        final MatrixEvent readReceiptEvent = await panelItem.room!.client
-            .getOneRoomEvent(panelItem.room!.id, readReceiptEventId);
+        // if readReceiptEventId is !null, then the user has given a new read receipt
+        if (readReceiptEventId != null) {
+          final MatrixEvent readReceiptEvent = await panelItem.room!.client
+              .getOneRoomEvent(panelItem.room!.id, readReceiptEventId);
 
-        _addAggregatedEventsToTimeline(
-          event,
-          readReceiptEvent,
-          panelItem.timeline!,
-          panelItem.room!,
-        );
+          _addAggregatedEventsToTimeline(
+            event,
+            readReceiptEvent,
+            panelItem.timeline!,
+            panelItem.room!,
+          );
 
-        await _client!.updateOpenReadReceipts(panelItem.room!.id);
-        _updateOpenReadReceipt(panelItem);
-        _sortPanelItems();
+          await _client!.updateOpenReadReceipts(panelItem.room!.id);
+          _updateOpenReadReceipt(panelItem);
+          _sortPanelItems();
 
-        message.isReadReceiptGiving = false;
+          message.isReadReceiptGiving = false;
+        }
+
         setState(() {
           message;
         });
       }
+    } else {
+      event.showReadReceiptListDialog(context, panelItem.timeline!);
     }
   }
 
