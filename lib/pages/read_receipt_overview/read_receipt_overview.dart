@@ -1,6 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+
 import 'package:matrix/matrix.dart';
+
 import 'package:fluffychat/pages/chat/read_receipt/read_receipt_extension.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'read_receipt_overview_view.dart';
@@ -94,13 +97,12 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
 
     if (localStorageEventsRaw != null) {
       for (final String key in localStorageEventsRaw.keys) {
-        final split = key.split('|');
-        if (split.length > 1 && localStorageEventsRaw[key] != null) {
+        final roomIdAndEventId = key.split('|');
+        if (roomIdAndEventId.length > 1 && localStorageEventsRaw[key] != null) {
           final Room? room =
-              panelItems.tryGet<ExpansionPanelItem>(split[0])?.room;
+              panelItems.tryGet<ExpansionPanelItem>(roomIdAndEventId[0])?.room;
           if (room != null) {
-            final event =
-                Event.fromJson(copyMap(localStorageEventsRaw[key]!), room);
+            final event = _eventFromJson(localStorageEventsRaw[key]!, room);
             if (_localStorageEvents.containsKey(room.id)) {
               // if event.eventId exits already it is overwritten
               _localStorageEvents[room.id]!.addAll({event.eventId: event});
@@ -113,6 +115,10 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
         }
       }
     }
+  }
+
+  Event _eventFromJson(eventRaw, room) {
+    return Event.fromJson(copyMap(eventRaw), room);
   }
 
   void _updateOpenReadReceipt(ExpansionPanelItem panelItem) {
@@ -173,7 +179,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     }
   }
 
-  Future<bool> _addParentToMessages(
+  Future<void> _addParentToMessages(
     MatrixEvent mEvent,
     ExpansionPanelItem panelItem,
   ) async {
@@ -198,11 +204,8 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
         // events from sync are sorted chronologically up
         // but we need latest event first -> therefore insert(0, ...
         panelItem.messages.addAll({parentEvent.eventId: parentEvent});
-        return true;
       }
     }
-
-    return false;
   }
 
   Future<void> _addAggregatedEventsToTimeline(
@@ -270,7 +273,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     return parentEvent;
   }
 
-  void onReadReceiptClick(
+  void onReadReceiptIconClick(
       Event event, ExpansionPanelItem panelItem, Event message) async {
     if (!message.isReadReceiptGiving) {
       setState(() {

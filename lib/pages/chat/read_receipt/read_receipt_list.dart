@@ -26,7 +26,7 @@ class ReadReceiptListController extends State<ReadReceiptList> {
   Room room;
   Timeline? timeline;
   List<User> members = [];
-  List<MatrixEvent>? readReceipts;
+  List<MatrixEvent> readReceipts = [];
   String filter = "all";
   bool membersLoaded = false;
 
@@ -62,7 +62,7 @@ class ReadReceiptListController extends State<ReadReceiptList> {
     bool found = false;
     final userId = members[index].id;
 
-    for (final event in readReceipts!) {
+    for (final event in readReceipts) {
       if (event.senderId == userId) {
         found = true;
       }

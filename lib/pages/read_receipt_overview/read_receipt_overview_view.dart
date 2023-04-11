@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/pages/chat/events/message.dart';
 import 'package:fluffychat/widgets/avatar.dart';
@@ -115,7 +117,7 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                                 onSwipe: (swipeDirection) {},
                                                 onReadReceipt: (event) =>
                                                     controller
-                                                        .onReadReceiptClick(
+                                                        .onReadReceiptIconClick(
                                                             event,
                                                             item,
                                                             message),

@@ -67,7 +67,7 @@ class SendFileDialogState extends State<SendFileDialog> {
   @override
   Widget build(BuildContext context) {
     var sendStr = (widget.requireReadReceipt)
-        ? L10n.of(context)!.sendFileWithReadReceiptRequests
+        ? L10n.of(context)!.sendFileWithReadReceiptRequest
         : L10n.of(context)!.sendFile;
     final bool allFilesAreImages =
         widget.files.every((file) => file is MatrixImageFile);
@@ -80,15 +80,15 @@ class SendFileDialogState extends State<SendFileDialog> {
 
     if (allFilesAreImages) {
       sendStr = (widget.requireReadReceipt)
-          ? L10n.of(context)!.sendImageWithReadReceiptRequests
+          ? L10n.of(context)!.sendImageWithReadReceiptRequest
           : L10n.of(context)!.sendImage;
     } else if (widget.files.every((file) => file is MatrixAudioFile)) {
       sendStr = (widget.requireReadReceipt)
-          ? L10n.of(context)!.sendAudioWithReadReceiptRequests
+          ? L10n.of(context)!.sendAudioWithReadReceiptRequest
           : L10n.of(context)!.sendAudio;
     } else if (widget.files.every((file) => file is MatrixVideoFile)) {
       (widget.requireReadReceipt)
-          ? L10n.of(context)!.sendVideoWithReadReceiptRequests
+          ? L10n.of(context)!.sendVideoWithReadReceiptRequest
           : L10n.of(context)!.sendVideo;
     }
     Widget contentWidget;
