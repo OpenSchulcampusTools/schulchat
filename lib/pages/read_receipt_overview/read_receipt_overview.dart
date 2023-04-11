@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-
 import 'package:matrix/matrix.dart';
-
 import 'package:fluffychat/pages/chat/read_receipt/read_receipt_extension.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'read_receipt_overview_view.dart';
@@ -18,7 +15,7 @@ class ReadReceiptOverviewPage extends StatefulWidget {
 
 class ExpansionPanelItem {
   List<Event> readReceiptRequests = [];
-  Map<String, MessageItem> messageItems = {};
+  Map<String, Event> messages = {};
   bool messagesLoaded = false;
   Timeline? timeline;
   Room? room;
@@ -27,13 +24,6 @@ class ExpansionPanelItem {
   bool hasToGiveReadReceipt = false;
 
   ExpansionPanelItem(Room this.room);
-}
-
-class MessageItem {
-  final Event message;
-  bool readReceiptInProgress = false;
-
-  MessageItem(this.message);
 }
 
 class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
@@ -147,7 +137,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
         await _addParentToMessages(event, panelItem);
 
         setState(() {
-          panelItem.messageItems;
+          panelItem.messages;
           panelItem.hasToGiveReadReceipt =
               _client!.roomsWithOpenReadReceipts.contains(room.id);
         });
@@ -167,7 +157,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
       final String roomId = panelItem.room!.id;
 
       panelItem.timeline = await _getTimeline(panelItem.room);
-      panelItem.messageItems.clear();
+      panelItem.messages.clear();
 
       if (_client!.readReceiptRequests.containsKey(roomId)) {
         for (final MatrixEvent mEvent
@@ -178,7 +168,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
 
       setState(() {
         panelItem.messagesLoaded = true;
-        panelItem.messageItems;
+        panelItem.messages;
       });
     }
   }
@@ -207,8 +197,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
 
         // events from sync are sorted chronologically up
         // but we need latest event first -> therefore insert(0, ...
-        panelItem.messageItems
-            .addAll({parentEvent.eventId: MessageItem(parentEvent)});
+        panelItem.messages.addAll({parentEvent.eventId: parentEvent});
         return true;
       }
     }
@@ -281,11 +270,11 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     return parentEvent;
   }
 
-  void onReadReceiptClick(Event event, ExpansionPanelItem panelItem,
-      MessageItem messageItem) async {
-    if (!messageItem.readReceiptInProgress) {
+  void onReadReceiptClick(
+      Event event, ExpansionPanelItem panelItem, Event message) async {
+    if (!message.isReadReceiptGiving) {
       setState(() {
-        messageItem.readReceiptInProgress = true;
+        message.isReadReceiptGiving = true;
       });
 
       final String? readReceiptEventId = await event.onReadReceiptIconClick(
@@ -307,9 +296,9 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
         _updateOpenReadReceipt(panelItem);
         _sortPanelItems();
 
-        messageItem.readReceiptInProgress = false;
+        message.isReadReceiptGiving = false;
         setState(() {
-          messageItem;
+          message;
         });
       }
     }
@@ -320,8 +309,8 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     if (panelItems.containsKey(event.roomId)) {
       final panelItem = panelItems[event.roomId]!;
 
-      if (panelItem.messageItems.containsKey(event.eventId)) {
-        return panelItem.messageItems[event.eventId]!.readReceiptInProgress;
+      if (panelItem.messages.containsKey(event.eventId)) {
+        return panelItem.messages[event.eventId]!.isReadReceiptGiving;
       }
     }
 

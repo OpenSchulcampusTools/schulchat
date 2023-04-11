@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/pages/chat/events/message.dart';
 import 'package:fluffychat/widgets/avatar.dart';
@@ -98,14 +96,14 @@ class ReadReceiptOverviewView extends StatelessWidget {
                               child: item.messagesLoaded == true
                                   ? Column(
                                       children: [
-                                        if (item.messageItems.isEmpty)
+                                        if (item.messages.isEmpty)
                                           Text(
                                             L10n.of(context)!
                                                 .noReadReceiptRequestsFound,
                                           )
                                         else
-                                          for (var messageItem in item
-                                              .messageItems.values
+                                          for (var message in item
+                                              .messages.values
                                               .toList()
                                               .reversed)
                                             Padding(
@@ -113,18 +111,16 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                                 right: 25,
                                               ),
                                               child: Message(
-                                                messageItem.message,
+                                                message,
                                                 onSwipe: (swipeDirection) {},
                                                 onReadReceipt: (event) =>
                                                     controller
                                                         .onReadReceiptClick(
                                                             event,
                                                             item,
-                                                            messageItem),
+                                                            message),
                                                 onSelect: (event) {},
                                                 timeline: item.timeline!,
-                                                readReceiptOverviewController:
-                                                    controller,
                                               ),
                                             ),
                                       ],

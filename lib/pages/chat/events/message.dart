@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 import 'package:swipe_to_action/swipe_to_action.dart';
-
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/string_color.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import '../../../config/app_config.dart';
-import '../../read_receipt_overview/read_receipt_overview.dart';
 import 'message_content.dart';
 import 'message_reactions.dart';
 import 'reply_content.dart';
 import 'state_message.dart';
 import 'verification_request_content.dart';
-
-// import 'package:fluffychat/config/edu_settings.dart';
 
 class Message extends StatelessWidget {
   final Event event;
@@ -32,7 +27,6 @@ class Message extends StatelessWidget {
   final bool selected;
   final Timeline timeline;
   final String? searchTerm;
-  final ReadReceiptOverviewController? readReceiptOverviewController;
 
   const Message(this.event,
       {this.nextEvent,
@@ -46,7 +40,6 @@ class Message extends StatelessWidget {
       this.selected = false,
       required this.timeline,
       this.searchTerm,
-      this.readReceiptOverviewController,
       Key? key})
       : super(key: key);
 
@@ -153,9 +146,7 @@ class Message extends StatelessWidget {
                       color: AppConfig.primaryColor,
                     ),
                   )
-                : (readReceiptOverviewController != null &&
-                        readReceiptOverviewController!
-                            .readReceiptInProgress(event))
+                : (event.isReadReceiptGiving)
                     ? const SizedBox(
                         width: 22,
                         height: 22,
