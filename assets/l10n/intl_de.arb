@@ -2512,8 +2512,6 @@
       "senderName": {}
     }
   },
-  "noSearchResult": "Keine Suchergebnisse.",
-  "@noSearchResult": {},
   "startFirstChat": "Starte deinen ersten Chat",
   "@startFirstChat": {},
   "deviceKeys": "Geräteschlüssel:",
@@ -2585,5 +2583,11 @@
   "open": "offen",
   "@open": {},
   "confirmed": "bestätigt",
-  "@confirmed": {}
+  "@confirmed": {},
+  "searchContacts": "Suche nach Personen oder Gruppen",
+  "@searchContacts": {},
+  "contactsInvited": "Kontakte wurden eingeladen",
+  "@contactsInvited": {},
+  "contactsInviteError": "Während der Einladung ist ein Fehler auftreten",
+  "@contactsInviteError": {}
 }

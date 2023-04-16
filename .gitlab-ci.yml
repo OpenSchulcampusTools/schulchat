@@ -39,6 +39,8 @@ dart_code_metrics_analyze:
     - .flutter_deps_and_format
   script: ['flutter pub run dart_code_metrics:metrics lib -r gitlab > code-quality-report.json']
   artifacts:
+    paths:
+      - untranslated-strings.txt
     reports:
       codequality: code-quality-report.json
 

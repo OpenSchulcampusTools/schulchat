@@ -3,191 +3,202 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:matrix/matrix.dart';
 import 'package:vrouter/vrouter.dart';
 
-import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/widgets/layouts/max_width_body.dart';
-import 'package:fluffychat/widgets/matrix.dart';
 import 'addressbook.dart';
 
 class AddressbookView extends StatelessWidget {
-  const AddressbookView({
-    super.key,
-    required this.entry,
-    required this.onTap,
-    required this.toggleEntry,
-    required this.isSelected,
-    required this.selection,
-    required this.displayBelowLastEntry,
-    required this.displayAboveFirstEntry,
-    required this.invite,
-  });
-
-  final TreeEntry<ABookEntry> entry;
-  final VoidCallback onTap;
-  final VoidCallback toggleEntry;
-  final bool Function() isSelected;
-  final Set<ABookEntry> selection;
-  final bool Function(TreeEntry<ABookEntry>) displayBelowLastEntry;
-  final bool Function(TreeEntry<ABookEntry>) displayAboveFirstEntry;
-  final void Function(List<ABookEntry>, String) invite;
+  final AddressbookController controller;
+  const AddressbookView(this.controller, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //IconButton? closeBtn;
-    //Container? closeBtn;
-    final children = <Widget>[];
-    Room? room;
-    String? roomName;
-    final roomId = VRouter.of(context).pathParameters['roomid'];
-    if (roomId != null) {
-      room = Matrix.of(context).client.getRoomById(roomId)!;
-      roomName = room.name.isEmpty ? L10n.of(context)!.group : room.name;
-      print('in room: $roomId with name $roomName');
-      // TODO add description (hover)
-      //closeBtn = Container(
-      //  alignment: Alignment.centerLeft,
-      //  child: IconButton(
-      //  icon: const Icon(Icons.close_outlined),
-      //  onPressed: () => VRouter.of(context).toSegments(['rooms', roomId]),
-      //  alignment: Alignment.centerLeft,
-      //  )
-      //);
-    }
-    late final Widget addressbook = InkWell(
-      onTap: onTap,
-      child: TreeIndentation(
-        entry: entry,
-        guide: const IndentGuide.connectingLines(indent: 48),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
-          child: Row(
-            // reduces the amount horizontally
-            //mainAxisSize: MainAxisSize.min, //min?
-            children: [
-              FolderButton(
-                isOpen: entry.hasChildren ? entry.isExpanded : null,
-                onPressed: entry.hasChildren ? onTap : null,
-              ),
-              Text(
-                entry.node.title,
-                //            style: TextStyle(fontSize: 13 * AppConfig.fontSizeFactor),
-              ),
-              IconButton(
-                icon: isSelected()
-                    ? const Icon(Icons.check_box)
-                    : const Icon(Icons.check_box_outline_blank),
-                onPressed: toggleEntry,
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-    //if (closeBtn != null && displayAboveFirstEntry(entry)) {
-    //  children.add(closeBtn);
-    //  //children.add(Text(L10n.of(context)!.addressbook));
-    //}
-    final selectedEntries = <Widget>[];
+    AppBar? backBtn;
+    final String? roomId = VRouter.of(context).pathParameters['roomid'];
+
     // main entries like Teacher, Student, Admins have a category
     final selectedWithoutCategory = <ABookEntry>[];
-    for (final e in selection) {
+    for (final e in controller.selection) {
       if (!e.category) {
         selectedWithoutCategory.add(e);
       }
     }
-    if (selectedWithoutCategory.isNotEmpty &&
-        roomId != null &&
-        displayAboveFirstEntry(entry)) {
-      // show the invite button only if there are selected entries
-      children.add(Container(
-        padding: const EdgeInsets.all(12.0),
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.green.shade800)),
+
+    // TODO add description (hover)
+    backBtn = AppBar(
+      leading: Container(
         alignment: Alignment.centerLeft,
-        child: TextButton.icon(
-          onPressed: () => invite(selectedWithoutCategory, roomId),
-          label: Text(L10n.of(context)!.inviteFromAddressbook),
-          icon: const Icon(Icons.library_add),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => roomId != null
+              ? VRouter.of(context).toSegments(['rooms', roomId])
+              : Navigator.of(context).pop(),
+          alignment: Alignment.centerLeft,
         ),
-      ));
-      children.add(
-        const Divider(thickness: 3),
-      );
-    }
-    children.add(SizedBox(height: 10));
-    children.add(SizedBox(height: 10));
-    children.add(SizedBox(height: 10));
-    children.add(SizedBox(height: 10));
-    children.add(SizedBox(height: 10));
-    children.add(SizedBox(height: 10));
+      ),
+      actions: (selectedWithoutCategory.isNotEmpty && roomId != null)
+          ? [
+              TextButton.icon(
+                onPressed: () =>
+                    controller.invite(selectedWithoutCategory, roomId),
+                label: Text(L10n.of(context)!.inviteFromAddressbook),
+                icon: const Icon(Icons.library_add),
+              )
+            ]
+          : [],
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+      backgroundColor:
+          Theme.of(context).colorScheme.secondaryContainer.withAlpha(210),
+      title: Text(L10n.of(context)!.addressbook),
+    );
 
-    if (displayBelowLastEntry(entry) && selection.isNotEmpty) {
-      print('adding more entries below');
-      for (final e in selectedWithoutCategory) {
-        selectedEntries.add(
-          Text(
-            '${e.title} (${L10n.of(context)!.addressbookContext}: ${e.info})',
+    final searchBar = Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            controller: controller.searchController,
+            onChanged: (value) {
+              controller.search();
+            },
+            onSubmitted: (value) {
+              controller.search();
+            },
+            autofocus: true,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              label: Text('Suche nach Personen und Gruppen'),
+            ),
           ),
-        );
-      }
-      //children.add(addressbook);
-      children.add(Column(
-        mainAxisSize: MainAxisSize.min, //min?
-        children: [addressbook],
-      ));
-      children.add(const Divider(thickness: 3));
-      children.add(Text(L10n.of(context)!.contactsOverview));
-      //selection.forEach((e) {
-      //  if (!e.category) {
-      //    selectedEntries.add(Text('${e.title} (context: ${e.info})'));
-      //  }
-      //});
-      //children.add(MaxWidthBody(
-      //    child: Column(mainAxisSize: MainAxisSize.min,children: selectedEntries)));
-      children.add(Column(
-          mainAxisSize: MainAxisSize.min, //min?
-          children: selectedEntries));
-    } else {
-      children.add(Column(
-          mainAxisSize: MainAxisSize.min, //min?
-          children: [addressbook]));
-    }
-//    return Column(children: children);
+        ),
+      ],
+    );
+
+    final Widget searchResult = Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: const Text(
+            'Suchergebnisse',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+        controller.searchResults.isNotEmpty
+            ? Column(
+                children: [
+                  for (var e in controller.searchResults)
+                    Row(
+                      children: [
+                        Text(
+                          (e.longName != null && e.longName!.isNotEmpty)
+                              ? '${e.longName} (${e.info})'
+                              : '${e.title} (${e.info})',
+                        ),
+                        IconButton(
+                          icon: controller.isSelected(e)
+                              ? const Icon(Icons.check_box)
+                              : const Icon(Icons.check_box_outline_blank),
+                          onPressed: () => controller.toggleEntry(e),
+                        )
+                      ],
+                    )
+                ],
+              )
+            : Column(
+                children: [Text(L10n.of(context)!.noSearchResult)],
+              ),
+      ],
+    );
+    late final Widget addressbook = SizedBox(
+      child: TreeView<ABookEntry>(
+        shrinkWrap: true,
+        treeController: controller.treeController,
+        nodeBuilder: (BuildContext context, TreeEntry<ABookEntry> entry) {
+          return InkWell(
+            onTap: () => controller.onTap(entry),
+            child: TreeIndentation(
+              entry: entry,
+              guide: const IndentGuide.connectingLines(indent: 48),
+              child: Padding(
+                //padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
+                padding: const EdgeInsets.all(0),
+                child: Container(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .secondaryContainer
+                      .withAlpha(210),
+                  child: Row(
+                    // reduces the amount horizontally
+                    //mainAxisSize: MainAxisSize.min,
+                    children: [
+                      FolderButton(
+                        isOpen: entry.hasChildren ? entry.isExpanded : null,
+                        onPressed: entry.hasChildren
+                            ? () => controller.onTap(entry)
+                            : null,
+                      ),
+                      Text(
+                        entry.node.longName != null &&
+                                entry.node.longName!.isNotEmpty
+                            ? entry.node.longName!
+                            : entry.node.title,
+                      ),
+                      IconButton(
+                        icon: controller.isSelected(entry.node)
+                            ? const Icon(Icons.check_box)
+                            : const Icon(Icons.check_box_outline_blank),
+                        onPressed: () => controller.toggleEntry(entry.node),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+
     return Scaffold(
-        //backgroundColor: color,
-        appBar: AppBar(
-          leading: const BackButton(color: Colors.black),
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-          //backgroundColor: Colors.transparent,
-          backgroundColor:
-              Theme.of(context).colorScheme.secondaryContainer.withAlpha(210),
-          elevation: 0,
-          title: Text(
-            L10n.of(context)!.addressbook,
-          ),
-          actions: const [],
+      appBar: backBtn,
+      extendBodyBehindAppBar: false,
+      body: MaxWidthBody(
+        withScrolling: true,
+        maxWidth: 800,
+        child: Column(
+          children: [
+            searchBar,
+            controller.showSearchResults ? searchResult : addressbook,
+            if (controller.selection.isNotEmpty) ...[
+              const Divider(thickness: 3),
+              Text(L10n.of(context)!.contactsOverview),
+              Column(
+                children: [
+                  for (final e in selectedWithoutCategory) ...[
+                    Row(
+                      children: [
+                        Text(
+                          (e.longName != null && e.longName!.isNotEmpty)
+                              ? '${e.longName} (${e.info})'
+                              : '${e.title} (${e.info})',
+                        ),
+                        IconButton(
+                          icon: controller.isSelected(e)
+                              ? const Icon(Icons.check_box)
+                              : const Icon(Icons.check_box_outline_blank),
+                          onPressed: () => controller.toggleEntry(e),
+                        )
+                      ],
+                    )
+                  ]
+                ],
+              )
+            ] else
+              ...[],
+          ],
         ),
-        extendBodyBehindAppBar: false,
-        body: Container(
-            color:
-                Theme.of(context).colorScheme.secondaryContainer.withAlpha(210),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min, //min?
-              children: children,
-            )));
-
-//      body: MaxWidthBody(
-////        withScrolling: true,
-//        maxWidth: 800,
-//        child: Container(
-//          color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(210),
-//          child: Column(
-//          mainAxisSize: MainAxisSize.min, //min?
-//          children: children,)
-//)));
+      ),
+    );
   }
 }

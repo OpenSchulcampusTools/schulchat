@@ -2567,8 +2567,6 @@
     "@invitedContactsDone": {},
     "inviteFromAddressbook": "Invite these contacts from address book",
     "@inviteFromAddressbook": {},
-    "addressbookContext": "Context",
-    "@addressbookContext": {},
     "contactsOverview": "Overview of selected contacts",
     "@contactsOverview": {},
     "contactsInfoTeacher": "Teacher in",
@@ -2580,5 +2578,11 @@
     "contactsInfoParent": "Parent in",
     "@contactsInfoParent": {},
     "contactsInfoGroup": "Group in",
-    "@contactsInfoGroup": {}
+    "@contactsInfoGroup": {},
+    "searchContacts": "Search people or groups",
+    "@searchContacts": {},
+    "contactsInvited": "Contacts have been invited",
+    "@contactsInvited": {},
+    "contactsInviteError": "Error during invitation",
+    "@contactsInviteError": {}
 }
