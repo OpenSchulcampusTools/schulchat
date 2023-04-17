@@ -57,8 +57,8 @@ roomID=$(curl --retry 3 --silent --fail -XPOST -d "{\"name\":\"room with $INTEGR
 echo "Created room '$roomID'"
 
 # send message in created room
-curl --retry 3 --fail --silent -XPOST -d '{"msgtype":"m.text", "body":"joined room successfully"}' "http://$HOMESERVER/_matrix/client/r0/rooms/$roomID/send/m.room.message?access_token=$usertoken2"
+curl --retry 3 --fail --silent -XPOST -d '{"msgtype":"m.text", "body":"joined room successfully"}' "http://$HOMESERVER/_matrix/client/r0/rooms/$roomID/send/m.room.message?access_token=$usertoken1"
 echo "Sent message"
 
-curl -fS --retry 3 -XPOST -d "{\"user_id\":\"$mxid1\"}" "http://$HOMESERVER/_matrix/client/r0/rooms/$roomID/invite?access_token=$usertoken2"
-echo "Invited $INTEGRATION_USER1"
+curl -fS --retry 3 -XPOST -d "{\"user_id\":\"$mxid2\"}" "http://$HOMESERVER/_matrix/client/r0/rooms/$roomID/invite?access_token=$usertoken1"
+echo "Invited $INTEGRATION_USER2"

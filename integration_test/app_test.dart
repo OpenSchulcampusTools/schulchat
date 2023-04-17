@@ -51,7 +51,8 @@ void main() {
       );
 
       testWidgets(
-        'Login as user 1, leave all chats, logout',
+        'Login as user 1, logout',
+        //'Login as user 1, leave all chats, logout',
         (WidgetTester tester) async {
           app.main();
           await tester.ensureLoggedOut();
@@ -59,14 +60,16 @@ void main() {
             loginUsername: Users.user1.name,
             loginPassword: Users.user1.password,
           );
-          await tester.leaveAllRooms();
+//          await tester.leaveAllRooms();
 //          await tester.removeAllDevices(Users.user1.password);
           await tester.ensureLoggedOut();
         },
+        semanticsEnabled: false,
       );
 
       testWidgets(
-        'Login as user 2, leave all chats, logout',
+        'Login as user 2, logout',
+        //'Login as user 2, leave all chats, logout',
         (WidgetTester tester) async {
           app.main();
           await tester.ensureLoggedOut();
@@ -74,23 +77,26 @@ void main() {
             loginUsername: Users.user2.name,
             loginPassword: Users.user2.password,
           );
-          await tester.leaveAllRooms();
+//          await tester.leaveAllRooms();
 //          await tester.removeAllDevices(Users.user2.password);
           await tester.ensureLoggedOut();
         },
+        semanticsEnabled: false,
       );
 
-      testWidgets('User 1 starts a new chat with user 2',
-          (WidgetTester tester) async {
-        app.main();
-        await tester.ensureLoggedOut();
-        await tester.ensureAppStartedHomescreen(
-          loginUsername: Users.user1.name,
-          loginPassword: Users.user1.password,
-        );
-        await tester.createPrivateRoom(Users.user2.name);
-        await tester.ensureLoggedOut();
-      });
+      //testWidgets('User 1 starts a new chat with user 2',
+      //    (WidgetTester tester) async {
+      //  app.main();
+      //  await tester.ensureLoggedOut();
+      //  await tester.ensureAppStartedHomescreen(
+      //    loginUsername: Users.user1.name,
+      //    loginPassword: Users.user1.password,
+      //  );
+      //  await tester.createRoomWithInvite(Users.user2.name);
+      //  await tester.ensureLoggedOut();
+      //},
+      //  semanticsEnabled: false,
+      //);
 
       testWidgets(
         'User 2 accepts invite',
@@ -136,6 +142,7 @@ void main() {
           await tester.waitFor(find.text(uniqueMessage));
           // TODO click on open Lesebestätigung
         },
+        semanticsEnabled: false,
       );
     },
   );
