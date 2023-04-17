@@ -1,3 +1,4 @@
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -67,7 +68,8 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                           right: 6, bottom: 4),
                                       child: Avatar(
                                         mxContent: room.avatar,
-                                        name: room.getLocalizedDisplayname(),
+                                        name: room.getLocalizedDisplayname(
+                                            MatrixLocals(L10n.of(context)!)),
                                         size: 38,
                                         fontSize: 16,
                                       ),
@@ -85,7 +87,8 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                   title: Wrap(
                                     children: [
                                       Text(
-                                        room.getLocalizedDisplayname(),
+                                        room.getLocalizedDisplayname(
+                                            MatrixLocals(L10n.of(context)!)),
                                         overflow: TextOverflow.clip,
                                       ),
                                     ],
