@@ -573,6 +573,9 @@ class ChatListController extends State<ChatList>
     if (client.prevBatch == null) {
       await client.onSync.stream.first;
 
+      await client.onSyncStatus.stream
+          .firstWhere((e) => e.status == SyncStatus.finished);
+
       // Display first login bootstrap if enabled
       if (client.encryption?.keyManager.enabled == true) {
         if (await client.encryption?.keyManager.isCached() == false ||
