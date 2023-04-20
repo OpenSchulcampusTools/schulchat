@@ -1134,8 +1134,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.17.1"
-      resolved-ref: cb97d65df1249596924b08ac9d67ce85b59e0c4f
+      ref: main
+      resolved-ref: "21d23baa290a71528a0c4d1154b3eed780c8485c"
       url: "git@git.fairkom.net:clients/rlp/client/famedlysdk.git"
     source: git
     version: "0.17.1"
@@ -1143,8 +1143,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "."
-      ref: "upstream-1.1.10"
-      resolved-ref: "200625fead922630f6f9e92805a5756b6b203af7"
+      ref: main
+      resolved-ref: "767ee446c09381e72a9d85c75e72a77e8e01f104"
       url: "git@git.fairkom.net:clients/rlp/client/matrix_api_lite"
     source: git
     version: "1.1.10"
