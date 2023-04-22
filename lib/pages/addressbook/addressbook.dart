@@ -111,16 +111,16 @@ class AddressbookController extends State<AddressbookPage> {
 
   Future<List<ABookEntry>> buildAddressbook() async {
     // temp HACK for showcase in case of integration1, set idm user to m.hannich
-    //final userId =
-    //    (Matrix.of(context).client.userID!.localpart == 'integration1' ||
-    //            Matrix.of(context).client.userID!.localpart == 'm.h')
-    //        ? 'm.hannich'
-    //        : Matrix.of(context).client.userID!.localpart;
-    const url = 'http://localhost:8085/u/m.hannich/addressbook';
-    final abookJson =
-        json.decode(utf8.decode((await http.get(Uri.parse(url))).bodyBytes));
-    //final abookJson = await Matrix.of(context).client.request(RequestType.GET,
-    //    '/../idm/u/BN7xs2BJeXH95gXAx6CII/${userId}/addressbook');
+    final userId =
+        (Matrix.of(context).client.userID!.localpart == 'integration1' ||
+                Matrix.of(context).client.userID!.localpart == 'm.h')
+            ? 'm.hannich'
+            : Matrix.of(context).client.userID!.localpart;
+    //const url = 'http://localhost:8085/u/m.hannich/addressbook';
+    //final abookJson =
+    //    json.decode(utf8.decode((await http.get(Uri.parse(url))).bodyBytes));
+    final abookJson = await Matrix.of(context).client.request(RequestType.GET,
+        '/../idm/u/BN7xs2BJeXH95gXAx6CII/${userId}/addressbook');
     final abookEntries = <ABookEntry>[];
     for (final school in abookJson.keys) {
       // this is a special key in the address book - not a school

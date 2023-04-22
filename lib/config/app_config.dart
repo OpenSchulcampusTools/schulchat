@@ -7,7 +7,7 @@ abstract class AppConfig {
   static String get applicationName => _applicationName;
   static String? _applicationWelcomeMessage;
   static String? get applicationWelcomeMessage => _applicationWelcomeMessage;
-  static String _defaultHomeserver = 'test.schulchat.rlp.de';
+  static String _defaultHomeserver = 'devmh.fairmatrix.net';
   static String get defaultHomeserver => _defaultHomeserver;
   static double bubbleSizeFactor = 1;
   static double fontSizeFactor = 1;
