@@ -7,9 +7,9 @@ import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 import 'package:fluffychat/widgets/matrix.dart';
-import '../chat_search/chat_search.dart';
 import 'addressbook_view.dart';
 
 class AddressbookPage extends StatefulWidget {
@@ -57,8 +57,9 @@ class ABookEntry {
 }
 
 class AddressbookController extends State<AddressbookPage> {
+  final AutoScrollController scrollController = AutoScrollController();
+
   final TextEditingController searchController = TextEditingController();
-  SearchState searchState = SearchState.noResult;
   List<ABookEntry> searchResults = [];
   String _lastSearchTerm = "";
   String _searchTerm = "";
@@ -333,15 +334,10 @@ class AddressbookController extends State<AddressbookPage> {
       searchResults.clear();
 
       setState(() {
-        searchState = SearchState.noResult;
         showSearchResults;
       });
 
       if (_searchTerm.isNotEmpty) {
-        setState(() {
-          searchState = SearchState.searching;
-        });
-
         _recursiveSearchTree(abook);
       }
     }

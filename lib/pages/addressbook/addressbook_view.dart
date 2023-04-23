@@ -81,8 +81,8 @@ class AddressbookView extends StatelessWidget {
     final Widget searchResult = Column(
       children: [
         const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
+          padding: const EdgeInsets.all(8.0),
+          child: const Text(
             'Suchergebnisse',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -118,6 +118,7 @@ class AddressbookView extends StatelessWidget {
     );
     late final Widget addressbook = SizedBox(
       child: TreeView<ABookEntry>(
+        physics: const PageScrollPhysics(),
         shrinkWrap: true,
         treeController: controller.treeController,
         nodeBuilder: (BuildContext context, TreeEntry<ABookEntry> entry) {
