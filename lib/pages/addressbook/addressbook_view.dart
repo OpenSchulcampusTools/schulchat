@@ -80,9 +80,9 @@ class AddressbookView extends StatelessWidget {
 
     final Widget searchResult = Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: const Text(
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
             'Suchergebnisse',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -100,8 +100,11 @@ class AddressbookView extends StatelessWidget {
                         ),
                         IconButton(
                           icon: controller.isSelected(e)
-                              ? const Icon(Icons.check_box)
-                              : const Icon(Icons.check_box_outline_blank),
+                              ? const Icon(
+                                  Icons.check_circle_outline,
+                                  size: 16.0,
+                                )
+                              : const Icon(Icons.circle_outlined, size: 16.0),
                           onPressed: () => controller.toggleEntry(e),
                         )
                       ],
@@ -149,8 +152,8 @@ class AddressbookView extends StatelessWidget {
                       ),
                       IconButton(
                         icon: controller.isSelected(entry.node)
-                            ? const Icon(Icons.check_box)
-                            : const Icon(Icons.check_box_outline_blank),
+                            ? const Icon(Icons.check_circle_outline, size: 16.0)
+                            : const Icon(Icons.circle_outlined, size: 16.0),
                         onPressed: () => controller.toggleEntry(entry.node),
                       )
                     ],
@@ -191,7 +194,8 @@ class AddressbookView extends StatelessWidget {
               const Divider(thickness: 3),
               Text(
                 L10n.of(context)!.contactsOverview,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               Column(
                 children: [
@@ -204,9 +208,7 @@ class AddressbookView extends StatelessWidget {
                               : '${e.title} (${e.info})',
                         ),
                         IconButton(
-                          icon: controller.isSelected(e)
-                              ? const Icon(Icons.check_box)
-                              : const Icon(Icons.check_box_outline_blank),
+                          icon: const Icon(Icons.clear, size: 16.0),
                           onPressed: () => controller.toggleEntry(e),
                         )
                       ],
