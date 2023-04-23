@@ -135,17 +135,8 @@ class AddressbookController extends State<AddressbookPage> {
 
   List<ABookEntry> listOfSchools = [];
   Future<Map<String, dynamic>> fetchAddressbook() async {
-    // temp HACK for showcase in case of integration1, set idm user to m.hannich
-    final userId =
-        (Matrix.of(context).client.userID!.localpart == 'integration1' ||
-                Matrix.of(context).client.userID!.localpart == 'm.h')
-            ? 'm.hannich'
-            : Matrix.of(context).client.userID!.localpart;
-    //const url = 'http://localhost:8085/u/m.hannich/addressbook';
-    //final abookJson =
-    //    json.decode(utf8.decode((await http.get(Uri.parse(url))).bodyBytes));
     final abookJson = await Matrix.of(context).client.request(RequestType.GET,
-        '/../idm/u/BN7xs2BJeXH95gXAx6CII/${userId}/addressbook');
+        '/client/unstable/fairkom.fairmessenger.addressbook/addressbook');
     return abookJson;
   }
 
