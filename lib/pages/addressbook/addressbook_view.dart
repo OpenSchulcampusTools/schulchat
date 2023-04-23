@@ -189,7 +189,10 @@ class AddressbookView extends StatelessWidget {
             controller.showSearchResults ? searchResult : addressbook,
             if (controller.selection.isNotEmpty) ...[
               const Divider(thickness: 3),
-              Text(L10n.of(context)!.contactsOverview),
+              Text(
+                L10n.of(context)!.contactsOverview,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               Column(
                 children: [
                   for (final e in selectedWithoutCategory) ...[
