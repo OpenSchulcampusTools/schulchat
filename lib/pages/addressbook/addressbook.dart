@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:core';
 
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
-import 'package:http/http.dart' as http;
 import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/widgets/matrix.dart';
@@ -135,8 +133,10 @@ class AddressbookController extends State<AddressbookPage> {
 
   List<ABookEntry> listOfSchools = [];
   Future<Map<String, dynamic>> fetchAddressbook() async {
-    final abookJson = await Matrix.of(context).client.request(RequestType.GET,
-        '/client/unstable/fairkom.fairmessenger.addressbook/addressbook');
+    final abookJson = await Matrix.of(context).client.request(
+          RequestType.GET,
+          '/client/unstable/fairkom.fairmessenger.addressbook/addressbook',
+        );
     return abookJson;
   }
 
@@ -150,7 +150,11 @@ class AddressbookController extends State<AddressbookPage> {
       final schoolName = abookJson[school]['name'];
       //final schoolName = await Matrix.of(context).client.request(RequestType.GET, '/../idm/school/${school}');
       final abookSchool = ABookEntry(
-          title: schoolName, children: [], category: true, isSchool: true);
+        title: schoolName,
+        children: [],
+        category: true,
+        isSchool: true,
+      );
       listOfSchools.add(abookSchool);
       final abookTeacher =
           ABookEntry(title: 'Lehrkräfte', children: [], category: true);
@@ -242,7 +246,7 @@ class AddressbookController extends State<AddressbookPage> {
       }
       abookEntries.add(abookSchool);
     }
-    print('list of schools: ${listOfSchools}');
+    Logs().d('List of schools: $listOfSchools');
     return abookEntries;
   }
 
@@ -281,13 +285,13 @@ class AddressbookController extends State<AddressbookPage> {
     if (success.error == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: const Text('Contacts have been invited.'),
+          content: Text('Contacts have been invited.'),
         ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: const Text('Error during invitation'),
+          content: Text('Error during invitation'),
         ),
       );
     }

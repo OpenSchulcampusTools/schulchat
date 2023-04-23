@@ -18,7 +18,7 @@ class AddressbookView extends StatelessWidget {
     final String? roomId = VRouter.of(context).pathParameters['roomid'];
 
     // used for the radio button that selects active schools
-    String? _selectedSchool = '';
+    //String? selectedSchool = '';
 
     // main entries like Teacher, Student, Admins have a category
     final selectedWithoutCategory = <ABookEntry>[];
@@ -175,14 +175,14 @@ class AddressbookView extends StatelessWidget {
             //  RadioListTile(
             //      title: Text('Auswahl begrenzen auf ${s.title}'),
             //      value: s.title,
-            //      groupValue: _selectedSchool,
+            //      groupValue: selectedSchool,
             //      onChanged: (String? value) {
             //        print('setting value in onChanged for $value');
             //        // if active, we are going to deactivate it now
             //        final buttonActive =
-            //            s.title == _selectedSchool ? true : false;
+            //            s.title == selectedSchool ? true : false;
             //        controller.toggleSchool(s, !buttonActive);
-            //        _selectedSchool = value;
+            //        selectedSchool = value;
             //      }),
             //],
             searchBar,
