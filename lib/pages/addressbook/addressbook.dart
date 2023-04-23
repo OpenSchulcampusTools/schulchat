@@ -31,6 +31,7 @@ class ABookEntry {
     this.orgName,
     this.longName,
     this.kind,
+    this.isSchool = false,
   });
 
   final String title;
@@ -53,6 +54,8 @@ class ABookEntry {
   final String? longName;
   // TODO enum of teacher,student,parents,admins,sc-group
   final String? kind;
+  // in case it is an category entry for a school
+  final bool isSchool;
 }
 
 class AddressbookController extends State<AddressbookPage> {
@@ -109,7 +112,17 @@ class AddressbookController extends State<AddressbookPage> {
     });
   }
 
-  Future<List<ABookEntry>> buildAddressbook() async {
+  void toggleSchool(node) {
+    // removes or adds a school from search results and addressbook view
+
+    // check if it is a school
+    if (node.category && node.isSchool) {
+      print('should remove ${node.title} from list');
+    }
+  }
+
+  List<ABookEntry> listOfSchools = [];
+  Future<Map<String, dynamic>> fetchAddressbook() async {
     // temp HACK for showcase in case of integration1, set idm user to m.hannich
     final userId =
         (Matrix.of(context).client.userID!.localpart == 'integration1' ||
@@ -121,15 +134,21 @@ class AddressbookController extends State<AddressbookPage> {
     //    json.decode(utf8.decode((await http.get(Uri.parse(url))).bodyBytes));
     final abookJson = await Matrix.of(context).client.request(RequestType.GET,
         '/../idm/u/BN7xs2BJeXH95gXAx6CII/${userId}/addressbook');
+    return abookJson;
+  }
+
+  Future<List<ABookEntry>> buildAddressbook() async {
     final abookEntries = <ABookEntry>[];
+    final abookJson = await fetchAddressbook();
     for (final school in abookJson.keys) {
       // this is a special key in the address book - not a school
       if (school == 'users') continue;
 
       final schoolName = abookJson[school]['name'];
       //final schoolName = await Matrix.of(context).client.request(RequestType.GET, '/../idm/school/${school}');
-      final abookSchool =
-          ABookEntry(title: schoolName, children: [], category: true);
+      final abookSchool = ABookEntry(
+          title: schoolName, children: [], category: true, isSchool: true);
+      listOfSchools.add(abookSchool);
       final abookTeacher =
           ABookEntry(title: 'Lehrkräfte', children: [], category: true);
       final abookSCGroups = ABookEntry(
@@ -220,6 +239,7 @@ class AddressbookController extends State<AddressbookPage> {
       }
       abookEntries.add(abookSchool);
     }
+    print('list of schools: ${listOfSchools}');
     return abookEntries;
   }
 

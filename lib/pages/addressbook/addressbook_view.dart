@@ -65,7 +65,7 @@ class AddressbookView extends StatelessWidget {
             onSubmitted: (value) {
               controller.search();
             },
-            autofocus: true,
+            autofocus: false,
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.search),
               label: Text('Suche nach Personen und Gruppen'),
@@ -168,6 +168,16 @@ class AddressbookView extends StatelessWidget {
         maxWidth: 800,
         child: Column(
           children: [
+            for (final s in controller.listOfSchools) ...[
+              RadioListTile(
+                  title: Text('Limit the search to'),
+                  value: s.title,
+                  groupValue: "group value",
+                  onChanged: (value) {
+                    print(value);
+                    controller.toggleSchool(s);
+                  }),
+            ],
             searchBar,
             controller.showSearchResults ? searchResult : addressbook,
             if (controller.selection.isNotEmpty) ...[
