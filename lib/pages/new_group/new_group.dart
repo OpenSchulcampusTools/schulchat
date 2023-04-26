@@ -26,13 +26,19 @@ class NewGroupController extends State<NewGroup> {
       context: context,
       future: () async {
         final roomId = await client.createGroupChat(
+          enableEncryption: true,
+          visibility: sdk.Visibility.private,
+          preset: sdk.CreateRoomPreset.privateChat,
+          /* #schulChatSpecific
           visibility:
               publicGroup ? sdk.Visibility.public : sdk.Visibility.private,
-          preset: publicGroup
-              ? sdk.CreateRoomPreset.publicChat
+          preset: publicGroupx
+              ? sdk.CreateRoomPreset.publicChatx
               : sdk.CreateRoomPreset.privateChat,
+           */
           groupName: controller.text.isNotEmpty ? controller.text : null,
         );
+
         return roomId;
       },
     );

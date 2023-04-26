@@ -144,7 +144,7 @@ class UserBottomSheetController extends State<UserBottomSheet> {
       case UserBottomSheetAction.message:
         final roomIdResult = await showFutureLoadingDialog(
           context: context,
-          future: () => widget.user.startDirectChat(),
+          future: () => widget.user.startDirectChat(enableEncryption: true),
         );
         if (roomIdResult.error != null) return;
         VRouter.of(widget.outerContext)

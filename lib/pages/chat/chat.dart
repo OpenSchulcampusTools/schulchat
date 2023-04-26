@@ -161,7 +161,7 @@ class ChatController extends State<Chat> {
             .firstWhere((s) => s.rooms?.leave?.containsKey(room.id) ?? false);
         await room.leave();
         await waitForSync;
-        return await client.startDirectChat(userId);
+        return await client.startDirectChat(userId, enableEncryption: true);
       },
     );
     final roomId = success.result;

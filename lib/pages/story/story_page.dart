@@ -496,8 +496,8 @@ class StoryPageController extends State<StoryPage> {
       case PopupStoryAction.message:
         final roomIdResult = await showFutureLoadingDialog(
           context: context,
-          future: () =>
-              currentEvent!.senderFromMemoryOrFallback.startDirectChat(),
+          future: () => currentEvent!.senderFromMemoryOrFallback
+              .startDirectChat(enableEncryption: true),
         );
         if (roomIdResult.error != null) return;
         VRouter.of(context).toSegments(['rooms', roomIdResult.result!]);

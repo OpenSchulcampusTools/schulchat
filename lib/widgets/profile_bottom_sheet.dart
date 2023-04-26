@@ -22,7 +22,7 @@ class ProfileBottomSheet extends StatelessWidget {
     final client = Matrix.of(context).client;
     final result = await showFutureLoadingDialog<String>(
       context: context,
-      future: () => client.startDirectChat(userId),
+      future: () => client.startDirectChat(userId, enableEncryption: true),
     );
     if (result.error == null) {
       VRouter.of(context).toSegments(['rooms', result.result!]);
