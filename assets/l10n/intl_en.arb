@@ -61,7 +61,7 @@
             "mxid": {}
         }
     },
-    "addGroupDescription": "Add a group description",
+    "addGroupDescription": "Add a room description",
     "@addGroupDescription": {
         "type": "text",
         "placeholders": {}
@@ -363,7 +363,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "changeTheNameOfTheGroup": "Change the name of the group",
+    "changeTheNameOfTheGroup": "Change the name of the room",
     "@changeTheNameOfTheGroup": {
         "type": "text",
         "placeholders": {}
@@ -433,7 +433,7 @@
     },
     "commandHint_markasdm": "Mark as direct message room",
     "@commandHint_markasdm": {},
-    "commandHint_markasgroup": "Mark as group",
+    "commandHint_markasgroup": "Mark as room",
     "@commandHint_markasgroup": {},
     "commandHint_ban": "Ban the given user from this room",
     "@commandHint_ban": {
@@ -445,7 +445,7 @@
         "type": "text",
         "description": "Usage hint for the command /clearcache"
     },
-    "commandHint_create": "Create an empty group chat\nUse --no-encryption to disable encryption",
+    "commandHint_create": "Create an empty toom\nUse --no-encryption to disable encryption",
     "@commandHint_create": {
         "type": "text",
         "description": "Usage hint for the command /create"
@@ -562,7 +562,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "contactHasBeenInvitedToTheGroup": "Contact has been invited to the group",
+    "contactHasBeenInvitedToTheGroup": "Contact has been invited to the room",
     "@contactHasBeenInvitedToTheGroup": {
         "type": "text",
         "placeholders": {}
@@ -623,7 +623,7 @@
             "username": {}
         }
     },
-    "createNewGroup": "Create new group",
+    "createNewGroup": "Create new room",
     "@createNewGroup": {
         "type": "text",
         "placeholders": {}
@@ -840,7 +840,7 @@
             "senderName": {}
         }
     },
-    "enterAGroupName": "Enter a group name",
+    "enterAGroupName": "Enter a room name",
     "@enterAGroupName": {
         "type": "text",
         "placeholders": {}
@@ -916,32 +916,33 @@
         "type": "text",
         "placeholders": {}
     },
-    "group": "Group",
+    "group": "Room",
     "@group": {
         "type": "text",
         "placeholders": {}
     },
-    "groupDescription": "Group description",
+    "groupDescription": "Room description",
+    "groupDescription": "Room description",
     "@groupDescription": {
         "type": "text",
         "placeholders": {}
     },
-    "groupDescriptionHasBeenChanged": "Group description changed",
+    "groupDescriptionHasBeenChanged": "Room description changed",
     "@groupDescriptionHasBeenChanged": {
         "type": "text",
         "placeholders": {}
     },
-    "groupIsPublic": "Group is public",
+    "groupIsPublic": "Room is public",
     "@groupIsPublic": {
         "type": "text",
         "placeholders": {}
     },
-    "groups": "Groups",
+    "groups": "Rooms",
     "@groups": {
         "type": "text",
         "placeholders": {}
     },
-    "groupWith": "Group with {displayname}",
+    "groupWith": "Room with {displayname}",
     "@groupWith": {
         "type": "text",
         "placeholders": {
@@ -1036,7 +1037,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "inviteContactToGroup": "Invite contact to {groupName}",
+    "inviteContactToGroup": "Invite contact to room {groupName}",
     "@inviteContactToGroup": {
         "type": "text",
         "placeholders": {
@@ -1431,7 +1432,7 @@
     "@link": {},
     "serverRequiresEmail": "This server needs to validate your email address for registration.",
     "@serverRequiresEmail": {},
-    "optionalGroupName": "(Optional) Group name",
+    "optionalGroupName": "(Optional) Room name",
     "@optionalGroupName": {
         "type": "text",
         "placeholders": {}
@@ -1819,7 +1820,7 @@
             "senderName": {}
         }
     },
-    "separateChatTypes": "Separate Direct Chats and Groups",
+    "separateChatTypes": "Separate Direct Chats and Rooms",
     "@separateChatTypes": {
         "type": "text",
         "placeholders": {}
@@ -1834,7 +1835,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "setGroupDescription": "Set group description",
+    "setGroupDescription": "Set room description",
     "@setGroupDescription": {
         "type": "text",
         "placeholders": {}
@@ -2202,7 +2203,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "whoIsAllowedToJoinThisGroup": "Who is allowed to join this group",
+    "whoIsAllowedToJoinThisGroup": "Who is allowed to join this room",
     "@whoIsAllowedToJoinThisGroup": {
         "type": "text",
         "placeholders": {}
@@ -2492,7 +2493,7 @@
     "@whyIsThisMessageEncrypted": {},
     "noKeyForThisMessage": "This can happen if the message was sent before you have signed in to your account at this device.\n\nIt is also possible that the sender has blocked your device or something went wrong with the internet connection.\n\nAre you able to read the message on another session? Then you can transfer the message from it! Go to Settings > Devices and make sure that your devices have verified each other. When you open the room the next time and both sessions are in the foreground, the keys will be transmitted automatically.\n\nDo you not want to lose the keys when logging out or switching devices? Make sure that you have enabled the chat backup in the settings.",
     "@noKeyForThisMessage": {},
-    "newGroup": "New group",
+    "newGroup": "New room",
     "@newGroup": {},
     "newSpace": "New space",
     "@newSpace": {},

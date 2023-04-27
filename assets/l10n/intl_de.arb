@@ -35,7 +35,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "addGroupDescription": "Eine Beschreibung für die Gruppe hinzufügen",
+  "addGroupDescription": "Eine Beschreibung für den Raum hinzufügen",
   "@addGroupDescription": {
     "type": "text",
     "placeholders": {}
@@ -299,7 +299,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "changeTheNameOfTheGroup": "Gruppenname ändern",
+  "changeTheNameOfTheGroup": "Raumname ändern",
   "@changeTheNameOfTheGroup": {
     "type": "text",
     "placeholders": {}
@@ -334,7 +334,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "chatDetails": "Gruppeninfo",
+  "chatDetails": "Rauminfo",
   "@chatDetails": {
     "type": "text",
     "placeholders": {}
@@ -468,7 +468,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "contactHasBeenInvitedToTheGroup": "Kontakt wurde in die Gruppe eingeladen",
+  "contactHasBeenInvitedToTheGroup": "Kontakt wurde in den Raum eingeladen",
   "@contactHasBeenInvitedToTheGroup": {
     "type": "text",
     "placeholders": {}
@@ -529,7 +529,7 @@
       "username": {}
     }
   },
-  "createNewGroup": "Neue Gruppe",
+  "createNewGroup": "Neuer Raum",
   "@createNewGroup": {
     "type": "text",
     "placeholders": {}
@@ -746,7 +746,7 @@
       "senderName": {}
     }
   },
-  "enterAGroupName": "Gib einen Gruppennamen ein",
+  "enterAGroupName": "Gib einen Raumnamen ein",
   "@enterAGroupName": {
     "type": "text",
     "placeholders": {}
@@ -820,32 +820,32 @@
     "type": "text",
     "placeholders": {}
   },
-  "group": "Gruppe",
+  "group": "Raum",
   "@group": {
     "type": "text",
     "placeholders": {}
   },
-  "groupDescription": "Gruppenbeschreibung",
+  "groupDescription": "Raumbeschreibung",
   "@groupDescription": {
     "type": "text",
     "placeholders": {}
   },
-  "groupDescriptionHasBeenChanged": "Gruppenbeschreibung wurde geändert",
+  "groupDescriptionHasBeenChanged": "Raumbeschreibung wurde geändert",
   "@groupDescriptionHasBeenChanged": {
     "type": "text",
     "placeholders": {}
   },
-  "groupIsPublic": "Öffentliche Gruppe",
+  "groupIsPublic": "Öffentlicher Raum",
   "@groupIsPublic": {
     "type": "text",
     "placeholders": {}
   },
-  "groups": "Gruppen",
+  "groups": "Räume",
   "@groups": {
     "type": "text",
     "placeholders": {}
   },
-  "groupWith": "Gruppe mit {displayname}",
+  "groupWith": "Raum mit {displayname}",
   "@groupWith": {
     "type": "text",
     "placeholders": {
@@ -940,7 +940,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "inviteContactToGroup": "Kontakt in die Gruppe {groupName} einladen",
+  "inviteContactToGroup": "Kontakt in den Raum {groupName} einladen",
   "@inviteContactToGroup": {
     "type": "text",
     "placeholders": {
@@ -1286,7 +1286,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "optionalGroupName": "(Optional) Gruppenname",
+  "optionalGroupName": "(Optional) Raumname",
   "@optionalGroupName": {
     "type": "text",
     "placeholders": {}
@@ -1678,7 +1678,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "setGroupDescription": "Gruppenbeschreibung festlegen",
+  "setGroupDescription": "Raumbeschreibung festlegen",
   "@setGroupDescription": {
     "type": "text",
     "placeholders": {}
@@ -2038,7 +2038,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "whoIsAllowedToJoinThisGroup": "Wer darf der Gruppe beitreten",
+  "whoIsAllowedToJoinThisGroup": "Wer darf dem Raum beitreten",
   "@whoIsAllowedToJoinThisGroup": {
     "type": "text",
     "placeholders": {}
@@ -2195,7 +2195,7 @@
     "type": "text",
     "description": "Usage hint for the command /clearcache"
   },
-  "commandHint_create": "Erstelle ein leeren Gruppenchat\nBenutze --no-encryption um die Verschlüsselung auszuschalten",
+  "commandHint_create": "Erstelle ein leeren Raum\nBenutze --no-encryption um die Verschlüsselung auszuschalten",
   "@commandHint_create": {
     "type": "text",
     "description": "Usage hint for the command /create"
@@ -2316,7 +2316,7 @@
   "@errorAddingWidget": {},
   "previousAccount": "Vorheriges Konto",
   "@previousAccount": {},
-  "separateChatTypes": "Separate Direktchats und Gruppen",
+  "separateChatTypes": "Separate Direktchats und Räume",
   "@separateChatTypes": {
     "type": "text",
     "placeholders": {}
@@ -2449,7 +2449,7 @@
   },
   "commandHint_markasdm": "Als Direktnachrichtenraum markieren",
   "@commandHint_markasdm": {},
-  "commandHint_markasgroup": "Als Gruppe markieren",
+  "commandHint_markasgroup": "Als Raum markieren",
   "@commandHint_markasgroup": {},
   "hideUnimportantStateEvents": "Blende unwichtige Zustandsereignisse aus",
   "@hideUnimportantStateEvents": {},
@@ -2475,7 +2475,7 @@
   "@otherCallingPermissions": {},
   "whyIsThisMessageEncrypted": "Warum ist diese Nachricht nicht lesbar?",
   "@whyIsThisMessageEncrypted": {},
-  "newGroup": "Neue Gruppe",
+  "newGroup": "Neuer Raum",
   "@newGroup": {},
   "newSpace": "Neuer Raum",
   "@newSpace": {},
