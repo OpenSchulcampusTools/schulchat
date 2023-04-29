@@ -5,7 +5,6 @@ import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:vrouter/vrouter.dart';
 
-import 'package:fluffychat/widgets/layouts/max_width_body.dart';
 import 'addressbook.dart';
 
 class AddressbookView extends StatelessWidget {
@@ -14,7 +13,7 @@ class AddressbookView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppBar? backBtn;
+    SliverAppBar? backBtn;
     final String? roomId = VRouter.of(context).pathParameters['roomid'];
 
     // used for the radio button that selects active schools
@@ -29,7 +28,8 @@ class AddressbookView extends StatelessWidget {
     }
 
     // TODO add description (hover)
-    backBtn = AppBar(
+    backBtn = SliverAppBar(
+      pinned: true,
       leading: Container(
         alignment: Alignment.centerLeft,
         child: IconButton(
@@ -56,8 +56,8 @@ class AddressbookView extends StatelessWidget {
       title: Text(L10n.of(context)!.addressbook),
     );
 
-    final searchBar = Column(
-      children: [
+    final searchBar = SliverList(
+      delegate: SliverChildListDelegate([
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
@@ -75,106 +75,117 @@ class AddressbookView extends StatelessWidget {
             ),
           ),
         ),
-      ],
+      ]),
     );
 
-    final Widget searchResult = Column(
-      children: [
-        const Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: const Text(
-            'Suchergebnisse',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
-        controller.searchResults.isNotEmpty
-            ? Column(
-                children: [
-                  for (var e in controller.searchResults)
-                    Row(
-                      children: [
-                        Text(
-                          (e.longName != null && e.longName!.isNotEmpty)
-                              ? '${e.longName} (${e.info})'
-                              : '${e.title} (${e.info})',
-                        ),
-                        IconButton(
-                          icon: controller.isSelected(e)
-                              ? const Icon(
-                                  Icons.check_circle_outline,
-                                  size: 16.0,
-                                )
-                              : const Icon(Icons.circle_outlined, size: 16.0),
-                          onPressed: () => controller.toggleEntry(e),
-                        )
-                      ],
-                    )
-                ],
-              )
-            : Column(
-                children: [Text(L10n.of(context)!.noSearchResult)],
-              ),
-      ],
-    );
-    late final Widget addressbook = SizedBox(
-      child: TreeView<ABookEntry>(
-        physics: const PageScrollPhysics(),
-        shrinkWrap: true,
-        treeController: controller.treeController,
-        nodeBuilder: (BuildContext context, TreeEntry<ABookEntry> entry) {
-          return InkWell(
-            onTap: () => controller.onTap(entry),
-            child: TreeIndentation(
-              entry: entry,
-              guide: const IndentGuide.connectingLines(indent: 48),
-              child: Padding(
-                //padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
-                padding: const EdgeInsets.all(0),
-                child: Container(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .secondaryContainer
-                      .withAlpha(210),
-                  child: Row(
-                    // reduces the amount horizontally
-                    //mainAxisSize: MainAxisSize.min,
-                    children: [
-                      FolderButton(
-                        isOpen: entry.hasChildren ? entry.isExpanded : null,
-                        onPressed: entry.hasChildren
-                            ? () => controller.onTap(entry)
-                            : null,
-                      ),
-                      Text(
-                        entry.node.longName != null &&
-                                entry.node.longName!.isNotEmpty
-                            ? entry.node.longName!
-                            : entry.node.title,
-                      ),
-                      IconButton(
-                        icon: controller.isSelected(entry.node)
-                            ? const Icon(Icons.check_circle_outline, size: 16.0)
-                            : const Icon(Icons.circle_outlined, size: 16.0),
-                        onPressed: () => controller.toggleEntry(entry.node),
-                      )
-                    ],
-                  ),
+    final List<Widget> searchResultArea = [];
+    searchResultArea.add(
+      SliverToBoxAdapter(
+        child: Row(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Suchergebnisse',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-          );
-        },
+          ],
+        ),
       ),
+    );
+    if (controller.searchResults.isNotEmpty) {
+      for (final e in controller.searchResults) {
+        searchResultArea.add(
+          SliverToBoxAdapter(
+            child: Row(
+              children: [
+                Text(
+                  (e.longName != null && e.longName!.isNotEmpty)
+                      ? '${e.longName} (${e.info})'
+                      : '${e.title} (${e.info})',
+                ),
+                IconButton(
+                  icon: controller.isSelected(e)
+                      ? const Icon(
+                          Icons.check_circle_outline,
+                          size: 16.0,
+                        )
+                      : const Icon(Icons.circle_outlined, size: 16.0),
+                  onPressed: () => controller.toggleEntry(e),
+                )
+              ],
+            ),
+          ),
+        );
+      }
+    } else {
+      searchResultArea.add(
+        SliverToBoxAdapter(
+          child: Row(
+            children: [
+              Text(L10n.of(context)!.noSearchResult),
+            ],
+          ),
+        ),
+      );
+    }
+
+    late final Widget addressbook = SliverTree<ABookEntry>(
+      controller: controller.treeController,
+      nodeBuilder: (BuildContext context, TreeEntry<ABookEntry> entry) {
+        return InkWell(
+          onTap: () => controller.onTap(entry),
+          child: TreeIndentation(
+            entry: entry,
+            guide: const IndentGuide.connectingLines(indent: 48),
+            child: Padding(
+              //padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
+              padding: const EdgeInsets.all(0),
+              child: Container(
+                color: Theme.of(context)
+                    .colorScheme
+                    .secondaryContainer
+                    .withAlpha(210),
+                child: Row(
+                  // reduces the amount horizontally
+                  //mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FolderButton(
+                      isOpen: entry.hasChildren ? entry.isExpanded : null,
+                      onPressed: entry.hasChildren
+                          ? () => controller.onTap(entry)
+                          : null,
+                    ),
+                    Text(
+                      entry.node.longName != null &&
+                              entry.node.longName!.isNotEmpty
+                          ? entry.node.longName!
+                          : entry.node.title,
+                    ),
+                    IconButton(
+                      icon: controller.isSelected(entry.node)
+                          ? const Icon(Icons.check_circle_outline, size: 16.0)
+                          : const Icon(Icons.circle_outlined, size: 16.0),
+                      onPressed: () => controller.toggleEntry(entry.node),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
 
     return Scaffold(
-      appBar: backBtn,
-      extendBodyBehindAppBar: false,
-      body: MaxWidthBody(
-        withScrolling: true,
-        maxWidth: 800,
-        child: Column(
-          children: [
+      body: SizedBox(
+        child: CustomScrollView(
+          slivers: <Widget>[
+            backBtn,
             //for (final s in controller.listOfSchools) ...[
             //  RadioListTile(
             //      title: Text('Auswahl begrenzen auf ${s.title}'),
@@ -190,33 +201,46 @@ class AddressbookView extends StatelessWidget {
             //      }),
             //],
             searchBar,
-            controller.showSearchResults ? searchResult : addressbook,
+            if (controller.showSearchResults)
+              ...searchResultArea
+            else
+              addressbook,
+
             if (controller.selection.isNotEmpty) ...[
-              const Divider(thickness: 3),
-              Text(
-                L10n.of(context)!.contactsOverview,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              const SliverToBoxAdapter(child: Divider(thickness: 3)),
+              SliverToBoxAdapter(
+                child: Text(
+                  L10n.of(context)!.contactsOverview,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              Column(
-                children: [
-                  for (final e in selectedWithoutCategory) ...[
-                    Row(
+              for (final e in selectedWithoutCategory) ...[
+                SliverToBoxAdapter(
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Row(
                       children: [
                         Text(
                           (e.longName != null && e.longName!.isNotEmpty)
                               ? '${e.longName} (${e.info})'
                               : '${e.title} (${e.info})',
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.clear, size: 16.0),
-                          onPressed: () => controller.toggleEntry(e),
+                        SizedBox(
+                          height: 13.0,
+                          width: 13.0,
+                          child: IconButton(
+                            icon: const Icon(Icons.clear, size: 13.0),
+                            onPressed: () => controller.toggleEntry(e),
+                          ),
                         )
                       ],
-                    )
-                  ]
-                ],
-              )
+                    ),
+                  ),
+                )
+              ]
             ] else
               ...[],
           ],
