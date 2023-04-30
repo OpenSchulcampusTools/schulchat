@@ -219,26 +219,22 @@ class AddressbookView extends StatelessWidget {
               ),
               for (final e in selectedWithoutCategory) ...[
                 SliverToBoxAdapter(
-                  child: Container(
-                    alignment: Alignment.center,
                     child: Row(
+                      //TODO does not work here?
+                      //crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           (e.longName != null && e.longName!.isNotEmpty)
                               ? '${e.longName} (${e.info})'
                               : '${e.title} (${e.info})',
                         ),
-                        SizedBox(
-                          height: 13.0,
-                          width: 13.0,
-                          child: IconButton(
-                            icon: const Icon(Icons.clear, size: 13.0),
+                         IconButton(
+                            icon: const Icon(Icons.clear, size: 16.0),
                             onPressed: () => controller.toggleEntry(e),
+                            //constraints: BoxConstraints.expand(width: 16.0, height: 16.0),
                           ),
-                        )
                       ],
                     ),
-                  ),
                 )
               ]
             ] else
