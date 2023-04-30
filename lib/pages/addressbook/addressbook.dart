@@ -30,6 +30,7 @@ class ABookEntry {
     this.longName,
     this.kind,
     this.isSchool = false,
+    this.active = false,
   });
 
   final String title;
@@ -54,6 +55,8 @@ class ABookEntry {
   final String? kind;
   // in case it is an category entry for a school
   final bool isSchool;
+  // if IDM user has already signed up in synapse at least once
+  final bool active;
 }
 
 class AddressbookController extends State<AddressbookPage> {
@@ -90,11 +93,15 @@ class AddressbookController extends State<AddressbookPage> {
   // [state] true, recursively add nodes to selection
   // [state] false, recursively remove nodes from selection
   void toggleRecursive(node, [state = true]) {
-    (state == true) ? selection.add(node) : selection.remove(node);
-    if (node.children.isNotEmpty) {
-      node.children.forEach((ABookEntry c) {
-        toggleRecursive(c, state);
-      });
+    print(
+        'called recursive toggle for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}');
+    if (node.active || node.category || node.kind == 'group') {
+      (state == true) ? selection.add(node) : selection.remove(node);
+      if (node.children.isNotEmpty) {
+        node.children.forEach((ABookEntry c) {
+          toggleRecursive(c, state);
+        });
+      }
     }
   }
 
@@ -132,7 +139,7 @@ class AddressbookController extends State<AddressbookPage> {
     }
   }*/
 
-  List<ABookEntry> listOfSchools = [];
+  List<String> listOfSchools = [];
   Future<Map<String, dynamic>> fetchAddressbook() async {
     final abookJson = await Matrix.of(context).client.request(
           RequestType.GET,
@@ -145,7 +152,7 @@ class AddressbookController extends State<AddressbookPage> {
     final abookEntries = <ABookEntry>[];
     final abookJson = await fetchAddressbook();
     for (final school in abookJson.keys) {
-      // this is a special key in the address book - not a school
+      // not a school, but contains a list of all users returned with the address book
       if (school == 'users') continue;
 
       final schoolName = abookJson[school]['name'];
@@ -156,7 +163,7 @@ class AddressbookController extends State<AddressbookPage> {
         category: true,
         isSchool: true,
       );
-      listOfSchools.add(abookSchool);
+      listOfSchools.add(abookSchool.title);
       final abookTeacher =
           ABookEntry(title: 'Lehrkräfte', children: [], category: true);
       final abookSCGroups = ABookEntry(
@@ -179,8 +186,9 @@ class AddressbookController extends State<AddressbookPage> {
               title: teacher,
               info: '${L10n.of(context)!.contactsInfoTeacher} $schoolName',
               orgName: schoolName,
-              longName: abookJson['users'][teacher],
+              longName: abookJson['users'][teacher].first,
               kind: 'teacher', //TODO
+              active: abookJson['users'][teacher].last == 'active',
             ),
           );
         });
@@ -209,8 +217,9 @@ class AddressbookController extends State<AddressbookPage> {
               title: student,
               info: '${L10n.of(context)!.contactsInfoStudent} $schoolName',
               orgName: schoolName,
-              longName: abookJson['users'][student],
+              longName: abookJson['users'][student].first,
               kind: 'student', //TODO
+              active: abookJson['users'][student].last == 'active',
             ),
           );
         });
@@ -224,8 +233,9 @@ class AddressbookController extends State<AddressbookPage> {
               title: parent,
               info: '${L10n.of(context)!.contactsInfoParent} $schoolName',
               orgName: schoolName,
-              longName: abookJson['users'][parent],
+              longName: abookJson['users'][parent].first,
               kind: 'parent', //TODO
+              active: abookJson['users'][parent].last == 'active',
             ),
           );
         });
@@ -239,8 +249,9 @@ class AddressbookController extends State<AddressbookPage> {
               title: admin,
               info: '${L10n.of(context)!.contactsInfoAdmin} $schoolName',
               orgName: schoolName,
-              longName: abookJson['users'][admin],
+              longName: abookJson['users'][admin].first,
               kind: 'admin', //TODO
+              active: abookJson['users'][admin].last == 'active',
             ),
           );
         });

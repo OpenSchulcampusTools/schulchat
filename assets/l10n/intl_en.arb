@@ -2584,5 +2584,7 @@
     "contactsInvited": "Contacts have been invited",
     "@contactsInvited": {},
     "contactsInviteError": "Error during invitation",
-    "@contactsInviteError": {}
+    "@contactsInviteError": {},
+    "userNotInMessenger": "Not in messenger yet",
+    "@userNotInMessenger": {}
 }

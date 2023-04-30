@@ -107,16 +107,23 @@ class AddressbookView extends StatelessWidget {
                   (e.longName != null && e.longName!.isNotEmpty)
                       ? '${e.longName} (${e.info})'
                       : '${e.title} (${e.info})',
+                  style: TextStyle(
+                    decoration: (e.active || e.kind == 'group')
+                        ? TextDecoration.none
+                        : TextDecoration.lineThrough,
+                  ),
                 ),
-                IconButton(
-                  icon: controller.isSelected(e)
-                      ? const Icon(
-                          Icons.check_circle_outline,
-                          size: 16.0,
-                        )
-                      : const Icon(Icons.circle_outlined, size: 16.0),
-                  onPressed: () => controller.toggleEntry(e),
-                )
+                if (e.active || e.kind == 'group')
+                  IconButton(
+                    icon: controller.isSelected(e)
+                        ? const Icon(
+                            Icons.check_circle_outline,
+                            size: 16.0,
+                          )
+                        : const Icon(Icons.circle_outlined, size: 16.0),
+                    onPressed: () => controller.toggleEntry(e),
+                  )
+                //: Text(' (${L10n.of(context)!.userNotInMessenger})')
               ],
             ),
           ),
@@ -165,13 +172,24 @@ class AddressbookView extends StatelessWidget {
                               entry.node.longName!.isNotEmpty
                           ? entry.node.longName!
                           : entry.node.title,
+                      style: TextStyle(
+                        decoration: (entry.node.active ||
+                                entry.node.category ||
+                                entry.node.kind == 'group')
+                            ? TextDecoration.none
+                            : TextDecoration.lineThrough,
+                      ),
                     ),
-                    IconButton(
-                      icon: controller.isSelected(entry.node)
-                          ? const Icon(Icons.check_circle_outline, size: 16.0)
-                          : const Icon(Icons.circle_outlined, size: 16.0),
-                      onPressed: () => controller.toggleEntry(entry.node),
-                    )
+                    if (entry.node.active ||
+                        entry.node.category ||
+                        entry.node.kind == 'group')
+                      IconButton(
+                        icon: controller.isSelected(entry.node)
+                            ? const Icon(Icons.check_circle_outline, size: 16.0)
+                            : const Icon(Icons.circle_outlined, size: 16.0),
+                        onPressed: () => controller.toggleEntry(entry.node),
+                      )
+                    //: Text(' (${L10n.of(context)!.userNotInMessenger})')
                   ],
                 ),
               ),
@@ -219,22 +237,22 @@ class AddressbookView extends StatelessWidget {
               ),
               for (final e in selectedWithoutCategory) ...[
                 SliverToBoxAdapter(
-                    child: Row(
-                      //TODO does not work here?
-                      //crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          (e.longName != null && e.longName!.isNotEmpty)
-                              ? '${e.longName} (${e.info})'
-                              : '${e.title} (${e.info})',
-                        ),
-                         IconButton(
-                            icon: const Icon(Icons.clear, size: 16.0),
-                            onPressed: () => controller.toggleEntry(e),
-                            //constraints: BoxConstraints.expand(width: 16.0, height: 16.0),
-                          ),
-                      ],
-                    ),
+                  child: Row(
+                    //TODO does not work here?
+                    //crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        (e.longName != null && e.longName!.isNotEmpty)
+                            ? '${e.longName} (${e.info})'
+                            : '${e.title} (${e.info})',
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.clear, size: 16.0),
+                        onPressed: () => controller.toggleEntry(e),
+                        //constraints: BoxConstraints.expand(width: 16.0, height: 16.0),
+                      ),
+                    ],
+                  ),
                 )
               ]
             ] else
