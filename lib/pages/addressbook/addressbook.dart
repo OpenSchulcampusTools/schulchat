@@ -31,6 +31,8 @@ class ABookEntry {
     this.kind,
     this.isSchool = false,
     this.active = false,
+    this.scgroupUsersActive = const <String>[],
+    this.scgroupUsersInactive = const <String>[],
   });
 
   final String title;
@@ -57,6 +59,10 @@ class ABookEntry {
   final bool isSchool;
   // if IDM user has already signed up in synapse at least once
   final bool active;
+  // active users in this group
+  final List<String>? scgroupUsersActive;
+  // inactive users in this group
+  final List<String>? scgroupUsersInactive;
 }
 
 class AddressbookController extends State<AddressbookPage> {
@@ -93,8 +99,9 @@ class AddressbookController extends State<AddressbookPage> {
   // [state] true, recursively add nodes to selection
   // [state] false, recursively remove nodes from selection
   void toggleRecursive(node, [state = true]) {
-    print(
-        'called recursive toggle for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}');
+    Logs().d(
+      'called recursive toggle for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}',
+    );
     if (node.active || node.category || node.kind == 'group') {
       (state == true) ? selection.add(node) : selection.remove(node);
       if (node.children.isNotEmpty) {
@@ -196,7 +203,18 @@ class AddressbookController extends State<AddressbookPage> {
       if (abookJson[school]['scgroups'] != null &&
           abookJson[school]['scgroups'].isNotEmpty) {
         abookSchool.children.add(abookSCGroups);
-        abookJson[school]['scgroups'].forEach((id, name) {
+        abookJson[school]['scgroups'].forEach((id, groupData) {
+          final name = groupData.first;
+          final users = groupData.last;
+          final List<String> activeUsers = [];
+          final List<String> inactiveUsers = [];
+          users.forEach((uid) {
+            if (abookJson['users'][uid].last == 'active') {
+              activeUsers.add(uid);
+            } else {
+              inactiveUsers.add(uid);
+            }
+          });
           abookSCGroups.children.add(
             ABookEntry(
               title: name,
@@ -204,6 +222,8 @@ class AddressbookController extends State<AddressbookPage> {
               info: '${L10n.of(context)!.contactsInfoGroup} $schoolName',
               orgName: schoolName,
               kind: 'group', //TODO
+              scgroupUsersActive: activeUsers,
+              scgroupUsersInactive: inactiveUsers,
             ),
           );
         });

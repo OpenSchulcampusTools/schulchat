@@ -106,7 +106,9 @@ class AddressbookView extends StatelessWidget {
                 Text(
                   (e.longName != null && e.longName!.isNotEmpty)
                       ? '${e.longName} (${e.info})'
-                      : '${e.title} (${e.info})',
+                      : (e.kind == 'group')
+                          ? '${e.title} (${e.info}) (${e.scgroupUsersActive!.length} of ${e.scgroupUsersInactive!.length} users active)'
+                          : '${e.title} (${e.info})',
                   style: TextStyle(
                     decoration: (e.active || e.kind == 'group')
                         ? TextDecoration.none
@@ -171,7 +173,9 @@ class AddressbookView extends StatelessWidget {
                       entry.node.longName != null &&
                               entry.node.longName!.isNotEmpty
                           ? entry.node.longName!
-                          : entry.node.title,
+                          : (entry.node.kind == 'group')
+                              ? '${entry.node.title} (${entry.node.scgroupUsersActive!.length} of ${entry.node.scgroupUsersInactive!.length} users active)'
+                              : entry.node.title,
                       style: TextStyle(
                         decoration: (entry.node.active ||
                                 entry.node.category ||
