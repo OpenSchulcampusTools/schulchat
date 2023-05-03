@@ -26,7 +26,7 @@ class ABookEntry {
     this.id,
     this.category = false,
     this.info,
-    this.orgName,
+    required this.orgName,
     this.longName,
     this.kind,
     this.isSchool = false,
@@ -49,8 +49,8 @@ class ABookEntry {
   final bool category;
   // additional info (like category of the node, e.g. Teacher in school X)
   final String? info;
-  // all entries (except meta entries like Teachers, Students, etc) have a associated school
-  final String? orgName;
+  // all entries have an associated school
+  final String orgName;
   // all entries except meta entries and sc groups
   final String? longName;
   // TODO enum of teacher,student,parents,admins,sc-group
@@ -100,7 +100,7 @@ class AddressbookController extends State<AddressbookPage> {
   // [state] false, recursively remove nodes from selection
   void toggleRecursive(node, [state = true]) {
     Logs().d(
-      'called recursive toggle for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}',
+      'called recursive toggle for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}, school: ${node.orgName}',
     );
     if (node.active || node.category || node.kind == 'group') {
       (state == true) ? selection.add(node) : selection.remove(node);
@@ -123,6 +123,25 @@ class AddressbookController extends State<AddressbookPage> {
     setState(() {
       treeController.rebuild();
     });
+  }
+
+  bool invitesFromMultipleSchools() {
+    bool multipleSchools = false;
+    final String firstSelectedSchool;
+
+    if (selection.isEmpty) {
+      return false;
+    } else {
+      firstSelectedSchool = selection.first.orgName;
+    }
+
+    for (final n in selection) {
+      if (n.orgName != firstSelectedSchool) {
+        multipleSchools = true;
+        break;
+      }
+    }
+    return multipleSchools;
   }
 
   /*
@@ -169,21 +188,39 @@ class AddressbookController extends State<AddressbookPage> {
         children: [],
         category: true,
         isSchool: true,
+        orgName: school,
       );
       listOfSchools.add(abookSchool.title);
-      final abookTeacher =
-          ABookEntry(title: 'Lehrkräfte', children: [], category: true);
+      final abookTeacher = ABookEntry(
+        title: 'Lehrkräfte',
+        children: [],
+        category: true,
+        orgName: school,
+      );
       final abookSCGroups = ABookEntry(
         title: 'Schulcampus-Gruppen',
         children: [],
         category: true,
+        orgName: school,
       );
-      final abookStudents =
-          ABookEntry(title: 'Schüler:innen', children: [], category: true);
-      final abookParents =
-          ABookEntry(title: 'Sorgeberechtigte', children: [], category: true);
-      final abookAdmins =
-          ABookEntry(title: 'Admins', children: [], category: true);
+      final abookStudents = ABookEntry(
+        title: 'Schüler:innen',
+        children: [],
+        category: true,
+        orgName: school,
+      );
+      final abookParents = ABookEntry(
+        title: 'Sorgeberechtigte',
+        children: [],
+        category: true,
+        orgName: school,
+      );
+      final abookAdmins = ABookEntry(
+        title: 'Admins',
+        children: [],
+        category: true,
+        orgName: school,
+      );
       if (abookJson[school]['teachers'] != null &&
           abookJson[school]['teachers'].isNotEmpty) {
         abookSchool.children.add(abookTeacher);
@@ -192,7 +229,7 @@ class AddressbookController extends State<AddressbookPage> {
             ABookEntry(
               title: teacher,
               info: '${L10n.of(context)!.contactsInfoTeacher} $schoolName',
-              orgName: schoolName,
+              orgName: school,
               longName: abookJson['users'][teacher].first,
               kind: 'teacher', //TODO
               active: abookJson['users'][teacher].last == 'active',
@@ -220,7 +257,7 @@ class AddressbookController extends State<AddressbookPage> {
               title: name,
               id: id,
               info: '${L10n.of(context)!.contactsInfoGroup} $schoolName',
-              orgName: schoolName,
+              orgName: school,
               kind: 'group', //TODO
               scgroupUsersActive: activeUsers,
               scgroupUsersInactive: inactiveUsers,
@@ -236,7 +273,7 @@ class AddressbookController extends State<AddressbookPage> {
             ABookEntry(
               title: student,
               info: '${L10n.of(context)!.contactsInfoStudent} $schoolName',
-              orgName: schoolName,
+              orgName: school,
               longName: abookJson['users'][student].first,
               kind: 'student', //TODO
               active: abookJson['users'][student].last == 'active',
@@ -252,7 +289,7 @@ class AddressbookController extends State<AddressbookPage> {
             ABookEntry(
               title: parent,
               info: '${L10n.of(context)!.contactsInfoParent} $schoolName',
-              orgName: schoolName,
+              orgName: school,
               longName: abookJson['users'][parent].first,
               kind: 'parent', //TODO
               active: abookJson['users'][parent].last == 'active',
@@ -268,7 +305,7 @@ class AddressbookController extends State<AddressbookPage> {
             ABookEntry(
               title: admin,
               info: '${L10n.of(context)!.contactsInfoAdmin} $schoolName',
-              orgName: schoolName,
+              orgName: school,
               longName: abookJson['users'][admin].first,
               kind: 'admin', //TODO
               active: abookJson['users'][admin].last == 'active',

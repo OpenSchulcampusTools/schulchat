@@ -40,7 +40,9 @@ class AddressbookView extends StatelessWidget {
           alignment: Alignment.centerLeft,
         ),
       ),
-      actions: (selectedWithoutCategory.isNotEmpty && roomId != null)
+      actions: (selectedWithoutCategory.isNotEmpty &&
+              roomId != null &&
+              !controller.invitesFromMultipleSchools())
           ? [
               TextButton.icon(
                 onPressed: () =>
@@ -49,7 +51,14 @@ class AddressbookView extends StatelessWidget {
                 icon: const Icon(Icons.library_add),
               )
             ]
-          : [],
+          : (selectedWithoutCategory.isNotEmpty && roomId != null)
+              ? [
+                  const Text(
+                    'Fehler: Einträge aus mehreren Schulen wurden ausgewählt.',
+                    style: TextStyle(color: Colors.red),
+                  )
+                ]
+              : [],
       systemOverlayStyle: SystemUiOverlayStyle.light,
       backgroundColor:
           Theme.of(context).colorScheme.secondaryContainer.withAlpha(210),
