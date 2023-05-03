@@ -93,14 +93,14 @@ class AddressbookController extends State<AddressbookPage> {
   }
 
   // holds all selected nodes
-  // if a node has children, all childs are implicitly selected
+  // if a node has children, all childs are explicitly selected
   final Set<ABookEntry> selectedNodes = {};
 
   // [state] true, recursively add nodes to selection
   // [state] false, recursively remove nodes from selection
   void toggleRecursive(node, [state = true]) {
     Logs().d(
-      'called recursive toggle for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}, school: ${node.orgName}',
+      'called recursive toggle to state $state for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}, school: ${node.orgName}',
     );
     if (node.active || node.category || node.kind == 'group') {
       (state == true) ? selection.add(node) : selection.remove(node);
@@ -321,21 +321,23 @@ class AddressbookController extends State<AddressbookPage> {
 
   late final TreeController<ABookEntry> treeController;
 
-  // gets a list of user and group ids and tries to invite them
+  // receives a list of user and group ids and tries to invite them
   // returns a Set of success/failure per id
-  void invite(invitees, roomId) async {
+  void invite(invitees, String roomId) async {
     // selection can contain the same user multiple times
     final Set uniqUsers = {};
-    final Set uniqGroups = {};
+    final List<String> uniqGroups = [];
+    final hs = Matrix.of(context).client.homeserver?.host;
+
     for (final e in selection) {
       if (e.id != null) {
-        uniqGroups.add(e);
+        uniqGroups.add('#${e.orgName}--${e.id}:$hs');
       } else {
-        uniqUsers.add(e.title);
+        uniqUsers.add('@${e.title}:$hs');
       }
     }
 
-    final room = Matrix.of(context).client.getRoomById(roomId!)!;
+    final room = Matrix.of(context).client.getRoomById(roomId)!;
     if (OkCancelResult.ok !=
         await showOkCancelAlertDialog(
           context: context,
@@ -349,18 +351,27 @@ class AddressbookController extends State<AddressbookPage> {
     }
     final success = await showFutureLoadingDialog(
       context: context,
-      future: () async {}, //room.invite(id),
+      future: () async {
+        for (final u in uniqUsers) {
+          Logs().v('about to invite $u');
+          await room.invite(u);
+        }
+        if (uniqGroups.isNotEmpty) {
+          Logs().v('about to invite groups $uniqGroups');
+          room.setRestrictedJoinRules(uniqGroups);
+        }
+      },
     );
     if (success.error == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Contacts have been invited.'),
+          content: Text('Kontakte wurden eingeladen.'),
         ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Error during invitation'),
+          content: Text('Es trat ein Fehler auf.'),
         ),
       );
     }
