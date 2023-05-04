@@ -41,6 +41,7 @@ class ChatDetailsView extends StatelessWidget {
         (room.summary.mJoinedMemberCount ?? 0);
     final canRequestMoreMembers =
         controller.members!.length < actualMembersCount;
+    final allowedSCGroups = room.restrictedJoinRulesAllowedRooms;
     final iconColor = Theme.of(context).textTheme.bodyLarge!.color;
     return StreamBuilder(
       stream: room.onUpdate.stream,
@@ -399,7 +400,7 @@ class ChatDetailsView extends StatelessWidget {
                           ),
                           room.canInvite
                               ? ListTile(
-                                  title: Text('Einladen via Adressbuch'),
+                                  title: const Text('Einladen via Adressbuch'),
                                   leading: CircleAvatar(
                                     backgroundColor:
                                         Theme.of(context).primaryColor,
@@ -411,6 +412,21 @@ class ChatDetailsView extends StatelessWidget {
                                       VRouter.of(context).to('addressbook'),
                                 )
                               : Container(),
+                          if (allowedSCGroups != null &&
+                              allowedSCGroups.isNotEmpty) ...[
+                            for (final g in allowedSCGroups)
+                              ListTile(
+                                title: Text(
+                                    'SC-Gruppe ${g.split(':')[0].split('--')[1]} (Schule: ${g.split(':')[0].split('--')[0].split('#')[1]})'), // TODO regexp
+                                leading: CircleAvatar(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  foregroundColor: Colors.white,
+                                  radius: Avatar.defaultSize / 2,
+                                  child: const Icon(Icons.group),
+                                ),
+                              ),
+                          ]
                         ],
                       )
                     : i < controller.members!.length + 1
