@@ -16,9 +16,6 @@ class AddressbookView extends StatelessWidget {
     SliverAppBar? backBtn;
     final String? roomId = VRouter.of(context).pathParameters['roomid'];
 
-    // used for the radio button that selects active schools
-    //String? selectedSchool = '';
-
     // main entries like Teacher, Student, Admins have a category
     final selectedWithoutCategory = <ABookEntry>[];
     for (final e in controller.selection) {
@@ -217,20 +214,6 @@ class AddressbookView extends StatelessWidget {
         child: CustomScrollView(
           slivers: <Widget>[
             backBtn,
-            //for (final s in controller.listOfSchools) ...[
-            //  RadioListTile(
-            //      title: Text('Auswahl begrenzen auf ${s.title}'),
-            //      value: s.title,
-            //      groupValue: selectedSchool,
-            //      onChanged: (String? value) {
-            //        print('setting value in onChanged for $value');
-            //        // if active, we are going to deactivate it now
-            //        final buttonActive =
-            //            s.title == selectedSchool ? true : false;
-            //        controller.toggleSchool(s, !buttonActive);
-            //        selectedSchool = value;
-            //      }),
-            //],
             searchBar,
             if (controller.showSearchResults)
               ...searchResultArea

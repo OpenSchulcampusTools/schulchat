@@ -144,28 +144,8 @@ class AddressbookController extends State<AddressbookPage> {
     return multipleSchools;
   }
 
-  /*
-  // Removes a node and it's children from the abook, so
-  // search results and the tree view don't show them anymore
-  // TODO: if deactivated, call buildAddressbook again
-  void toggleSchool(node, [activate = false]) {
-    print('toggleSchool called with activate $activate');
-    // removes or adds a school from search results and addressbook view
-
-    // check if it is a school
-    if (node.category && node.isSchool) {
-      if (activate) {
-        print('remove ${node.title}\'s children and node from list');
-        // FIXME instead of removing the selection, remove the node from abook
-        // if we remove it now, the radio button entry disappears, too so we cannot add it again
-        toggleRecursive(node, true);
-        //treeController.roots.remove(node);
-        setState(() {});
-      }
-    }
-  }*/
-
   List<String> listOfSchools = [];
+
   Future<Map<String, dynamic>> fetchAddressbook() async {
     final abookJson = await Matrix.of(context).client.request(
           RequestType.GET,
@@ -190,7 +170,7 @@ class AddressbookController extends State<AddressbookPage> {
         isSchool: true,
         orgName: school,
       );
-      listOfSchools.add(abookSchool.title);
+      listOfSchools.add(abookSchool);
       final abookTeacher = ABookEntry(
         title: 'Lehrkräfte',
         children: [],
@@ -315,7 +295,7 @@ class AddressbookController extends State<AddressbookPage> {
       }
       abookEntries.add(abookSchool);
     }
-    Logs().d('List of schools: $listOfSchools');
+    Logs().d('List of schools: ${listOfSchools.map((s) => s.title).toList()}');
     return abookEntries;
   }
 
