@@ -113,7 +113,7 @@ class AddressbookView extends StatelessWidget {
                   (e.longName != null && e.longName!.isNotEmpty)
                       ? '${e.longName} (${e.info})'
                       : (e.kind == 'group')
-                          ? '${e.title} (${e.info}) (${e.scgroupUsersActive!.length} of ${e.scgroupUsersInactive!.length} users active)'
+                          ? '${e.title} (${e.info}) (${e.scgroupUsersActive!.length} of ${e.scgroupUsersActive!.length + e.scgroupUsersInactive!.length} users active)'
                           : '${e.title} (${e.info})',
                   style: TextStyle(
                     decoration: (e.active || e.kind == 'group')
@@ -180,7 +180,7 @@ class AddressbookView extends StatelessWidget {
                               entry.node.longName!.isNotEmpty
                           ? entry.node.longName!
                           : (entry.node.kind == 'group')
-                              ? '${entry.node.title} (${entry.node.scgroupUsersActive!.length} of ${entry.node.scgroupUsersInactive!.length} users active)'
+                              ? '${entry.node.title} (${entry.node.scgroupUsersActive!.length} of ${entry.node.scgroupUsersActive!.length + entry.node.scgroupUsersInactive!.length} users active)'
                               : entry.node.title,
                       style: TextStyle(
                         decoration: (entry.node.active ||
@@ -219,7 +219,6 @@ class AddressbookView extends StatelessWidget {
               ...searchResultArea
             else
               addressbook,
-
             if (controller.selection.isNotEmpty) ...[
               const SliverToBoxAdapter(child: Divider(thickness: 3)),
               SliverToBoxAdapter(
@@ -232,24 +231,62 @@ class AddressbookView extends StatelessWidget {
                 ),
               ),
               for (final e in selectedWithoutCategory) ...[
-                SliverToBoxAdapter(
-                  child: Row(
-                    //TODO does not work here?
-                    //crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        (e.longName != null && e.longName!.isNotEmpty)
-                            ? '${e.longName} (${e.info})'
-                            : '${e.title} (${e.info})',
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.clear, size: 16.0),
-                        onPressed: () => controller.toggleEntry(e),
-                        //constraints: BoxConstraints.expand(width: 16.0, height: 16.0),
-                      ),
-                    ],
+                if (e.kind == 'group') ...[
+                  SliverToBoxAdapter(
+                    child: Row(
+                      children: [
+                        Text(
+                          '${e.title} (${e.info})',
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.clear, size: 16.0),
+                          onPressed: () => controller.toggleEntry(e),
+                        ),
+                      ],
+                    ),
                   ),
-                )
+                  for (final groupMemberName in [
+                    ...e.scgroupUsersActive!,
+                    ...e.scgroupUsersInactive!
+                  ]) ...[
+                    if (!controller.deselectedUserEntries
+                        .contains(groupMemberName)) ...[
+                      SliverToBoxAdapter(
+                        child: Row(
+                          children: [
+                            Text(
+                              '${controller.usersInSCGroups.where((u) => u.username == groupMemberName).toList().first.longName} (via ${e.title})',
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.clear, size: 16.0),
+                              onPressed: () async =>
+                                  await controller.removeGroupMember(
+                                e,
+                                groupMemberName,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ]
+                  ]
+                ] else ...[
+                  SliverToBoxAdapter(
+                    child: Row(
+                      children: [
+                        Text(
+                          (e.longName != null && e.longName!.isNotEmpty)
+                              ? '${e.longName} (${e.info})'
+                              : '${e.title} (${e.info})',
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.clear, size: 16.0),
+                          onPressed: () => controller.toggleEntry(e),
+                        ),
+                      ],
+                    ),
+                  )
+                ]
               ]
             ] else
               ...[],

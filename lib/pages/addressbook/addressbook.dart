@@ -65,23 +65,31 @@ class ABookEntry {
   final List<String>? scgroupUsersInactive;
 }
 
+// represents teacher, parent, admin and student, ie all user roles
+class FlatUser {
+  const FlatUser({
+    required this.username,
+    required this.longName,
+    required this.active,
+  });
+
+  final String username;
+  final String longName;
+  final bool active;
+}
+
 class AddressbookController extends State<AddressbookPage> {
   final AutoScrollController scrollController = AutoScrollController();
 
-  final TextEditingController searchController = TextEditingController();
-  List<ABookEntry> searchResults = [];
-  String _lastSearchTerm = "";
-  String _searchTerm = "";
+  // this is only used for deselecting single users of a SC group
+  // Contains only those users that are part of a SC group
+  List<FlatUser> usersInSCGroups = [];
+
+  // Contains all users
+  // Multiple entries are possible when an user has multiple roles
+  Map<String, List<ABookEntry>> allUsers = {};
 
   var abook = <ABookEntry>[];
-  // wrap async abook loading, because initState cannot be async
-  void loadAddressbook() async {
-    abook = await buildAddressbook();
-    setState(() {
-      treeController.roots = abook;
-      treeController.rebuild();
-    });
-  }
 
   // getter for nodes selected by an user
   Set<ABookEntry> get selection => selectedNodes;
@@ -102,14 +110,14 @@ class AddressbookController extends State<AddressbookPage> {
     Logs().d(
       'called recursive toggle to state $state for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}, school: ${node.orgName}',
     );
-    if (node.active || node.category || node.kind == 'group') {
-      (state == true) ? selection.add(node) : selection.remove(node);
-      if (node.children.isNotEmpty) {
-        node.children.forEach((ABookEntry c) {
-          toggleRecursive(c, state);
-        });
-      }
+    //if (node.active || node.category || node.kind == 'group') {
+    (state == true) ? selection.add(node) : selection.remove(node);
+    if (node.children.isNotEmpty) {
+      node.children.forEach((ABookEntry c) {
+        toggleRecursive(c, state);
+      });
     }
+    //}
   }
 
   void toggleEntry(node) {
@@ -124,6 +132,76 @@ class AddressbookController extends State<AddressbookPage> {
       treeController.rebuild();
     });
   }
+
+  bool syncWarningShown = false;
+  // Mainly for deselecting users that are part of a group but should not be part
+  // of the newly created room.
+  //
+  // If a group member is deselected, we not longer sync the resulting memberships with IDM.
+  // That's why we add all members, except the deselected one, and remove the sc group from the list
+  // of selected contacts.
+  Future<void> removeGroupMember(group, groupMemberName) async {
+    if (syncWarningShown) {
+      await _removeGroupMember(group, groupMemberName);
+    } else {
+      if (OkCancelResult.ok !=
+          await showOkCancelAlertDialog(
+            context: context,
+            title:
+                'This removes synchronization of the memberships for the group ${group.title}. If an user is provisioned into the Schulcampus group later, they are not added to the room automatically.',
+            okLabel: 'Remove selection of this user',
+            cancelLabel: L10n.of(context)!.cancel,
+          )) {
+        Logs().v('Did not press ok');
+        return;
+      }
+      final success = await showFutureLoadingDialog(
+        context: context,
+        future: () async {
+          await _removeGroupMember(group, groupMemberName);
+        },
+      );
+      if (success.error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Es trat ein Fehler auf.'),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _removeGroupMember(group, groupMemberName) async {
+    syncWarningShown = true;
+    final school = group.orgName;
+
+    // add all members of the group
+    final toBeAdded = [
+      ...group.scgroupUsersActive,
+      ...group.scgroupUsersInactive
+    ];
+    // this is the user that is actually removed from the selection
+    toBeAdded.remove(groupMemberName);
+
+    for (final userEntry in allUsers[school]!) {
+      if (toBeAdded.contains(userEntry.title)) {
+        selection.add(userEntry);
+      }
+    }
+
+    // remove the group
+    // no-op in case it is not the first user that is removed from the selection
+    toggleRecursive(group, false);
+
+    // prevent the user from being added again
+    if (!deselectedUserEntries.contains(groupMemberName))
+      deselectedUserEntries.add(groupMemberName);
+    setState(() {
+      treeController.rebuild();
+    });
+  }
+
+  List<String> deselectedUserEntries = [];
 
   bool invitesFromMultipleSchools() {
     bool multipleSchools = false;
@@ -144,7 +222,16 @@ class AddressbookController extends State<AddressbookPage> {
     return multipleSchools;
   }
 
-  List<String> listOfSchools = [];
+  List<ABookEntry> listOfSchools = [];
+
+  // wrap async abook loading, because initState cannot be async
+  void loadAddressbook() async {
+    abook = await buildAddressbook();
+    setState(() {
+      treeController.roots = abook;
+      treeController.rebuild();
+    });
+  }
 
   Future<Map<String, dynamic>> fetchAddressbook() async {
     final abookJson = await Matrix.of(context).client.request(
@@ -201,20 +288,23 @@ class AddressbookController extends State<AddressbookPage> {
         category: true,
         orgName: school,
       );
+      allUsers[school] = [];
       if (abookJson[school]['teachers'] != null &&
           abookJson[school]['teachers'].isNotEmpty) {
         abookSchool.children.add(abookTeacher);
         abookJson[school]['teachers'].forEach((teacher) {
-          abookTeacher.children.add(
-            ABookEntry(
-              title: teacher,
-              info: '${L10n.of(context)!.contactsInfoTeacher} $schoolName',
-              orgName: school,
-              longName: abookJson['users'][teacher].first,
-              kind: 'teacher', //TODO
-              active: abookJson['users'][teacher].last == 'active',
-            ),
+          final entry = ABookEntry(
+            title: teacher,
+            info: '${L10n.of(context)!.contactsInfoTeacher} $schoolName',
+            orgName: school,
+            longName: abookJson['users'][teacher].first,
+            kind: 'teacher', //TODO
+            active: abookJson['users'][teacher].last == 'active',
           );
+          abookTeacher.children.add(
+            entry,
+          );
+          allUsers[school]!.add(entry);
         });
       }
       if (abookJson[school]['scgroups'] != null &&
@@ -228,8 +318,24 @@ class AddressbookController extends State<AddressbookPage> {
           users.forEach((uid) {
             if (abookJson['users'][uid].last == 'active') {
               activeUsers.add(uid);
+              //FIXME multiple entries of same users!
+              usersInSCGroups.add(
+                FlatUser(
+                  username: uid,
+                  longName: abookJson['users'][uid].first,
+                  active: true,
+                ),
+              );
             } else {
               inactiveUsers.add(uid);
+              //FIXME multiple entries of same users!
+              usersInSCGroups.add(
+                FlatUser(
+                  username: uid,
+                  longName: abookJson['users'][uid].first,
+                  active: false,
+                ),
+              );
             }
           });
           abookSCGroups.children.add(
@@ -249,48 +355,54 @@ class AddressbookController extends State<AddressbookPage> {
           abookJson[school]['students'].isNotEmpty) {
         abookSchool.children.add(abookStudents);
         abookJson[school]['students'].forEach((student) {
-          abookStudents.children.add(
-            ABookEntry(
-              title: student,
-              info: '${L10n.of(context)!.contactsInfoStudent} $schoolName',
-              orgName: school,
-              longName: abookJson['users'][student].first,
-              kind: 'student', //TODO
-              active: abookJson['users'][student].last == 'active',
-            ),
+          final entry = ABookEntry(
+            title: student,
+            info: '${L10n.of(context)!.contactsInfoStudent} $schoolName',
+            orgName: school,
+            longName: abookJson['users'][student].first,
+            kind: 'student', //TODO
+            active: abookJson['users'][student].last == 'active',
           );
+          abookStudents.children.add(
+            entry,
+          );
+          allUsers[school]!.add(entry);
         });
       }
       if (abookJson[school]['parents'] != null &&
           abookJson[school]['parents'].isNotEmpty) {
         abookSchool.children.add(abookParents);
         abookJson[school]['parents'].forEach((parent) {
-          abookParents.children.add(
-            ABookEntry(
-              title: parent,
-              info: '${L10n.of(context)!.contactsInfoParent} $schoolName',
-              orgName: school,
-              longName: abookJson['users'][parent].first,
-              kind: 'parent', //TODO
-              active: abookJson['users'][parent].last == 'active',
-            ),
+          final entry = ABookEntry(
+            title: parent,
+            info: '${L10n.of(context)!.contactsInfoParent} $schoolName',
+            orgName: school,
+            longName: abookJson['users'][parent].first,
+            kind: 'parent', //TODO
+            active: abookJson['users'][parent].last == 'active',
           );
+          abookParents.children.add(
+            entry,
+          );
+          allUsers[school]!.add(entry);
         });
       }
       if (abookJson[school]['admins'] != null &&
           abookJson[school]['admins'].isNotEmpty) {
         abookSchool.children.add(abookAdmins);
         abookJson[school]['admins'].forEach((admin) {
-          abookAdmins.children.add(
-            ABookEntry(
-              title: admin,
-              info: '${L10n.of(context)!.contactsInfoAdmin} $schoolName',
-              orgName: school,
-              longName: abookJson['users'][admin].first,
-              kind: 'admin', //TODO
-              active: abookJson['users'][admin].last == 'active',
-            ),
+          final entry = ABookEntry(
+            title: admin,
+            info: '${L10n.of(context)!.contactsInfoAdmin} $schoolName',
+            orgName: school,
+            longName: abookJson['users'][admin].first,
+            kind: 'admin', //TODO
+            active: abookJson['users'][admin].last == 'active',
           );
+          abookAdmins.children.add(
+            entry,
+          );
+          allUsers[school]!.add(entry);
         });
       }
       abookEntries.add(abookSchool);
@@ -383,6 +495,11 @@ class AddressbookController extends State<AddressbookPage> {
   void onTap(entry) {
     treeController.toggleExpansion(entry.node);
   }
+
+  final TextEditingController searchController = TextEditingController();
+  List<ABookEntry> searchResults = [];
+  String _lastSearchTerm = "";
+  String _searchTerm = "";
 
   void search() {
     _searchTerm = searchController.text;
