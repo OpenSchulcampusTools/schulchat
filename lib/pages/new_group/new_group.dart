@@ -29,6 +29,7 @@ class NewGroupController extends State<NewGroup> {
           enableEncryption: true,
           visibility: sdk.Visibility.private,
           preset: sdk.CreateRoomPreset.privateChat,
+          powerLevelContentOverride: {'invite': 50},
           /* #schulChatSpecific
           visibility:
               publicGroup ? sdk.Visibility.public : sdk.Visibility.private,
