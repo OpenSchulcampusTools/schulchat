@@ -134,10 +134,14 @@ class ChatListController extends State<ChatList>
   bool Function(Room) getRoomFilterByActiveFilter(ActiveFilter activeFilter) {
     switch (activeFilter) {
       case ActiveFilter.allChats:
-        return (room) => !room.isSpace && !room.isStoryRoom;
+        return (room) =>
+            !room.isSpace && !room.isStoryRoom && !room.isSCGroupRoom;
       case ActiveFilter.groups:
         return (room) =>
-            !room.isSpace && !room.isDirectChat && !room.isStoryRoom;
+            !room.isSpace &&
+            !room.isDirectChat &&
+            !room.isStoryRoom &&
+            !room.isSCGroupRoom;
       case ActiveFilter.messages:
         return (room) =>
             !room.isSpace && room.isDirectChat && !room.isStoryRoom;

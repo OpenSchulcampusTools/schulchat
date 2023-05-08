@@ -41,7 +41,15 @@ class ChatDetailsView extends StatelessWidget {
         (room.summary.mJoinedMemberCount ?? 0);
     final canRequestMoreMembers =
         controller.members!.length < actualMembersCount;
-    final allowedSCGroups = room.restrictedJoinRulesAllowedRooms;
+    final allowedSCGroups = room
+        .restrictedJoinRulesAllowedRooms; /*[];
+    for (final SCGroupId in room.restrictedJoinRulesAllowedRooms) {
+      final info = await Matrix.of(context).client.request(
+          RequestType.GET,
+          '/client/unstable/fairkom.fairmessenger.addressbook/class/$SCGroupId',
+        );
+      allowedSCGroups.add([info['title'], info['school']]);
+    }*/
     final iconColor = Theme.of(context).textTheme.bodyLarge!.color;
     return StreamBuilder(
       stream: room.onUpdate.stream,
@@ -418,6 +426,7 @@ class ChatDetailsView extends StatelessWidget {
                               ListTile(
                                 title: Text(
                                     'SC-Gruppe ${g.split(':')[0].split('--')[1]} (Schule: ${g.split(':')[0].split('--')[0].split('#')[1]})'), // TODO regexp
+                                //'SC-Gruppe ${g.first} (Schule: ${g.last})'),
                                 leading: CircleAvatar(
                                   backgroundColor:
                                       Theme.of(context).primaryColor,
