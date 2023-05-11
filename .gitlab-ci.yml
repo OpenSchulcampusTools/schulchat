@@ -8,8 +8,9 @@ variables:
 
 stages:
   - analyze
-  - build
-  - test
+  - build_and_test
+    #  - build
+    #  - test
 #  - upload #FIXME upload webbuild and android package
 
 
@@ -48,7 +49,7 @@ dart_code_metrics_analyze:
       codequality: code-quality-report.json
 
 widget_test:
-  stage: test
+  stage: build_and_test
   extends:
     - .flutter_deps_and_format
   script: |
@@ -76,7 +77,7 @@ widget_test:
       junit: TEST-report.xml
 
 build_web:
-  stage: build
+  stage: build_and_test
   extends:
     - .prepare_flutter
   script: |
@@ -96,7 +97,7 @@ build_web:
       - build/web/webbuild.zip
 
 build_web_profile:
-  stage: build
+  stage: build_and_test
   extends:
     - .prepare_flutter
   script: |
@@ -117,7 +118,7 @@ build_web_profile:
 
 # TODO include config.sample.json?
 build_android_apk:
-  stage: build
+  stage: build_and_test
   tags: [docker, rlp]
   script: |
     docker container rm androidimage || true
@@ -131,16 +132,8 @@ build_android_apk:
     paths:
       - app-debug.apk
 
-      #integration_web:
-      #  stage: test
-      #  tags: [docker, rlp]
-      #  script: |
-      #    docker image rm integration-web || true
-      #    docker build -f docker/Dockerfile.integration-web -t integration-web --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg INTEGRATION_USER1=$INTEGRATION_USER1 --build-arg INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --build-arg INTEGRATION_USER2=$INTEGRATION_USER2 --build-arg INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 .
-      #    docker run --shm-size=512m --rm integration-web
-
 integration_android:
-  stage: test
+  stage: build_and_test
   tags: [docker, rlp]
   variables:
     FF_NETWORK_PER_BUILD: "true"
@@ -186,7 +179,7 @@ integration_android:
       junit: TEST-report.xml
 
 integration_web:
-  stage: test
+  stage: build_and_test
   tags: [docker, rlp]
   variables:
     FF_NETWORK_PER_BUILD: "true"
