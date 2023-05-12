@@ -35,11 +35,19 @@ ENV PATH=${PATH}:/tmp/flutter/bin
 RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
 WORKDIR ./fluffychat
 RUN git checkout $CI_COMMIT_SHA
+
+# we use tokens instead of ssh
 RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
+
+# local domain is synapse
 RUN sed -i "s#test.schulchat.rlp.de#synapse#g" config.sample.json lib/config/app_config.dart
+
 # no https support for our local synapse
 RUN sed -i 's#homeserver = Uri.https#homeserver = Uri.http#g' lib/pages/homeserver_picker/homeserver_picker.dart
 RUN sed -i 's#var newDomain = Uri.https#var newDomain = Uri.http#g' lib/pages/login/login.dart
+
+# currently no idm login is done
+RUN sed -i 's#disableAuthWithUsernameAndPassword = true#disableAuthWithUsernameAndPassword = false#g' lib/config/edu_settings.dart
 
 RUN mkdir -p assets/js/package
 RUN ./scripts/prepare-web.sh
