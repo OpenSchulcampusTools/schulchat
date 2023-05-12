@@ -1,13 +1,16 @@
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/pages/connect/connect_page.dart';
+import 'package:fluffychat/pages/qrscan/qrscan.dart';
 import 'package:fluffychat/widgets/layouts/login_scaffold.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import '../../config/edu_settings.dart';
 import 'sso_button.dart';
 
 class ConnectPageView extends StatelessWidget {
@@ -201,7 +204,37 @@ class ConnectPageView extends StatelessWidget {
                             ].toList(),
                           ),
                   ),
-          if (controller.supportsLogin)
+          if (controller.supportsSso && !kIsWeb)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12.0),
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primaryContainer,
+                  foregroundColor:
+                      Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+                icon: const Icon(
+                  Icons.qr_code_2_outlined,
+                  size: 16,
+                ),
+                onPressed: controller.loading
+                    ? null
+                    : () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const QRScan()));
+                      },
+                label: Text(
+                  L10n.of(context)!.scanQrCode,
+                ),
+              ),
+            ),
+          if (controller.supportsLogin &&
+              !EduSettings
+                  .disableAuthWithUsernameAndPassword) // #schulChatSpecific
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Hero(
