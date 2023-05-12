@@ -18,12 +18,16 @@ if [ -z "$INTEGRATION_PASSWORD2" ]; then
   echo "INTEGRATION_PASSWORD2 not set"
   exit 1
 fi
+if [ -z "$TEST_DEVICE" ]; then
+  echo "TEST_DEVICE not set"
+  exit 1
+fi
 
 echo "Getting .well-known from docker entrypoint"
 curl -XGET "http://synapse/.well-known/matrix/client"
 
 adb start-server
-emulator -avd nexus-5 -wipe-data -no-audio -no-boot-anim -no-window -accel on -gpu swiftshader_indirect -memory 2048 -writable-system & # run in background
+emulator -avd $TEST_DEVICE -wipe-data -no-audio -no-boot-anim -no-window -accel on -gpu swiftshader_indirect -memory 2048 -writable-system & # run in background
 
 adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 

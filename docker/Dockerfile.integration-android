@@ -6,7 +6,7 @@ ENV FLUTTER_VERSION=3.7.7
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 ENV PATH=${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/emulator:/tmp/flutter/bin
 
-ARG TEST_DEVICE=nexus-5
+ARG TEST_DEVICE
 ARG TEST_PACKAGE='system-images;android-33;google_apis;x86_64'
 
 ARG CI_COMMIT_SHA
@@ -17,6 +17,7 @@ ARG INTEGRATION_PASSWORD1
 ARG INTEGRATION_USER2
 ARG INTEGRATION_PASSWORD2
 
+ENV TEST_DEVICE=$TEST_DEVICE
 ENV INTEGRATION_USER1=$INTEGRATION_USER1
 ENV INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1
 ENV INTEGRATION_USER2=$INTEGRATION_USER2
@@ -48,7 +49,8 @@ RUN sdkmanager \
   "cmake;3.10.2.4988404" \
   "ndk;21.4.7075529"
 RUN yes | sdkmanager --licenses
-RUN avdmanager create avd --force --name "${TEST_DEVICE}" -k "${TEST_PACKAGE}" -d 7
+
+RUN avdmanager list
 
 RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/flutter.git /tmp/flutter
 RUN cd /tmp/flutter && git checkout -b upstream-${FLUTTER_VERSION} origin/upstream-${FLUTTER_VERSION}
@@ -73,6 +75,11 @@ RUN sed -i 's#disableAuthWithUsernameAndPassword = true#disableAuthWithUsernameA
 
 RUN flutter pub get
 ENV ANDROID_SDK_ROOT=/opt/android-sdk/
+
+# TEST_DEVICE is readable and used for container name etc. but is not the actual id
+RUN ./scripts/get-avd-id.sh $TEST_DEVICE > /tmp/device-id
+RUN avdmanager create avd --force --name "${TEST_DEVICE}" -k "${TEST_PACKAGE}" -d $(cat /tmp/device-id)
+
 RUN flutter build apk --debug
 
 COPY ./docker/run-integration-android.sh /
