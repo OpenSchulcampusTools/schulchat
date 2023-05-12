@@ -22,3 +22,5 @@ Sofern Sie den Web client nutzen, bitte wenn möglich die Meldungen aus der Erro
 
 **Zu welcher Uhrzeit trat der Fehler auf?**
 Dies ist nicht für alle Fehler relevant, hilft uns allerdings in den Logs eventuelle Meldungen schneller zu finden.
+
+/label ~activity:assessment
