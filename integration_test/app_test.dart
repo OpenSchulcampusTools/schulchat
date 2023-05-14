@@ -84,20 +84,6 @@ void main() {
         semanticsEnabled: false,
       );
 
-      //testWidgets('User 1 starts a new chat with user 2',
-      //    (WidgetTester tester) async {
-      //  app.main();
-      //  await tester.ensureLoggedOut();
-      //  await tester.ensureAppStartedHomescreen(
-      //    loginUsername: Users.user1.name,
-      //    loginPassword: Users.user1.password,
-      //  );
-      //  await tester.createRoomWithInvite(Users.user2.name);
-      //  await tester.ensureLoggedOut();
-      //},
-      //  semanticsEnabled: false,
-      //);
-
       testWidgets(
         'User 2 accepts invite',
         (WidgetTester tester) async {
@@ -141,6 +127,22 @@ void main() {
           await tester.openChatByName('room with ${Users.user1.name}');
           await tester.waitFor(find.text(uniqueMessage));
           // TODO click on open Lesebestätigung
+          await tester.ensureLoggedOut();
+        },
+        semanticsEnabled: false,
+      );
+
+      testWidgets(
+        'User 1 starts a new chat with user 2 (UI regression, see #)',
+        (WidgetTester tester) async {
+          app.main();
+          await tester.ensureLoggedOut();
+          await tester.ensureAppStartedHomescreen(
+            loginUsername: Users.user1.name,
+            loginPassword: Users.user1.password,
+          );
+          await tester.createRoom(Users.user2.name, 'UI overflow regression');
+          await tester.ensureLoggedOut();
         },
         semanticsEnabled: false,
       );
