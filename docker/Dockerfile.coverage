@@ -1,0 +1,6 @@
+FROM debian:bullseye-slim
+
+RUN apt update && apt install -y --no-install-recommends lcov python2
+COPY . /fluffy
+WORKDIR /fluffy
+ENTRYPOINT ["./docker/merge-coverage.sh"]

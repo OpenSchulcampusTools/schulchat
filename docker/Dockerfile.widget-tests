@@ -1,0 +1,22 @@
+FROM debian:bullseye-slim
+
+ENV FLUTTER_VERSION=3.7.7
+ARG CITOKEN
+
+RUN apt update && apt install -y lcov ca-certificates unzip python python3 curl bash git xz-utils --no-install-recommends
+
+RUN useradd -m -s /bin/bash fluffy
+USER fluffy
+WORKDIR /home/fluffy
+ENV PATH="$PATH:/tmp/flutter/bin:/home/fluffy/.pub-cache/bin"
+
+RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
+WORKDIR fluffychat
+RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
+RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/flutter.git /tmp/flutter
+RUN cd /tmp/flutter && git checkout -b upstream-${FLUTTER_VERSION} origin/upstream-${FLUTTER_VERSION}
+RUN flutter pub get
+RUN flutter pub global activate junitreport
+
+COPY ./docker/run-widget-test.sh /
+ENTRYPOINT ["/run-widget-test.sh"]

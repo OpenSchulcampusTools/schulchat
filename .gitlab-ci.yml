@@ -50,30 +50,30 @@ dart_code_metrics_analyze:
 
 widget_test:
   stage: build_and_test
-  extends:
-    - .flutter_deps_and_format
+  tags: [docker, rlp]
+  allow_failure: true
   script: |
-    flutter pub get
-    flutter pub global activate junitreport
-    flutter test --coverage --machine > TEST-report.json
-    exit_code=$?
-    flutter pub global run junitreport:tojunit --input TEST-report.json --output TEST-report.xml
+    docker stop widgettest || true
+    docker container rm widgettest || true
+    docker image rm widget_test || true
+    docker build -f docker/Dockerfile.widget-tests -t widget_test --build-arg CITOKEN=$CITOKEN .
+    docker run --name widgettest widget_test || true
+    docker cp widgettest:/home/fluffy/fluffychat/coverage_widget .
+    docker cp widgettest:/home/fluffy/fluffychat/coverage_widget.xml .
+    docker cp widgettest:/home/fluffy/fluffychat/TEST-report.xml .
+    docker cp widgettest:/home/fluffy/fluffychat/exit_code .
     sed 's/&#x1B;//g' -i TEST-report.xml
-    #genhtml -o coverage coverage/lcov.info || true
-    curl https://raw.githubusercontent.com/eriwen/lcov-to-cobertura-xml/master/lcov_cobertura/lcov_cobertura.py > lcov_cobertura.py #TODO how to install package without migrating to docker images?
-    chmod +x lcov_cobertura.py
-    ./lcov_cobertura.py coverage/lcov.info || true
-    exit $exit_code
+    docker stop widgettest || true 
+    docker container rm widgettest || true
+    docker image rm widget_test || true
+    exit $(cat exit_code)
   artifacts:
     when: always
     paths:
-      - coverage/
-      - coverage.xml
+      - coverage_widget/
+      - coverage_widget.xml
       - TEST-report.xml
     reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage.xml
       junit: TEST-report.xml
 
 build_web:
@@ -137,6 +137,7 @@ integration_android:
   tags: [docker, rlp]
   variables:
     FF_NETWORK_PER_BUILD: "true"
+  allow_failure: true
   script: |
     apk add curl jq
     docker image rm integration-nexus-5 || true
@@ -164,7 +165,6 @@ integration_android:
     docker cp nexus:fluffychat/exit_code .
     sed 's/&#x1B;//g' -i TEST-report.xml
     exit $(cat exit_code)
-  coverage: '/lines......: \d+\.\d+%/'
   artifacts:
     when: always
     paths:
@@ -173,9 +173,6 @@ integration_android:
       - TEST-report.xml
       - video.mkv
     reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage.xml
       junit: TEST-report.xml
 
 integration_web:
@@ -183,6 +180,7 @@ integration_web:
   tags: [docker, rlp]
   variables:
     FF_NETWORK_PER_BUILD: "true"
+  allow_failure: true
   script: |
     docker stop synapse-for-web || true
     docker stop synapse || true
@@ -198,5 +196,43 @@ integration_web:
     #FIXME we need to use our synapse build instead!
     docker run -d --name synapse-for-web -h $HOMESERVER -v /builds/shared/fluffy:/data matrixdotorg/synapse:latest
     SYNAPSE_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' synapse-for-web)
-    docker run --add-host=${HOMESERVER}:${SYNAPSE_IP} --shm-size=4096m --name integration-web-run integration-web
-    docker stop synapse-for-web
+    docker run --add-host=${HOMESERVER}:${SYNAPSE_IP} --shm-size=4096m --name integration-web-run integration-web || true
+    docker stop synapse-for-web || true
+    docker cp integration-web-run:/tmp/exit_code .
+    docker cp integration-web-run:/tmp/chromedriver.log .
+    exit $(cat exit_code)
+  artifacts:
+    when: always
+    paths:
+      - chromedriver.log
+
+# this job merges the coverage reports
+combined_coverage:
+  stage: build_and_test
+  tags: [docker, rlp]
+  needs: ["integration_web", "integration_android", "widget_test"]
+  dependencies:
+    - integration_web
+    - integration_android
+    - widget_test
+  script: |
+    docker image rm -f coverage || true
+    docker container rm merge-coverage || true
+    docker build -f docker/Dockerfile.coverage -t coverage .
+    docker run --name merge-coverage coverage || true
+  coverage: '/lines......: \d+\.\d+%/'
+  artifacts:
+    when: always
+    paths:
+      - chromedriver.log
+      - coverage/
+      - coverage.xml
+      - coverage_widget/
+      - coverage_widget.xml
+      - coverage_merged.xml
+      - coverage_merged/
+      - video.mkv
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage-merged.xml

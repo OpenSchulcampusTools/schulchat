@@ -49,7 +49,7 @@ adb shell pm grant chat.fluffy.fluffychat android.permission.VIBRATE
 adb shell pm grant chat.fluffy.fluffychat android.permission.WAKE_LOCK
 adb shell pm grant chat.fluffy.fluffychat android.permission.WRITE_EXTERNAL_STORAGE
 
-#push /etc/hosts file from docker container
+#push /etc/hosts file from docker container so we can reach synapse
 adb root
 adb shell avbctl disable-verification
 sleep 10
@@ -62,6 +62,12 @@ adb push /etc/hosts /system/etc
 
 flutter devices
 scrcpy --no-display --record video.mkv &
+
+# import all files so coverage report is accurate, as
+# it will report only on the touched files
+IMPORTS=$(find lib -name '*.dart'|sed -e "s#^lib#import 'package:fluffychat#g" -e "s#\$#';#g")
+echo -e "${IMPORTS}\n$(cat integration_test/app_test.dart)" >integration_test/app_test.dart
+
 flutter test -d emulator-5554 integration_test --coverage --dart-define=INTEGRATION_USER1=$INTEGRATION_USER1 --dart-define=INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --dart-define=INTEGRATION_USER2=$INTEGRATION_USER2 --dart-define=INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 --reporter json | tee TEST-results.json
 exit_code=${PIPESTATUS[0]}
 echo "Done running tests. Exit code was $exit_code"
