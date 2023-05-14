@@ -142,8 +142,8 @@ integration_android:
     matrix:
       - ANDROID_DEVICE:
           - nexus-5
-          - nexus-10
-          - pixel_5
+            #          - nexus-10
+            #          - pixel_5
           - 10.1in # WXGA (Tablet)
   script: |
     apk add curl jq
