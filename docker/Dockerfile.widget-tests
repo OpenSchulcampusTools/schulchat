@@ -2,6 +2,7 @@ FROM debian:bullseye-slim
 
 ENV FLUTTER_VERSION=3.7.7
 ARG CITOKEN
+ARG CI_COMMIT_SHA
 
 RUN apt update && apt install -y lcov ca-certificates unzip python python3 curl bash git xz-utils --no-install-recommends
 
@@ -12,6 +13,7 @@ ENV PATH="$PATH:/tmp/flutter/bin:/home/fluffy/.pub-cache/bin"
 
 RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
 WORKDIR fluffychat
+RUN git checkout $CI_COMMIT_SHA
 RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
 RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/flutter.git /tmp/flutter
 RUN cd /tmp/flutter && git checkout -b upstream-${FLUTTER_VERSION} origin/upstream-${FLUTTER_VERSION}

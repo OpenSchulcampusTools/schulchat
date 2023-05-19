@@ -56,7 +56,7 @@ widget_test:
     docker stop widgettest || true
     docker container rm widgettest || true
     docker image rm widget_test || true
-    docker build -f docker/Dockerfile.widget-tests -t widget_test --build-arg CITOKEN=$CITOKEN .
+    docker build -f docker/Dockerfile.widget-tests -t widget_test --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA .
     docker run --name widgettest widget_test || true
     docker cp widgettest:/home/fluffy/fluffychat/coverage_widget .
     docker cp widgettest:/home/fluffy/fluffychat/coverage_widget.xml .
