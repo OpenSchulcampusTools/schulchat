@@ -147,9 +147,8 @@ class AddressbookController extends State<AddressbookPage> {
       if (OkCancelResult.ok !=
           await showOkCancelAlertDialog(
             context: context,
-            title:
-                'This removes synchronization of the memberships for the group ${group.title}. If an user is provisioned into the Schulcampus group later, they are not added to the room automatically.',
-            okLabel: 'Remove selection of this user',
+            title: L10n.of(context)!.groupMemberRemoveTitle(group.title),
+            okLabel: L10n.of(context)!.groupMemberRemoveLabel,
             cancelLabel: L10n.of(context)!.cancel,
           )) {
         Logs().v('Did not press ok');
@@ -163,8 +162,8 @@ class AddressbookController extends State<AddressbookPage> {
       );
       if (success.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Es trat ein Fehler auf.'),
+          SnackBar(
+            content: Text(L10n.of(context)!.inviteErrorHappened),
           ),
         );
       }
@@ -259,31 +258,31 @@ class AddressbookController extends State<AddressbookPage> {
       );
       listOfSchools.add(abookSchool);
       final abookTeacher = ABookEntry(
-        title: 'Lehrkräfte',
+        title: L10n.of(context)!.abookTitleTeachers,
         children: [],
         category: true,
         orgName: school,
       );
       final abookSCGroups = ABookEntry(
-        title: 'Schulcampus-Gruppen',
+        title: L10n.of(context)!.abookTitleSCGroups,
         children: [],
         category: true,
         orgName: school,
       );
       final abookStudents = ABookEntry(
-        title: 'Schüler:innen',
+        title: L10n.of(context)!.abookTitleStudents,
         children: [],
         category: true,
         orgName: school,
       );
       final abookParents = ABookEntry(
-        title: 'Sorgeberechtigte',
+        title: L10n.of(context)!.abookTitleParents,
         children: [],
         category: true,
         orgName: school,
       );
       final abookAdmins = ABookEntry(
-        title: 'Admins',
+        title: L10n.of(context)!.abookTitleAdmins,
         children: [],
         category: true,
         orgName: school,
@@ -433,9 +432,13 @@ class AddressbookController extends State<AddressbookPage> {
     if (OkCancelResult.ok !=
         await showOkCancelAlertDialog(
           context: context,
-          title:
-              'You are about to invite ${uniqUsers.length} users and ${uniqGroups.length} groups (total: ${selection.length}) to room ${room.name}',
-          okLabel: 'Invite',
+          title: L10n.of(context)!.inviteTitleMessage(
+            uniqUsers.length,
+            uniqGroups.length,
+            selection.length,
+            room.name,
+          ),
+          okLabel: L10n.of(context)!.inviteOKLabel,
           cancelLabel: L10n.of(context)!.cancel,
         )) {
       Logs().v('Did not press ok');
@@ -456,14 +459,14 @@ class AddressbookController extends State<AddressbookPage> {
     );
     if (success.error == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Kontakte wurden eingeladen.'),
+        SnackBar(
+          content: Text(L10n.of(context)!.invitedContactsDone),
         ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Es trat ein Fehler auf.'),
+        SnackBar(
+          content: Text(L10n.of(context)!.inviteErrorHappened),
         ),
       );
     }

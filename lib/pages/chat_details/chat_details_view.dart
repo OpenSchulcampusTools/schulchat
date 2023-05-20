@@ -408,7 +408,8 @@ class ChatDetailsView extends StatelessWidget {
                           ),
                           room.canInvite
                               ? ListTile(
-                                  title: const Text('Einladen via Adressbuch'),
+                                  title: Text(
+                                      L10n.of(context)!.inviteUsingAddressbook),
                                   leading: CircleAvatar(
                                     backgroundColor:
                                         Theme.of(context).primaryColor,

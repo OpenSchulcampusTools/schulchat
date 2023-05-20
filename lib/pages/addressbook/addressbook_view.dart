@@ -50,9 +50,9 @@ class AddressbookView extends StatelessWidget {
             ]
           : (selectedWithoutCategory.isNotEmpty && roomId != null)
               ? [
-                  const Text(
-                    'Fehler: Einträge aus mehreren Schulen wurden ausgewählt.',
-                    style: TextStyle(color: Colors.red),
+                  Text(
+                    L10n.of(context)!.contactsFromMultipleSchoolsError,
+                    style: const TextStyle(color: Colors.red),
                   )
                 ]
               : [],
@@ -75,9 +75,9 @@ class AddressbookView extends StatelessWidget {
               controller.search();
             },
             autofocus: false,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              label: Text('Suche nach Personen und Gruppen'),
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.search),
+              label: Text(L10n.of(context)!.abookSearchDesc),
             ),
           ),
         ),
@@ -89,11 +89,11 @@ class AddressbookView extends StatelessWidget {
       SliverToBoxAdapter(
         child: Row(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Suchergebnisse',
-                style: TextStyle(
+                L10n.of(context)!.inviteSearchResults,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

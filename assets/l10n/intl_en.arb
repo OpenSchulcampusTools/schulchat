@@ -2586,5 +2586,46 @@
     "contactsInviteError": "Error during invitation",
     "@contactsInviteError": {},
     "userNotInMessenger": "Not in messenger yet",
-    "@userNotInMessenger": {}
+    "@userNotInMessenger": {},
+    "inviteErrorHappened": "An error occurred during invite",
+    "@inviteErrorHappened": {},
+    "inviteOKLabel": "Invite",
+    "@inviteOKLabel": {},
+    "groupMemberRemoveLabel": "Remove selection of this user",
+    "@groupMemberRemoveLabel": {},
+    "groupMemberRemoveTitle": "This removes synchronization of the memberships for the group {group}. If an user is provisioned into the Schulcampus group later, they are not added to the room automatically.",
+    "@groupMemberRemoveTitle": {
+      "type": "text",
+      "placeholders": {
+        "group": {}
+      }
+    },
+    "abookTitleTeachers": "Teachers",
+    "@abookTitleTeachers": {},
+    "abookTitleStudents": "Students",
+    "@abookTitleStudents": {},
+    "abookTitleSCGroups": "Schulcampus Groups",
+    "@abookTitleSCGroups": {},
+    "abookTitleParents": "Parents",
+    "@abookTitleParents": {},
+    "abookTitleAdmins": "Administrators",
+    "@abookTitleAdmins": {},
+    "inviteTitleMessage": "You are about to invite {uniqUsersLength} users and {uniqGroupsLength} groups (total: {selectionLength}) to room {name}",
+    "@inviteTitleMessage": {
+      "type": "text",
+      "placeholders": {
+        "uniqUsersLength": {},
+        "uniqGroupsLength": {},
+        "selectionLength": {},
+        "name": {}
+      }
+    },
+    "contactsFromMultipleSchoolsError": "Error: entries from multiple schools selected",
+    "@contactsFromMultipleSchoolsError": {},
+    "abookSearchDesc": "Search for persons and groups",
+    "@abookSearchDesc": {},
+    "inviteSearchResults": "Search results",
+    "@inviteSearchResults": {},
+    "inviteUsingAddressbook": "Invite using addressbook",
+    "@inviteUsingAddressbook": {}
 }

@@ -106,7 +106,7 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
           children: [
             const Icon(Icons.contacts),
             const SizedBox(width: 12),
-            Text('Invite using ${L10n.of(context)!.addressbook}'),
+            Text(L10n.of(context)!.inviteUsingAddressbook),
           ],
         ),
       ),
