@@ -2596,5 +2596,7 @@
   "inviteSearchResults": "Suchergebnisse",
   "@inviteSearchResults": {},
   "inviteUsingAddressbook": "Einladen mit Adressbuch",
-  "@inviteUsingAddressbook": {}
+  "@inviteUsingAddressbook": {},
+  "forbidWriting": "Andere Teilnehmer:innen können keine Nachrichten senden",
+  "@forbidWriting": {}
 }

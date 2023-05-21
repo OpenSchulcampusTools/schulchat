@@ -17,8 +17,11 @@ class NewGroup extends StatefulWidget {
 class NewGroupController extends State<NewGroup> {
   TextEditingController controller = TextEditingController();
   bool publicGroup = false;
+  bool readOnly = false;
 
   void setPublicGroup(bool b) => setState(() => publicGroup = b);
+
+  void setReadOnly(bool b) => setState(() => readOnly = b);
 
   void submitAction([_]) async {
     final client = Matrix.of(context).client;
@@ -29,7 +32,10 @@ class NewGroupController extends State<NewGroup> {
           enableEncryption: true,
           visibility: sdk.Visibility.private,
           preset: sdk.CreateRoomPreset.privateChat,
-          powerLevelContentOverride: {'invite': 50},
+          powerLevelContentOverride: {
+            'invite': 50,
+            if (readOnly) ...{'users_default': -1}
+          },
           /* #schulChatSpecific
           visibility:
               publicGroup ? sdk.Visibility.public : sdk.Visibility.private,

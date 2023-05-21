@@ -35,6 +35,12 @@ class NewGroupView extends StatelessWidget {
                 ),
               ),
             ),
+            SwitchListTile.adaptive(
+              secondary: const Icon(Icons.block_outlined),
+              title: Text(L10n.of(context)!.forbidWriting),
+              value: controller.readOnly,
+              onChanged: controller.setReadOnly,
+            ),
             /* #schulChatSpecific
             SwitchListTile.adaptive(
               secondary: const Icon(Icons.public_outlined),

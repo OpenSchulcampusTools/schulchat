@@ -2572,5 +2572,7 @@
     "inviteSearchResults": "Search results",
     "@inviteSearchResults": {},
     "inviteUsingAddressbook": "Invite using addressbook",
-    "@inviteUsingAddressbook": {}
+    "@inviteUsingAddressbook": {},
+    "forbidWriting": "Other participants cannot write",
+    "@forbidWriting": {}
 }
