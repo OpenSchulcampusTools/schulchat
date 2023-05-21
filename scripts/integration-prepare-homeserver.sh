@@ -26,18 +26,22 @@ echo "Waiting for homeserver to be available... (GET http://$HOMESERVER/_matrix/
 while ! curl -XGET "http://$HOMESERVER/_matrix/client/v3/login" >/dev/null 2>/dev/null; do
   sleep 2
   # for debugging
-  docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';
+  # docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';
 done
 
 echo "Homeserver is up."
 echo "Getting well-known"
+
+echo "get http://$HOMESERVER/.well-known/matrix/client"
 curl -XGET "http://$HOMESERVER/.well-known/matrix/client"
 
 # create users
 
+echo "creating users"
 curl -fS --retry 3 -XPOST -d "{\"username\":\"$INTEGRATION_USER1\", \"password\":\"$INTEGRATION_PASSWORD1\", \"inhibit_login\":true, \"auth\": {\"type\":\"m.login.dummy\"}}" "http://$HOMESERVER/_matrix/client/r0/register"
 curl -fS --retry 3 -XPOST -d "{\"username\":\"$INTEGRATION_USER2\", \"password\":\"$INTEGRATION_PASSWORD2\", \"inhibit_login\":true, \"auth\": {\"type\":\"m.login.dummy\"}}" "http://$HOMESERVER/_matrix/client/r0/register"
 
+echo "getting access tokens"
 usertoken1=$(curl -fS --retry 3 "http://$HOMESERVER/_matrix/client/r0/login" -H "Content-Type: application/json" -d "{\"type\": \"m.login.password\", \"identifier\": {\"type\": \"m.id.user\",\"user\": \"$INTEGRATION_USER1\"},\"password\":\"$INTEGRATION_PASSWORD1\"}" | jq -r '.access_token')
 usertoken2=$(curl -fS --retry 3 "http://$HOMESERVER/_matrix/client/r0/login" -H "Content-Type: application/json" -d "{\"type\": \"m.login.password\", \"identifier\": {\"type\": \"m.id.user\",\"user\": \"$INTEGRATION_USER2\"},\"password\":\"$INTEGRATION_PASSWORD2\"}" | jq -r '.access_token')
 
@@ -46,6 +50,9 @@ usertoken2=$(curl -fS --retry 3 "http://$HOMESERVER/_matrix/client/r0/login" -H 
 mxid1=$(curl -fS --retry 3 "http://$HOMESERVER/_matrix/client/r0/account/whoami" -H "Authorization: Bearer $usertoken1" | jq -r .user_id)
 mxid2=$(curl -fS --retry 3 "http://$HOMESERVER/_matrix/client/r0/account/whoami" -H "Authorization: Bearer $usertoken2" | jq -r .user_id)
 
+echo "usernames: $mxid1 and $mxid2"
+
+echo "setting display names"
 # setting the display name to username
 curl -fS --retry 3 -XPUT -d "{\"displayname\":\"$INTEGRATION_USER1\"}" "http://$HOMESERVER/_matrix/client/v3/profile/$mxid1/displayname" -H "Authorization: Bearer $usertoken1"
 curl -fS --retry 3 -XPUT -d "{\"displayname\":\"$INTEGRATION_USER2\"}" "http://$HOMESERVER/_matrix/client/v3/profile/$mxid2/displayname" -H "Authorization: Bearer $usertoken2"
