@@ -28,7 +28,7 @@ stages:
     - sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
     - flutter pub get
     - flutter pub run import_sorter:main --no-comments --exit-if-changed
-    - flutter format lib/ test/ --set-exit-if-changed
+    - flutter format lib/ test/ integration_test/ --set-exit-if-changed
     - mkdir -p assets/js/package
 
 flutter_analyze:
