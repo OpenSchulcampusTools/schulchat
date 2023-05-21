@@ -24,7 +24,7 @@ TODO:
 String random(int length) {
   var rand = Random();
   return String.fromCharCodes(
-    List.generate(length, (index) => rand.nextInt(33) + 89),
+    List.generate(length, (index) => rand.nextInt(25) + 97),
   );
 }
 
@@ -32,7 +32,7 @@ void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   binding.testTextInput.register(); // makes enterText work
 
-  final uniqueMessage = 'Test message ${random(10)}';
+  final uniqueMessage = 'Test message ${random(20)}';
 
   group(
     'Integration Test',
