@@ -24,9 +24,6 @@ sudo docker run -d --name synapse -h $HOMESERVER -v $(pwd)/integration_test/syna
 export SYNAPSE_IP=$(sudo docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' synapse)
 echo "synapse server ip: ${SYNAPSE_IP}"
 
-echo "${SYNAPSE_IP} synapse" | sudo tee --append /etc/hosts
-
-
 ./scripts/integration-prepare-homeserver.sh
 
 sed -i "s#test.schulchat.rlp.de#synapse#g" config.sample.json lib/config/app_config.dart

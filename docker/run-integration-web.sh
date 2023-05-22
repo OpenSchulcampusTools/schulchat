@@ -16,6 +16,14 @@ if [ -z "$INTEGRATION_PASSWORD2" ]; then
   echo "INTEGRATION_PASSWORD2 not set"
   exit 1
 fi
+if [ -z "$HOMESERVER" ]; then
+  echo "Please ensure HOMESERVER environment variable is set to the IP or hostname of the homeserver."
+  exit 1
+fi
+if [ -z "$SYNAPSE_IP" ]; then
+  echo "Please ensure SYNAPSE_IP environment variable is set to the IP of the homeserver."
+  exit 1
+fi
 
 #for android tests we put it outside the entrypoint and it works
 #not sure why it cannot reach synapse

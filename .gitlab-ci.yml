@@ -158,9 +158,7 @@ integration_android:
     chmod 0777 /builds/shared/fluffy
     #FIXME we need to use our synapse build instead!
     docker run -d --name synapse -h $HOMESERVER -v /builds/shared/fluffy:/data matrixdotorg/synapse:latest
-    SYNAPSE_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' synapse)
-    echo "${SYNAPSE_IP} synapse" >> /etc/hosts
-    #docker run --name synapse -v synapse_data:/data -p 80:80 matrixdotorg/synapse:latest
+    export SYNAPSE_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' synapse)
     timeout 30s ./scripts/integration-prepare-homeserver.sh
     docker build -f docker/Dockerfile.integration-android -t integration-$ANDROID_DEVICE --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg INTEGRATION_USER1=$INTEGRATION_USER1 --build-arg INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --build-arg INTEGRATION_USER2=$INTEGRATION_USER2 --build-arg INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 --build-arg TEST_DEVICE=$ANDROID_DEVICE .
     docker run --add-host=${HOMESERVER}:${SYNAPSE_IP} --device /dev/kvm --name $ANDROID_DEVICE integration-$ANDROID_DEVICE || true
@@ -203,7 +201,7 @@ integration_web:
     #FIXME we need to use our synapse build instead!
     docker run -d --name synapse-for-web -h $HOMESERVER -v /builds/shared/fluffy:/data matrixdotorg/synapse:latest
     SYNAPSE_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' synapse-for-web)
-    docker run --add-host=${HOMESERVER}:${SYNAPSE_IP} --shm-size=4096m --name integration-web-run integration-web || true
+    docker run --add-host=${HOMESERVER}:${SYNAPSE_IP} -e SYNAPSE_IP=$SYNAPSE_IP --shm-size=4096m --name integration-web-run integration-web || true
     docker stop synapse-for-web || true
     docker cp integration-web-run:/tmp/exit_code .
     docker cp integration-web-run:/tmp/chromedriver.log .
