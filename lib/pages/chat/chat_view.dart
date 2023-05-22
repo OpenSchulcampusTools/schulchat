@@ -179,6 +179,9 @@ class ChatView extends StatelessWidget {
           redirector.stopRedirection();
         }
       },
+      afterUpdate: (BuildContext context, String? from, String to) async {
+        controller.scrollToEventAfterSearch(context, from, to);
+      },
       child: GestureDetector(
         onTapDown: controller.setReadMarker,
         behavior: HitTestBehavior.opaque,

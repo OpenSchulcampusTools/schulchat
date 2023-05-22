@@ -805,6 +805,21 @@ class ChatController extends State<Chat> {
     inputFocus.requestFocus();
   }
 
+  /*
+  * this function scrolls to event given by queryParameters, only if
+  * last route was search
+   */
+  void scrollToEventAfterSearch(BuildContext context, String? from, String to) {
+    if (mounted && timeline != null) {
+      if (from != null && from.endsWith('/search')) {
+        final event = VRouter.of(context).queryParameters['event'];
+        if (event != null) {
+          scrollToEventId(event);
+        }
+      }
+    }
+  }
+
   void scrollToEventId(String eventId) async {
     var eventIndex = timeline!.events.indexWhere((e) => e.eventId == eventId);
     if (eventIndex == -1) {

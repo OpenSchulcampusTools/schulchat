@@ -233,12 +233,10 @@ class ChatSearchController extends State<ChatSearch> {
   }
 
   void scrollToEventId(String eventId) {
-    VRouter.of(context).path.startsWith('/spaces/')
-        ? VRouter.of(context).pop()
-        : VRouter.of(context).toSegments(
-            ['rooms', roomId!],
-            queryParameters: {'event': eventId},
-          );
+    VRouter.of(context).toSegments(
+      ['rooms', roomId!],
+      queryParameters: {'event': eventId},
+    );
   }
 
   void scrollToTop() {
