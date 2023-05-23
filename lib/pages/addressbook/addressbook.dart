@@ -233,180 +233,188 @@ class AddressbookController extends State<AddressbookPage> {
   }
 
   Future<Map<String, dynamic>> fetchAddressbook() async {
-    final abookJson = await Matrix.of(context).client.request(
-          RequestType.GET,
-          '/client/unstable/fairkom.fairmessenger.addressbook/addressbook',
-        );
-    return abookJson;
+    try {
+      final abookJson = await Matrix.of(context).client.request(
+            RequestType.GET,
+            '/client/unstable/fairkom.fairmessenger.addressbook/addressbook',
+          );
+      return abookJson;
+    } on MatrixException catch (e) {
+      Logs().i('Error fetchAddressbook: ${e.errcode} ${e.errorMessage}');
+      return {};
+    }
   }
 
   Future<List<ABookEntry>> buildAddressbook() async {
     final abookEntries = <ABookEntry>[];
     final abookJson = await fetchAddressbook();
-    for (final school in abookJson.keys) {
-      // not a school, but contains a list of all users returned with the address book
-      if (school == 'users') continue;
+    if (abookJson.keys.isNotEmpty) {
+      for (final school in abookJson.keys) {
+        // not a school, but contains a list of all users returned with the address book
+        if (school == 'users') continue;
 
-      final schoolName = abookJson[school]['name'];
-      //final schoolName = await Matrix.of(context).client.request(RequestType.GET, '/../idm/school/${school}');
-      final abookSchool = ABookEntry(
-        title: schoolName,
-        children: [],
-        category: true,
-        isSchool: true,
-        orgName: school,
-      );
-      listOfSchools.add(abookSchool);
-      final abookTeacher = ABookEntry(
-        title: L10n.of(context)!.abookTitleTeachers,
-        children: [],
-        category: true,
-        orgName: school,
-      );
-      final abookSCGroups = ABookEntry(
-        title: L10n.of(context)!.abookTitleSCGroups,
-        children: [],
-        category: true,
-        orgName: school,
-      );
-      final abookStudents = ABookEntry(
-        title: L10n.of(context)!.abookTitleStudents,
-        children: [],
-        category: true,
-        orgName: school,
-      );
-      final abookParents = ABookEntry(
-        title: L10n.of(context)!.abookTitleParents,
-        children: [],
-        category: true,
-        orgName: school,
-      );
-      final abookAdmins = ABookEntry(
-        title: L10n.of(context)!.abookTitleAdmins,
-        children: [],
-        category: true,
-        orgName: school,
-      );
-      allUsers[school] = [];
-      if (abookJson[school]['teachers'] != null &&
-          abookJson[school]['teachers'].isNotEmpty) {
-        abookSchool.children.add(abookTeacher);
-        abookJson[school]['teachers'].forEach((teacher) {
-          final entry = ABookEntry(
-            title: teacher,
-            info: '${L10n.of(context)!.contactsInfoTeacher} $schoolName',
-            orgName: school,
-            longName: abookJson['users'][teacher].first,
-            kind: 'teacher', //TODO
-            active: abookJson['users'][teacher].last == 'active',
-          );
-          abookTeacher.children.add(
-            entry,
-          );
-          allUsers[school]!.add(entry);
-        });
-      }
-      if (abookJson[school]['scgroups'] != null &&
-          abookJson[school]['scgroups'].isNotEmpty) {
-        abookSchool.children.add(abookSCGroups);
-        abookJson[school]['scgroups'].forEach((id, groupData) {
-          final name = groupData.first;
-          final users = groupData.last;
-          final List<String> activeUsers = [];
-          final List<String> inactiveUsers = [];
-          users.forEach((uid) {
-            if (abookJson['users'][uid].last == 'active') {
-              activeUsers.add(uid);
-              //FIXME multiple entries of same users!
-              usersInSCGroups.add(
-                FlatUser(
-                  username: uid,
-                  longName: abookJson['users'][uid].first,
-                  active: true,
-                ),
-              );
-            } else {
-              inactiveUsers.add(uid);
-              //FIXME multiple entries of same users!
-              usersInSCGroups.add(
-                FlatUser(
-                  username: uid,
-                  longName: abookJson['users'][uid].first,
-                  active: false,
-                ),
-              );
-            }
-          });
-          abookSCGroups.children.add(
-            ABookEntry(
-              title: name,
-              id: id,
-              info: '${L10n.of(context)!.contactsInfoGroup} $schoolName',
+        final schoolName = abookJson[school]['name'];
+        //final schoolName = await Matrix.of(context).client.request(RequestType.GET, '/../idm/school/${school}');
+        final abookSchool = ABookEntry(
+          title: schoolName,
+          children: [],
+          category: true,
+          isSchool: true,
+          orgName: school,
+        );
+        listOfSchools.add(abookSchool);
+        final abookTeacher = ABookEntry(
+          title: L10n.of(context)!.abookTitleTeachers,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookSCGroups = ABookEntry(
+          title: L10n.of(context)!.abookTitleSCGroups,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookStudents = ABookEntry(
+          title: L10n.of(context)!.abookTitleStudents,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookParents = ABookEntry(
+          title: L10n.of(context)!.abookTitleParents,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookAdmins = ABookEntry(
+          title: L10n.of(context)!.abookTitleAdmins,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        allUsers[school] = [];
+        if (abookJson[school]['teachers'] != null &&
+            abookJson[school]['teachers'].isNotEmpty) {
+          abookSchool.children.add(abookTeacher);
+          abookJson[school]['teachers'].forEach((teacher) {
+            final entry = ABookEntry(
+              title: teacher,
+              info: '${L10n.of(context)!.contactsInfoTeacher} $schoolName',
               orgName: school,
-              kind: 'group', //TODO
-              scgroupUsersActive: activeUsers,
-              scgroupUsersInactive: inactiveUsers,
-            ),
-          );
-        });
+              longName: abookJson['users'][teacher].first,
+              kind: 'teacher', //TODO
+              active: abookJson['users'][teacher].last == 'active',
+            );
+            abookTeacher.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['scgroups'] != null &&
+            abookJson[school]['scgroups'].isNotEmpty) {
+          abookSchool.children.add(abookSCGroups);
+          abookJson[school]['scgroups'].forEach((id, groupData) {
+            final name = groupData.first;
+            final users = groupData.last;
+            final List<String> activeUsers = [];
+            final List<String> inactiveUsers = [];
+            users.forEach((uid) {
+              if (abookJson['users'][uid].last == 'active') {
+                activeUsers.add(uid);
+                //FIXME multiple entries of same users!
+                usersInSCGroups.add(
+                  FlatUser(
+                    username: uid,
+                    longName: abookJson['users'][uid].first,
+                    active: true,
+                  ),
+                );
+              } else {
+                inactiveUsers.add(uid);
+                //FIXME multiple entries of same users!
+                usersInSCGroups.add(
+                  FlatUser(
+                    username: uid,
+                    longName: abookJson['users'][uid].first,
+                    active: false,
+                  ),
+                );
+              }
+            });
+            abookSCGroups.children.add(
+              ABookEntry(
+                title: name,
+                id: id,
+                info: '${L10n.of(context)!.contactsInfoGroup} $schoolName',
+                orgName: school,
+                kind: 'group', //TODO
+                scgroupUsersActive: activeUsers,
+                scgroupUsersInactive: inactiveUsers,
+              ),
+            );
+          });
+        }
+        if (abookJson[school]['students'] != null &&
+            abookJson[school]['students'].isNotEmpty) {
+          abookSchool.children.add(abookStudents);
+          abookJson[school]['students'].forEach((student) {
+            final entry = ABookEntry(
+              title: student,
+              info: '${L10n.of(context)!.contactsInfoStudent} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][student].first,
+              kind: 'student', //TODO
+              active: abookJson['users'][student].last == 'active',
+            );
+            abookStudents.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['parents'] != null &&
+            abookJson[school]['parents'].isNotEmpty) {
+          abookSchool.children.add(abookParents);
+          abookJson[school]['parents'].forEach((parent) {
+            final entry = ABookEntry(
+              title: parent,
+              info: '${L10n.of(context)!.contactsInfoParent} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][parent].first,
+              kind: 'parent', //TODO
+              active: abookJson['users'][parent].last == 'active',
+            );
+            abookParents.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['admins'] != null &&
+            abookJson[school]['admins'].isNotEmpty) {
+          abookSchool.children.add(abookAdmins);
+          abookJson[school]['admins'].forEach((admin) {
+            final entry = ABookEntry(
+              title: admin,
+              info: '${L10n.of(context)!.contactsInfoAdmin} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][admin].first,
+              kind: 'admin', //TODO
+              active: abookJson['users'][admin].last == 'active',
+            );
+            abookAdmins.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        abookEntries.add(abookSchool);
       }
-      if (abookJson[school]['students'] != null &&
-          abookJson[school]['students'].isNotEmpty) {
-        abookSchool.children.add(abookStudents);
-        abookJson[school]['students'].forEach((student) {
-          final entry = ABookEntry(
-            title: student,
-            info: '${L10n.of(context)!.contactsInfoStudent} $schoolName',
-            orgName: school,
-            longName: abookJson['users'][student].first,
-            kind: 'student', //TODO
-            active: abookJson['users'][student].last == 'active',
-          );
-          abookStudents.children.add(
-            entry,
-          );
-          allUsers[school]!.add(entry);
-        });
-      }
-      if (abookJson[school]['parents'] != null &&
-          abookJson[school]['parents'].isNotEmpty) {
-        abookSchool.children.add(abookParents);
-        abookJson[school]['parents'].forEach((parent) {
-          final entry = ABookEntry(
-            title: parent,
-            info: '${L10n.of(context)!.contactsInfoParent} $schoolName',
-            orgName: school,
-            longName: abookJson['users'][parent].first,
-            kind: 'parent', //TODO
-            active: abookJson['users'][parent].last == 'active',
-          );
-          abookParents.children.add(
-            entry,
-          );
-          allUsers[school]!.add(entry);
-        });
-      }
-      if (abookJson[school]['admins'] != null &&
-          abookJson[school]['admins'].isNotEmpty) {
-        abookSchool.children.add(abookAdmins);
-        abookJson[school]['admins'].forEach((admin) {
-          final entry = ABookEntry(
-            title: admin,
-            info: '${L10n.of(context)!.contactsInfoAdmin} $schoolName',
-            orgName: school,
-            longName: abookJson['users'][admin].first,
-            kind: 'admin', //TODO
-            active: abookJson['users'][admin].last == 'active',
-          );
-          abookAdmins.children.add(
-            entry,
-          );
-          allUsers[school]!.add(entry);
-        });
-      }
-      abookEntries.add(abookSchool);
+      Logs()
+          .d('List of schools: ${listOfSchools.map((s) => s.title).toList()}');
     }
-    Logs().d('List of schools: ${listOfSchools.map((s) => s.title).toList()}');
     return abookEntries;
   }
 
