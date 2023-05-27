@@ -530,30 +530,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   }
 }
 
-class FixedThreepidCreds extends ThreepidCreds {
-  FixedThreepidCreds({
-    required String sid,
-    required String clientSecret,
-    String? idServer,
-    String? idAccessToken,
-  }) : super(
-          sid: sid,
-          clientSecret: clientSecret,
-          idServer: idServer,
-          idAccessToken: idAccessToken,
-        );
-
-  @override
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['sid'] = sid;
-    data['client_secret'] = clientSecret;
-    if (idServer != null) data['id_server'] = idServer;
-    if (idAccessToken != null) data['id_access_token'] = idAccessToken;
-    return data;
-  }
-}
-
 class _AccountBundleWithClient {
   final Client? client;
   final AccountBundle? bundle;
