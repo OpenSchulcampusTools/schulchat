@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:vrouter/vrouter.dart';
 
-import 'package:fluffychat/pages/add_story/add_story.dart';
 import 'package:fluffychat/pages/addressbook/addressbook.dart';
 import 'package:fluffychat/pages/archive/archive.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
@@ -18,7 +17,6 @@ import 'package:fluffychat/pages/invitation_selection/invitation_selection.dart'
 import 'package:fluffychat/pages/login/login.dart';
 import 'package:fluffychat/pages/new_group/new_group.dart';
 import 'package:fluffychat/pages/new_private_chat/new_private_chat.dart';
-import 'package:fluffychat/pages/new_space/new_space.dart';
 import 'package:fluffychat/pages/read_receipt_overview/read_receipt_overview.dart';
 import 'package:fluffychat/pages/settings/settings.dart';
 import 'package:fluffychat/pages/settings_3pid/settings_3pid.dart';
@@ -28,10 +26,8 @@ import 'package:fluffychat/pages/settings_ignore_list/settings_ignore_list.dart'
 import 'package:fluffychat/pages/settings_multiple_emotes/settings_multiple_emotes.dart';
 import 'package:fluffychat/pages/settings_notifications/settings_notifications.dart';
 import 'package:fluffychat/pages/settings_security/settings_security.dart';
-import 'package:fluffychat/pages/settings_stories/settings_stories.dart';
 import 'package:fluffychat/pages/settings_style/settings_style.dart';
 import 'package:fluffychat/pages/sign_up/signup.dart';
-import 'package:fluffychat/pages/story/story_page.dart';
 import 'package:fluffychat/widgets/layouts/empty_page.dart';
 import 'package:fluffychat/widgets/layouts/loading_view.dart';
 import 'package:fluffychat/widgets/layouts/side_view_layout.dart';
@@ -55,31 +51,12 @@ class AppRoutes {
           widget: const ChatList(),
           stackedRoutes: [
             VWidget(
-              path: '/stories/create',
-              widget: const AddStoryPage(),
-            ),
-            VWidget(
               path: '/readreceipts',
               widget: const ReadReceiptOverviewPage(),
             ),
             VWidget(
               path: '/addressbook',
               widget: const AddressbookPage(),
-            ),
-            VWidget(
-              path: '/stories/:roomid',
-              widget: const StoryPage(),
-              stackedRoutes: [
-                VWidget(
-                  path: 'share',
-                  widget: const AddStoryPage(),
-                ),
-              ],
-            ),
-            VWidget(
-              path: '/spaces/:roomid',
-              widget: const ChatDetails(),
-              stackedRoutes: _chatDetailsRoutes,
             ),
             VWidget(
               path: ':roomid',
@@ -133,10 +110,6 @@ class AppRoutes {
               path: '/newgroup',
               widget: const NewGroup(),
             ),
-            VWidget(
-              path: '/newspace',
-              widget: const NewSpace(),
-            ),
           ],
         ),
       ];
@@ -155,34 +128,12 @@ class AppRoutes {
               buildTransition: _fadeTransition,
               stackedRoutes: [
                 VWidget(
-                  path: '/stories/create',
-                  buildTransition: _fadeTransition,
-                  widget: const AddStoryPage(),
-                ),
-                VWidget(
                   path: '/readreceipts',
                   widget: const ReadReceiptOverviewPage(),
                 ),
                 VWidget(
                   path: '/addressbook',
                   widget: const AddressbookPage(),
-                ),
-                VWidget(
-                  path: '/stories/:roomid',
-                  buildTransition: _fadeTransition,
-                  widget: const StoryPage(),
-                  stackedRoutes: [
-                    VWidget(
-                      path: 'share',
-                      widget: const AddStoryPage(),
-                    ),
-                  ],
-                ),
-                VWidget(
-                  path: '/spaces/:roomid',
-                  widget: const ChatDetails(),
-                  buildTransition: _fadeTransition,
-                  stackedRoutes: _chatDetailsRoutes,
                 ),
                 VWidget(
                   path: '/newprivatechat',
@@ -192,11 +143,6 @@ class AppRoutes {
                 VWidget(
                   path: '/newgroup',
                   widget: const NewGroup(),
-                  buildTransition: _fadeTransition,
-                ),
-                VWidget(
-                  path: '/newspace',
-                  widget: const NewSpace(),
                   buildTransition: _fadeTransition,
                 ),
                 VNester(
@@ -426,11 +372,6 @@ class AppRoutes {
           widget: const SettingsSecurity(),
           buildTransition: _dynamicTransition,
           stackedRoutes: [
-            VWidget(
-              path: 'stories',
-              widget: const SettingsStories(),
-              buildTransition: _dynamicTransition,
-            ),
             VWidget(
               path: 'ignorelist',
               widget: const SettingsIgnoreList(),

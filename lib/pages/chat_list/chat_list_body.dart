@@ -7,10 +7,7 @@ import 'package:matrix/matrix.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_item.dart';
 import 'package:fluffychat/pages/chat_list/search_title.dart';
-import 'package:fluffychat/pages/chat_list/space_view.dart';
-import 'package:fluffychat/pages/chat_list/stories_header.dart';
 import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/client_stories_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/utils/stream_extension.dart';
 import 'package:fluffychat/widgets/avatar.dart';
@@ -65,11 +62,6 @@ class ChatListViewBody extends StatelessWidget {
           }
           if (controller.waitForFirstSync && client.prevBatch != null) {
             final rooms = controller.filteredRooms;
-            final displayStoriesHeader = {
-                  ActiveFilter.allChats,
-                  ActiveFilter.messages,
-                }.contains(controller.activeFilter) &&
-                client.storiesRooms.isNotEmpty;
             return ListView.builder(
               controller: controller.scrollController,
               // add +1 space below in order to properly scroll below the spaces bar
@@ -154,16 +146,7 @@ class ChatListViewBody extends StatelessWidget {
                                   ),
                                 ),
                         ),
-                        SearchTitle(
-                          title: L10n.of(context)!.stories,
-                          icon: const Icon(Icons.camera_alt_outlined),
-                        ),
                       ],
-                      if (displayStoriesHeader)
-                        StoriesHeader(
-                          key: const Key('stories_header'),
-                          filter: controller.searchController.text,
-                        ),
                       const ConnectionStatusHeader(),
                       AnimatedContainer(
                         height: controller.isTorBrowser ? 64 : 0,

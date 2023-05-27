@@ -30,16 +30,6 @@ class ClientChooserButton extends StatelessWidget {
       );
     return <PopupMenuEntry<Object>>[
       PopupMenuItem(
-        value: SettingsAction.newStory,
-        child: Row(
-          children: [
-            const Icon(Icons.camera_outlined),
-            const SizedBox(width: 18),
-            Text(L10n.of(context)!.yourStory),
-          ],
-        ),
-      ),
-      PopupMenuItem(
         value: SettingsAction.newGroup,
         child: Row(
           children: [
@@ -302,9 +292,6 @@ class ClientChooserButton extends StatelessWidget {
           if (consent != OkCancelResult.ok) return;
           VRouter.of(context).to('/settings/addaccount');
           break;
-        case SettingsAction.newStory:
-          VRouter.of(context).to('/stories/create');
-          break;
         case SettingsAction.newGroup:
           VRouter.of(context).to('/newgroup');
           break;
@@ -408,7 +395,6 @@ class ClientChooserButton extends StatelessWidget {
 
 enum SettingsAction {
   addAccount,
-  newStory,
   newGroup,
   newSpace,
   invite,
