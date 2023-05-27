@@ -38,15 +38,6 @@ enum SelectMode {
   select,
 }
 
-enum PopupMenuAction {
-  settings,
-  invite,
-  newGroup,
-  newSpace,
-  setStatus,
-  archive,
-}
-
 enum ActiveFilter {
   allChats,
   groups,
