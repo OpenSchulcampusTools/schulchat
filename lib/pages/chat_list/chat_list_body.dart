@@ -44,22 +44,12 @@ class ChatListViewBody extends StatelessWidget {
       },
       child: StreamBuilder(
         key: ValueKey(
-          client.userID.toString() +
-              controller.activeFilter.toString() +
-              controller.activeSpaceId.toString(),
+          client.userID.toString() + controller.activeFilter.toString(),
         ),
         stream: client.onSync.stream
             .where((s) => s.hasRoomUpdate)
             .rateLimit(const Duration(seconds: 1)),
         builder: (context, _) {
-          if (controller.activeFilter == ActiveFilter.spaces &&
-              !controller.isSearchMode) {
-            return SpaceView(
-              controller,
-              scrollController: controller.scrollController,
-              key: Key(controller.activeSpaceId ?? 'Spaces'),
-            );
-          }
           if (controller.waitForFirstSync && client.prevBatch != null) {
             final rooms = controller.filteredRooms;
             return ListView.builder(

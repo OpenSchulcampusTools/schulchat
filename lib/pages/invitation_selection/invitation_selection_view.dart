@@ -20,13 +20,11 @@ class InvitationSelectionView extends StatelessWidget {
     final groupName = room.name.isEmpty ? L10n.of(context)!.group : room.name;
     return Scaffold(
       appBar: AppBar(
-        leading: VRouter.of(context).path.startsWith('/spaces/')
-            ? null
-            : IconButton(
-                icon: const Icon(Icons.close_outlined),
-                onPressed: () => VRouter.of(context)
-                    .toSegments(['rooms', controller.roomId!]),
-              ),
+        leading: IconButton(
+          icon: const Icon(Icons.close_outlined),
+          onPressed: () =>
+              VRouter.of(context).toSegments(['rooms', controller.roomId!]),
+        ),
         titleSpacing: 0,
         title: SizedBox(
           height: 44,

@@ -10,8 +10,6 @@ import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/pages/chat_list/navi_rail_item.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
-import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/unread_rooms_badge.dart';
 import '../../widgets/matrix.dart';
 import 'chat_list_body.dart';
@@ -71,18 +69,11 @@ class ChatListView extends StatelessWidget {
           ),
           label: L10n.of(context)!.chats,
         ),
-      if (controller.spaces.isNotEmpty)
-        const NavigationDestination(
-          icon: Icon(Icons.workspaces_outlined),
-          selectedIcon: Icon(Icons.workspaces),
-          label: 'Spaces',
-        ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    final client = Matrix.of(context).client;
     return StreamBuilder<Object?>(
       stream: Matrix.of(context).onShareContentChanged.stream,
       builder: (_, __) {
@@ -111,23 +102,13 @@ class ChatListView extends StatelessWidget {
                   FluffyThemes.getDisplayNavigationRail(context)) ...[
                 Builder(
                   builder: (context) {
-                    final allSpaces =
-                        client.rooms.where((room) => room.isSpace);
-                    final rootSpaces = allSpaces
-                        .where(
-                          (space) => !allSpaces.any(
-                            (parentSpace) => parentSpace.spaceChildren
-                                .any((child) => child.roomId == space.id),
-                          ),
-                        )
-                        .toList();
                     final destinations = getNavigationDestinations(context);
 
                     return SizedBox(
                       width: 64,
                       child: ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: rootSpaces.length + destinations.length,
+                        itemCount: destinations.length,
                         itemBuilder: (context, i) {
                           if (i < destinations.length) {
                             return NaviRailItem(
@@ -139,25 +120,7 @@ class ChatListView extends StatelessWidget {
                             );
                           }
                           i -= destinations.length;
-                          final isSelected =
-                              controller.activeFilter == ActiveFilter.spaces &&
-                                  rootSpaces[i].id == controller.activeSpaceId;
-                          return NaviRailItem(
-                            toolTip: rootSpaces[i].getLocalizedDisplayname(
-                              MatrixLocals(L10n.of(context)!),
-                            ),
-                            isSelected: isSelected,
-                            onTap: () =>
-                                controller.setActiveSpace(rootSpaces[i].id),
-                            icon: Avatar(
-                              mxContent: rootSpaces[i].avatar,
-                              name: rootSpaces[i].getLocalizedDisplayname(
-                                MatrixLocals(L10n.of(context)!),
-                              ),
-                              size: 32,
-                              fontSize: 12,
-                            ),
-                          );
+                          return null;
                         },
                       ),
                     );

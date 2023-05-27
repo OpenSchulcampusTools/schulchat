@@ -41,10 +41,7 @@ class PublicRoomBottomSheet extends StatelessWidget {
           (sync) => sync.rooms?.join?.containsKey(result.result) ?? false,
         );
       }
-      // don't open the room if the joined room is a space
-      if (!client.getRoomById(result.result!)!.isSpace) {
-        VRouter.of(context).toSegments(['rooms', result.result!]);
-      }
+      VRouter.of(context).toSegments(['rooms', result.result!]);
       Navigator.of(context, rootNavigator: false).pop();
       return;
     }

@@ -140,11 +140,6 @@ class UrlLauncher {
       }
       servers.addAll(identityParts.via);
       if (room != null) {
-        if (room.isSpace) {
-          // TODO: Implement navigate to space
-          VRouter.of(context).toSegments(['rooms']);
-          return;
-        }
         // we have the room, so....just open it
         if (event != null) {
           VRouter.of(context).toSegments(

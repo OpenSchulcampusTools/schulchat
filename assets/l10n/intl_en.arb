@@ -66,8 +66,6 @@
         "type": "text",
         "placeholders": {}
     },
-    "addToSpace": "Add to space",
-    "@addToSpace": {},
     "admin": "Admin",
     "@admin": {
         "type": "text",
@@ -407,8 +405,6 @@
         "type": "text",
         "placeholders": {}
     },
-    "chatHasBeenAddedToThisSpace": "Chat has been added to this space",
-    "@chatHasBeenAddedToThisSpace": {},
     "chats": "Chats",
     "@chats": {
         "type": "text",
@@ -625,11 +621,6 @@
     },
     "createNewGroup": "Create new room",
     "@createNewGroup": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "createNewSpace": "New space",
-    "@createNewSpace": {
         "type": "text",
         "placeholders": {}
     },
@@ -850,8 +841,6 @@
         "type": "text",
         "placeholders": {}
     },
-    "enterASpacepName": "Enter a space name",
-    "@enterASpacepName": {},
     "homeserver": "Homeserver",
     "@homeserver": {},
     "enterYourHomeserver": "Enter your homeserver",
@@ -1877,11 +1866,6 @@
         "type": "text",
         "placeholders": {}
     },
-    "showDirectChatsInSpaces": "Show related Direct Chats in Spaces",
-    "@showDirectChatsInSpaces": {
-        "type": "text",
-        "placeholders": {}
-    },
     "showPassword": "Show password",
     "@showPassword": {
         "type": "text",
@@ -1904,16 +1888,6 @@
     },
     "sourceCode": "Source code",
     "@sourceCode": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "spaceIsPublic": "Space is public",
-    "@spaceIsPublic": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "spaceName": "Space name",
-    "@spaceName": {
         "type": "text",
         "placeholders": {}
     },
@@ -2273,10 +2247,6 @@
     "@sender": {},
     "openGallery": "Open gallery",
     "@openGallery": {},
-    "removeFromSpace": "Remove from space",
-    "@removeFromSpace": {},
-    "addToSpaceDescription": "Select a space to add this chat to it.",
-    "@addToSpaceDescription": {},
     "start": "Start",
     "@start": {},
     "pleaseEnterRecoveryKeyDescription": "To unlock your old messages, please enter your recovery key that has been generated in a previous session. Your recovery key is NOT your password.",
@@ -2477,14 +2447,8 @@
     "@noKeyForThisMessage": {},
     "newGroup": "New room",
     "@newGroup": {},
-    "newSpace": "New space",
-    "@newSpace": {},
-    "enterSpace": "Enter space",
-    "@enterSpace": {},
     "enterRoom": "Enter room",
     "@enterRoom": {},
-    "allSpaces": "All spaces",
-    "@allSpaces": {},
     "numChats": "{number} chats",
     "@numChats": {
         "type": "number",
@@ -2501,7 +2465,6 @@
             "oldDisplayName": {}
         }
     },
-    "newSpaceDescription": "Spaces allows you to consolidate your chats and build private or public communities.",
     "encryptThisChat": "Encrypt this chat",
     "endToEndEncryption": "End to end encryption",
     "disableEncryptionWarning": "For security reasons you can not disable encryption in a chat, where it has been enabled before.",

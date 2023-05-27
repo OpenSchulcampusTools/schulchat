@@ -54,11 +54,8 @@ class ChatSearchView extends StatelessWidget {
                 SliverAppBar(
                   leading: IconButton(
                     icon: const Icon(Icons.close_outlined),
-                    onPressed: () =>
-                        VRouter.of(context).path.startsWith('/spaces/')
-                            ? VRouter.of(context).pop()
-                            : VRouter.of(context)
-                                .toSegments(['rooms', controller.roomId!]),
+                    onPressed: () => VRouter.of(context)
+                        .toSegments(['rooms', controller.roomId!]),
                   ),
                   elevation: Theme.of(context).appBarTheme.elevation,
                   expandedHeight: 300.0,

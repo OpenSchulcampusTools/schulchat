@@ -534,11 +534,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "createNewSpace": "Neuer Space",
-  "@createNewSpace": {
-    "type": "text",
-    "placeholders": {}
-  },
   "crossSigningEnabled": "Cross-Signing ist aktiviert",
   "@crossSigningEnabled": {
     "type": "text",
@@ -756,8 +751,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "enterASpacepName": "Namen für den Space eingeben",
-  "@enterASpacepName": {},
   "enterYourHomeserver": "Gib Deinen Homeserver ein",
   "@enterYourHomeserver": {
     "type": "text",
@@ -1745,16 +1738,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "spaceIsPublic": "Space ist öffentlich",
-  "@spaceIsPublic": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "spaceName": "Space-Name",
-  "@spaceName": {
-    "type": "text",
-    "placeholders": {}
-  },
   "startedACall": "{senderName} hat einen Anruf getätigt",
   "@startedACall": {
     "type": "text",
@@ -2112,15 +2095,11 @@
   "@typeInInviteLinkManually": {},
   "shareYourInviteLink": "Teile deinen Einladungslink",
   "@shareYourInviteLink": {},
-  "chatHasBeenAddedToThisSpace": "Chat wurde zum Space hinzugefügt",
-  "@chatHasBeenAddedToThisSpace": {},
   "autoplayImages": "Animierte Sticker und Emotes automatisch abspielen",
   "@autoplayImages": {
     "type": "text",
     "placeholder": {}
   },
-  "addToSpace": "Zum Space hinzufügen",
-  "@addToSpace": {},
   "serverRequiresEmail": "Dieser Server muss deine E-Mail-Adresse für die Registrierung überprüfen.",
   "@serverRequiresEmail": {},
   "enableMultiAccounts": "(BETA) Aktiviere Multi-Accounts für dieses Gerät",
@@ -2159,10 +2138,6 @@
   "@sender": {},
   "openGallery": "Galerie öffnen",
   "@openGallery": {},
-  "removeFromSpace": "Aus dem Space entfernen",
-  "@removeFromSpace": {},
-  "addToSpaceDescription": "Wähle einen Space aus, um diesen Chat hinzuzufügen.",
-  "@addToSpaceDescription": {},
   "loginWithOneClick": "Anmelden mit einem Klick",
   "@loginWithOneClick": {},
   "start": "Start",
@@ -2304,11 +2279,6 @@
   "@previousAccount": {},
   "separateChatTypes": "Separate Direktchats und Räume",
   "@separateChatTypes": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "showDirectChatsInSpaces": "Zugehörige Direkt-Chats in Spaces anzeigen",
-  "@showDirectChatsInSpaces": {
     "type": "text",
     "placeholders": {}
   },
@@ -2461,14 +2431,8 @@
   "@whyIsThisMessageEncrypted": {},
   "newGroup": "Neuer Raum",
   "@newGroup": {},
-  "newSpace": "Neuer Raum",
-  "@newSpace": {},
-  "enterSpace": "Raum betreten",
-  "@enterSpace": {},
   "enterRoom": "Raum betreten",
   "@enterRoom": {},
-  "allSpaces": "Alle Spaces",
-  "@allSpaces": {},
   "screenSharingDetail": "Du teilst deinen Bildschirm",
   "@screenSharingDetail": {},
   "numChats": "{number} Chats",
@@ -2478,8 +2442,6 @@
       "number": {}
     }
   },
-  "newSpaceDescription": "Mit Spaces kannst du deine Chats zusammenfassen und private oder öffentliche Communities aufbauen.",
-  "@newSpaceDescription": {},
   "wasDirectChatDisplayName": "Leerer Chat (was {oldDisplayName}",
   "@wasDirectChatDisplayName": {
     "type": "text",

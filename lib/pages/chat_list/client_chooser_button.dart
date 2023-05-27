@@ -40,16 +40,6 @@ class ClientChooserButton extends StatelessWidget {
         ),
       ),
       PopupMenuItem(
-        value: SettingsAction.newSpace,
-        child: Row(
-          children: [
-            const Icon(Icons.workspaces_outlined),
-            const SizedBox(width: 18),
-            Text(L10n.of(context)!.createNewSpace),
-          ],
-        ),
-      ),
-      PopupMenuItem(
         value: SettingsAction.invite,
         child: Row(
           children: [
@@ -295,9 +285,6 @@ class ClientChooserButton extends StatelessWidget {
         case SettingsAction.newGroup:
           VRouter.of(context).to('/newgroup');
           break;
-        case SettingsAction.newSpace:
-          VRouter.of(context).to('/newspace');
-          break;
         case SettingsAction.invite:
           FluffyShare.share(
             L10n.of(context)!.inviteText(
@@ -396,7 +383,6 @@ class ClientChooserButton extends StatelessWidget {
 enum SettingsAction {
   addAccount,
   newGroup,
-  newSpace,
   invite,
   settings,
   archive,

@@ -112,12 +112,6 @@ class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
             ]
           : selectMode == SelectMode.select
               ? [
-                  if (controller.spaces.isNotEmpty)
-                    IconButton(
-                      tooltip: L10n.of(context)!.addToSpace,
-                      icon: const Icon(Icons.workspaces_outlined),
-                      onPressed: controller.addToSpace,
-                    ),
                   IconButton(
                     tooltip: L10n.of(context)!.toggleUnread,
                     icon: Icon(

@@ -42,8 +42,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     await _client!.readReceiptRequestsLoading;
 
     for (final room in _client!.rooms) {
-      if (!room.isSpace &&
-          _client!.readReceiptRequests.keys.contains(room.id)) {
+      if (_client!.readReceiptRequests.keys.contains(room.id)) {
         _addPanelItem(room);
       }
     }

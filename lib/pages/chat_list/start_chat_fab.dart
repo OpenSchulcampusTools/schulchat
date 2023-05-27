@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../config/themes.dart';
@@ -20,9 +21,6 @@ class StartChatFloatingActionButton extends StatelessWidget {
       case ActiveFilter.groups:
         VRouter.of(context).to('/newgroup');
         break;
-      case ActiveFilter.spaces:
-        VRouter.of(context).to('/newspace');
-        break;
     }
   }
 
@@ -33,13 +31,11 @@ class StartChatFloatingActionButton extends StatelessWidget {
         return Icons.edit_outlined;
       case ActiveFilter.groups:
         return Icons.group_add_outlined;
-      case ActiveFilter.spaces:
-        return Icons.workspaces_outlined;
     }
   }
 
   String getLabel(BuildContext context) {
-    return 'Neuer Raum'; //L10n.of(context)!.newGroup;
+    return L10n.of(context)!.newGroup;
   }
 
   @override

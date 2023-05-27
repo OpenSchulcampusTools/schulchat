@@ -19,13 +19,11 @@ class ChatPermissionsSettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: VRouter.of(context).path.startsWith('/spaces/')
-            ? null
-            : IconButton(
-                icon: const Icon(Icons.close_outlined),
-                onPressed: () => VRouter.of(context)
-                    .toSegments(['rooms', controller.roomId!]),
-              ),
+        leading: IconButton(
+          icon: const Icon(Icons.close_outlined),
+          onPressed: () =>
+              VRouter.of(context).toSegments(['rooms', controller.roomId!]),
+        ),
         title: Text(L10n.of(context)!.editChatPermissions),
       ),
       body: MaxWidthBody(
