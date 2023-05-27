@@ -7,7 +7,10 @@ import 'package:fluffychat/pages/chat/read_receipt/read_receipt_list.dart';
 
 extension ReadReceiptListDialogExtension on Event {
   void showReadReceiptListDialog(
-          BuildContext context, Room room, Timeline timeline) =>
+    BuildContext context,
+    Room room,
+    Timeline timeline,
+  ) =>
       showModalBottomSheet(
         context: context,
         builder: (context) => ReadReceiptListDialog(
@@ -36,14 +39,15 @@ class ReadReceiptListDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(L10n.of(context)!.readReceipts),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_downward),
-            onPressed: Navigator.of(context, rootNavigator: false).pop,
-            tooltip: L10n.of(context)!.close,
-          ),
+      appBar: AppBar(
+        title: Text(L10n.of(context)!.readReceipts),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_downward),
+          onPressed: Navigator.of(context, rootNavigator: false).pop,
+          tooltip: L10n.of(context)!.close,
         ),
-        body: ReadReceiptList(event: event, room: room, timeline: timeline));
+      ),
+      body: ReadReceiptList(event: event, room: room, timeline: timeline),
+    );
   }
 }

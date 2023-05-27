@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'extensions/default_flows.dart';
 import 'extensions/wait_for.dart';
 import 'extensions/create_private_room.dart';
-import 'extensions/leave_rooms.dart';
 import 'users.dart';
 import 'dart:math';
 
@@ -22,7 +21,7 @@ TODO:
 */
 
 String random(int length) {
-  var rand = Random();
+  final rand = Random();
   return String.fromCharCodes(
     List.generate(length, (index) => rand.nextInt(25) + 97),
   );

@@ -62,33 +62,40 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                       .colorScheme
                                       .secondaryContainer
                                       .withAlpha(210),
-                                  leading: Stack(children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 6, bottom: 4),
-                                      child: Avatar(
-                                        mxContent: room.avatar,
-                                        name: room.getLocalizedDisplayname(
-                                            MatrixLocals(L10n.of(context)!)),
-                                        size: 38,
-                                        fontSize: 16,
+                                  leading: Stack(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 6,
+                                          bottom: 4,
+                                        ),
+                                        child: Avatar(
+                                          mxContent: room.avatar,
+                                          name: room.getLocalizedDisplayname(
+                                            MatrixLocals(L10n.of(context)!),
+                                          ),
+                                          size: 38,
+                                          fontSize: 16,
+                                        ),
                                       ),
-                                    ),
-                                    if (item.hasToGiveReadReceipt)
-                                      const Positioned(
+                                      if (item.hasToGiveReadReceipt)
+                                        const Positioned(
                                           bottom: 0,
                                           right: 0,
                                           child: Icon(
                                             Icons.mark_chat_read,
                                             color: AppConfig.primaryColor,
                                             size: 20,
-                                          ))
-                                  ]),
+                                          ),
+                                        )
+                                    ],
+                                  ),
                                   title: Wrap(
                                     children: [
                                       Text(
                                         room.getLocalizedDisplayname(
-                                            MatrixLocals(L10n.of(context)!)),
+                                          MatrixLocals(L10n.of(context)!),
+                                        ),
                                         overflow: TextOverflow.clip,
                                       ),
                                     ],
@@ -120,7 +127,10 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                                 onSwipe: (swipeDirection) {},
                                                 onReadReceipt: (event) =>
                                                     controller.onReadReceipt(
-                                                        event, item, message),
+                                                  event,
+                                                  item,
+                                                  message,
+                                                ),
                                                 onSelect: (event) {},
                                                 timeline: item.timeline!,
                                               ),

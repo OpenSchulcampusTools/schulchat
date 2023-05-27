@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -223,9 +221,11 @@ class ConnectPageView extends StatelessWidget {
                     ? null
                     : () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const QRScan()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const QRScan(),
+                          ),
+                        );
                       },
                 label: Text(
                   L10n.of(context)!.scanQrCode,

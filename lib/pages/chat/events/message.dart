@@ -30,20 +30,21 @@ class Message extends StatelessWidget {
   final Timeline timeline;
   final String? searchTerm;
 
-  const Message(this.event,
-      {this.nextEvent,
-      this.longPressSelect = false,
-      this.onSelect,
-      this.onInfoTab,
-      this.onAvatarTab,
-      this.scrollToEventId,
-      required this.onSwipe,
-      this.onReadReceipt,
-      this.selected = false,
-      required this.timeline,
-      this.searchTerm,
-      Key? key})
-      : super(key: key);
+  const Message(
+    this.event, {
+    this.nextEvent,
+    this.longPressSelect = false,
+    this.onSelect,
+    this.onInfoTab,
+    this.onAvatarTab,
+    this.scrollToEventId,
+    required this.onSwipe,
+    this.onReadReceipt,
+    this.selected = false,
+    required this.timeline,
+    this.searchTerm,
+    Key? key,
+  }) : super(key: key);
 
   /// Indicates wheither the user may use a mouse instead
   /// of touchscreen.
@@ -126,45 +127,48 @@ class Message extends StatelessWidget {
 
     final readReceiptGiven = event
         .aggregatedEvents(timeline, RelationshipTypes.readReceipt)
-        .where((e) =>
-            e.content
-                .tryGetMap<String, dynamic>('m.relates_to')
-                ?.tryGet<String>('user_id') ==
-            client.userID)
+        .where(
+          (e) =>
+              e.content
+                  .tryGetMap<String, dynamic>('m.relates_to')
+                  ?.tryGet<String>('user_id') ==
+              client.userID,
+        )
         .toList()
         .isNotEmpty;
 
     final rowChildren = <Widget>[
       if (requiresReadReceipt && !ownMessage)
         Padding(
-            padding: EdgeInsets.all(
-              8.0 * AppConfig.bubbleSizeFactor,
-            ),
-            child: readReceiptGiven
-                ? Tooltip(
-                    message: L10n.of(context)!.readReceiptGiven,
-                    child: const Icon(
-                      Icons.mark_chat_read,
-                      color: AppConfig.primaryColor,
+          padding: EdgeInsets.all(
+            8.0 * AppConfig.bubbleSizeFactor,
+          ),
+          child: readReceiptGiven
+              ? Tooltip(
+                  message: L10n.of(context)!.readReceiptGiven,
+                  child: const Icon(
+                    Icons.mark_chat_read,
+                    color: AppConfig.primaryColor,
+                  ),
+                )
+              : (event.isReadReceiptGiving)
+                  ? const SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator.adaptive(
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : IconButton(
+                      tooltip: L10n.of(context)!.readReceiptGive,
+                      padding: const EdgeInsets.all(0),
+                      icon: const Icon(
+                        Icons.mark_chat_read_outlined,
+                        color: AppConfig.primaryColor,
+                      ),
+                      onPressed: () => onReadReceipt?.call(displayEvent),
                     ),
-                  )
-                : (event.isReadReceiptGiving)
-                    ? const SizedBox(
-                        width: 22,
-                        height: 22,
-                        child: CircularProgressIndicator.adaptive(
-                          strokeWidth: 2,
-                        ),
-                      )
-                    : IconButton(
-                        tooltip: L10n.of(context)!.readReceiptGive,
-                        padding: const EdgeInsets.all(0),
-                        icon: const Icon(
-                          Icons.mark_chat_read_outlined,
-                          color: AppConfig.primaryColor,
-                        ),
-                        onPressed: () => onReadReceipt?.call(displayEvent),
-                      )),
+        ),
       sameSender || ownMessage
           ? SizedBox(
               width: Avatar.defaultSize,
@@ -288,8 +292,9 @@ class Message extends StatelessWidget {
                                     child: AbsorbPointer(
                                       child: Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: 4.0 *
-                                                AppConfig.bubbleSizeFactor),
+                                          vertical:
+                                              4.0 * AppConfig.bubbleSizeFactor,
+                                        ),
                                         child: ReplyContent(
                                           replyEvent,
                                           ownMessage: ownMessage,

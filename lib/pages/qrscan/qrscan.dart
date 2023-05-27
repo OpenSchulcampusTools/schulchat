@@ -68,14 +68,17 @@ class QRScanController extends State<QRScan> {
     isCurrentlySendingAuthorizationCode = true;
 
     try {
-      final response = await http.get(Uri.parse(
-          '${Matrix.of(context).getLoginClient().homeserver?.toString()}/_synapse/client/oidc/callbacksc?code=${authorizationCode}'));
+      final response = await http.get(
+        Uri.parse(
+          '${Matrix.of(context).getLoginClient().homeserver?.toString()}/_synapse/client/oidc/callbacksc?code=$authorizationCode',
+        ),
+      );
 
       if (response.statusCode == 200) {
         final htmlDoc = String.fromCharCodes(response.bodyBytes);
-        RegExp regExp = RegExp(r'(?<=loginToken=)[\w-]+');
-        Match? match = regExp.firstMatch(htmlDoc);
-        String? token = match?.group(0);
+        final RegExp regExp = RegExp(r'(?<=loginToken=)[\w-]+');
+        final Match? match = regExp.firstMatch(htmlDoc);
+        final String? token = match?.group(0);
 
         if (token?.isEmpty ?? true) return;
 
@@ -88,10 +91,10 @@ class QRScanController extends State<QRScan> {
               ),
         );
       } else {
-        print('Failed to send authorization code: ${response.statusCode}');
+        Logs().w('Failed to send authorization code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error sending authorization code: $e');
+      Logs().e('Error sending authorization code: $e');
     }
 
     isCurrentlySendingAuthorizationCode = false;

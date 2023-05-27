@@ -141,7 +141,8 @@ class ChatSearchView extends StatelessWidget {
                                       SearchState.searching)
                                     const Center(
                                       child: CircularProgressIndicator.adaptive(
-                                          strokeWidth: 2),
+                                        strokeWidth: 2,
+                                      ),
                                     ),
                               ],
                             )
@@ -165,7 +166,8 @@ class ChatSearchView extends StatelessWidget {
                                       const Center(
                                         child:
                                             CircularProgressIndicator.adaptive(
-                                                strokeWidth: 2),
+                                          strokeWidth: 2,
+                                        ),
                                       ),
                                   ],
                                 )

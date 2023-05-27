@@ -235,7 +235,6 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
   }
 
   void _showAddressbook() {
-    print('addressbook called');
     if (VRouter.of(context).path.endsWith('/addressbook')) {
       VRouter.of(context).toSegments(['rooms', widget.room.id]);
     } else {

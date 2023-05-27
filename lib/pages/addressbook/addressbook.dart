@@ -193,8 +193,10 @@ class AddressbookController extends State<AddressbookPage> {
     toggleRecursive(group, false);
 
     // prevent the user from being added again
-    if (!deselectedUserEntries.contains(groupMemberName))
+    if (!deselectedUserEntries.contains(groupMemberName)) {
       deselectedUserEntries.add(groupMemberName);
+    }
+
     setState(() {
       treeController.rebuild();
     });

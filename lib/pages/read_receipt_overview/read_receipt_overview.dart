@@ -274,7 +274,10 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
   }
 
   void onReadReceipt(
-      Event event, ExpansionPanelItem panelItem, Event message) async {
+    Event event,
+    ExpansionPanelItem panelItem,
+    Event message,
+  ) async {
     if (message.isNotOwnEvent) {
       if (!message.isReadReceiptGiving) {
         setState(() {

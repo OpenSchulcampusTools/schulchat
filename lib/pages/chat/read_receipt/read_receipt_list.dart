@@ -9,12 +9,12 @@ class ReadReceiptList extends StatefulWidget {
   final Room room;
   final Timeline timeline;
 
-  const ReadReceiptList(
-      {required this.event,
-      required this.room,
-      required this.timeline,
-      Key? key})
-      : super(key: key);
+  const ReadReceiptList({
+    required this.event,
+    required this.room,
+    required this.timeline,
+    Key? key,
+  }) : super(key: key);
 
   @override
   ReadReceiptListController createState() =>

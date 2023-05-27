@@ -81,30 +81,34 @@ class AppRoutes {
               widget: const ChatDetails(),
               stackedRoutes: _chatDetailsRoutes,
             ),
-            VWidget(path: ':roomid', widget: const Chat(), stackedRoutes: [
-              VWidget(
-                path: 'encryption',
-                widget: const ChatEncryptionSettings(),
-              ),
-              VWidget(
-                path: 'invite',
-                widget: const InvitationSelection(),
-              ),
-              VWidget(
-                path: 'addressbook',
-                widget: const AddressbookPage(),
-              ),
-              VWidget(
-                path: 'details',
-                widget: const ChatDetails(),
-                stackedRoutes: _chatDetailsRoutes,
-              ),
-              VWidget(
-                path: 'search',
-                widget: const ChatSearch(),
-                // stackedRoutes: _chatDetailsRoutes,
-              ),
-            ]),
+            VWidget(
+              path: ':roomid',
+              widget: const Chat(),
+              stackedRoutes: [
+                VWidget(
+                  path: 'encryption',
+                  widget: const ChatEncryptionSettings(),
+                ),
+                VWidget(
+                  path: 'invite',
+                  widget: const InvitationSelection(),
+                ),
+                VWidget(
+                  path: 'addressbook',
+                  widget: const AddressbookPage(),
+                ),
+                VWidget(
+                  path: 'details',
+                  widget: const ChatDetails(),
+                  stackedRoutes: _chatDetailsRoutes,
+                ),
+                VWidget(
+                  path: 'search',
+                  widget: const ChatSearch(),
+                  // stackedRoutes: _chatDetailsRoutes,
+                ),
+              ],
+            ),
             VWidget(
               path: '/settings',
               widget: const Settings(),

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
@@ -45,11 +44,12 @@ class QRScanView extends StatelessWidget {
       key: controller.qrKey,
       onQRViewCreated: controller.onQRViewCreated,
       overlay: QrScannerOverlayShape(
-          borderColor: Theme.of(context).colorScheme.primary,
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: scanArea),
+        borderColor: Theme.of(context).colorScheme.primary,
+        borderRadius: 10,
+        borderLength: 30,
+        borderWidth: 10,
+        cutOutSize: scanArea,
+      ),
       onPermissionSet: (ctrl, p) =>
           controller.onPermissionSet(context, ctrl, p),
     );

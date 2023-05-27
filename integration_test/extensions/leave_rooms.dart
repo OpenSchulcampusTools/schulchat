@@ -41,7 +41,8 @@ extension LeaveAllRoomsExtension on WidgetTester {
       await pumpAndSettle();
       if (find
           .text(
-              "Can't join remote room because no servers that are in the room have been provided.")
+            "Can't join remote room because no servers that are in the room have been provided.",
+          )
           .evaluate()
           .isNotEmpty) {
         await tap(find.maybeUppercaseText('Close'));

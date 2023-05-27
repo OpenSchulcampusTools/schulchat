@@ -254,14 +254,16 @@ class ChatInputRow extends StatelessWidget {
                 Container(
                   height: 56,
                   alignment: Alignment.center,
-                  child: Row(children: [
-                    ChatInputRowReadReceiptButton(controller),
-                    IconButton(
-                      tooltip: L10n.of(context)!.voiceMessage,
-                      icon: const Icon(Icons.mic_none_outlined),
-                      onPressed: controller.voiceMessageAction,
-                    )
-                  ]),
+                  child: Row(
+                    children: [
+                      ChatInputRowReadReceiptButton(controller),
+                      IconButton(
+                        tooltip: L10n.of(context)!.voiceMessage,
+                        icon: const Icon(Icons.mic_none_outlined),
+                        onPressed: controller.voiceMessageAction,
+                      )
+                    ],
+                  ),
                 ),
               if (!PlatformInfos.isMobile || controller.inputText.isNotEmpty)
                 Container(
@@ -271,9 +273,10 @@ class ChatInputRow extends StatelessWidget {
                     children: [
                       ChatInputRowReadReceiptButton(controller),
                       IconButton(
-                          icon: const Icon(Icons.send_outlined),
-                          onPressed: controller.send,
-                          tooltip: L10n.of(context)!.send)
+                        icon: const Icon(Icons.send_outlined),
+                        onPressed: controller.send,
+                        tooltip: L10n.of(context)!.send,
+                      )
                     ],
                   ),
                 ),

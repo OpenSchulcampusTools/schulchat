@@ -18,4 +18,4 @@ class User {
   const User(this.name, this.password);
 }
 
-final homeserver = 'synapse';
+const homeserver = 'synapse';

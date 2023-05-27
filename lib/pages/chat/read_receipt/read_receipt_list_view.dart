@@ -26,43 +26,45 @@ class ReadReceiptListView extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: SizedBox(
-                        height: (isSmallScreen) ? 105 : 55,
-                        child: Flex(
-                          direction:
-                              (isSmallScreen) ? Axis.vertical : Axis.horizontal,
-                          mainAxisAlignment: (isSmallScreen)
-                              ? MainAxisAlignment.start
-                              : MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: RadioListTile(
-                                title: Text(L10n.of(context)!.all),
-                                value: "all",
-                                groupValue: controller.filter,
-                                onChanged: (value) =>
-                                    controller.changeFilter(value),
-                              ),
+                      height: (isSmallScreen) ? 105 : 55,
+                      child: Flex(
+                        direction:
+                            (isSmallScreen) ? Axis.vertical : Axis.horizontal,
+                        mainAxisAlignment: (isSmallScreen)
+                            ? MainAxisAlignment.start
+                            : MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: RadioListTile(
+                              title: Text(L10n.of(context)!.all),
+                              value: "all",
+                              groupValue: controller.filter,
+                              onChanged: (value) =>
+                                  controller.changeFilter(value),
                             ),
-                            Expanded(
-                              child: RadioListTile(
-                                title: Text(L10n.of(context)!.open),
-                                value: "open",
-                                groupValue: controller.filter,
-                                onChanged: (value) =>
-                                    controller.changeFilter(value),
-                              ),
+                          ),
+                          Expanded(
+                            child: RadioListTile(
+                              title: Text(L10n.of(context)!.open),
+                              value: "open",
+                              groupValue: controller.filter,
+                              onChanged: (value) =>
+                                  controller.changeFilter(value),
                             ),
-                            Expanded(
-                              child: RadioListTile(
-                                title: Text(L10n.of(context)!.confirmed),
-                                value: "given",
-                                groupValue: controller.filter,
-                                onChanged: (value) =>
-                                    controller.changeFilter(value),
-                              ),
+                          ),
+                          Expanded(
+                            child: RadioListTile(
+                              title: Text(L10n.of(context)!.confirmed),
+                              value: "given",
+                              groupValue: controller.filter,
+                              onChanged: (value) =>
+                                  controller.changeFilter(value),
                             ),
-                          ],
-                        )))
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 : controller.userIsVisible(i - 1)
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.start,

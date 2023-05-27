@@ -409,7 +409,8 @@ class ChatDetailsView extends StatelessWidget {
                           room.canInvite
                               ? ListTile(
                                   title: Text(
-                                      L10n.of(context)!.inviteUsingAddressbook),
+                                    L10n.of(context)!.inviteUsingAddressbook,
+                                  ),
                                   leading: CircleAvatar(
                                     backgroundColor:
                                         Theme.of(context).primaryColor,
@@ -426,7 +427,8 @@ class ChatDetailsView extends StatelessWidget {
                             for (final g in allowedSCGroups)
                               ListTile(
                                 title: Text(
-                                    'SC-Gruppe ${g.split(':')[0].split('--')[1]} (Schule: ${g.split(':')[0].split('--')[0].split('#')[1]})'), // TODO regexp
+                                  'SC-Gruppe ${g.split(':')[0].split('--')[1]} (Schule: ${g.split(':')[0].split('--')[0].split('#')[1]})',
+                                ), // TODO regexp
                                 //'SC-Gruppe ${g.first} (Schule: ${g.last})'),
                                 leading: CircleAvatar(
                                   backgroundColor:

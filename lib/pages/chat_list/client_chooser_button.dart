@@ -236,29 +236,34 @@ class ClientChooserButton extends StatelessWidget {
           PopupMenuButton<Object>(
             onSelected: (o) => _clientSelected(o, context),
             itemBuilder: _bundleMenuItems,
-            child: Stack(children: [
-              Padding(
+            child: Stack(
+              children: [
+                Padding(
                   padding: const EdgeInsets.only(right: 6, bottom: 4),
                   child: Material(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(99),
-                      child: Avatar(
-                        mxContent: snapshot.data?.avatarUrl,
-                        name: snapshot.data?.displayName ??
-                            matrix.client.userID!.localpart,
-                        size: 28,
-                        fontSize: 12,
-                      ))),
-              if (controller.hasToGiveReadReceipt)
-                const Positioned(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(99),
+                    child: Avatar(
+                      mxContent: snapshot.data?.avatarUrl,
+                      name: snapshot.data?.displayName ??
+                          matrix.client.userID!.localpart,
+                      size: 28,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                if (controller.hasToGiveReadReceipt)
+                  const Positioned(
                     bottom: 0,
                     right: 0,
                     child: Icon(
                       Icons.mark_chat_read,
                       color: AppConfig.primaryColor,
                       size: 16,
-                    ))
-            ]),
+                    ),
+                  )
+              ],
+            ),
           ),
         ],
       ),

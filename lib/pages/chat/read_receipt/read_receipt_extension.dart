@@ -35,11 +35,13 @@ extension ReadReceiptExtension on Event {
     if (requiresReadReceipt && userID != null) {
       final userReadReceipt =
           aggregatedEvents(timeline, RelationshipTypes.readReceipt)
-              .where((e) =>
-                  e.content
-                      .tryGetMap<String, dynamic>('m.relates_to')
-                      ?.tryGet<String>('user_id') ==
-                  userID)
+              .where(
+                (e) =>
+                    e.content
+                        .tryGetMap<String, dynamic>('m.relates_to')
+                        ?.tryGet<String>('user_id') ==
+                    userID,
+              )
               .toList();
 
       if (userReadReceipt.isEmpty) {
