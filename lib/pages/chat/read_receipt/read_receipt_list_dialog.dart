@@ -5,23 +5,6 @@ import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/pages/chat/read_receipt/read_receipt_list.dart';
 
-extension ReadReceiptListDialogExtension on Event {
-  void showReadReceiptListDialog(
-    BuildContext context,
-    Room room,
-    Timeline timeline,
-  ) =>
-      showModalBottomSheet(
-        context: context,
-        builder: (context) => ReadReceiptListDialog(
-          l10n: L10n.of(context)!,
-          event: this,
-          room: room,
-          timeline: timeline,
-        ),
-      );
-}
-
 class ReadReceiptListDialog extends StatelessWidget {
   final Event event;
   final L10n l10n;
