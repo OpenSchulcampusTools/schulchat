@@ -1,5 +1,6 @@
 # Next version test3
 Fix: Various localization updates
+Fix: Don't skip all other invitees, if there is an error during invitation of one of them.
 
 Chore: Remove stories
 Chore: Remove spaces

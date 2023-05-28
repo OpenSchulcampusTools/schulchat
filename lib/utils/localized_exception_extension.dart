@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
+import 'invite_exception.dart';
 import 'uia_request_manager.dart';
 
 extension LocalizedExceptionExtension on Object {
@@ -62,6 +63,7 @@ extension LocalizedExceptionExtension on Object {
     }
     if (this is String) return toString();
     if (this is UiaException) return toString();
+    if (this is InviteException) return toString();
     Logs().w('Something went wrong: ', this);
     return L10n.of(context)!.oopsSomethingWentWrong;
   }

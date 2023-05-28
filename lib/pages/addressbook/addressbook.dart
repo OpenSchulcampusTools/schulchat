@@ -9,6 +9,7 @@ import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
+import 'package:fluffychat/utils/invite_exception.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'addressbook_view.dart';
 
@@ -457,13 +458,22 @@ class AddressbookController extends State<AddressbookPage> {
     final success = await showFutureLoadingDialog(
       context: context,
       future: () async {
+        final List<String> errors = [];
         for (final u in uniqUsers) {
-          Logs().v('about to invite $u');
-          await room.invite(u);
+          try {
+            Logs().v('about to invite $u');
+            await room.invite(u);
+          } on MatrixException catch (e) {
+            errors.add(e.errorMessage);
+          }
         }
         if (uniqGroups.isNotEmpty) {
           Logs().v('about to invite groups $uniqGroups');
           room.setRestrictedJoinRules(uniqGroups);
+        }
+        // we collected all errors above, now throw an exception
+        if (errors.isNotEmpty) {
+          throw InviteException(errors.join('\n'));
         }
       },
     );
