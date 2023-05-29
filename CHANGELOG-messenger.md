@@ -1,12 +1,15 @@
-# Next version test3
+# test3
 
 Feature: Option for read-only rooms during room creation
 
 Fix: Various localization updates
 Fix: Don't skip all other invitees, if there is an error during invitation of one of them.
+Fix: Remove possibility to login with user/password without Schulcampus
+Fix: Jump to selected search results on large screen
 
 Chore: Remove stories
 Chore: Remove spaces
+Chore: Various improvements of CI
 
 # test2
 
