@@ -40,6 +40,7 @@ enum ActiveFilter {
   allChats,
   groups,
   messages,
+  school,
 }
 
 class ChatList extends StatefulWidget {
@@ -60,7 +61,10 @@ class ChatListController extends State<ChatList>
   StreamSubscription? _intentUriStreamSubscription;
 
   bool get displayNavigationBar =>
-      !FluffyThemes.isColumnMode(context) && (AppConfig.separateChatTypes);
+      !FluffyThemes.isColumnMode(context) &&
+      (AppConfig.separateChatTypes || schools.keys.toList().length > 1);
+
+  int selectedSchoolIndex = -1;
 
   int get selectedIndex {
     switch (activeFilter) {
@@ -70,28 +74,38 @@ class ChatListController extends State<ChatList>
         return 0;
       case ActiveFilter.messages:
         return 1;
+      case ActiveFilter.school:
+        return (AppConfig.separateChatTypes
+            ? selectedSchoolIndex + 2
+            : selectedSchoolIndex + 1);
     }
   }
 
   ActiveFilter getActiveFilterByDestination(int? i) {
     switch (i) {
-      case 1:
-        if (AppConfig.separateChatTypes) {
-          return ActiveFilter.messages;
-        }
-        return ActiveFilter.allChats;
       case 0:
-      default:
         if (AppConfig.separateChatTypes) {
           return ActiveFilter.groups;
         }
         return ActiveFilter.allChats;
+      default:
+        if (i == 1 && AppConfig.separateChatTypes) {
+          return ActiveFilter.messages;
+        }
+        // at this point we know that we are handling a school nav item
+        return ActiveFilter.school;
     }
   }
 
-  void onDestinationSelected(int? i) {
+  void onDestinationSelected(int i) {
     setState(() {
       activeFilter = getActiveFilterByDestination(i);
+      if (i == 0 || i == 1 && AppConfig.separateChatTypes) {
+        // no school is selected
+        selectedSchoolIndex = -1;
+      } else {
+        selectedSchoolIndex = i - (AppConfig.separateChatTypes ? 2 : 1);
+      }
     });
   }
 
@@ -107,7 +121,14 @@ class ChatListController extends State<ChatList>
         return (room) => !room.isDirectChat && !room.isSCGroupRoom;
       case ActiveFilter.messages:
         return (room) => room.isDirectChat;
+      case ActiveFilter.school:
+        return (room) =>
+            room.isBoundToSchool(schools.keys.toList()[selectedSchoolIndex]);
     }
+  }
+
+  bool Function(Room) getRoomFilterBySchool(String schoolId) {
+    return (room) => room.isBoundToSchool(schoolId);
   }
 
   List<Room> get filteredRooms => Matrix.of(context)
@@ -329,6 +350,8 @@ class ChatListController extends State<ChatList>
     Matrix.of(context)
         .client
         .loadReadReceiptRequests(_updateHasToGiveReadReceipt);
+
+    setSchools();
 
     super.initState();
   }
@@ -619,15 +642,10 @@ class ChatListController extends State<ChatList>
   Future<void> dehydrate() =>
       SettingsSecurityController.dehydrateDevice(context);
 
-  Future<void> fetchSchools() async {
-    final abookJson = await Matrix.of(context).client.fetchAddressbook();
-    final schools = abookJson.keys.where((key) => key != 'users').toList();
-    for (final s in schools) {
-      availableSchools[s] = abookJson[s]['name'];
-    }
+  Map<String, String> schools = {};
+  Future<void> setSchools() async {
+    schools = await Matrix.of(context).client.getSchools();
   }
-
-  Map<String, String> availableSchools = {};
 }
 
 enum EditBundleAction { addToBundle, removeFromBundle }

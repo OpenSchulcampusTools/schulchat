@@ -69,6 +69,21 @@ class ChatListView extends StatelessWidget {
           ),
           label: L10n.of(context)!.chats,
         ),
+      for (final schoolId in controller.schools.keys) ...[
+        NavigationDestination(
+          icon: UnreadRoomsBadge(
+            badgePosition: badgePosition,
+            filter: controller.getRoomFilterBySchool(schoolId),
+            child: const Icon(Icons.chat_outlined),
+          ),
+          selectedIcon: UnreadRoomsBadge(
+            badgePosition: badgePosition,
+            filter: controller.getRoomFilterBySchool(schoolId),
+            child: const Icon(Icons.chat),
+          ),
+          label: controller.schools[schoolId]!,
+        ),
+      ]
     ];
   }
 

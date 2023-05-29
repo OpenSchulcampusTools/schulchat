@@ -224,6 +224,14 @@ class AddressbookController extends State<AddressbookPage> {
     return multipleSchools;
   }
 
+  // what is the school of the invitees?
+  // returns null if there are no invitees
+  String? selectedSchool() {
+    if (selection.isEmpty) return null;
+
+    return selection.first.orgName;
+  }
+
   List<ABookEntry> listOfSchools = [];
 
   // wrap async abook loading, because initState cannot be async
@@ -418,6 +426,8 @@ class AddressbookController extends State<AddressbookPage> {
     final List<String> uniqGroups = [];
     final hs = Matrix.of(context).client.homeserver?.host;
 
+    final orgName = selectedSchool();
+
     for (final e in selection) {
       if (e.id != null) {
         uniqGroups.add('#${e.orgName}--${e.id}:$hs');
@@ -458,6 +468,10 @@ class AddressbookController extends State<AddressbookPage> {
           Logs().v('about to invite groups $uniqGroups');
           room.setRestrictedJoinRules(uniqGroups);
         }
+        if (orgName != null) {
+          room.setSchoolId(orgName);
+        }
+
         // we collected all errors above, now throw an exception
         if (errors.isNotEmpty) {
           throw InviteException(errors.join('\n'));
