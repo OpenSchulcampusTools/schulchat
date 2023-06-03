@@ -17,20 +17,17 @@ class ReadReceiptList extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  ReadReceiptListController createState() =>
-      ReadReceiptListController(event, room, timeline);
+  ReadReceiptListController createState() => ReadReceiptListController();
 }
 
 class ReadReceiptListController extends State<ReadReceiptList> {
-  Event event;
-  Room room;
-  Timeline? timeline;
+  late Event event;
+  late Room room;
+  late Timeline? timeline;
   List<User> members = [];
   List<MatrixEvent> readReceipts = [];
   String filter = "all";
   bool membersLoaded = false;
-
-  ReadReceiptListController(this.event, this.room, Timeline this.timeline);
 
   void initReadReceipts() async {
     // use requestParticipants instead of getParticipants in case not all participants are yet loaded
@@ -54,6 +51,9 @@ class ReadReceiptListController extends State<ReadReceiptList> {
 
   @override
   void initState() {
+    event = widget.event;
+    room = widget.room;
+    timeline = widget.timeline;
     initReadReceipts();
     super.initState();
   }
