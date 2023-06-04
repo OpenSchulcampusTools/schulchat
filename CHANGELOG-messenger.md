@@ -1,3 +1,10 @@
+# Next release test4
+
+Feature: Add icons in chat list for all schools.
+Feature: Store school id as state event in room. This helps implementing the report feature.
+
+Fix: Cache addressbook in hive, which reduces the number of requests.
+
 # test3
 
 Feature: Option for read-only rooms during room creation
