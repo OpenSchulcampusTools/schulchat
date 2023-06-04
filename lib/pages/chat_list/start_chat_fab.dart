@@ -13,25 +13,11 @@ class StartChatFloatingActionButton extends StatelessWidget {
       : super(key: key);
 
   void _onPressed(BuildContext context) {
-    switch (controller.activeFilter) {
-      case ActiveFilter.allChats:
-      case ActiveFilter.messages:
-        VRouter.of(context).to('/newgroup');
-        break;
-      case ActiveFilter.groups:
-        VRouter.of(context).to('/newgroup');
-        break;
-    }
+    VRouter.of(context).to('/newgroup');
   }
 
   IconData get icon {
-    switch (controller.activeFilter) {
-      case ActiveFilter.allChats:
-      case ActiveFilter.messages:
-        return Icons.edit_outlined;
-      case ActiveFilter.groups:
-        return Icons.group_add_outlined;
-    }
+    return Icons.group_add_outlined;
   }
 
   String getLabel(BuildContext context) {
