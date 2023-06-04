@@ -226,7 +226,7 @@ class AddressbookController extends State<AddressbookPage> {
 
   // what is the school of the invitees?
   // returns null if there are no invitees
-  String? selectedSchool() {
+  String? getSchoolFromSelection() {
     if (selection.isEmpty) return null;
 
     return selection.first.orgName;
@@ -426,7 +426,7 @@ class AddressbookController extends State<AddressbookPage> {
     final List<String> uniqGroups = [];
     final hs = Matrix.of(context).client.homeserver?.host;
 
-    final orgName = selectedSchool();
+    final orgName = getSchoolFromSelection();
 
     for (final e in selection) {
       if (e.id != null) {
