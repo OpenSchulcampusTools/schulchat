@@ -618,6 +618,16 @@ class ChatListController extends State<ChatList>
 
   Future<void> dehydrate() =>
       SettingsSecurityController.dehydrateDevice(context);
+
+  Future<void> fetchSchools() async {
+    final abookJson = await Matrix.of(context).client.fetchAddressbook();
+    final schools = abookJson.keys.where((key) => key != 'users').toList();
+    for (final s in schools) {
+      availableSchools[s] = abookJson[s]['name'];
+    }
+  }
+
+  Map<String, String> availableSchools = {};
 }
 
 enum EditBundleAction { addToBundle, removeFromBundle }

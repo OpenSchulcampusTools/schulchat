@@ -108,9 +108,9 @@ class AddressbookController extends State<AddressbookPage> {
   // [state] true, recursively add nodes to selection
   // [state] false, recursively remove nodes from selection
   void toggleRecursive(node, [state = true]) {
-    Logs().d(
-      'called recursive toggle to state $state for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}, school: ${node.orgName}',
-    );
+    //Logs().d(
+    //  'called recursive toggle to state $state for ${node.title}; active: ${node.active} category: ${node.category} group: ${node.kind}, school: ${node.orgName}',
+    //);
     //if (node.active || node.category || node.kind == 'group') {
     (state == true) ? selection.add(node) : selection.remove(node);
     if (node.children.isNotEmpty) {
@@ -235,22 +235,9 @@ class AddressbookController extends State<AddressbookPage> {
     });
   }
 
-  Future<Map<String, dynamic>> fetchAddressbook() async {
-    try {
-      final abookJson = await Matrix.of(context).client.request(
-            RequestType.GET,
-            '/client/unstable/fairkom.fairmessenger.addressbook/addressbook',
-          );
-      return abookJson;
-    } on MatrixException catch (e) {
-      Logs().i('Error fetchAddressbook: ${e.errcode} ${e.errorMessage}');
-      return {};
-    }
-  }
-
   Future<List<ABookEntry>> buildAddressbook() async {
     final abookEntries = <ABookEntry>[];
-    final abookJson = await fetchAddressbook();
+    final abookJson = await Matrix.of(context).client.fetchAddressbook();
     if (abookJson.keys.isNotEmpty) {
       for (final school in abookJson.keys) {
         // not a school, but contains a list of all users returned with the address book
