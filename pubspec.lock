@@ -1151,7 +1151,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "b53729136d4e5d05e13d525365c28486f43c0e53"
+      resolved-ref: b53729136d4e5d05e13d525365c28486f43c0e53
       url: "git@git.fairkom.net:clients/rlp/client/matrix_api_lite"
     source: git
     version: "1.1.10"
