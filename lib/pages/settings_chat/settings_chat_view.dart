@@ -62,7 +62,6 @@ class SettingsChatView extends StatelessWidget {
                   storeKey: SettingKeys.autoplayImages,
                   defaultValue: AppConfig.autoplayImages,
                 ),
-              /*#schulChatSpecific
               const Divider(),
               SettingsSwitchListTile.adaptive(
                 title: L10n.of(context)!.sendOnEnter,
@@ -70,6 +69,7 @@ class SettingsChatView extends StatelessWidget {
                 storeKey: SettingKeys.sendOnEnter,
                 defaultValue: AppConfig.sendOnEnter,
               ),
+              /*#schulChatSpecific
               if (Matrix.of(context).webrtcIsSupported)
                 SettingsSwitchListTile.adaptive(
                   title: L10n.of(context)!.experimentalVideoCalls,
