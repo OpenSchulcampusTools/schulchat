@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "chat.fluffy.fluffychat"
+        applicationId "eu.fairkom.fairmessenger.rlp"
         minSdkVersion 16
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
