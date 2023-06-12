@@ -130,7 +130,7 @@
       "supportedVersions": {}
     }
   },
-  "banFromChat": "Aus dem Chat verbannen",
+  "banFromChat": "Aus dem Raum verbannen",
   "@banFromChat": {
     "type": "text",
     "placeholders": {}
@@ -522,7 +522,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "createdTheChat": "💬 {username} hat den Chat erstellt",
+  "createdTheChat": "💬 {username} hat den Raum erstellt",
   "@createdTheChat": {
     "type": "text",
     "placeholders": {
@@ -976,7 +976,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "joinedTheChat": "👋 {username} ist dem Chat beigetreten",
+  "joinedTheChat": "👋 {username} ist dem Raum beigetreten",
   "@joinedTheChat": {
     "type": "text",
     "placeholders": {
@@ -1009,7 +1009,7 @@
       "targetName": {}
     }
   },
-  "kickFromChat": "Aus dem Chat hinauswerfen",
+  "kickFromChat": "Aus dem Raum hinauswerfen",
   "@kickFromChat": {
     "type": "text",
     "placeholders": {}
@@ -1026,12 +1026,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "leave": "Verlassen",
+  "leave": "Raum verlassen",
   "@leave": {
     "type": "text",
     "placeholders": {}
   },
-  "leftTheChat": "Hat den Chat verlassen",
+  "leftTheChat": "Hat den Raum verlassen",
   "@leftTheChat": {
     "type": "text",
     "placeholders": {}
@@ -1911,7 +1911,7 @@
       "username": {}
     }
   },
-  "userLeftTheChat": "🚪 {username} hat den Chat verlassen",
+  "userLeftTheChat": "🚪 {username} hat den Raum verlassen",
   "@userLeftTheChat": {
     "type": "text",
     "placeholders": {
@@ -2056,12 +2056,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "youAreInvitedToThisChat": "Du wurdest in diesen Chat eingeladen",
+  "youAreInvitedToThisChat": "Du wurdest in diesen Raum eingeladen",
   "@youAreInvitedToThisChat": {
     "type": "text",
     "placeholders": {}
   },
-  "youAreNoLongerParticipatingInThisChat": "Du bist kein Mitglied mehr in diesem Chat",
+  "youAreNoLongerParticipatingInThisChat": "Du bist kein Mitglied mehr in diesem Raum",
   "@youAreNoLongerParticipatingInThisChat": {
     "type": "text",
     "placeholders": {}
@@ -2071,7 +2071,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "youHaveBeenBannedFromThisChat": "Du wurdest aus dem Chat verbannt",
+  "youHaveBeenBannedFromThisChat": "Du wurdest aus dem Raum verbannt",
   "@youHaveBeenBannedFromThisChat": {
     "type": "text",
     "placeholders": {}
@@ -2304,7 +2304,7 @@
   },
   "youRejectedTheInvitation": "Du hast die Einladung abgelehnt",
   "@youRejectedTheInvitation": {},
-  "youJoinedTheChat": "Du bist dem Chat beigetreten",
+  "youJoinedTheChat": "Du bist dem Raum beigetreten",
   "@youJoinedTheChat": {},
   "youAcceptedTheInvitation": "👍 Du hast die Einladung angenommen",
   "@youAcceptedTheInvitation": {},
@@ -2442,14 +2442,14 @@
       "number": {}
     }
   },
-  "wasDirectChatDisplayName": "Leerer Chat (was {oldDisplayName}",
+  "wasDirectChatDisplayName": "Leerer Raum (was {oldDisplayName}",
   "@wasDirectChatDisplayName": {
     "type": "text",
     "placeholders": {
       "oldDisplayName": {}
     }
   },
-  "encryptThisChat": "Diesen Chat verschlüsseln",
+  "encryptThisChat": "Diesen Raum verschlüsseln",
   "@encryptThisChat": {},
   "googlyEyesContent": "{senderName} hat dir Googly Eyes gesendet",
   "@googlyEyesContent": {
@@ -2488,7 +2488,7 @@
   "@commandHint_googly": {},
   "endToEndEncryption": "Ende-zu-Ende-Verschlüsselung",
   "@endToEndEncryption": {},
-  "disableEncryptionWarning": "Aus Sicherheitsgründen können Sie die Verschlüsselung in einem Chat nicht deaktivieren, wo sie zuvor aktiviert wurde.",
+  "disableEncryptionWarning": "Aus Sicherheitsgründen können Sie die Verschlüsselung in einem Raum nicht deaktivieren, wo sie zuvor aktiviert wurde.",
   "@disableEncryptionWarning": {},
   "enterInviteLinkOrMatrixId": "Einladungslink oder Matrix-ID eingeben …",
   "@enterInviteLinkOrMatrixId": {},
