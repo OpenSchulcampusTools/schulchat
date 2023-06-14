@@ -46,6 +46,9 @@ enum ActiveFilter {
 class ChatList extends StatefulWidget {
   static BuildContext? contextForVoip;
 
+  // get selected school item from address book
+  static String selectedSchoolId = '';
+
   const ChatList({Key? key}) : super(key: key);
 
   @override
@@ -103,8 +106,10 @@ class ChatListController extends State<ChatList>
       if (i == 0 || i == 1 && AppConfig.separateChatTypes) {
         // no school is selected
         selectedSchoolIndex = -1;
+        ChatList.selectedSchoolId = '';
       } else {
         selectedSchoolIndex = i - (AppConfig.separateChatTypes ? 2 : 1);
+        ChatList.selectedSchoolId = schools.keys.elementAt(selectedSchoolIndex);
       }
     });
   }

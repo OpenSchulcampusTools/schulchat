@@ -10,6 +10,7 @@ import 'package:matrix/matrix.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:vrouter/vrouter.dart';
 
+import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/utils/invite_exception.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'addressbook_view.dart';
@@ -249,10 +250,37 @@ class AddressbookController extends State<AddressbookPage> {
   Future<List<ABookEntry>> buildAddressbook() async {
     final abookEntries = <ABookEntry>[];
     final abookJson = await Matrix.of(context).client.fetchAddressbook();
+    final Room? room =
+        roomId != null ? Matrix.of(context).client.getRoomById(roomId!) : null;
+
+    // if the room state has a school set
+    final String schoolId = room?.schoolId ?? '';
+
+    // creating a room (1):
+    // - if school is selected in chat list: show that school in contacts (a)
+    // - if no school is selected in chat list: show all schools in contacts (b)
+    //
+    // opening a room, while no school is selected in chat list (2):
+    // - no participants: show contacts from all schools (a)
+    // - with participants: show contacts from participant's school (b)
+    //
+    // opening a room, while school is selected in chat list (3):
+    // - no participants: show contacts from selected school (a)
+    // - with participants: show contacts from participant's school (b)
+    //
+    // if filteredSchool is empty, all schools are shown
+    final String filteredSchool = schoolId.isEmpty
+        ? ChatList.selectedSchoolId.isEmpty
+            ? /*1b, 2a*/ ''
+            : /*1a, 3a*/ ChatList.selectedSchoolId
+        : /*2b, 3b*/ schoolId;
+
     if (abookJson.keys.isNotEmpty) {
       for (final school in abookJson.keys) {
         // not a school, but contains a list of all users returned with the address book
         if (school == 'users') continue;
+
+        if (filteredSchool.isNotEmpty && filteredSchool != school) continue;
 
         final schoolName = abookJson[school]['name'];
         //final schoolName = await Matrix.of(context).client.request(RequestType.GET, '/../idm/school/${school}');

@@ -1,4 +1,13 @@
-# Next release test4
+# Next release
+
+Feature: Filter contacts by school in case a room already has contacts
+Feature: Filter contacts by school in case a school is selected in chat list
+
+Fix: Sending messages on Enter (web)
+
+Chore: localization updates
+
+# test4
 
 Feature: Add icons in chat list for all schools.
 Feature: Store school id as state event in room. This helps implementing the report feature.
