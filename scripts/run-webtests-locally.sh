@@ -40,9 +40,9 @@ flutter config --enable-web
 if [ -f "$FLUTTER_TOOLS" ]; then
   echo "using dart drive"
   # headless
-  dart --disable-dart-dev $FLUTTER_TOOLS drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart -d chrome --web-run-headless --headless --dart-define=Dart2jsOptimization=O0 --dart-define=INTEGRATION_USER1=$INTEGRATION_USER1 --dart-define=INTEGRATION_USER2=$INTEGRATION_USER2 --dart-define=INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --dart-define=INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 --debug
+  dart --disable-dart-dev $FLUTTER_TOOLS drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart -d chrome --web-run-headless --headless --dart-define=Dart2jsOptimization=O0 --dart-define=INTEGRATION_USER1=$INTEGRATION_USER1 --dart-define=INTEGRATION_USER2=$INTEGRATION_USER2 --dart-define=INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --dart-define=INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 --release
 else
   echo "using flutter drive"
   # not headless, needs chromedriver, e.g. `./chromedriver --port=4444 --enable-chrome-logs --verbose --log-path=/tmp/chromedriver.log`
-  flutter drive -d chrome --dart-define=Dart2jsOptimization=O0 --dart-define=INTEGRATION_USER1=$INTEGRATION_USER1 --dart-define=INTEGRATION_USER2=$INTEGRATION_USER2 --dart-define=INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --dart-define=INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 --debug --driver=test_driver/integration_test.dart integration_test/app_test.dart
+  flutter drive -d chrome --dart-define=Dart2jsOptimization=O0 --dart-define=INTEGRATION_USER1=$INTEGRATION_USER1 --dart-define=INTEGRATION_USER2=$INTEGRATION_USER2 --dart-define=INTEGRATION_PASSWORD1=$INTEGRATION_PASSWORD1 --dart-define=INTEGRATION_PASSWORD2=$INTEGRATION_PASSWORD2 --release --driver=test_driver/integration_test.dart integration_test/app_test.dart
 fi
