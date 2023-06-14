@@ -14,7 +14,6 @@ class AddressbookView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SliverAppBar? backBtn;
-    final String? roomId = VRouter.of(context).pathParameters['roomid'];
 
     // main entries like Teacher, Student, Admins have a category
     final selectedWithoutCategory = <ABookEntry>[];
@@ -31,24 +30,24 @@ class AddressbookView extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => roomId != null
-              ? VRouter.of(context).toSegments(['rooms', roomId])
+          onPressed: () => controller.roomId != null
+              ? VRouter.of(context).toSegments(['rooms', controller.roomId!])
               : Navigator.of(context).pop(),
           alignment: Alignment.centerLeft,
         ),
       ),
       actions: (selectedWithoutCategory.isNotEmpty &&
-              roomId != null &&
+              controller.roomId != null &&
               !controller.invitesFromMultipleSchools())
           ? [
               TextButton.icon(
-                onPressed: () =>
-                    controller.invite(selectedWithoutCategory, roomId),
+                onPressed: () => controller.invite(
+                    selectedWithoutCategory, controller.roomId!),
                 label: Text(L10n.of(context)!.inviteFromAddressbook),
                 icon: const Icon(Icons.library_add),
               )
             ]
-          : (selectedWithoutCategory.isNotEmpty && roomId != null)
+          : (selectedWithoutCategory.isNotEmpty && controller.roomId != null)
               ? [
                   Text(
                     L10n.of(context)!.contactsFromMultipleSchoolsError,

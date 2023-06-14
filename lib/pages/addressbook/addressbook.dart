@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:vrouter/vrouter.dart';
 
 import 'package:fluffychat/utils/invite_exception.dart';
 import 'package:fluffychat/widgets/matrix.dart';
@@ -91,6 +92,8 @@ class AddressbookController extends State<AddressbookPage> {
   Map<String, List<ABookEntry>> allUsers = {};
 
   var abook = <ABookEntry>[];
+
+  String? get roomId => VRouter.of(context).pathParameters['roomid'];
 
   // getter for nodes selected by an user
   Set<ABookEntry> get selection => selectedNodes;
