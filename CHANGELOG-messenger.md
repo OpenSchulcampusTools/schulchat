@@ -6,6 +6,8 @@ Feature: Filter contacts by school in case a school is selected in chat list.
 Fix: Sending messages on Enter (web).
 Fix: Don't show invite menu if user has no permission to invite others.
 
+Misc: UI improvements in addressbook
+
 Chore: localization updates
 
 # test4

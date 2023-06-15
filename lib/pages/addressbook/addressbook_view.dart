@@ -110,18 +110,6 @@ class AddressbookView extends StatelessWidget {
           SliverToBoxAdapter(
             child: Row(
               children: [
-                Text(
-                  (e.longName != null && e.longName!.isNotEmpty)
-                      ? '${e.longName} (${e.info})'
-                      : (e.kind == 'group')
-                          ? '${e.title} (${e.info}) (${e.scgroupUsersActive!.length} of ${e.scgroupUsersActive!.length + e.scgroupUsersInactive!.length} users active)'
-                          : '${e.title} (${e.info})',
-                  style: TextStyle(
-                    decoration: (e.active || e.kind == 'group')
-                        ? TextDecoration.none
-                        : TextDecoration.lineThrough,
-                  ),
-                ),
                 if (e.active || e.kind == 'group')
                   IconButton(
                     icon: controller.isSelected(e)
@@ -131,8 +119,19 @@ class AddressbookView extends StatelessWidget {
                           )
                         : const Icon(Icons.circle_outlined, size: 16.0),
                     onPressed: () => controller.toggleEntry(e),
-                  )
-                //: Text(' (${L10n.of(context)!.userNotInMessenger})')
+                  ),
+                Text(
+                  (e.longName != null && e.longName!.isNotEmpty)
+                      ? '${e.longName} (${e.info})'
+                      : (e.kind == 'group')
+                          ? '${e.title} (${e.info}) (${e.scgroupUsersActive!.length}/${e.scgroupUsersActive!.length + e.scgroupUsersInactive!.length})'
+                          : '${e.title} (${e.info})',
+                  style: TextStyle(
+                    decoration: (e.active || e.kind == 'group')
+                        ? TextDecoration.none
+                        : TextDecoration.lineThrough,
+                  ),
+                ),
               ],
             ),
           ),
@@ -176,12 +175,21 @@ class AddressbookView extends StatelessWidget {
                           ? () => controller.onTap(entry)
                           : null,
                     ),
+                    if (entry.node.active ||
+                        entry.node.category ||
+                        entry.node.kind == 'group')
+                      IconButton(
+                        icon: controller.isSelected(entry.node)
+                            ? const Icon(Icons.check_circle_outline, size: 16.0)
+                            : const Icon(Icons.circle_outlined, size: 16.0),
+                        onPressed: () => controller.toggleEntry(entry.node),
+                      ),
                     Text(
                       entry.node.longName != null &&
                               entry.node.longName!.isNotEmpty
                           ? entry.node.longName!
                           : (entry.node.kind == 'group')
-                              ? '${entry.node.title} (${entry.node.scgroupUsersActive!.length} of ${entry.node.scgroupUsersActive!.length + entry.node.scgroupUsersInactive!.length} users active)'
+                              ? '${entry.node.title} (${entry.node.scgroupUsersActive!.length}/${entry.node.scgroupUsersActive!.length + entry.node.scgroupUsersInactive!.length})'
                               : entry.node.title,
                       style: TextStyle(
                         decoration: (entry.node.active ||
@@ -191,16 +199,6 @@ class AddressbookView extends StatelessWidget {
                             : TextDecoration.lineThrough,
                       ),
                     ),
-                    if (entry.node.active ||
-                        entry.node.category ||
-                        entry.node.kind == 'group')
-                      IconButton(
-                        icon: controller.isSelected(entry.node)
-                            ? const Icon(Icons.check_circle_outline, size: 16.0)
-                            : const Icon(Icons.circle_outlined, size: 16.0),
-                        onPressed: () => controller.toggleEntry(entry.node),
-                      )
-                    //: Text(' (${L10n.of(context)!.userNotInMessenger})')
                   ],
                 ),
               ),
@@ -236,12 +234,12 @@ class AddressbookView extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: Row(
                       children: [
-                        Text(
-                          '${e.title} (${e.info})',
-                        ),
                         IconButton(
                           icon: const Icon(Icons.clear, size: 16.0),
                           onPressed: () => controller.toggleEntry(e),
+                        ),
+                        Text(
+                          '${e.title} (${e.info})',
                         ),
                       ],
                     ),
@@ -255,9 +253,6 @@ class AddressbookView extends StatelessWidget {
                       SliverToBoxAdapter(
                         child: Row(
                           children: [
-                            Text(
-                              '${controller.usersInSCGroups.where((u) => u.username == groupMemberName).toList().first.longName} (via ${e.title})',
-                            ),
                             IconButton(
                               icon: const Icon(Icons.clear, size: 16.0),
                               onPressed: () async =>
@@ -265,6 +260,9 @@ class AddressbookView extends StatelessWidget {
                                 e,
                                 groupMemberName,
                               ),
+                            ),
+                            Text(
+                              '${controller.usersInSCGroups.where((u) => u.username == groupMemberName).toList().first.longName} (via ${e.title})',
                             ),
                           ],
                         ),
@@ -275,14 +273,14 @@ class AddressbookView extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: Row(
                       children: [
+                        IconButton(
+                          icon: const Icon(Icons.clear, size: 16.0),
+                          onPressed: () => controller.toggleEntry(e),
+                        ),
                         Text(
                           (e.longName != null && e.longName!.isNotEmpty)
                               ? '${e.longName} (${e.info})'
                               : '${e.title} (${e.info})',
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.clear, size: 16.0),
-                          onPressed: () => controller.toggleEntry(e),
                         ),
                       ],
                     ),
