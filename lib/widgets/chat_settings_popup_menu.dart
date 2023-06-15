@@ -100,17 +100,21 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
           ],
         ),
       ),
-      PopupMenuItem<String>(
-        value: 'addressbook',
-        child: Row(
-          children: [
-            const Icon(Icons.contacts),
-            const SizedBox(width: 12),
-            Text(L10n.of(context)!.inviteUsingAddressbook),
-          ],
-        ),
-      ),
     ];
+    if (widget.room.canInvite) {
+      items.add(
+        PopupMenuItem<String>(
+          value: 'addressbook',
+          child: Row(
+            children: [
+              const Icon(Icons.contacts),
+              const SizedBox(width: 12),
+              Text(L10n.of(context)!.inviteUsingAddressbook),
+            ],
+          ),
+        ),
+      );
+    }
     if (widget.displayChatDetails) {
       items.insert(
         0,
