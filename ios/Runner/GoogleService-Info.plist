@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>865731724731-ofdr7e6m04murgb1bvchlj9oaos0q5i3.apps.googleusercontent.com</string>
+	<string>867559520081-kglk4l9l17nh04ffo7tth3n84u87naoh.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.865731724731-ofdr7e6m04murgb1bvchlj9oaos0q5i3</string>
+	<string>com.googleusercontent.apps.867559520081-kglk4l9l17nh04ffo7tth3n84u87naoh</string>
 	<key>API_KEY</key>
-	<string>AIzaSyA8ZUBcuny0HjPwF2Q2fvDyQTC5dG2VHlE</string>
+	<string>AIzaSyCZ4PdM_sNU9r1vobtMk8TERPQbWjDWv1s</string>
 	<key>GCM_SENDER_ID</key>
-	<string>865731724731</string>
+	<string>867559520081</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>im.fluffychat.app</string>
+	<string>eu.fairkom.fairmessenger.rlp</string>
 	<key>PROJECT_ID</key>
-	<string>fluffychat-ef3e8</string>
+	<string>schulchatrlp</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fluffychat-ef3e8.appspot.com</string>
+	<string>schulchatrlp.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:865731724731:ios:79fd983ce46cb40c64309e</string>
+	<string>1:867559520081:ios:50fcb077e7029fb0698570</string>
 </dict>
 </plist>
