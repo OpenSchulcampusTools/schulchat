@@ -1663,6 +1663,16 @@
       "type": "text",
       "placeholders": {}
     },
+    "scanError": "Error while scanning the QR code",
+    "@scanError": {
+      "type": "text",
+      "placeholders": {}
+    },
+    "scanErrorExplanation": "An error has occurred. Please try again. Additional information:",
+    "@scanErrorExplanation": {
+      "type": "text",
+      "placeholders": {}
+    },
     "search": "Search",
     "@search": {
         "type": "text",

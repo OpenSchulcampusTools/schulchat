@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:matrix/matrix.dart';
@@ -64,6 +65,28 @@ class QRScanController extends State<QRScan> {
     });
   }
 
+  void showErrorDialog(
+      BuildContext context, String authorizationCode, String error) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(L10n.of(context)!.scanError),
+          content: Text(L10n.of(context)!.scanErrorExplanation),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                isCurrentlySendingAuthorizationCode = false;
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> sendAuthorizationCode(String authorizationCode) async {
     isCurrentlySendingAuthorizationCode = true;
 
@@ -95,13 +118,14 @@ class QRScanController extends State<QRScan> {
         );
         return;
       } else {
-        Logs().w('Failed to send authorization code: ${response.statusCode}');
+        showErrorDialog(
+            context, authorizationCode, response.statusCode.toString());
+        Logs().d('Failed to send authorization code: ${response.statusCode}');
       }
     } catch (e) {
+      showErrorDialog(context, authorizationCode, e.toString());
       Logs().e('Error sending authorization code: $e');
     }
-
-    isCurrentlySendingAuthorizationCode = false;
   }
 
   void onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {

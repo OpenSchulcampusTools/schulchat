@@ -1531,6 +1531,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "scanError": "Fehler beim Scannen vom QR-Code" ,
+  "@scanError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "scanErrorExplanation": "Ein Fehler ist aufgetreten. Bitte versuche es erneut. Hier sind zusätzliche Informationen:",
+  "@scanErrorExplanation": {
+    "type": "text",
+    "placeholders": {}
+  },
   "search": "Suchen",
   "@search": {
     "type": "text",
