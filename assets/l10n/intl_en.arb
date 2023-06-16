@@ -2574,5 +2574,9 @@
     "inviteUsingAddressbook": "Invite using addressbook",
     "@inviteUsingAddressbook": {},
     "forbidWriting": "Other participants cannot write",
-    "@forbidWriting": {}
+    "@forbidWriting": {},
+    "removeSelectionContact": "Remove selected entry",
+    "@removeSelectionContact": {},
+    "selectContact": "Select entry",
+    "@selectContact": {}
 }

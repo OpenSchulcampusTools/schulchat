@@ -7,7 +7,7 @@ Fix: Sending messages on Enter (web).
 Fix: Don't show invite menu if user has no permission to invite others.
 Fix: Chat list does not show school icon if there is only one school (android/iOS)
 
-Misc: UI improvements in addressbook
+Misc: UI improvements in addressbook, add labels
 
 Chore: localization updates
 

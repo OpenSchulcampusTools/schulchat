@@ -26,15 +26,10 @@ class AddressbookView extends StatelessWidget {
     // TODO add description (hover)
     backBtn = SliverAppBar(
       pinned: true,
-      leading: Container(
-        alignment: Alignment.centerLeft,
-        child: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => controller.roomId != null
-              ? VRouter.of(context).toSegments(['rooms', controller.roomId!])
-              : Navigator.of(context).pop(),
-          alignment: Alignment.centerLeft,
-        ),
+      leading: BackButton(
+        onPressed: () => controller.roomId != null
+            ? VRouter.of(context).toSegments(['rooms', controller.roomId!])
+            : Navigator.of(context).pop(),
       ),
       actions: (selectedWithoutCategory.isNotEmpty &&
               controller.roomId != null &&
@@ -183,6 +178,7 @@ class AddressbookView extends StatelessWidget {
                             ? const Icon(Icons.check_circle_outline, size: 16.0)
                             : const Icon(Icons.circle_outlined, size: 16.0),
                         onPressed: () => controller.toggleEntry(entry.node),
+                        tooltip: L10n.of(context)!.selectContact,
                       ),
                     Text(
                       entry.node.longName != null &&
@@ -237,6 +233,7 @@ class AddressbookView extends StatelessWidget {
                         IconButton(
                           icon: const Icon(Icons.clear, size: 16.0),
                           onPressed: () => controller.toggleEntry(e),
+                          tooltip: L10n.of(context)!.removeSelectionContact,
                         ),
                         Text(
                           '${e.title} (${e.info})',
@@ -260,6 +257,7 @@ class AddressbookView extends StatelessWidget {
                                 e,
                                 groupMemberName,
                               ),
+                              tooltip: L10n.of(context)!.removeSelectionContact,
                             ),
                             Text(
                               '${controller.usersInSCGroups.where((u) => u.username == groupMemberName).toList().first.longName} (via ${e.title})',
@@ -276,6 +274,7 @@ class AddressbookView extends StatelessWidget {
                         IconButton(
                           icon: const Icon(Icons.clear, size: 16.0),
                           onPressed: () => controller.toggleEntry(e),
+                          tooltip: L10n.of(context)!.removeSelectionContact,
                         ),
                         Text(
                           (e.longName != null && e.longName!.isNotEmpty)

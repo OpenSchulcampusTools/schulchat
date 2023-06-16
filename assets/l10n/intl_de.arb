@@ -2598,5 +2598,9 @@
   "inviteUsingAddressbook": "Einladen mit Adressbuch",
   "@inviteUsingAddressbook": {},
   "forbidWriting": "Andere Teilnehmer:innen können keine Nachrichten senden",
-  "@forbidWriting": {}
+  "@forbidWriting": {},
+  "removeSelectionContact": "Eintrag entfernen",
+  "@removeSelectionContact": {},
+  "selectContact": "Eintrag auswählen",
+  "@selectContact": {}
 }
