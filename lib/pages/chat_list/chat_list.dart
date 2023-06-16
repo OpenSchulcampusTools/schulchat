@@ -65,7 +65,7 @@ class ChatListController extends State<ChatList>
 
   bool get displayNavigationBar =>
       !FluffyThemes.isColumnMode(context) &&
-      (AppConfig.separateChatTypes || schools.keys.toList().length > 1);
+      (AppConfig.separateChatTypes || schools.keys.toList().isNotEmpty);
 
   int selectedSchoolIndex = -1;
 
