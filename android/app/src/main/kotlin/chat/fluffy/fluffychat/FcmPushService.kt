@@ -1,8 +1,8 @@
-/*package chat.fluffy.fluffychat
+package eu.fairkom.fairmessenger.rlp
 
 import com.famedly.fcm_shared_isolate.FcmSharedIsolateService
 
-import chat.fluffy.fluffychat.MainActivity
+import eu.fairkom.fairmessenger.rlp.MainActivity
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -33,4 +33,3 @@ class FcmPushService : FcmSharedIsolateService() {
         }
     }
 }
-*/
