@@ -1,4 +1,4 @@
-# Next release
+# test5
 
 Feature: Filter contacts by school in case a room already has contacts.
 Feature: Filter contacts by school in case a school is selected in chat list.
