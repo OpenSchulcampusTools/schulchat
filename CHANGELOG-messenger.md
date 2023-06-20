@@ -1,3 +1,7 @@
+# test6
+
+Feature: Add refresh functionality in addressbook.
+
 # test5
 
 Feature: Filter contacts by school in case a room already has contacts.

@@ -2578,5 +2578,7 @@
     "removeSelectionContact": "Remove selected entry",
     "@removeSelectionContact": {},
     "selectContact": "Select entry",
-    "@selectContact": {}
+    "@selectContact": {},
+    "refreshContacts": "Refresh",
+    "@refreshContacts": {}
 }

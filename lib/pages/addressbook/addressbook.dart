@@ -236,20 +236,24 @@ class AddressbookController extends State<AddressbookPage> {
     return selection.first.orgName;
   }
 
-  List<ABookEntry> listOfSchools = [];
-
   // wrap async abook loading, because initState cannot be async
-  void loadAddressbook() async {
-    abook = await buildAddressbook();
+  void loadAddressbook([refresh = false]) async {
+    abook = await buildAddressbook(refresh);
     setState(() {
       treeController.roots = abook;
       treeController.rebuild();
     });
   }
 
-  Future<List<ABookEntry>> buildAddressbook() async {
+  Future<List<ABookEntry>> buildAddressbook(refresh) async {
+    // clear old data, needed on refresh
+    selection.clear();
+    deselectedUserEntries.clear();
+    allUsers.clear(); // in case a school is deactivated
+    usersInSCGroups.clear();
+
     final abookEntries = <ABookEntry>[];
-    final abookJson = await Matrix.of(context).client.fetchAddressbook();
+    final abookJson = await Matrix.of(context).client.fetchAddressbook(refresh);
     final Room? room =
         roomId != null ? Matrix.of(context).client.getRoomById(roomId!) : null;
 
@@ -291,7 +295,6 @@ class AddressbookController extends State<AddressbookPage> {
           isSchool: true,
           orgName: school,
         );
-        listOfSchools.add(abookSchool);
         final abookTeacher = ABookEntry(
           title: L10n.of(context)!.abookTitleTeachers,
           children: [],
@@ -441,8 +444,6 @@ class AddressbookController extends State<AddressbookPage> {
         }
         abookEntries.add(abookSchool);
       }
-      Logs()
-          .d('List of schools: ${listOfSchools.map((s) => s.title).toList()}');
     }
     return abookEntries;
   }
@@ -523,6 +524,10 @@ class AddressbookController extends State<AddressbookPage> {
       );
     }
   }
+
+  //void reloadAddressbook() {
+  //  loadAddressbook();
+  //}
 
   @override
   void initState() {

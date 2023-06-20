@@ -2602,5 +2602,7 @@
   "removeSelectionContact": "Eintrag entfernen",
   "@removeSelectionContact": {},
   "selectContact": "Eintrag auswählen",
-  "@selectContact": {}
+  "@selectContact": {},
+  "refreshContacts": "Aktualisieren",
+  "@refreshContacts": {}
 }

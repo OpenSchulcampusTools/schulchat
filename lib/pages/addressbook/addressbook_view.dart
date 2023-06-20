@@ -31,27 +31,30 @@ class AddressbookView extends StatelessWidget {
             ? VRouter.of(context).toSegments(['rooms', controller.roomId!])
             : Navigator.of(context).pop(),
       ),
-      actions: (selectedWithoutCategory.isNotEmpty &&
-              controller.roomId != null &&
-              !controller.invitesFromMultipleSchools())
-          ? [
-              TextButton.icon(
-                onPressed: () => controller.invite(
-                  selectedWithoutCategory,
-                  controller.roomId!,
-                ),
-                label: Text(L10n.of(context)!.inviteFromAddressbook),
-                icon: const Icon(Icons.library_add),
-              )
-            ]
-          : (selectedWithoutCategory.isNotEmpty && controller.roomId != null)
-              ? [
-                  Text(
-                    L10n.of(context)!.contactsFromMultipleSchoolsError,
-                    style: const TextStyle(color: Colors.red),
-                  )
-                ]
-              : [],
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.refresh_outlined, size: 16.0),
+          onPressed: () => controller.loadAddressbook(true),
+          tooltip: L10n.of(context)!.refreshContacts,
+        ),
+        if (selectedWithoutCategory.isNotEmpty &&
+            controller.roomId != null &&
+            !controller.invitesFromMultipleSchools())
+          TextButton.icon(
+            onPressed: () => controller.invite(
+              selectedWithoutCategory,
+              controller.roomId!,
+            ),
+            label: Text(L10n.of(context)!.inviteFromAddressbook),
+            icon: const Icon(Icons.library_add),
+          )
+        else if (selectedWithoutCategory.isNotEmpty &&
+            controller.roomId != null)
+          Text(
+            L10n.of(context)!.contactsFromMultipleSchoolsError,
+            style: const TextStyle(color: Colors.red),
+          )
+      ],
       systemOverlayStyle: SystemUiOverlayStyle.light,
       backgroundColor:
           Theme.of(context).colorScheme.secondaryContainer.withAlpha(210),
