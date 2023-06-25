@@ -81,12 +81,6 @@ class SettingsStyleView extends StatelessWidget {
             const Divider(height: 1),
             RadioListTile<ThemeMode>(
               groupValue: controller.currentTheme,
-              value: ThemeMode.system,
-              title: Text(L10n.of(context)!.systemTheme),
-              onChanged: controller.switchTheme,
-            ),
-            RadioListTile<ThemeMode>(
-              groupValue: controller.currentTheme,
               value: ThemeMode.light,
               title: Text(L10n.of(context)!.lightTheme),
               onChanged: controller.switchTheme,
@@ -95,6 +89,12 @@ class SettingsStyleView extends StatelessWidget {
               groupValue: controller.currentTheme,
               value: ThemeMode.dark,
               title: Text(L10n.of(context)!.darkTheme),
+              onChanged: controller.switchTheme,
+            ),
+            RadioListTile<ThemeMode>(
+              groupValue: controller.currentTheme,
+              value: ThemeMode.system,
+              title: Text(L10n.of(context)!.systemTheme),
               onChanged: controller.switchTheme,
             ),
             const Divider(height: 1),

@@ -111,7 +111,9 @@ class HomeserverPickerView extends StatelessWidget {
                   : Container(
                       alignment: Alignment.topCenter,
                       child: Image.asset(
-                        'assets/banner_transparent.png',
+                        Theme.of(context).brightness == Brightness.dark
+                            ? 'assets/banner_transparent.png'
+                            : 'assets/banner.png',
                         filterQuality: FilterQuality.medium,
                       ),
                     ),

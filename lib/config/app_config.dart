@@ -11,14 +11,14 @@ abstract class AppConfig {
   static String get defaultHomeserver => _defaultHomeserver;
   static double bubbleSizeFactor = 1;
   static double fontSizeFactor = 1;
-  static const Color chatColor = primaryColor;
-  static Color? colorSchemeSeed = primaryColor;
   static const double messageFontSize = 15.75;
   static const bool allowOtherHomeservers = true;
   static const bool enableRegistration = true;
-  static const Color primaryColor = Color(0xFFC0CD00);
-  static const Color primaryColorLight = Color(0xFFEAF099);
+  static const Color primaryColor = Color(0xFF009CEE);
+  static const Color primaryColorLight = Color(0xFFFFFFFF);
   static const Color secondaryColor = Color(0xFF009cee);
+  static const Color chatColor = primaryColor;
+  static Color? colorSchemeSeed = primaryColor;
   static String _privacyUrl =
       'https://gitlab.com/famedly/fluffychat/-/blob/main/PRIVACY.md';
   static String get privacyUrl => _privacyUrl;

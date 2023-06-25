@@ -161,12 +161,10 @@ class ConnectPageView extends StatelessWidget {
                             padding: const EdgeInsets.all(12.0),
                             child: ElevatedButton.icon(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
-                                foregroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimaryContainer,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primary,
+                                foregroundColor:
+                                    Theme.of(context).colorScheme.onPrimary,
                               ),
                               icon: identityProviders.single.icon == null
                                   ? const Icon(
@@ -208,10 +206,8 @@ class ConnectPageView extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Theme.of(context).colorScheme.primaryContainer,
-                  foregroundColor:
-                      Theme.of(context).colorScheme.onPrimaryContainer,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 icon: const Icon(
                   Icons.qr_code_2_outlined,
@@ -242,10 +238,8 @@ class ConnectPageView extends StatelessWidget {
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.login_outlined),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
-                    foregroundColor:
-                        Theme.of(context).colorScheme.onPrimaryContainer,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: controller.loading ? () {} : controller.login,
                   label: Text(L10n.of(context)!.login),

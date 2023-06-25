@@ -37,10 +37,7 @@ class LoginScaffold extends StatelessWidget {
     if (isMobileMode) return scaffold;
     return Container(
       decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/login_wallpaper.png'),
-          fit: BoxFit.cover,
-        ),
+        color: Color(0xFFA7ADB1),
       ),
       child: Center(
         child: Padding(
