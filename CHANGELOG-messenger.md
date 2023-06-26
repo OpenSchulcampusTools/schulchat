@@ -1,3 +1,6 @@
+# test8
+Fix: Delete messages from input bar in case they have been sent. Accidentally missed some lines during merge, as we had changes on the same lines.
+
 # test7
 
 Feature: Adapt branding

@@ -319,6 +319,11 @@ class ChatController extends State<Chat> {
 
   Future<void> send() async {
     if (sendController.text.trim().isEmpty) return;
+
+    _storeInputTimeoutTimer?.cancel();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('draft_$roomId');
+
     var parseCommands = false;
 
     final commandMatch =
