@@ -1,3 +1,8 @@
+# test7
+
+Feature: Adapt branding
+Fix: Prevent fetching fonts from Google
+
 # test6
 
 Feature: Add refresh functionality in addressbook.
