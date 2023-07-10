@@ -26,18 +26,6 @@ class UserBottomSheetView extends StatelessWidget {
             onPressed: Navigator.of(context, rootNavigator: false).pop,
           ),
           title: Text(user.calcDisplayname()),
-          actions: [
-            if (user.id != client.userID)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: OutlinedButton.icon(
-                  onPressed: () => controller
-                      .participantAction(UserBottomSheetAction.message),
-                  icon: const Icon(Icons.chat_outlined),
-                  label: Text(L10n.of(context)!.newChat),
-                ),
-              ),
-          ],
         ),
         body: ListView(
           children: [
