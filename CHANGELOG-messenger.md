@@ -1,3 +1,11 @@
+# test9
+Feature: Adapt Design
+
+Fix: Temporarly remove New chat feature from user profile and room participant info sheet
+Fix: Remove possibility to change display name
+Fix: Remove possibility to change your own avatar (set globally in Schulcampus instead)
+Fix: Prevent setting room to public
+
 # test8
 Fix: Delete messages from input bar in case they have been sent. Accidentally missed some lines during merge, as we had changes on the same lines.
 
