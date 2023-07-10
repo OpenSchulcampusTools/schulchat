@@ -26,6 +26,7 @@ class SettingsStyleView extends StatelessWidget {
         withScrolling: true,
         child: Column(
           children: [
+            /* #schulChatSpecific
             SizedBox(
               height: colorPickerSize + 24,
               child: ListView(
@@ -78,7 +79,7 @@ class SettingsStyleView extends StatelessWidget {
                     .toList(),
               ),
             ),
-            const Divider(height: 1),
+            const Divider(height: 1),*/
             RadioListTile<ThemeMode>(
               groupValue: controller.currentTheme,
               value: ThemeMode.light,

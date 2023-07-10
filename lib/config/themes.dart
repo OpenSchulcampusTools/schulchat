@@ -37,7 +37,6 @@ abstract class FluffyThemes {
     titleMedium: fallbackTextStyle,
     titleSmall: fallbackTextStyle,
   );
-
   static const Duration animationDuration = Duration(milliseconds: 250);
   static const Curve animationCurve = Curves.easeInOut;
 
@@ -46,7 +45,9 @@ abstract class FluffyThemes {
         visualDensity: VisualDensity.standard,
         useMaterial3: true,
         brightness: brightness,
-        colorSchemeSeed: seed ?? AppConfig.colorSchemeSeed,
+        colorScheme: brightness == Brightness.dark
+            ? AppConfig.colorSchemeDark
+            : AppConfig.colorSchemeLight,
         textTheme: PlatformInfos.isDesktop || PlatformInfos.isWeb
             ? brightness == Brightness.light
                 ? Typography.material2018().black.merge(fallbackTextTheme)
