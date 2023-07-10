@@ -76,7 +76,9 @@ class AddressbookView extends StatelessWidget {
             autofocus: false,
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.search),
-              label: Text(L10n.of(context)!.abookSearchDesc),
+              label: Text(
+                L10n.of(context)!.abookSearchDesc,
+              ),
             ),
           ),
         ),
@@ -118,18 +120,21 @@ class AddressbookView extends StatelessWidget {
                         : const Icon(Icons.circle_outlined, size: 16.0),
                     onPressed: () => controller.toggleEntry(e),
                   ),
-                Text(
-                  (e.longName != null && e.longName!.isNotEmpty)
-                      ? '${e.longName} (${e.info})'
-                      : (e.kind == 'group')
-                          ? '${e.title} (${e.info}) (${e.scgroupUsersActive!.length}/${e.scgroupUsersActive!.length + e.scgroupUsersInactive!.length})'
-                          : '${e.title} (${e.info})',
-                  style: TextStyle(
-                    decoration: (e.active || e.kind == 'group')
-                        ? TextDecoration.none
-                        : TextDecoration.lineThrough,
+                Expanded(
+                  child: Text(
+                    (e.longName != null && e.longName!.isNotEmpty)
+                        ? '${e.longName} (${e.info})'
+                        : (e.kind == 'group')
+                            ? '${e.title} (${e.info}) (${e.scgroupUsersActive!.length}/${e.scgroupUsersActive!.length + e.scgroupUsersInactive!.length})'
+                            : '${e.title} (${e.info})',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      decoration: (e.active || e.kind == 'group')
+                          ? TextDecoration.none
+                          : TextDecoration.lineThrough,
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -140,7 +145,9 @@ class AddressbookView extends StatelessWidget {
         SliverToBoxAdapter(
           child: Row(
             children: [
-              Text(L10n.of(context)!.noSearchResult),
+              Text(
+                L10n.of(context)!.noSearchResult,
+              ),
             ],
           ),
         ),
@@ -183,19 +190,22 @@ class AddressbookView extends StatelessWidget {
                         onPressed: () => controller.toggleEntry(entry.node),
                         tooltip: L10n.of(context)!.selectContact,
                       ),
-                    Text(
-                      entry.node.longName != null &&
-                              entry.node.longName!.isNotEmpty
-                          ? entry.node.longName!
-                          : (entry.node.kind == 'group')
-                              ? '${entry.node.title} (${entry.node.scgroupUsersActive!.length}/${entry.node.scgroupUsersActive!.length + entry.node.scgroupUsersInactive!.length})'
-                              : entry.node.title,
-                      style: TextStyle(
-                        decoration: (entry.node.active ||
-                                entry.node.category ||
-                                entry.node.kind == 'group')
-                            ? TextDecoration.none
-                            : TextDecoration.lineThrough,
+                    Expanded(
+                      child: Text(
+                        entry.node.longName != null &&
+                                entry.node.longName!.isNotEmpty
+                            ? entry.node.longName!
+                            : (entry.node.kind == 'group')
+                                ? '${entry.node.title} (${entry.node.scgroupUsersActive!.length}/${entry.node.scgroupUsersActive!.length + entry.node.scgroupUsersInactive!.length})'
+                                : entry.node.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          decoration: (entry.node.active ||
+                                  entry.node.category ||
+                                  entry.node.kind == 'group')
+                              ? TextDecoration.none
+                              : TextDecoration.lineThrough,
+                        ),
                       ),
                     ),
                   ],
@@ -238,8 +248,11 @@ class AddressbookView extends StatelessWidget {
                           onPressed: () => controller.toggleEntry(e),
                           tooltip: L10n.of(context)!.removeSelectionContact,
                         ),
-                        Text(
-                          '${e.title} (${e.info})',
+                        Expanded(
+                          child: Text(
+                            '${e.title} (${e.info})',
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
@@ -262,9 +275,12 @@ class AddressbookView extends StatelessWidget {
                               ),
                               tooltip: L10n.of(context)!.removeSelectionContact,
                             ),
-                            Text(
-                              '${controller.usersInSCGroups.where((u) => u.username == groupMemberName).toList().first.longName} (via ${e.title})',
-                            ),
+                            Expanded(
+                              child: Text(
+                                '${controller.usersInSCGroups.where((u) => u.username == groupMemberName).toList().first.longName} (via ${e.title})',
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
                           ],
                         ),
                       )
@@ -279,10 +295,13 @@ class AddressbookView extends StatelessWidget {
                           onPressed: () => controller.toggleEntry(e),
                           tooltip: L10n.of(context)!.removeSelectionContact,
                         ),
-                        Text(
-                          (e.longName != null && e.longName!.isNotEmpty)
-                              ? '${e.longName} (${e.info})'
-                              : '${e.title} (${e.info})',
+                        Expanded(
+                          child: Text(
+                            (e.longName != null && e.longName!.isNotEmpty)
+                                ? '${e.longName} (${e.info})'
+                                : '${e.title} (${e.info})',
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
