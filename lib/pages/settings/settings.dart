@@ -30,33 +30,6 @@ class SettingsController extends State<Settings> {
         profileFuture = null;
       });
 
-  void setDisplaynameAction() async {
-    final profile = await profileFuture;
-    final input = await showTextInputDialog(
-      useRootNavigator: false,
-      context: context,
-      title: L10n.of(context)!.editDisplayname,
-      okLabel: L10n.of(context)!.ok,
-      cancelLabel: L10n.of(context)!.cancel,
-      textFields: [
-        DialogTextField(
-          initialText: profile?.displayName ??
-              Matrix.of(context).client.userID!.localpart,
-        )
-      ],
-    );
-    if (input == null) return;
-    final matrix = Matrix.of(context);
-    final success = await showFutureLoadingDialog(
-      context: context,
-      future: () =>
-          matrix.client.setDisplayName(matrix.client.userID!, input.single),
-    );
-    if (success.error == null) {
-      updateProfile();
-    }
-  }
-
   void logoutAction() async {
     final noBackup = showChatBackupBanner == true;
     if (await showOkCancelAlertDialog(

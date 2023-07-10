@@ -94,23 +94,6 @@ class SettingsView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextButton.icon(
-                            onPressed: controller.setDisplaynameAction,
-                            icon: const Icon(
-                              Icons.edit_outlined,
-                              size: 16,
-                            ),
-                            style: TextButton.styleFrom(
-                              foregroundColor:
-                                  Theme.of(context).colorScheme.onBackground,
-                            ),
-                            label: Text(
-                              displayname,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              //  style: const TextStyle(fontSize: 18),
-                            ),
-                          ),
-                          TextButton.icon(
                             onPressed: () => FluffyShare.share(mxid, context),
                             icon: const Icon(
                               Icons.copy_outlined,
