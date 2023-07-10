@@ -190,22 +190,6 @@ class ChatDetailsView extends StatelessWidget {
                                 ),
                                 onTap: controller.setDisplaynameAction,
                               ),
-                            if (room.joinRules == JoinRules.public)
-                              ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  foregroundColor: iconColor,
-                                  child: const Icon(Icons.link_outlined),
-                                ),
-                                onTap: controller.editAliases,
-                                title: Text(L10n.of(context)!.editRoomAliases),
-                                subtitle: Text(
-                                  (room.canonicalAlias.isNotEmpty)
-                                      ? room.canonicalAlias
-                                      : L10n.of(context)!.none,
-                                ),
-                              ),
                             ListTile(
                               leading: CircleAvatar(
                                 backgroundColor:
@@ -218,47 +202,6 @@ class ChatDetailsView extends StatelessWidget {
                               title: Text(L10n.of(context)!.emoteSettings),
                               subtitle: Text(L10n.of(context)!.setCustomEmotes),
                               onTap: controller.goToEmoteSettings,
-                            ),
-                            PopupMenuButton(
-                              onSelected: controller.setJoinRulesAction,
-                              itemBuilder: (BuildContext context) =>
-                                  <PopupMenuEntry<JoinRules>>[
-                                if (room.canChangeJoinRules)
-                                  PopupMenuItem<JoinRules>(
-                                    value: JoinRules.public,
-                                    child: Text(
-                                      JoinRules.public.getLocalizedString(
-                                        MatrixLocals(L10n.of(context)!),
-                                      ),
-                                    ),
-                                  ),
-                                if (room.canChangeJoinRules)
-                                  PopupMenuItem<JoinRules>(
-                                    value: JoinRules.invite,
-                                    child: Text(
-                                      JoinRules.invite.getLocalizedString(
-                                        MatrixLocals(L10n.of(context)!),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  foregroundColor: iconColor,
-                                  child: const Icon(Icons.shield_outlined),
-                                ),
-                                title: Text(
-                                  L10n.of(context)!.whoIsAllowedToJoinThisGroup,
-                                ),
-                                subtitle: Text(
-                                  room.joinRules?.getLocalizedString(
-                                        MatrixLocals(L10n.of(context)!),
-                                      ) ??
-                                      L10n.of(context)!.none,
-                                ),
-                              ),
                             ),
                             PopupMenuButton(
                               onSelected: controller.setHistoryVisibilityAction,
