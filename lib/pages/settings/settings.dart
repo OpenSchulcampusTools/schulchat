@@ -3,13 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:file_picker_cross/file_picker_cross.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/utils/platform_infos.dart';
 import '../../widgets/matrix.dart';
 import '../bootstrap/bootstrap_dialog.dart';
 import 'settings_view.dart';
@@ -24,11 +21,6 @@ class Settings extends StatefulWidget {
 class SettingsController extends State<Settings> {
   Future<Profile>? profileFuture;
   bool profileUpdated = false;
-
-  void updateProfile() => setState(() {
-        profileUpdated = true;
-        profileFuture = null;
-      });
 
   void logoutAction() async {
     final noBackup = showChatBackupBanner == true;
@@ -49,79 +41,6 @@ class SettingsController extends State<Settings> {
       context: context,
       future: () => matrix.client.logout(),
     );
-  }
-
-  void setAvatarAction() async {
-    final profile = await profileFuture;
-    final actions = [
-      if (PlatformInfos.isMobile)
-        SheetAction(
-          key: AvatarAction.camera,
-          label: L10n.of(context)!.openCamera,
-          isDefaultAction: true,
-          icon: Icons.camera_alt_outlined,
-        ),
-      SheetAction(
-        key: AvatarAction.file,
-        label: L10n.of(context)!.openGallery,
-        icon: Icons.photo_outlined,
-      ),
-      if (profile?.avatarUrl != null)
-        SheetAction(
-          key: AvatarAction.remove,
-          label: L10n.of(context)!.removeYourAvatar,
-          isDestructiveAction: true,
-          icon: Icons.delete_outlined,
-        ),
-    ];
-    final action = actions.length == 1
-        ? actions.single.key
-        : await showModalActionSheet<AvatarAction>(
-            context: context,
-            title: L10n.of(context)!.changeYourAvatar,
-            actions: actions,
-          );
-    if (action == null) return;
-    final matrix = Matrix.of(context);
-    if (action == AvatarAction.remove) {
-      final success = await showFutureLoadingDialog(
-        context: context,
-        future: () => matrix.client.setAvatar(null),
-      );
-      if (success.error == null) {
-        updateProfile();
-      }
-      return;
-    }
-    MatrixFile file;
-    if (PlatformInfos.isMobile) {
-      final result = await ImagePicker().pickImage(
-        source: action == AvatarAction.camera
-            ? ImageSource.camera
-            : ImageSource.gallery,
-        imageQuality: 50,
-      );
-      if (result == null) return;
-      file = MatrixFile(
-        bytes: await result.readAsBytes(),
-        name: result.path,
-      );
-    } else {
-      final result =
-          await FilePickerCross.importFromStorage(type: FileTypeCross.image);
-      if (result.fileName == null) return;
-      file = MatrixFile(
-        bytes: result.toUint8List(),
-        name: result.fileName!,
-      );
-    }
-    final success = await showFutureLoadingDialog(
-      context: context,
-      future: () => matrix.client.setAvatar(file),
-    );
-    if (success.error == null) {
-      updateProfile();
-    }
   }
 
   @override

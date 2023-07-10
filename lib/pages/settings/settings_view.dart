@@ -75,16 +75,6 @@ class SettingsView extends StatelessWidget {
                               fontSize: 18 * 2.5,
                             ),
                           ),
-                          if (profile != null)
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: FloatingActionButton.small(
-                                onPressed: controller.setAvatarAction,
-                                heroTag: null,
-                                child: const Icon(Icons.camera_alt_outlined),
-                              ),
-                            ),
                         ],
                       ),
                     ),
