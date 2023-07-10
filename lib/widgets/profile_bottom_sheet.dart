@@ -78,15 +78,6 @@ class ProfileBottomSheet extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(12),
-                  child: FloatingActionButton.extended(
-                    onPressed: () => _startDirectChat(context),
-                    label: Text(L10n.of(context)!.newChat),
-                    icon: const Icon(Icons.send_outlined),
-                  ),
-                ),
                 const SizedBox(height: 8),
               ],
             ),
