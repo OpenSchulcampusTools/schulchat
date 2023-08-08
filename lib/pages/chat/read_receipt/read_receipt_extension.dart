@@ -33,22 +33,42 @@ extension ReadReceiptExtension on Event {
             .isNotEmpty;
 
     if (requiresReadReceipt && userID != null) {
-      final userReadReceipt =
-          aggregatedEvents(timeline, RelationshipTypes.readReceipt)
-              .where(
-                (e) =>
-                    e.content
-                        .tryGetMap<String, dynamic>('m.relates_to')
-                        ?.tryGet<String>('user_id') ==
-                    userID,
-              )
-              .toList();
+      final userReadReceipt = userReadReceipts(timeline, userID);
 
       if (userReadReceipt.isEmpty) {
         readReceiptEventId = await room.sendReadReceipt(eventId, userID);
+
+        if (readReceiptEventId == null) {
+          // something went wrong - read receipt was not send
+          Logs().e(
+              "Read receipt for user $userID and event $eventId wasn't sent.");
+        }
       }
     }
 
     return readReceiptEventId;
+  }
+
+  List<Event> userReadReceipts(timeline, userId) {
+    return aggregatedEvents(timeline, RelationshipTypes.readReceipt)
+        .where(
+          (e) =>
+              e.content
+                      .tryGetMap<String, dynamic>('m.relates_to')
+                      ?.tryGet<String>('user_id') ==
+                  userId &&
+              e.status != EventStatus.error &&
+              e.status != EventStatus.removed,
+        )
+        .toList();
+  }
+
+  bool requiresReadReceipt(Timeline timeline) {
+    return aggregatedEvents(timeline, RelationshipTypes.readReceiptRequired)
+        .isNotEmpty;
+  }
+
+  bool readReceiptGiven(Timeline timeline, String? userId) {
+    return userReadReceipts(timeline, userId).isNotEmpty;
   }
 }

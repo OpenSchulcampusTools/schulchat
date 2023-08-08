@@ -5,6 +5,7 @@ import 'package:matrix/matrix.dart';
 import 'package:swipe_to_action/swipe_to_action.dart';
 
 import 'package:fluffychat/config/themes.dart';
+import 'package:fluffychat/pages/chat/read_receipt/read_receipt_extension.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/string_color.dart';
 import 'package:fluffychat/widgets/avatar.dart';
@@ -120,22 +121,8 @@ class Message extends StatelessWidget {
           : Theme.of(context).colorScheme.primary;
     }
 
-    // add reading receipt for edu
-    final requiresReadReceipt = event
-        .aggregatedEvents(timeline, RelationshipTypes.readReceiptRequired)
-        .isNotEmpty;
-
-    final readReceiptGiven = event
-        .aggregatedEvents(timeline, RelationshipTypes.readReceipt)
-        .where(
-          (e) =>
-              e.content
-                  .tryGetMap<String, dynamic>('m.relates_to')
-                  ?.tryGet<String>('user_id') ==
-              client.userID,
-        )
-        .toList()
-        .isNotEmpty;
+    final requiresReadReceipt = event.requiresReadReceipt(timeline);
+    final readReceiptGiven = event.readReceiptGiven(timeline, client.userID);
 
     final rowChildren = <Widget>[
       if (requiresReadReceipt && !ownMessage)

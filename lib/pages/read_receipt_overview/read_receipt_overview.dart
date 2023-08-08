@@ -301,10 +301,9 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
           await _client!.updateOpenReadReceipts(panelItem.room!.id);
           _updateOpenReadReceipt(panelItem);
           _sortPanelItems();
-
-          message.isReadReceiptGiving = false;
         }
 
+        message.isReadReceiptGiving = false;
         setState(() {
           message;
         });
