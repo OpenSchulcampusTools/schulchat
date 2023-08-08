@@ -358,13 +358,15 @@ class ChatController extends State<Chat> {
       parseCommands: parseCommands,
     );
 
-    if (requireReadReceipt && eventId != null) {
-      await room!.sendReadReceiptRequired(eventId);
+    if (eventId != null) {
+      if (editEvent != null) {
+        await _redactReadReceipts();
+      } else if (requireReadReceipt) {
+        // add readreceiptrequest only if event is created (not when edited)
+        await room!.sendReadReceiptRequired(eventId);
+      }
     }
-    /*  if (requireReadReceipt && eventId != null) {
-      final client = Matrix.of(context).client;
-      await client.database?.addReadReceiptRequiredEvent(eventId!, room!.id);
-    */
+
     sendController.value = TextEditingValue(
       text: pendingText,
       selection: const TextSelection.collapsed(offset: 0),
@@ -377,6 +379,30 @@ class ChatController extends State<Chat> {
       pendingText = '';
       requireReadReceipt = false;
     });
+  }
+
+  Future<void> _redactReadReceipts() async {
+    if (editEvent!.requiresReadReceipt(timeline!)) {
+      final readReceipts = editEvent!.readReceipts(timeline);
+      for (final event in readReceipts) {
+        if (event.status.isSent) {
+          if (event.canRedact) {
+            await event.redactEvent();
+          } else {
+            final client = currentRoomBundle.firstWhere(
+              (cl) => selectedEvents.first.senderId == cl!.userID,
+              orElse: () => null,
+            );
+            if (client != null) {
+              final room = client.getRoomById(roomId!)!;
+              await Event.fromJson(event.toJson(), room).redactEvent();
+            }
+          }
+        } else {
+          await event.remove();
+        }
+      }
+    }
   }
 
   void sendFileAction() async {

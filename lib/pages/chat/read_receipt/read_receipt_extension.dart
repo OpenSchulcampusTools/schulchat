@@ -72,4 +72,13 @@ extension ReadReceiptExtension on Event {
   bool readReceiptGiven(Timeline timeline, String? userId) {
     return userReadReceipts(timeline, userId).isNotEmpty;
   }
+
+  List<Event> readReceipts(timeline) {
+    return aggregatedEvents(timeline, RelationshipTypes.readReceipt)
+        .where(
+          (e) =>
+              e.status != EventStatus.error && e.status != EventStatus.removed,
+        )
+        .toList();
+  }
 }

@@ -153,7 +153,7 @@ class Message extends StatelessWidget {
                         Icons.mark_chat_read_outlined,
                         color: AppConfig.primaryColor,
                       ),
-                      onPressed: () => onReadReceipt?.call(displayEvent),
+                      onPressed: () => onReadReceipt?.call(event),
                     ),
         ),
       sameSender || ownMessage
