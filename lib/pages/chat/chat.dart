@@ -594,7 +594,7 @@ class ChatController extends State<Chat> {
 
   bool showReadReceiptButton() {
     // only admin is allowed to request read receipt
-    return room!.ownPowerLevel == 100;
+    return editEvent == null && room!.ownPowerLevel == 100;
   }
 
   void onReadReceipt(Event event) async {

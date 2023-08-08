@@ -74,7 +74,8 @@ class _EditContent extends StatelessWidget {
             hideReply: true,
           ),
           builder: (context, snapshot) {
-            return Text(
+            return Expanded(
+                child: Text(
               snapshot.data ??
                   event.calcLocalizedBodyFallback(
                     MatrixLocals(L10n.of(context)!),
@@ -86,7 +87,7 @@ class _EditContent extends StatelessWidget {
               style: TextStyle(
                 color: Theme.of(context).textTheme.bodyMedium!.color,
               ),
-            );
+            ));
           },
         ),
       ],
