@@ -57,7 +57,7 @@ class ParticipantListItem extends StatelessWidget {
                   permissionBatch,
                   style: TextStyle(
                     fontSize: 14,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
               ),
