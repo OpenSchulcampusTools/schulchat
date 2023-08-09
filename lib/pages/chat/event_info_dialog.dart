@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/widgets/avatar.dart';
@@ -54,7 +53,7 @@ class EventInfoDialog extends StatelessWidget {
             ),
             title: Text(L10n.of(context)!.sender),
             subtitle: Text(
-              '${event.senderFromMemoryOrFallback.calcDisplayname()} [${event.senderId}]',
+              '${event.senderFromMemoryOrFallback.calcDisplayname()}', /* schulChatSpecific string + [${event.senderId}]*/
             ),
           ),
           ListTile(
@@ -65,6 +64,7 @@ class EventInfoDialog extends StatelessWidget {
             title: Text(L10n.of(context)!.messageType),
             subtitle: Text(event.humanreadableType),
           ),
+          /* schulChatSpecific
           ListTile(title: Text('${L10n.of(context)!.sourceCode}:')),
           Padding(
             padding: const EdgeInsets.all(12.0),
@@ -77,7 +77,7 @@ class EventInfoDialog extends StatelessWidget {
                 child: SelectableText(prettyJson),
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );
