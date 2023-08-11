@@ -52,7 +52,7 @@ RUN sed -i 's#disableAuthWithUsernameAndPassword = true#disableAuthWithUsernameA
 RUN mkdir -p assets/js/package
 RUN ./scripts/prepare-web.sh
 
-RUN curl -s 'https://chromedriver.storage.googleapis.com/113.0.5672.63/chromedriver_linux64.zip' >/tmp/chromedriver.zip && unzip /tmp/chromedriver.zip && rm /tmp/chromedriver.zip
+RUN curl -s 'https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip' >/tmp/chromedriver.zip && unzip /tmp/chromedriver.zip && rm /tmp/chromedriver.zip
 RUN chmod +x chromedriver
 RUN flutter config --enable-web
 COPY ./docker/run-integration-web.sh /
