@@ -53,7 +53,7 @@ class EventInfoDialog extends StatelessWidget {
             ),
             title: Text(L10n.of(context)!.sender),
             subtitle: Text(
-              '${event.senderFromMemoryOrFallback.calcDisplayname()}', /* schulChatSpecific string + [${event.senderId}]*/
+              event.senderFromMemoryOrFallback.calcDisplayname(),
             ),
           ),
           ListTile(
@@ -64,20 +64,6 @@ class EventInfoDialog extends StatelessWidget {
             title: Text(L10n.of(context)!.messageType),
             subtitle: Text(event.humanreadableType),
           ),
-          /* schulChatSpecific
-          ListTile(title: Text('${L10n.of(context)!.sourceCode}:')),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Material(
-              borderRadius: BorderRadius.circular(AppConfig.borderRadius),
-              color: Theme.of(context).colorScheme.surface,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(8),
-                scrollDirection: Axis.horizontal,
-                child: SelectableText(prettyJson),
-              ),
-            ),
-          ),*/
         ],
       ),
     );

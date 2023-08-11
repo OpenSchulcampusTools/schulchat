@@ -75,19 +75,20 @@ class _EditContent extends StatelessWidget {
           ),
           builder: (context, snapshot) {
             return Expanded(
-                child: Text(
-              snapshot.data ??
-                  event.calcLocalizedBodyFallback(
-                    MatrixLocals(L10n.of(context)!),
-                    withSenderNamePrefix: false,
-                    hideReply: true,
-                  ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              style: TextStyle(
-                color: Theme.of(context).textTheme.bodyMedium!.color,
+              child: Text(
+                snapshot.data ??
+                    event.calcLocalizedBodyFallback(
+                      MatrixLocals(L10n.of(context)!),
+                      withSenderNamePrefix: false,
+                      hideReply: true,
+                    ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyMedium!.color,
+                ),
               ),
-            ));
+            );
           },
         ),
       ],

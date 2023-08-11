@@ -14,7 +14,7 @@ class SettingsStyleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const colorPickerSize = 32.0;
+    // const colorPickerSize = 32.0;
     final wallpaper = Matrix.of(context).wallpaper;
     return Scaffold(
       appBar: AppBar(

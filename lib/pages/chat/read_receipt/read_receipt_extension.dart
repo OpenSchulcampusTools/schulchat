@@ -41,7 +41,8 @@ extension ReadReceiptExtension on Event {
         if (readReceiptEventId == null) {
           // something went wrong - read receipt was not send
           Logs().e(
-              "Read receipt for user $userID and event $eventId wasn't sent.");
+            "Read receipt for user $userID and event $eventId wasn't sent.",
+          );
         }
       }
     }
