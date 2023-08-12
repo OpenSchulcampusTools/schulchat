@@ -963,7 +963,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "inviteText": "{username} hat dich eingeladen. \n1. Installiere den Messenger: https://schulchat.rlp.de \n2. Melde dich in der App an \n3. Öffne den Einladungslink: {link}",
+  "inviteText": "{username} hat dich eingeladen. \n1. Installiere Schulchat: https://schulchat.rlp.de \n2. Melde dich in der App an \n3. Öffne den Einladungslink: {link}",
   "@inviteText": {
     "type": "text",
     "placeholders": {
@@ -1147,7 +1147,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "💬 Neue Nachricht im Schulmessenger",
+  "newMessageInFluffyChat": "💬 Neue Nachricht in Schulchat",
   "@newMessageInFluffyChat": {
     "type": "text",
     "placeholders": {}
@@ -2356,7 +2356,7 @@
   "@dehydrate": {},
   "dehydrateWarning": "Diese Aktion kann nicht rückgängig gemacht werden. Stelle sicher, dass du die Sicherungsdatei sicher aufbewahrst.",
   "@dehydrateWarning": {},
-  "dehydrateShare": "Dies ist dein privater Messenger-Export. Stelle sicher, dass du ihn nicht verlierst und bewahre ihn privat auf.",
+  "dehydrateShare": "Dies ist dein privater Schulchat-Export. Stelle sicher, dass du ihn nicht verlierst und bewahre ihn privat auf.",
   "@dehydrateShare": {},
   "dehydrateTor": "TOR-Benutzer: Sitzung exportieren",
   "@dehydrateTor": {},
@@ -2390,7 +2390,7 @@
   "@storeInSecureStorageDescription": {},
   "storeInAppleKeyChain": "Im Apple KeyChain speichern",
   "@storeInAppleKeyChain": {},
-  "indexedDbErrorLong": "Die Nachrichtenspeicherung ist im privaten Modus standardmäßig leider nicht aktiviert.\nBitte besuche\n- about:config\n- Setze dom.indexedDB.privateBrowsing.enabled auf true\nAndernfalls ist es nicht möglich, den Messenger auszuführen.",
+  "indexedDbErrorLong": "Die Nachrichtenspeicherung ist im privaten Modus standardmäßig leider nicht aktiviert.\nBitte besuche\n- about:config\n- Setze dom.indexedDB.privateBrowsing.enabled auf true\nAndernfalls ist es nicht möglich, Schulchat auszuführen.",
   "@indexedDbErrorLong": {},
   "confirmMatrixId": "Bitte bestätigen deine Matrix-ID, um dein Konto zu löschen.",
   "@confirmMatrixId": {},
@@ -2409,7 +2409,7 @@
   "@hideUnimportantStateEvents": {},
   "doNotShowAgain": "Nicht mehr anzeigen",
   "@doNotShowAgain": {},
-  "appearOnTopDetails": "Ermöglicht, dass die App oben angezeigt wird (nicht erforderlich, wenn du den Messenger bereits als Anrufkonto eingerichtet hast)",
+  "appearOnTopDetails": "Ermöglicht, dass die App oben angezeigt wird (nicht erforderlich, wenn du Schulchat bereits als Anrufkonto eingerichtet hast)",
   "@appearOnTopDetails": {},
   "noKeyForThisMessage": "Dies kann passieren, wenn die Nachricht gesendet wurde, bevor du dich auf diesem Gerät bei deinem Konto angemeldet hast.\n\nEs ist auch möglich, dass der Absender dein Gerät blockiert hat oder etwas mit der Internetverbindung schief gelaufen ist.\n\nKannst du die Nachricht in einer anderen Sitzung lesen? Dann kannst du die Nachricht davon übertragen! Gehe zu denEinstellungen > Geräte und vergewissere dich, dass sich deine Geräte gegenseitig verifiziert haben. Wenn du den Raum das nächste Mal öffnest und beide Sitzungen im Vordergrund sind, werden die Schlüssel automatisch übertragen.\n\nDu möchtest die Schlüssel beim Abmelden oder Gerätewechsel nicht verlieren? Stelle sicher, dass du das Chat-Backup in den Einstellungen aktiviert hast.",
   "@noKeyForThisMessage": {},
@@ -2421,7 +2421,7 @@
   "@callingPermissions": {},
   "callingAccount": "Anrufkonto",
   "@callingAccount": {},
-  "callingAccountDetails": "Ermöglicht dem Messenger, die native Android-Dialer-App zu verwenden.",
+  "callingAccountDetails": "Ermöglicht Schulchat, die native Android-Dialer-App zu verwenden.",
   "@callingAccountDetails": {},
   "appearOnTop": "Oben erscheinen",
   "@appearOnTop": {},
@@ -2554,7 +2554,7 @@
   "@contactsInfoParent": {},
   "contactsInfoGroup": "Gruppe in",
   "@contactsInfoGroup": {},
-  "userNotInMessenger": "noch nicht im Messenger",
+  "userNotInMessenger": "noch nicht im Schulchat",
   "@userNotInMessenger": {},
   "inviteErrorHappened": "Ein Fehler trat während der Einladung auf",
   "@inviteErrorHappened": {},
