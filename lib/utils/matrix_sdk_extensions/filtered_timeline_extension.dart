@@ -14,6 +14,13 @@ extension IsStateExtension on Event {
       !{EventTypes.Reaction, EventTypes.Redaction}.contains(type) &&
       // if we enabled to hide all redacted events, don't show those
       (!AppConfig.hideRedactedEvents || !redacted) &&
+      // always filter out read receipt redactions of edit events
+      (!redacted ||
+          !(unsigned
+                  ?.tryGetMap<String, dynamic>("redacted_because")
+                  ?.tryGetMap<String, dynamic>("content")
+                  ?.tryGet<String>("reason") ==
+              'Read receipt response discarded due to message edit.')) &&
       // if we enabled to hide all unknown events, don't show those
       (!AppConfig.hideUnknownEvents || isEventTypeKnown) &&
       // remove state events that we don't want to render

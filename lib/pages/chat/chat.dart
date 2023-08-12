@@ -387,7 +387,8 @@ class ChatController extends State<Chat> {
       for (final event in readReceipts) {
         if (event.status.isSent) {
           if (event.canRedact) {
-            await event.redactEvent();
+            await event.redactEvent(
+                reason: 'Read receipt response discarded due to message edit.');
           } else {
             final client = currentRoomBundle.firstWhere(
               (cl) => selectedEvents.first.senderId == cl!.userID,
@@ -395,7 +396,9 @@ class ChatController extends State<Chat> {
             );
             if (client != null) {
               final room = client.getRoomById(roomId!)!;
-              await Event.fromJson(event.toJson(), room).redactEvent();
+              await Event.fromJson(event.toJson(), room).redactEvent(
+                  reason:
+                      'Read receipt response discarded due to message edit.');
             }
           }
         } else {
