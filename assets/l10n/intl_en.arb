@@ -2584,5 +2584,10 @@
     "readReceiptRequest": "Read receipt request",
     "@readReceiptRequest": {},
     "schoolId": "",
-    "@schoolId": {}
+    "@schoolId": {},
+    "areYouSureYouWantToForward": "Do you really want to forward the message to the room {name}?",
+    "@areYouSureYouWantToForward": {
+      "type": "text",
+      "placeholders": {}
+    }
 }

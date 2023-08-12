@@ -68,6 +68,17 @@ class ChatListItem extends StatelessWidget {
       // Share content into this room
       final shareContent = Matrix.of(context).shareContent;
       if (shareContent != null) {
+        if (await showOkCancelAlertDialog(
+              useRootNavigator: false,
+              context: context,
+              title: L10n.of(context)!.areYouSureYouWantToForward(room.name),
+              okLabel: L10n.of(context)!.ok,
+              cancelLabel: L10n.of(context)!.cancel,
+            ) ==
+            OkCancelResult.cancel) {
+          return;
+        }
+
         final shareFile = shareContent.tryGet<MatrixFile>('file');
         if (shareContent.tryGet<String>('msgtype') ==
                 'chat.fluffy.shared_file' &&

@@ -2615,5 +2615,10 @@
         }
     },
   "schoolId": "",
-  "@schoolId": {}
+  "@schoolId": {},
+  "areYouSureYouWantToForward": "Wollen Sie die Nachricht wirklich in den Raum {name} weiterleiten?",
+  "@areYouSureYouWantToForward": {
+    "type": "text",
+    "placeholders": {}
+  }
 }
