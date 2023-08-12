@@ -2604,5 +2604,7 @@
   "selectContact": "Eintrag auswählen",
   "@selectContact": {},
   "refreshContacts": "Aktualisieren",
-  "@refreshContacts": {}
+  "@refreshContacts": {},
+  "readReceiptRequest": "Lesebestätigung erforderlich",
+  "@readReceiptRequest": {}
 }

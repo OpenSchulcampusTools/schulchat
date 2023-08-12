@@ -2580,5 +2580,7 @@
     "selectContact": "Select entry",
     "@selectContact": {},
     "refreshContacts": "Refresh",
-    "@refreshContacts": {}
+    "@refreshContacts": {},
+    "readReceiptRequest": "Read receipt request",
+    "@readReceiptRequest": {}
 }

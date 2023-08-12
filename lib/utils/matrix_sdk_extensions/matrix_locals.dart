@@ -182,6 +182,12 @@ class MatrixLocals extends MatrixLocalizations {
   String get noPermission => l10n.noKeyForThisMessage;
 
   @override
+  String get readReceiptRequest => l10n.readReceiptRequest;
+
+  @override
+  String get readReceiptGiven => l10n.readReceiptGiven;
+
+  @override
   String redactedAnEvent(String senderName) {
     return l10n.redactedAnEvent(senderName);
   }
