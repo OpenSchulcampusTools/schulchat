@@ -2613,5 +2613,7 @@
         "placeholders": {
             "unreadCount": {}
         }
-    }
+    },
+  "schoolId": "",
+  "@schoolId": {}
 }

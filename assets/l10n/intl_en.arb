@@ -2582,5 +2582,7 @@
     "refreshContacts": "Refresh",
     "@refreshContacts": {},
     "readReceiptRequest": "Read receipt request",
-    "@readReceiptRequest": {}
+    "@readReceiptRequest": {},
+    "schoolId": "",
+    "@schoolId": {}
 }

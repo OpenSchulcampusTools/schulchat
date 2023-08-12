@@ -188,6 +188,9 @@ class MatrixLocals extends MatrixLocalizations {
   String get readReceiptGiven => l10n.readReceiptGiven;
 
   @override
+  String get schoolId => l10n.schoolId;
+
+  @override
   String redactedAnEvent(String senderName) {
     return l10n.redactedAnEvent(senderName);
   }
