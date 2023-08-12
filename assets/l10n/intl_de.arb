@@ -2606,5 +2606,12 @@
   "refreshContacts": "Aktualisieren",
   "@refreshContacts": {},
   "readReceiptRequest": "Lesebestätigung erforderlich",
-  "@readReceiptRequest": {}
+  "@readReceiptRequest": {},
+  "unreadChats": "{unreadCount, plural, =1{Ungelesene Nachrichten in 1 Raum} other{Ungelesene Nachrichten in {unreadCount} Räumen}}",
+  "@unreadChats": {
+        "type": "text",
+        "placeholders": {
+            "unreadCount": {}
+        }
+    }
 }
