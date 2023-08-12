@@ -2607,7 +2607,7 @@
   "@refreshContacts": {},
   "readReceiptRequest": "Lesebestätigung erforderlich",
   "@readReceiptRequest": {},
-  "unreadChats": "{unreadCount, plural, =1{Ungelesene Nachrichten in 1 Raum} other{Ungelesene Nachrichten in {unreadCount} Räumen}}",
+  "unreadChats": "{unreadCount, plural, =1{Neue Nachrichten} other{Neue Nachrichten in {unreadCount} Räumen}}",
   "@unreadChats": {
         "type": "text",
         "placeholders": {

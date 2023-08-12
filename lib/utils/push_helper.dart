@@ -44,7 +44,7 @@ Future<void> pushHelper(
       onDidReceiveBackgroundNotificationResponse: onSelectNotification,
     );
 
-    l10n ??= lookupL10n(const Locale('en'));
+    l10n ??= lookupL10n(const Locale('de'));
     flutterLocalNotificationsPlugin.show(
       0,
       l10n.newMessageInFluffyChat,
