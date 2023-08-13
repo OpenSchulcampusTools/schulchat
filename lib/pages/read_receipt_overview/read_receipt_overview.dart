@@ -203,6 +203,12 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
         // events from sync are sorted chronologically up
         // but we need latest event first -> therefore insert(0, ...
         panelItem.messages.addAll({parentEvent.eventId: parentEvent});
+
+        // if `getDisplayEvent` would be extended to include encrypted events,
+        // the following would display the latest content of edited events -
+        // however no read receipt would be found in that case
+        // final Event maybeEncrypted = await _decryptEvent(parentEvent.getDisplayEvent(panelItem.timeline!), room);
+        // panelItem.messages.addAll({maybeEncrypted.eventId: maybeEncrypted});
       }
     }
   }

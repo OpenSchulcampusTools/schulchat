@@ -38,9 +38,35 @@ class ReadReceiptListController extends State<ReadReceiptList> {
       return (membership != null && membership == "join");
     }).toList();
 
+    final origSrc = event.originalSource;
+    Event origSrcEvt;
+    String? origEvtId;
+    if (origSrc != null) {
+      // an edited event in chat view
+      origSrcEvt = Event.fromMatrixEvent(origSrc, room);
+      origEvtId = origSrcEvt.relationshipEventId;
+    } else {
+      // 1. edited event in overview (via settings) - this has a m.relates_to that refs the original event
+      // 2. non-edit event in overview - has m.relates_to that references the read receipt request, so origEvtId isn't changed
+      if (event.content
+              .tryGetMap<String, dynamic>('m.relates_to')
+              ?.tryGet<String>('rel_type') ==
+          RelationshipTypes.edit) {
+        origEvtId = event.relationshipEventId;
+      }
+    }
+
     // read all read receipts from server as there are possibly not all events already loaded in the timeline
-    readReceipts =
-        await event.getRelations(relType: RelationshipTypes.readReceipt);
+    // receipt responses are related to the *original* event, so in case the message was edited,
+    // we fetch the original event first
+    if (origEvtId != null) {
+      final Event? origEvent = await timeline!.getEventById(origEvtId);
+      readReceipts =
+          await origEvent!.getRelations(relType: RelationshipTypes.readReceipt);
+    } else {
+      readReceipts =
+          await event.getRelations(relType: RelationshipTypes.readReceipt);
+    }
 
     setState(() {
       members;
