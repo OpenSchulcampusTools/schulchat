@@ -1,3 +1,28 @@
+# 10
+
+Feature: Error handling for read receipts
+Feature: Add dialog to confirm message forwards
+Feature: Support editing of messages with read receipts (announcements)
+Feature: Log client errors to server
+
+Fix: Leaving a room clears all read receipt requests
+Fix: Role labels in rooms could not be read (UX)
+Fix: Don't show read receipt button when editing messages
+Fix: Don't display message source and sender in event details (UX)
+Fix: Don't display password change method, as this is done within IdP
+Fix: Read receipt localization in Push messages
+Fix: School identifier message localization
+
+Misc: Don't display message details (Push, Android)
+Misc: Push localization
+Misc: Enable send on enter by default
+Misc: Enable hide unknown events by default
+Misc: Use 'Schulchat' in more places (branding)
+Misc: Remove invite button from settings
+Misc: Clip too long text in addressbook
+
+Chore: Bump chromedriver
+
 # test9
 Feature: Adapt Design
 
