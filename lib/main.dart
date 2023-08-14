@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +37,12 @@ void main() async {
     queryParameters
         .addAll(Uri.parse(html.window.location.href).queryParameters);
   }
+
+  Timer.periodic(const Duration(seconds: 60), (Timer t) {
+    for (final client in clients) {
+      Logs().writeLogToServer(client);
+    }
+  });
 
   runApp(
     PlatformInfos.isMobile

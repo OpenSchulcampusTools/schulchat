@@ -40,6 +40,12 @@ class FluffyChatAppState extends State<FluffyChatApp> {
   @override
   void initState() {
     super.initState();
+
+    // This captures errors reported by the FLUTTER framework.
+    FlutterError.onError = (FlutterErrorDetails details) {
+      Logs().e("Unhandled exception", details.exception, details.stack);
+    };
+
     _initialUrl =
         widget.clients.any((client) => client.isLogged()) ? '/rooms' : '/home';
   }
