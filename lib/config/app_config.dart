@@ -42,7 +42,7 @@ abstract class AppConfig {
   static bool hideUnimportantStateEvents = true;
   static bool separateChatTypes = false;
   static bool autoplayImages = true;
-  static bool sendOnEnter = true;
+  static bool sendOnEnter = false;
   static bool experimentalVoip = false;
   static const bool hideTypingUsernames = false;
   static const bool hideAllStateEvents = false;
