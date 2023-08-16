@@ -127,7 +127,7 @@ class AddressbookView extends StatelessWidget {
                         : (e.kind == 'group')
                             ? '${e.title} (${e.info}) (${e.scgroupUsersActive!.length}/${e.scgroupUsersActive!.length + e.scgroupUsersInactive!.length})'
                             : '${e.title} (${e.info})',
-                    overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.clip,
                     style: TextStyle(
                       decoration: (e.active || e.kind == 'group')
                           ? TextDecoration.none
@@ -198,7 +198,7 @@ class AddressbookView extends StatelessWidget {
                             : (entry.node.kind == 'group')
                                 ? '${entry.node.title} (${entry.node.scgroupUsersActive!.length}/${entry.node.scgroupUsersActive!.length + entry.node.scgroupUsersInactive!.length})'
                                 : entry.node.title,
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.clip,
                         style: TextStyle(
                           decoration: (entry.node.active ||
                                   entry.node.category ||
@@ -251,7 +251,7 @@ class AddressbookView extends StatelessWidget {
                         Expanded(
                           child: Text(
                             '${e.title} (${e.info})',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
                       ],
@@ -278,7 +278,7 @@ class AddressbookView extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 '${controller.usersInSCGroups.where((u) => u.username == groupMemberName).toList().first.longName} (via ${e.title})',
-                                overflow: TextOverflow.ellipsis,
+                                overflow: TextOverflow.clip,
                               ),
                             )
                           ],
@@ -300,7 +300,7 @@ class AddressbookView extends StatelessWidget {
                             (e.longName != null && e.longName!.isNotEmpty)
                                 ? '${e.longName} (${e.info})'
                                 : '${e.title} (${e.info})',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
                       ],
