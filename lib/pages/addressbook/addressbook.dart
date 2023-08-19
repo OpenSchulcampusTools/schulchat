@@ -525,14 +525,10 @@ class AddressbookController extends State<AddressbookPage> {
     }
   }
 
-  //void reloadAddressbook() {
-  //  loadAddressbook();
-  //}
-
   @override
   void initState() {
     super.initState();
-    loadAddressbook();
+    loadAddressbook(true);
     treeController = TreeController<ABookEntry>(
       roots: abook,
       childrenProvider: (ABookEntry node) => node.children,
