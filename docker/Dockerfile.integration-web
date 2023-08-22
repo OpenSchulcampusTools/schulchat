@@ -52,7 +52,7 @@ RUN sed -i 's#disableAuthWithUsernameAndPassword = true#disableAuthWithUsernameA
 RUN mkdir -p assets/js/package
 RUN ./scripts/prepare-web.sh
 
-RUN curl -s 'https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chrome-linux64.zip' >/tmp/chromedriver.zip && unzip /tmp/chromedriver.zip && rm /tmp/chromedriver.zip
+RUN curl -s 'https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chromedriver-linux64.zip' >/tmp/chromedriver.zip && unzip /tmp/chromedriver.zip && rm /tmp/chromedriver.zip
 RUN chmod +x chromedriver
 RUN flutter config --enable-web
 COPY ./docker/run-integration-web.sh /
