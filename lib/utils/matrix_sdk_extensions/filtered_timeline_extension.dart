@@ -41,7 +41,6 @@ extension IsStateExtension on Event {
     EventTypes.RoomCreate,
     EventTypes.RoomMember,
     EventTypes.RoomTombstone,
-    EventTypes.CallInvite,
   };
 
   bool get isState => !{

@@ -269,21 +269,6 @@ class MessageContent extends StatelessWidget {
               },
             );
         }
-      case EventTypes.CallInvite:
-        return FutureBuilder<User?>(
-          future: event.fetchSenderUser(),
-          builder: (context, snapshot) {
-            return _ButtonContent(
-              label: L10n.of(context)!.startedACall(
-                snapshot.data?.calcDisplayname() ??
-                    event.senderFromMemoryOrFallback.calcDisplayname(),
-              ),
-              icon: const Icon(Icons.phone_outlined),
-              textColor: buttonTextColor,
-              onPressed: () => onInfoTab!(event),
-            );
-          },
-        );
       default:
         return FutureBuilder<User?>(
           future: event.fetchSenderUser(),

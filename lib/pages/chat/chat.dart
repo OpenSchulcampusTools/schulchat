@@ -34,7 +34,6 @@ import '../../utils/account_bundles.dart';
 import '../../utils/localized_exception_extension.dart';
 import '../../utils/matrix_sdk_extensions/matrix_file_extension.dart';
 import 'send_file_dialog.dart';
-import 'send_location_dialog.dart';
 import 'sticker_picker_dialog.dart';
 
 class Chat extends StatefulWidget {
@@ -388,7 +387,8 @@ class ChatController extends State<Chat> {
         if (event.status.isSent) {
           if (event.canRedact) {
             await event.redactEvent(
-                reason: 'Read receipt response discarded due to message edit.');
+              reason: 'Read receipt response discarded due to message edit.',
+            );
           } else {
             final client = currentRoomBundle.firstWhere(
               (cl) => selectedEvents.first.senderId == cl!.userID,
@@ -397,8 +397,8 @@ class ChatController extends State<Chat> {
             if (client != null) {
               final room = client.getRoomById(roomId!)!;
               await Event.fromJson(event.toJson(), room).redactEvent(
-                  reason:
-                      'Read receipt response discarded due to message edit.');
+                reason: 'Read receipt response discarded due to message edit.',
+              );
             }
           }
         } else {
@@ -605,14 +605,6 @@ class ChatController extends State<Chat> {
       emojiPickerType = EmojiPickerType.keyboard;
       setState(() => showEmojiPicker = false);
     }
-  }
-
-  void sendLocationAction() async {
-    await showDialog(
-      context: context,
-      useRootNavigator: false,
-      builder: (c) => SendLocationDialog(room: room!),
-    );
   }
 
   void toggleReadReceiptAction() {
@@ -1112,9 +1104,6 @@ class ChatController extends State<Chat> {
     if (choice == 'sticker') {
       sendStickerAction();
     }
-    if (choice == 'location') {
-      sendLocationAction();
-    }
     if (choice == 'reading-receipt') {
       toggleReadReceiptAction();
     }
@@ -1204,65 +1193,6 @@ class ChatController extends State<Chat> {
 
   void showEventInfo([Event? event]) =>
       (event ?? selectedEvents.single).showInfoDialog(context);
-
-  void onPhoneButtonTap() async {
-    // VoIP required Android SDK 21
-    if (PlatformInfos.isAndroid) {
-      DeviceInfoPlugin().androidInfo.then((value) {
-        if (value.version.sdkInt < 21) {
-          Navigator.pop(context);
-          showOkAlertDialog(
-            context: context,
-            title: L10n.of(context)!.unsupportedAndroidVersion,
-            message: L10n.of(context)!.unsupportedAndroidVersionLong,
-            okLabel: L10n.of(context)!.close,
-          );
-        }
-      });
-    }
-    final callType = await showModalActionSheet<CallType>(
-      context: context,
-      title: L10n.of(context)!.warning,
-      message: L10n.of(context)!.videoCallsBetaWarning,
-      cancelLabel: L10n.of(context)!.cancel,
-      actions: [
-        SheetAction(
-          label: L10n.of(context)!.voiceCall,
-          icon: Icons.phone_outlined,
-          key: CallType.kVoice,
-        ),
-        SheetAction(
-          label: L10n.of(context)!.videoCall,
-          icon: Icons.video_call_outlined,
-          key: CallType.kVideo,
-        ),
-      ],
-    );
-    if (callType == null) return;
-
-    final success = await showFutureLoadingDialog(
-      context: context,
-      future: () =>
-          Matrix.of(context).voipPlugin!.voip.requestTurnServerCredentials(),
-    );
-    if (success.result != null) {
-      final voipPlugin = Matrix.of(context).voipPlugin;
-      try {
-        await voipPlugin!.voip.inviteToCall(room!.id, callType);
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toLocalizedString(context))),
-        );
-      }
-    } else {
-      await showOkAlertDialog(
-        context: context,
-        title: L10n.of(context)!.unavailable,
-        okLabel: L10n.of(context)!.next,
-        useRootNavigator: false,
-      );
-    }
-  }
 
   void cancelReplyEventAction() => setState(() {
         if (editEvent != null) {

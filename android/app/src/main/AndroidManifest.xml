@@ -11,8 +11,6 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -25,7 +23,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-sdk
-            tools:overrideLibrary="io.wazo.callkeep, net.touchcapture.qr.flutterqr, com.cloudwebrtc.webrtc, org.webrtc, com.it_nomads.fluttersecurestorage, com.pichillilorenzo.flutter_inappwebview, com.example.video_compress, com.otaliastudios.transcoder, com.otaliastudios.opengl, com.kineapps.flutter_file_dialog, com.llfbandit.record, com.pravera.flutter_foreground_task"/>
+            tools:overrideLibrary="net.touchcapture.qr.flutterqr, com.it_nomads.fluttersecurestorage, com.pichillilorenzo.flutter_inappwebview, com.example.video_compress, com.otaliastudios.transcoder, com.otaliastudios.opengl, com.kineapps.flutter_file_dialog, com.llfbandit.record, com.pravera.flutter_foreground_task"/>
     <application
         android:label="Schulchat"
         android:icon="@mipmap/ic_launcher"

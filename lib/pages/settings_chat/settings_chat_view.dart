@@ -69,28 +69,6 @@ class SettingsChatView extends StatelessWidget {
                 storeKey: SettingKeys.sendOnEnter,
                 defaultValue: AppConfig.sendOnEnter,
               ),
-              /*#schulChatSpecific
-              if (Matrix.of(context).webrtcIsSupported)
-                SettingsSwitchListTile.adaptive(
-                  title: L10n.of(context)!.experimentalVideoCalls,
-                  onChanged: (b) {
-                    AppConfig.experimentalVoip = b;
-                    Matrix.of(context).createVoipPlugin();
-                    return;
-                  },
-                  storeKey: SettingKeys.experimentalVoip,
-                  defaultValue: AppConfig.experimentalVoip,
-                ),
-              if (Matrix.of(context).webrtcIsSupported && !kIsWeb)
-                ListTile(
-                  title: Text(L10n.of(context)!.callingPermissions),
-                  onTap: () =>
-                      CallKeepManager().checkoutPhoneAccountSetting(context),
-                  trailing: const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Icon(Icons.call),
-                  ),
-                ), */
               SettingsSwitchListTile.adaptive(
                 title: L10n.of(context)!.separateChatTypes,
                 onChanged: (b) => AppConfig.separateChatTypes = b,

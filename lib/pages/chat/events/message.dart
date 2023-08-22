@@ -57,11 +57,7 @@ class Message extends StatelessWidget {
       EventTypes.Message,
       EventTypes.Sticker,
       EventTypes.Encrypted,
-      EventTypes.CallInvite
     }.contains(event.type)) {
-      if (event.type.startsWith('m.call.')) {
-        return Container();
-      }
       return StateMessage(event);
     }
 

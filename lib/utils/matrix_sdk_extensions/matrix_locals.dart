@@ -18,11 +18,6 @@ class MatrixLocals extends MatrixLocalizations {
   }
 
   @override
-  String answeredTheCall(String senderName) {
-    return l10n.answeredTheCall(senderName, senderName);
-  }
-
-  @override
   String get anyoneCanJoin => l10n.anyoneCanJoin;
 
   @override
@@ -124,11 +119,6 @@ class MatrixLocals extends MatrixLocalizations {
 
   @override
   String get encryptionNotEnabled => l10n.encryptionNotEnabled;
-
-  @override
-  String endedTheCall(String senderName) {
-    return l10n.endedTheCall(senderName);
-  }
 
   @override
   String get fromJoining => l10n.fromJoining;
@@ -234,18 +224,8 @@ class MatrixLocals extends MatrixLocalizations {
   }
 
   @override
-  String sentCallInformations(String senderName) {
-    return l10n.sentCallInformations(senderName);
-  }
-
-  @override
   String sharedTheLocation(String senderName) {
     return l10n.sharedTheLocation(senderName);
-  }
-
-  @override
-  String startedACall(String senderName) {
-    return l10n.startedACall(senderName);
   }
 
   @override

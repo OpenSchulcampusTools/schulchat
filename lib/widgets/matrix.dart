@@ -26,7 +26,6 @@ import 'package:fluffychat/utils/client_manager.dart';
 import 'package:fluffychat/utils/localized_exception_extension.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/utils/uia_request_manager.dart';
-import 'package:fluffychat/utils/voip_plugin.dart';
 import '../config/app_config.dart';
 import '../config/setting_keys.dart';
 import '../pages/key_verification/key_verification_dialog.dart';
@@ -88,14 +87,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     return widget.clients[_activeClient];
   }
 
-  bool get webrtcIsSupported =>
-      kIsWeb ||
-      PlatformInfos.isMobile ||
-      PlatformInfos.isWindows ||
-      PlatformInfos.isMacOS;
-
-  VoipPlugin? voipPlugin;
-
   bool get isMultiAccount => widget.clients.length > 1;
 
   int getClientIndexByMatrixId(String matrixId) =>
@@ -108,8 +99,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     final i = widget.clients.indexWhere((c) => c == cl);
     if (i != -1) {
       _activeClient = i;
-      // TODO: Multi-client VoiP support
-      createVoipPlugin();
     } else {
       Logs().w('Tried to set an unknown client ${cl!.userID} as active');
     }
@@ -433,16 +422,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         },
       );
     }
-
-    createVoipPlugin();
-  }
-
-  void createVoipPlugin() async {
-    if (await store.getItemBool(SettingKeys.experimentalVoip) == false) {
-      voipPlugin = null;
-      return;
-    }
-    voipPlugin = webrtcIsSupported ? VoipPlugin(client) : null;
   }
 
   @override
@@ -492,9 +471,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     store
         .getItemBool(SettingKeys.sendOnEnter, AppConfig.sendOnEnter)
         .then((value) => AppConfig.sendOnEnter = value);
-    store
-        .getItemBool(SettingKeys.experimentalVoip, AppConfig.experimentalVoip)
-        .then((value) => AppConfig.experimentalVoip = value);
   }
 
   @override
