@@ -1,3 +1,13 @@
+# 11
+
+Fix: Messages are sent multiple times (sendOnEnter bug)
+Fix: Clip long group/user names in addressbook onto new line
+Fix: Back arrow in Read Receipts (UX, dark mode)
+
+Misc: Remove voip code
+Misc: Reload addressbook whenever it is used
+Misc: Open chats by default instead of messages
+
 # 10
 
 Feature: Error handling for read receipts
