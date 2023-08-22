@@ -6,9 +6,7 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 enum PermissionLevel {
   user,
-  moderator,
   admin,
-  custom,
 }
 
 extension on PermissionLevel {
@@ -16,13 +14,10 @@ extension on PermissionLevel {
     switch (this) {
       case PermissionLevel.user:
         return L10n.of(context)!.user;
-      case PermissionLevel.moderator:
-        return L10n.of(context)!.moderator;
       case PermissionLevel.admin:
         return L10n.of(context)!.admin;
-      case PermissionLevel.custom:
       default:
-        return L10n.of(context)!.custom;
+        return L10n.of(context)!.user;
     }
   }
 }
@@ -48,23 +43,7 @@ Future<int?> showPermissionChooser(
   switch (permissionLevel) {
     case PermissionLevel.user:
       return 0;
-    case PermissionLevel.moderator:
-      return 50;
     case PermissionLevel.admin:
       return 100;
-    case PermissionLevel.custom:
-      final customLevel = await showTextInputDialog(
-        context: context,
-        title: L10n.of(context)!.setPermissionsLevel,
-        textFields: [
-          DialogTextField(
-            initialText: currentLevel.toString(),
-            keyboardType: TextInputType.number,
-            autocorrect: false,
-          )
-        ],
-      );
-      if (customLevel == null) return null;
-      return int.tryParse(customLevel.first);
   }
 }

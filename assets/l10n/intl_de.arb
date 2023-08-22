@@ -40,7 +40,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "admin": "Admin",
+  "admin": "Moderator:in",
   "@admin": {
     "type": "text",
     "placeholders": {}
@@ -1122,11 +1122,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "moderator": "Moderator",
-  "@moderator": {
-    "type": "text",
-    "placeholders": {}
-  },
   "monday": "Montag",
   "@monday": {
     "type": "text",
@@ -1289,7 +1284,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "participant": "Mitglieder",
+  "participant": "Teilnehmer:in",
   "@participant": {
     "type": "text",
     "placeholders": {}
@@ -2344,7 +2339,7 @@
   "@recoveryKeyLost": {},
   "enableAutoBackups": "Aktiviere automatische Sicherungen",
   "@enableAutoBackups": {},
-  "user": "Benutzer",
+  "user": "Teilnehmer:in",
   "@user": {},
   "custom": "Benutzerdefiniert",
   "@custom": {},

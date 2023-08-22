@@ -97,8 +97,6 @@ extension on int {
   String toLocalizedPowerLevelString(BuildContext context) {
     return this == 100
         ? L10n.of(context)!.admin
-        : this >= 50
-            ? L10n.of(context)!.moderator
-            : L10n.of(context)!.participant;
+        : L10n.of(context)!.participant;
   }
 }
