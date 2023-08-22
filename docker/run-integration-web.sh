@@ -29,7 +29,7 @@ fi
 #not sure why it cannot reach synapse
 timeout 30s sh scripts/integration-prepare-homeserver.sh
 
-./chromedriver --port=4444 --enable-chrome-logs --verbose --log-path=/tmp/chromedriver.log &
+./chromedriver-linux64/chromedriver --port=4444 --enable-chrome-logs --verbose --log-path=/tmp/chromedriver.log &
 
 echo "waiting 5s so that chromedriver can finish startup"
 sleep 5
