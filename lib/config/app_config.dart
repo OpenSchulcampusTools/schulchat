@@ -20,7 +20,7 @@ abstract class AppConfig {
   static const Color chatColor = primaryColor;
   static Color? colorSchemeSeed = primaryColor;
   static String _privacyUrl =
-      'https://gitlab.com/famedly/fluffychat/-/blob/main/PRIVACY.md';
+      'https://infoportal.schulcampus-rlp.de/datenschutzerklaerung/';
   static String get privacyUrl => _privacyUrl;
   static const String enablePushTutorial =
       'https://gitlab.com/famedly/fluffychat/-/wikis/Push-Notifications-without-Google-Services';
