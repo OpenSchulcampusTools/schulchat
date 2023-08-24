@@ -95,6 +95,6 @@ class PermissionsListTile extends StatelessWidget {
 
 extension on int {
   String toLocalizedPowerLevelString(BuildContext context) {
-    return this == 0 ? L10n.of(context)!.participant : L10n.of(context)!.admin;
+    return this <= 0 ? L10n.of(context)!.participant : L10n.of(context)!.admin;
   }
 }
