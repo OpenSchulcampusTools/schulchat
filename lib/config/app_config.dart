@@ -52,7 +52,7 @@ abstract class AppConfig {
   static const String pushNotificationsChannelName = 'FluffyChat push channel';
   static const String pushNotificationsChannelDescription =
       'Push notifications for FluffyChat';
-  static const String pushNotificationsAppId = 'eu.fairkom.fairmessenger.rlp';
+  static const String pushNotificationsAppId = 'de.rlp.schulchat';
   static const String pushNotificationsGatewayUrl =
       'https://test.schulchat.rlp.de/_matrix/push/v1/notify';
   static const String pushNotificationsPusherFormat = 'event_id_only';

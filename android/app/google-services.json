@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "867559520081",
-    "project_id": "schulchatrlp",
-    "storage_bucket": "schulchatrlp.appspot.com"
+    "project_number": "292796249688",
+    "project_id": "pl-schulchat-dev",
+    "storage_bucket": "pl-schulchat-dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:867559520081:android:f573f6ff8e050135698570",
+        "mobilesdk_app_id": "1:292796249688:android:3a1270c5a4efaef3287c2d",
         "android_client_info": {
-          "package_name": "eu.fairkom.fairmessenger.rlp"
+          "package_name": "de.rlp.schulchat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "867559520081-s87v2s703gonhnosc1bkjdsj0c09jo8e.apps.googleusercontent.com",
+          "client_id": "292796249688-0l06bjrb0geef5o350nd6d526hemo85v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCpJUig4xEohHcWyYsD92L9mT24cNhFLa0"
+          "current_key": "AIzaSyC2pCiuTXqDlvtQGWLTG5OrxHDijQ_LX9I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "867559520081-s87v2s703gonhnosc1bkjdsj0c09jo8e.apps.googleusercontent.com",
+              "client_id": "292796249688-0l06bjrb0geef5o350nd6d526hemo85v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "292796249688-qpmpg65quc1ijqkuvigaf5ejh7pi0urd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.rlp.schulchat"
+              }
             }
           ]
         }

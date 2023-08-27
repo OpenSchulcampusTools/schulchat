@@ -1,4 +1,4 @@
-app_identifier("eu.fairkom.fairmessenger.rlp") # The bundle identifier of your app
+app_identifier("de.rlp.schulchat") # The bundle identifier of your app
 apple_id("mr.monz.philipp@gmail.com") # Your Apple email address
 
 itc_team_id("122628977") # App Store Connect Team ID

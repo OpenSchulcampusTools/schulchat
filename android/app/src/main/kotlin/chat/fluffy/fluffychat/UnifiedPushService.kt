@@ -1,4 +1,4 @@
-package eu.fairkom.fairmessenger.rlp
+package de.rlp.schulchat
 
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.dart.DartExecutor

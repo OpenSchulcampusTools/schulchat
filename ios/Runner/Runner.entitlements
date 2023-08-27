@@ -10,7 +10,7 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.eu.fairkom.fairmessenger.rlp</string>
+		<string>group.de.rlp.schulchat</string>
 	</array>
 </dict>
 </plist>

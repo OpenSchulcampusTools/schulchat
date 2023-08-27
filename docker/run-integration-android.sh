@@ -32,26 +32,26 @@ emulator -avd $TEST_DEVICE -wipe-data -no-audio -no-boot-anim -no-window -accel 
 adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 
 #TODO find a way to accept permissions from the tests
-#adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.POST_NOTIFICATIONS
-#adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.ACCESS_NOTIFICATION_POLICY
+#adb shell pm grant de.rlp.schulchat android.permission.POST_NOTIFICATIONS
+#adb shell pm grant de.rlp.schulchat android.permission.ACCESS_NOTIFICATION_POLICY
 #TODO these are too many permissions, identify the relevant ones
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.ACCESS_COARSE_LOCATION
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.ACCESS_FINE_LOCATION
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.BIND_TELECOM_CONNECTION_SERVICE
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.BLUETOOTH
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.CALL_PHONE
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.CAMERA
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.FOREGROUND_SERVICE
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.INTERNET
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.MODIFY_AUDIO_SETTINGS
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.READ_EXTERNAL_STORAGE
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.READ_PHONE_STATE
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.RECORD_AUDIO
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.SYSTEM_ALERT_WINDOW
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.USE_FULL_SCREEN_INTENT
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.VIBRATE
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.WAKE_LOCK
-adb shell pm grant eu.fairkom.fairmessenger.rlp android.permission.WRITE_EXTERNAL_STORAGE
+adb shell pm grant de.rlp.schulchat android.permission.ACCESS_COARSE_LOCATION
+adb shell pm grant de.rlp.schulchat android.permission.ACCESS_FINE_LOCATION
+adb shell pm grant de.rlp.schulchat android.permission.BIND_TELECOM_CONNECTION_SERVICE
+adb shell pm grant de.rlp.schulchat android.permission.BLUETOOTH
+adb shell pm grant de.rlp.schulchat android.permission.CALL_PHONE
+adb shell pm grant de.rlp.schulchat android.permission.CAMERA
+adb shell pm grant de.rlp.schulchat android.permission.FOREGROUND_SERVICE
+adb shell pm grant de.rlp.schulchat android.permission.INTERNET
+adb shell pm grant de.rlp.schulchat android.permission.MODIFY_AUDIO_SETTINGS
+adb shell pm grant de.rlp.schulchat android.permission.READ_EXTERNAL_STORAGE
+adb shell pm grant de.rlp.schulchat android.permission.READ_PHONE_STATE
+adb shell pm grant de.rlp.schulchat android.permission.RECORD_AUDIO
+adb shell pm grant de.rlp.schulchat android.permission.SYSTEM_ALERT_WINDOW
+adb shell pm grant de.rlp.schulchat android.permission.USE_FULL_SCREEN_INTENT
+adb shell pm grant de.rlp.schulchat android.permission.VIBRATE
+adb shell pm grant de.rlp.schulchat android.permission.WAKE_LOCK
+adb shell pm grant de.rlp.schulchat android.permission.WRITE_EXTERNAL_STORAGE
 
 #push /etc/hosts file from docker container so we can reach synapse
 adb root

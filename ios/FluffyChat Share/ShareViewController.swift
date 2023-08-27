@@ -5,7 +5,7 @@ import Photos
 
 class ShareViewController: SLComposeServiceViewController {
     // TODO: IMPORTANT: This should be your host app bundle identifier
-    let hostAppBundleIdentifier = "eu.fairkom.fairmessenger.rlp"
+    let hostAppBundleIdentifier = "de.rlp.schulchat"
     let sharedKey = "ShareKey"
     var sharedMedia: [SharedMediaFile] = []
     var sharedText: [String] = []

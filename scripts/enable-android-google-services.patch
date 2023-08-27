@@ -5,7 +5,7 @@ index d158f258..24e05116 100644
 @@ -44,7 +44,7 @@ android {
  
      defaultConfig {
-         applicationId "eu.fairkom.fairmessenger.rlp"
+         applicationId "de.rlp.schulchat"
 -        minSdkVersion 16
 +        minSdkVersion 19
          targetSdkVersion 31
@@ -89,12 +89,12 @@ index d9930f55..351b1a5b 100644
 +++ b/android/app/src/main/kotlin/chat/fluffy/fluffychat/FcmPushService.kt
 @@ -1,8 +1,8 @@
 -/*package chat.fluffy.fluffychat
-+package eu.fairkom.fairmessenger.rlp
++package de.rlp.schulchat
  
  import com.famedly.fcm_shared_isolate.FcmSharedIsolateService
  
 -import chat.fluffy.fluffychat.MainActivity
-+import eu.fairkom.fairmessenger.rlp.MainActivity
++import de.rlp.schulchat.MainActivity
  
  import io.flutter.embedding.android.FlutterActivity
  import io.flutter.embedding.engine.FlutterEngine

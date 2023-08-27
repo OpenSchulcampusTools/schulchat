@@ -1,8 +1,8 @@
-package eu.fairkom.fairmessenger.rlp
+package de.rlp.schulchat
 
 import com.famedly.fcm_shared_isolate.FcmSharedIsolateService
 
-import eu.fairkom.fairmessenger.rlp.MainActivity
+import de.rlp.schulchat.MainActivity
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
