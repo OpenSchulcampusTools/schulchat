@@ -2584,5 +2584,7 @@
     "@areYouSureYouWantToForward": {
       "type": "text",
       "placeholders": {}
-    }
+    },
+    "forwardedMessage": "Forwarded Message:",
+    "@forwardedMessage": {}
 }

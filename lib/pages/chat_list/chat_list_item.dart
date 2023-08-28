@@ -93,13 +93,63 @@ class ChatListItem extends StatelessWidget {
             ),
           );
         } else {
-          room.sendEvent(shareContent);
+          final forwardContent = _forwardContent(shareContent, context);
+          room.sendEvent(forwardContent);
         }
         Matrix.of(context).shareContent = null;
       }
 
       VRouter.of(context).toSegments(['rooms', room.id]);
     }
+  }
+
+  Map<String, dynamic> _forwardContent(
+      Map<String, dynamic> shareContent, BuildContext context) {
+    if (shareContent.tryGet<String>('msgtype') != MessageTypes.Text) {
+      // add forwarded-text only if message is o type m.text otherwise return
+      return shareContent;
+    }
+
+    final forwardText = '<i>${L10n.of(context)!.forwardedMessage}</i><br>';
+    String? body = "";
+
+    if (shareContent.containsKey('body')) {
+      body = shareContent.tryGet<String>('body');
+      body ??= "";
+
+      if (body.startsWith(L10n.of(context)!.forwardedMessage)) {
+        // don't add forwarded-text twice
+        return shareContent;
+      }
+
+      shareContent['body'] = '${L10n.of(context)!.forwardedMessage}$body';
+    } else {
+      shareContent.addAll({'body': L10n.of(context)!.forwardedMessage});
+    }
+
+    if (shareContent.containsKey('formatted_body')) {
+      final formattedBody = shareContent.tryGet<String>('formatted_body')!;
+
+      /* text forwarded-text appears after citation, should be before citation
+         don't add forwarded-text to message with reply? if yes, uncomment the following lines!
+      if(formattedBody.contains('<mx-reply>')) {
+        return shareContent;
+      }
+      */
+      shareContent['formatted_body'] = '$forwardText$formattedBody';
+    } else {
+      shareContent.addAll({
+        'formatted_body': '$forwardText$body',
+      });
+    }
+
+    if (shareContent.containsKey('format')) {
+      shareContent['format'] = 'org.matrix.custom.html';
+    } else {
+      shareContent.addAll({'format': 'org.matrix.custom.html'});
+    }
+
+    return shareContent;
   }
 
   Future<void> archiveAction(BuildContext context) async {

@@ -2615,5 +2615,7 @@
   "@areYouSureYouWantToForward": {
     "type": "text",
     "placeholders": {}
-  }
+  },
+  "forwardedMessage": "Weitergeleitete Nachricht:",
+  "@forwardedMessage": {}
 }
