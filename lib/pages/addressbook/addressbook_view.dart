@@ -129,9 +129,9 @@ class AddressbookView extends StatelessWidget {
                             : '${e.title} (${e.info})',
                     overflow: TextOverflow.clip,
                     style: TextStyle(
-                      decoration: (e.active || e.kind == 'group')
-                          ? TextDecoration.none
-                          : TextDecoration.lineThrough,
+                      fontStyle: (e.active || e.kind == 'group')
+                          ? FontStyle.normal
+                          : FontStyle.italic,
                     ),
                   ),
                 )
@@ -200,11 +200,11 @@ class AddressbookView extends StatelessWidget {
                                 : entry.node.title,
                         overflow: TextOverflow.clip,
                         style: TextStyle(
-                          decoration: (entry.node.active ||
+                          fontStyle: (entry.node.active ||
                                   entry.node.category ||
                                   entry.node.kind == 'group')
-                              ? TextDecoration.none
-                              : TextDecoration.lineThrough,
+                              ? FontStyle.normal
+                              : FontStyle.italic,
                         ),
                       ),
                     ),
