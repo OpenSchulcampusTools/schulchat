@@ -35,7 +35,6 @@ ENV PATH=${PATH}:/tmp/flutter/bin:/tmp/flutter/.pub-cache/bin
 RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
 WORKDIR ./fluffychat
 RUN git checkout $CI_COMMIT_SHA
-RUN git apply ./scripts/enable-android-google-services.patch
 RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
 RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.lock
 #RUN rm pubspec.lock || true

@@ -25,6 +25,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import 'package:fcm_shared_isolate/fcm_shared_isolate.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
@@ -37,8 +38,6 @@ import '../config/app_config.dart';
 import '../config/setting_keys.dart';
 import 'famedlysdk_store.dart';
 import 'platform_infos.dart';
-
-//import 'package:fcm_shared_isolate/fcm_shared_isolate.dart';
 
 class NoTokenException implements Exception {
   String get cause => 'Cannot get firebase token';
@@ -64,7 +63,7 @@ class BackgroundPush {
 
   final pendingTests = <String, Completer<void>>{};
 
-  final dynamic firebase = null; //FcmSharedIsolate();
+  final dynamic firebase = FcmSharedIsolate();
 
   DateTime? lastReceivedPush;
 
