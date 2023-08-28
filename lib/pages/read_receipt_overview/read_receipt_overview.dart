@@ -18,8 +18,8 @@ class ReadReceiptOverviewPage extends StatefulWidget {
 
 class ExpansionPanelItem {
   List<Event> readReceiptRequests = [];
-  Map<String, Event> messages = {};
-  bool messagesLoaded = false;
+  Map<String, Event> events = {};
+  bool eventsLoaded = false;
   Timeline? timeline;
   Room? room;
   bool isExpanded = false;
@@ -142,7 +142,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
         await _addParentToMessages(event, panelItem);
 
         setState(() {
-          panelItem.messages;
+          panelItem.events;
           panelItem.hasToGiveReadReceipt =
               _client!.roomsWithOpenReadReceipts.contains(room.id);
         });
@@ -158,11 +158,11 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
   }
 
   void _loadMessages(ExpansionPanelItem panelItem) async {
-    if (!panelItem.messagesLoaded) {
+    if (!panelItem.eventsLoaded) {
       final String roomId = panelItem.room!.id;
 
       panelItem.timeline = await _getTimeline(panelItem.room);
-      panelItem.messages.clear();
+      panelItem.events.clear();
 
       if (_client!.readReceiptRequests.containsKey(roomId)) {
         for (final MatrixEvent mEvent
@@ -172,8 +172,8 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
       }
 
       setState(() {
-        panelItem.messagesLoaded = true;
-        panelItem.messages;
+        panelItem.eventsLoaded = true;
+        panelItem.events;
       });
     }
   }
@@ -189,7 +189,8 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     if (parentId != null) {
       final Room room = panelItem.room!;
 
-      final Event? parentEvent = await _loadParentEvent(room, parentId);
+      final Event? parentEvent =
+          await _loadParentEvent(room, parentId, panelItem.timeline!);
 
       if (parentEvent != null) {
         // add related events as aggregated events to timeline
@@ -202,13 +203,7 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
 
         // events from sync are sorted chronologically up
         // but we need latest event first -> therefore insert(0, ...
-        panelItem.messages.addAll({parentEvent.eventId: parentEvent});
-
-        // if `getDisplayEvent` would be extended to include encrypted events,
-        // the following would display the latest content of edited events -
-        // however no read receipt would be found in that case
-        // final Event maybeEncrypted = await _decryptEvent(parentEvent.getDisplayEvent(panelItem.timeline!), room);
-        // panelItem.messages.addAll({maybeEncrypted.eventId: maybeEncrypted});
+        panelItem.events.addAll({parentEvent.eventId: parentEvent});
       }
     }
   }
@@ -222,8 +217,12 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     final relations = await parentEvent.getRelations();
 
     for (final relation in relations) {
-      final Event eEvent = Event.fromMatrixEvent(relation, room);
-      timeline.addAggregatedEvent(eEvent);
+      Event relEvent = Event.fromMatrixEvent(relation, room);
+
+      if (relEvent.relationshipType == RelationshipTypes.edit) {
+        relEvent = await _decryptEvent(relEvent, room);
+      }
+      timeline.addAggregatedEvent(relEvent);
     }
   }
 
@@ -234,7 +233,12 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     return timeline;
   }
 
-  Future<Event?> _loadParentEvent(Room room, String parentId) async {
+  Future<Event?> _loadParentEvent(
+      Room room, String parentId, Timeline timeline) async {
+    final Event? timelineEvent = await timeline.getEventById(parentId);
+    if (timelineEvent != null) {
+      return timelineEvent;
+    }
     // check if event is already in local storage
     final Event? storageEvent = _localStorageEvents
         .tryGetMap<String, dynamic>(room.id)
@@ -324,8 +328,8 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     if (panelItems.containsKey(event.roomId)) {
       final panelItem = panelItems[event.roomId]!;
 
-      if (panelItem.messages.containsKey(event.eventId)) {
-        return panelItem.messages[event.eventId]!.isReadReceiptGiving;
+      if (panelItem.events.containsKey(event.eventId)) {
+        return panelItem.events[event.eventId]!.isReadReceiptGiving;
       }
     }
 

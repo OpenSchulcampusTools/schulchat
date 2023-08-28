@@ -39,12 +39,13 @@ class ReadReceiptListController extends State<ReadReceiptList> {
     }).toList();
 
     final origSrc = event.originalSource;
-    Event origSrcEvt;
     String? origEvtId;
     if (origSrc != null) {
       // an edited event in chat view
-      origSrcEvt = Event.fromMatrixEvent(origSrc, room);
-      origEvtId = origSrcEvt.relationshipEventId;
+      final origSrcEvt = Event.fromMatrixEvent(origSrc, room);
+      if (origSrcEvt.relationshipType == RelationshipTypes.edit) {
+        origEvtId = origSrcEvt.relationshipEventId;
+      }
     } else {
       // 1. edited event in overview (via settings) - this has a m.relates_to that refs the original event
       // 2. non-edit event in overview - has m.relates_to that references the read receipt request, so origEvtId isn't changed

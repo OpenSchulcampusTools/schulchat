@@ -47,12 +47,12 @@ class ReadReceiptOverviewView extends StatelessWidget {
                             .keys
                             .toList()
                             .map((var index) {
-                          final item =
+                          final panelItem =
                               controller.panelItems.values.elementAt(index);
-                          final room = item.room!;
+                          final room = panelItem.room!;
                           return ExpansionPanel(
                             canTapOnHeader: true,
-                            isExpanded: item.isExpanded,
+                            isExpanded: panelItem.isExpanded,
                             headerBuilder: (context, isExpanded) {
                               return Padding(
                                 padding:
@@ -78,7 +78,7 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                           fontSize: 16,
                                         ),
                                       ),
-                                      if (item.hasToGiveReadReceipt)
+                                      if (panelItem.hasToGiveReadReceipt)
                                         const Positioned(
                                           bottom: 0,
                                           right: 0,
@@ -105,17 +105,17 @@ class ReadReceiptOverviewView extends StatelessWidget {
                             },
                             body: Padding(
                               padding: const EdgeInsets.only(bottom: 15),
-                              child: item.messagesLoaded == true
+                              child: panelItem.eventsLoaded == true
                                   ? Column(
                                       children: [
-                                        if (item.messages.isEmpty)
+                                        if (panelItem.events.isEmpty)
                                           Text(
                                             L10n.of(context)!
                                                 .noReadReceiptRequestsFound,
                                           )
                                         else
-                                          for (var message in item
-                                              .messages.values
+                                          for (var message in panelItem
+                                              .events.values
                                               .toList()
                                               .reversed)
                                             Padding(
@@ -128,11 +128,11 @@ class ReadReceiptOverviewView extends StatelessWidget {
                                                 onReadReceipt: (event) =>
                                                     controller.onReadReceipt(
                                                   event,
-                                                  item,
+                                                  panelItem,
                                                   message,
                                                 ),
                                                 onSelect: (event) {},
-                                                timeline: item.timeline!,
+                                                timeline: panelItem.timeline!,
                                               ),
                                             ),
                                       ],
