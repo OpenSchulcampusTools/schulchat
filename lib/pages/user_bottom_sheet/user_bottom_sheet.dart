@@ -38,6 +38,17 @@ class UserBottomSheet extends StatefulWidget {
 }
 
 class UserBottomSheetController extends State<UserBottomSheet> {
+  bool canSendToUserLoaded = false;
+  bool canSendToUser = false;
+
+  void initCanSendToUser() async {
+    canSendToUser =
+        await Matrix.of(context).client.canSendToUser(widget.user.id);
+    setState(() {
+      canSendToUserLoaded = true;
+    });
+  }
+
   void participantAction(UserBottomSheetAction action) async {
     // ignore: prefer_function_declarations_over_variables
     final Function askConfirmation = () async => (await showOkCancelAlertDialog(
@@ -159,6 +170,12 @@ class UserBottomSheetController extends State<UserBottomSheet> {
           );
         }
     }
+  }
+
+  @override
+  void initState() {
+    initCanSendToUser();
+    super.initState();
   }
 
   @override

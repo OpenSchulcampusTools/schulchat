@@ -46,24 +46,11 @@ class ProfileBottomSheet extends StatelessWidget {
               title: ListTile(
                 contentPadding: const EdgeInsets.only(right: 16.0),
                 title: Text(
-                  profile?.displayName ?? userId.localpart ?? userId,
+                  profile?.displayName ?? '',
                   style: const TextStyle(fontSize: 18),
                 ),
-                subtitle: Text(
-                  userId,
-                  style: const TextStyle(fontSize: 12),
-                ),
               ),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: OutlinedButton.icon(
-                    onPressed: () => _startDirectChat(context),
-                    icon: Icon(Icons.adaptive.share_outlined),
-                    label: Text(L10n.of(context)!.share),
-                  ),
-                ),
-              ],
+              actions: const [],
             ),
             body: ListView(
               children: [
@@ -72,12 +59,22 @@ class ProfileBottomSheet extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: Avatar(
                       mxContent: profile?.avatarUrl,
-                      name: profile?.displayName ?? userId,
+                      name: profile?.displayName ?? '',
                       size: Avatar.defaultSize * 3,
                       fontSize: 36,
                     ),
                   ),
                 ),
+                if (profile?.canSendTo ?? false)
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    child: FloatingActionButton.extended(
+                      onPressed: () => _startDirectChat(context),
+                      label: Text(L10n.of(context)!.newChat),
+                      icon: const Icon(Icons.send_outlined),
+                    ),
+                  ),
                 const SizedBox(height: 8),
               ],
             ),

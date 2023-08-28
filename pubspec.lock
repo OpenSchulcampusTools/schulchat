@@ -1110,7 +1110,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "7be11f3fdd1f4d72f783d539c0e761630ed8e6ce"
+      resolved-ref: bac1079bbeeec29fc69703f20ce74e1ee8b406cc
       url: "git@git.fairkom.net:clients/rlp/client/famedlysdk"
     source: git
     version: "0.17.1"
@@ -1119,7 +1119,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: ebdc246fd3827adf5ecfe62857c7ed006afb5add
+      resolved-ref: "5ec3d8dd2679e5d0b836e82cc757bd45fd1ebc59"
       url: "git@git.fairkom.net:clients/rlp/client/matrix_api_lite"
     source: git
     version: "1.1.10"
