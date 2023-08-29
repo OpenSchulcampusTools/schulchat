@@ -224,11 +224,6 @@ class MatrixLocals extends MatrixLocalizations {
   }
 
   @override
-  String sharedTheLocation(String senderName) {
-    return l10n.sharedTheLocation(senderName);
-  }
-
-  @override
   String unbannedUser(String senderName, String targetName) {
     return l10n.unbannedUser(senderName, targetName);
   }

@@ -848,13 +848,6 @@
         "type": "text",
         "placeholders": {}
     },
-    "errorObtainingLocation": "Error obtaining location: {error}",
-    "@errorObtainingLocation": {
-        "type": "text",
-        "placeholders": {
-            "error": {}
-        }
-    },
     "everythingReady": "Everything ready!",
     "@everythingReady": {
         "type": "text",
@@ -1172,16 +1165,6 @@
         "type": "text",
         "placeholders": {}
     },
-    "locationDisabledNotice": "Location services are disabled. Please enable them to be able to share your location.",
-    "@locationDisabledNotice": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "locationPermissionDeniedNotice": "Location permission denied. Please grant them to be able to share your location.",
-    "@locationPermissionDeniedNotice": {
-        "type": "text",
-        "placeholders": {}
-    },
     "login": "Login",
     "@login": {
         "type": "text",
@@ -1337,11 +1320,6 @@
         "placeholders": {
             "count": {}
         }
-    },
-    "obtainingLocation": "Obtaining location…",
-    "@obtainingLocation": {
-        "type": "text",
-        "placeholders": {}
     },
     "offensive": "Offensive",
     "@offensive": {
@@ -1846,18 +1824,6 @@
     },
     "share": "Share",
     "@share": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "sharedTheLocation": "{username} shared their location",
-    "@sharedTheLocation": {
-        "type": "text",
-        "placeholders": {
-            "username": {}
-        }
-    },
-    "shareLocation": "Share location",
-    "@shareLocation": {
         "type": "text",
         "placeholders": {}
     },

@@ -756,13 +756,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "errorObtainingLocation": "Fehler beim Suchen des Standortes: {error}",
-  "@errorObtainingLocation": {
-    "type": "text",
-    "placeholders": {
-      "error": {}
-    }
-  },
   "everythingReady": "Alles fertig!",
   "@everythingReady": {
     "type": "text",
@@ -1063,16 +1056,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "locationDisabledNotice": "Standort ist deaktiviert. Bitte aktivieren, um den Standort teilen zu können.",
-  "@locationDisabledNotice": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "locationPermissionDeniedNotice": "Standort-Berechtigung wurde abgelehnt. Bitte akzeptieren, um den Standort teilen zu können.",
-  "@locationPermissionDeniedNotice": {
-    "type": "text",
-    "placeholders": {}
-  },
   "login": "Anmelden",
   "@login": {
     "type": "text",
@@ -1218,11 +1201,6 @@
     "placeholders": {
       "count": {}
     }
-  },
-  "obtainingLocation": "Standort wird ermittelt …",
-  "@obtainingLocation": {
-    "type": "text",
-    "placeholders": {}
   },
   "offensive": "Beleidigend",
   "@offensive": {
@@ -1693,18 +1671,6 @@
   },
   "share": "Teilen",
   "@share": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "sharedTheLocation": "{username} hat den Standort geteilt",
-  "@sharedTheLocation": {
-    "type": "text",
-    "placeholders": {
-      "username": {}
-    }
-  },
-  "shareLocation": "Standort teilen",
-  "@shareLocation": {
     "type": "text",
     "placeholders": {}
   },

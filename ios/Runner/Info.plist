@@ -66,12 +66,6 @@
 	<string>Share contacts with your contacts in Schulchat.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Schulchat uses an app lock for an additional security level</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Share your location with your contacts in Schulchat.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Share your location with your contacts in Schulchat.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Share your location with your contacts in Schulchat.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Record voice message and share them with your contacts on Schulchat RLP.</string>
 	<key>NSMotionUsageDescription</key>
