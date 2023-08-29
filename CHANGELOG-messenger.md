@@ -1,3 +1,22 @@
+# 13
+
+Feature: Highlight forwarded messages
+Feature: Prevent admins from leaving rooms in case there is no other admin
+
+Fix: Show edited messages in Read Receipt Overview
+
+Misc: Don't show idm bot in room info
+
+# 12
+
+Feature: Show 'new chat' in Profile/user bottom sheet in case the user has permission to send messages to the other user
+
+Misc: Only use roles moderator/user
+Misc: Don't strikethrough users that are not enabled yet; instead use italic style
+
+Chore: adapt privacy url
+Chore: Rename package to Schulchat
+
 # 11
 
 Fix: Messages are sent multiple times (sendOnEnter bug)
