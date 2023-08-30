@@ -122,7 +122,7 @@ class ChatListItem extends StatelessWidget {
         return shareContent;
       }
 
-      shareContent['body'] = '${L10n.of(context)!.forwardedMessage}$body';
+      shareContent['body'] = '${L10n.of(context)!.forwardedMessage}\n$body';
     } else {
       shareContent.addAll({'body': L10n.of(context)!.forwardedMessage});
     }
