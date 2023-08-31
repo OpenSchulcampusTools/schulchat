@@ -7,7 +7,7 @@ abstract class AppConfig {
   static String get applicationName => _applicationName;
   static String? _applicationWelcomeMessage;
   static String? get applicationWelcomeMessage => _applicationWelcomeMessage;
-  static String _defaultHomeserver = 'test.schulchat.rlp.de';
+  static String _defaultHomeserver = 'schulchat.rlp.de';
   static String get defaultHomeserver => _defaultHomeserver;
   static double bubbleSizeFactor = 1;
   static double fontSizeFactor = 1;
@@ -54,7 +54,7 @@ abstract class AppConfig {
       'Push notifications for FluffyChat';
   static const String pushNotificationsAppId = 'de.rlp.schulchat';
   static const String pushNotificationsGatewayUrl =
-      'https://test.schulchat.rlp.de/_matrix/push/v1/notify';
+      'https://schulchat.rlp.de/_matrix/push/v1/notify';
   static const String pushNotificationsPusherFormat = 'event_id_only';
   static const String emojiFontName = 'Noto Emoji';
   static const String emojiFontUrl =

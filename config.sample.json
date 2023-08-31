@@ -1,9 +1,9 @@
 {
   "application_name": "Schulchat RLP",
   "application_welcome_message": null,
-  "default_homeserver": "test.schulchat.rlp.de",
-  "web_base_url": "https://web.rlp.fairmatrix.net/web",
-  "privacy_url": "https://fluffychat.im/en/privacy.html",
+  "default_homeserver": "schulchat.rlp.de",
+  "web_base_url": "https://schulchat.rlp.de/web",
+  "privacy_url": "https://infoportal.schulcampus-rlp.de/wp-content/uploads/2023/08/Datenschutzerklaerung-Schulchat-RLP.pdf",
   "render_html": false,
   "hide_redacted_events": false,
   "hide_unknown_events": true
