@@ -12,8 +12,8 @@ abstract class AppConfig {
   static double bubbleSizeFactor = 1;
   static double fontSizeFactor = 1;
   static const double messageFontSize = 15.75;
-  static const bool allowOtherHomeservers = true;
-  static const bool enableRegistration = true;
+  static const bool allowOtherHomeservers = false;
+  static const bool enableRegistration = false;
   static const Color primaryColor = Color(0xFF009CEE);
   static const Color primaryColorLight = Color(0xFFFFFFFF);
   static const Color secondaryColor = Color(0xFF009cee);
@@ -28,14 +28,12 @@ abstract class AppConfig {
       'https://gitlab.com/famedly/fluffychat/-/wikis/How-to-use-end-to-end-encryption-in-FluffyChat';
   static const String appId = 'im.fluffychat.FluffyChat';
   static const String appOpenUrlScheme = 'im.fluffychat';
-  static String _webBaseUrl = 'https://fluffychat.im/web';
+  static String _webBaseUrl = 'https://schulchat.rlp.de/web';
   static String get webBaseUrl => _webBaseUrl;
-  static const String sourceCodeUrl = 'https://gitlab.com/famedly/fluffychat';
+  static const String sourceCodeUrl =
+      'https://git.fairkom.net/chat/matrix/schulchatrlp/';
   static const String supportUrl =
-      'https://gitlab.com/famedly/fluffychat/issues';
-  static const bool enableSentry = true;
-  static const String sentryDns =
-      'https://8591d0d863b646feb4f3dda7e5dcab38@o256755.ingest.sentry.io/5243143';
+      'https://git.fairkom.net/chat/matrix/schulchatrlp/-/issues';
   static bool renderHtml = true;
   static bool hideRedactedEvents = false;
   static bool hideUnknownEvents = true;
@@ -48,10 +46,10 @@ abstract class AppConfig {
   static const String inviteLinkPrefix = 'https://matrix.to/#/';
   static const String deepLinkPrefix = 'im.fluffychat://chat/';
   static const String schemePrefix = 'matrix:';
-  static const String pushNotificationsChannelId = 'fluffychat_push';
-  static const String pushNotificationsChannelName = 'FluffyChat push channel';
+  static const String pushNotificationsChannelId = 'schulchat_push';
+  static const String pushNotificationsChannelName = 'Schulchat push channel';
   static const String pushNotificationsChannelDescription =
-      'Push notifications for FluffyChat';
+      'Push notifications for Schulchat';
   static const String pushNotificationsAppId = 'de.rlp.schulchat';
   static const String pushNotificationsGatewayUrl =
       'https://schulchat.rlp.de/_matrix/push/v1/notify';
