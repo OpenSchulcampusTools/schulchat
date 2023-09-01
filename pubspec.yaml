@@ -1,7 +1,7 @@
 name: fluffychat
 description: Chat with your friends.
 publish_to: none
-version: 13.0.0+11
+version: 13.0.0+16
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -48,7 +48,10 @@ dependencies:
       url: git@git.fairkom.net:clients/rlp/client/flutter_matrix_html.git
       ref: abfadec795817a53688369e8e3ba4fb3500a1916
   flutter_olm: ^1.2.0
-  flutter_openssl_crypto: ^0.1.0
+  flutter_openssl_crypto:
+    git:
+      url: git@git.fairkom.net:clients/rlp/client/flutter-openssl-crypto
+      ref: main
   flutter_ringtone_player: ^3.1.1
   flutter_secure_storage: ^7.0.1
   flutter_typeahead: ^4.3.2

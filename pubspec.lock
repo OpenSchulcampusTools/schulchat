@@ -710,10 +710,11 @@ packages:
   flutter_openssl_crypto:
     dependency: "direct main"
     description:
-      name: flutter_openssl_crypto
-      sha256: b64a0825d79f10b6d5f5951f7ce2d5ddc12ed532129fc5a7e0ce472f5b97d78e
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: c0cc78d0f94c06b4642f0087e4f3c6ba97bf576e
+      url: "git@git.fairkom.net:clients/rlp/client/flutter-openssl-crypto"
+    source: git
     version: "0.1.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
