@@ -130,7 +130,6 @@ class ChatView extends StatelessWidget {
       ];
     } else {
       return [
-        EncryptionButton(controller.room!),
         ChatSettingsPopupMenu(controller.room!, !controller.room!.isDirectChat),
       ];
     }

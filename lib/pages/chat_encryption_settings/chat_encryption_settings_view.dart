@@ -30,26 +30,9 @@ class ChatEncryptionSettingsView extends StatelessWidget {
                 VRouter.of(context).toSegments(['rooms', controller.roomId!]),
           ),
           title: Text(L10n.of(context)!.endToEndEncryption),
-          actions: [
-            TextButton(
-              onPressed: () => launchUrlString(AppConfig.encryptionTutorial),
-              child: Text(L10n.of(context)!.help),
-            ),
-          ],
         ),
         body: ListView(
           children: [
-            SwitchListTile(
-              secondary: CircleAvatar(
-                foregroundColor:
-                    Theme.of(context).colorScheme.onPrimaryContainer,
-                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                child: const Icon(Icons.lock_outlined),
-              ),
-              title: Text(L10n.of(context)!.encryptThisChat),
-              value: room.encrypted,
-              onChanged: controller.enableEncryption,
-            ),
             Center(
               child: Image.asset(
                 'assets/encryption.png',
@@ -141,7 +124,7 @@ class ChatEncryptionSettingsView extends StatelessWidget {
                                   ),
                                   side: BorderSide(
                                     color:
-                                        Theme.of(context).colorScheme.primary,
+                                        Theme.of(context).colorScheme.onPrimary,
                                   ),
                                 ),
                                 color: Theme.of(context)
@@ -154,8 +137,9 @@ class ChatEncryptionSettingsView extends StatelessWidget {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
                                       fontSize: 12,
                                       fontStyle: FontStyle.italic,
                                     ),
