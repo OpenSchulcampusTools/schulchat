@@ -347,9 +347,20 @@ class AddressbookController extends State<AddressbookPage> {
         if (abookJson[school]['scgroups'] != null &&
             abookJson[school]['scgroups'].isNotEmpty) {
           abookSchool.children.add(abookSCGroups);
+
+          // sort by title
+          final List<List<String>> groupsSorted = [];
           abookJson[school]['scgroups'].forEach((id, groupData) {
             final name = groupData.first;
-            final users = groupData.last;
+            groupsSorted.add([name, id]);
+          });
+          groupsSorted
+              .sort((a, b) => a[0].toLowerCase().compareTo(b[0].toLowerCase()));
+
+          groupsSorted.forEach((item) {
+            final name = item[0];
+            final id = item[1];
+            final users = abookJson[school]['scgroups'][id].last;
             final List<String> activeUsers = [];
             final List<String> inactiveUsers = [];
             users.forEach((uid) {
