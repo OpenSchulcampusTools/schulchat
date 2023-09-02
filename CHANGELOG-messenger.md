@@ -1,3 +1,10 @@
+# 15
+
+Change: Sort scgroups by name in addressbook
+Change: Adapt links (privacy etc)
+
+Misc: Disable encryption button for the moment until we have a better UI for devices/verification/blocking
+
 # 13
 
 Feature: Highlight forwarded messages
