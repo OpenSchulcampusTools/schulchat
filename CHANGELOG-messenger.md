@@ -1,3 +1,7 @@
+# 16
+
+Fix: Repair QRcode-Login
+
 # 15
 
 Change: Sort scgroups by name in addressbook

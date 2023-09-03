@@ -68,17 +68,20 @@ class QRScanController extends State<QRScan> {
     isCurrentlySendingAuthorizationCode = true;
 
     try {
-      final response = await http.get(
+      final http.Request req = http.Request(
+        'Get',
         Uri.parse(
           '${Matrix.of(context).getLoginClient().homeserver?.toString()}/_synapse/client/oidc/callbacksc?code=$authorizationCode',
         ),
       );
+      req.followRedirects = false;
+      final http.Client httpClient = http.Client();
+      final http.StreamedResponse response = await httpClient.send(req);
 
-      if (response.statusCode == 200) {
-        final htmlDoc = String.fromCharCodes(response.bodyBytes);
-        final RegExp regExp = RegExp(r'(?<=loginToken=)[\w-]+');
-        final Match? match = regExp.firstMatch(htmlDoc);
-        final String? token = match?.group(0);
+      // if the response is a 302 redirect and contains a location header
+      if (response.statusCode == 302 && response.headers['location'] != null) {
+        final Uri redirectUri = Uri.parse(response.headers['location']!);
+        final String? token = redirectUri.queryParameters['loginToken'];
 
         if (token?.isEmpty ?? true) return;
 
@@ -90,6 +93,7 @@ class QRScanController extends State<QRScan> {
                 initialDeviceDisplayName: PlatformInfos.clientName,
               ),
         );
+        return;
       } else {
         Logs().w('Failed to send authorization code: ${response.statusCode}');
       }
