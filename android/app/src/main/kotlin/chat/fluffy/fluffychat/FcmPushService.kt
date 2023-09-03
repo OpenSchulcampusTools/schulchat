@@ -1,4 +1,4 @@
-/*package de.rlp.schulchat
+package de.rlp.schulchat
 
 import com.famedly.fcm_shared_isolate.FcmSharedIsolateService
 
@@ -33,4 +33,3 @@ class FcmPushService : FcmSharedIsolateService() {
         }
     }
 }
-*/
