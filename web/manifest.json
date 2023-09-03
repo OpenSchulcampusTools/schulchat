@@ -1,11 +1,11 @@
 {
-    "name": "FluffyChat",
+    "name": "Schulchat RLP",
     "short_name": "FluffyChat",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "The cutest messenger in the Matrix network",
+    "description": "Kommunikationsplattform in Rheinland-Pfalz",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
