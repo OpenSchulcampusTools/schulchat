@@ -234,7 +234,10 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
   }
 
   Future<Event?> _loadParentEvent(
-      Room room, String parentId, Timeline timeline) async {
+    Room room,
+    String parentId,
+    Timeline timeline,
+  ) async {
     final Event? timelineEvent = await timeline.getEventById(parentId);
     if (timelineEvent != null) {
       return timelineEvent;

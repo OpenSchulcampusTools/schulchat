@@ -104,7 +104,9 @@ class ChatListItem extends StatelessWidget {
   }
 
   Map<String, dynamic> _forwardContent(
-      Map<String, dynamic> shareContent, BuildContext context) {
+    Map<String, dynamic> shareContent,
+    BuildContext context,
+  ) {
     if (shareContent.tryGet<String>('msgtype') != MessageTypes.Text) {
       // add forwarded-text only if message is o type m.text otherwise return
       return shareContent;

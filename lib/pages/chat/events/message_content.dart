@@ -19,7 +19,6 @@ import 'audio_player.dart';
 import 'cute_events.dart';
 import 'html_message.dart';
 import 'image_bubble.dart';
-import 'map_bubble.dart';
 import 'message_download_content.dart';
 import 'sticker.dart';
 
