@@ -37,9 +37,7 @@ adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do slee
 #TODO these are too many permissions, identify the relevant ones
 adb shell pm grant de.rlp.schulchat android.permission.ACCESS_COARSE_LOCATION
 adb shell pm grant de.rlp.schulchat android.permission.ACCESS_FINE_LOCATION
-adb shell pm grant de.rlp.schulchat android.permission.BIND_TELECOM_CONNECTION_SERVICE
 adb shell pm grant de.rlp.schulchat android.permission.BLUETOOTH
-adb shell pm grant de.rlp.schulchat android.permission.CALL_PHONE
 adb shell pm grant de.rlp.schulchat android.permission.CAMERA
 adb shell pm grant de.rlp.schulchat android.permission.FOREGROUND_SERVICE
 adb shell pm grant de.rlp.schulchat android.permission.INTERNET
