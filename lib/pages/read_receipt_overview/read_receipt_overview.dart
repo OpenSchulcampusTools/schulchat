@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/pages/chat/read_receipt/read_receipt_extension.dart';
+import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'read_receipt_overview_view.dart';
 
@@ -17,7 +18,6 @@ class ReadReceiptOverviewPage extends StatefulWidget {
 }
 
 class ExpansionPanelItem {
-  List<Event> readReceiptRequests = [];
   Map<String, Event> events = {};
   bool eventsLoaded = false;
   Timeline? timeline;
@@ -25,6 +25,7 @@ class ExpansionPanelItem {
   bool isExpanded = false;
   StreamSubscription<List<Event>>? eventStreamSubscription;
   bool hasToGiveReadReceipt = false;
+  DateTime sortDate = DateTime(2000);
 
   ExpansionPanelItem(Room this.room);
 }
@@ -43,7 +44,9 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
 
     for (final room in _client!.rooms) {
       if (_client!.readReceiptRequests.keys.contains(room.id)) {
-        _addPanelItem(room);
+        final latestReadReceipt =
+            _client!.readReceiptRequests[room.id]!.values.toList().last;
+        _addPanelItem(room, latestReadReceipt);
       }
     }
 
@@ -61,8 +64,9 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     });
   }
 
-  void _addPanelItem(Room room) {
+  void _addPanelItem(Room room, MatrixEvent latestReadReceipt) {
     final panelItem = ExpansionPanelItem(room);
+    panelItem.sortDate = latestReadReceipt.originServerTs;
     panelItem.hasToGiveReadReceipt =
         _client!.roomsWithOpenReadReceipts.contains(room.id);
     panelItems.addAll({room.id: panelItem});
@@ -71,8 +75,12 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
   void _sortPanelItems() {
     final List<ExpansionPanelItem> sortedItems = panelItems.values.toList()
       ..sort((item1, item2) {
+        //  0 ... item 1 = item 2
+        // -1 ... item1 < item 2
+        //  1 ... item 2 < item 1
         if (item1.hasToGiveReadReceipt == item2.hasToGiveReadReceipt) {
-          return 0;
+          return getItemDateSortIndex(item1, item2);
+          //  return 0;
         }
         // item1 < item 2
         else if (item1.hasToGiveReadReceipt && !item2.hasToGiveReadReceipt) {
@@ -87,6 +95,16 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
     panelItems.clear();
     for (final ExpansionPanelItem item in sortedItems) {
       panelItems.addAll({item.room!.id: item});
+    }
+  }
+
+  int getItemDateSortIndex(ExpansionPanelItem p1, ExpansionPanelItem p2) {
+    if (p1.sortDate == p2.sortDate) {
+      return 0;
+    } else if (p1.sortDate > p2.sortDate) {
+      return -1;
+    } else {
+      return 1;
     }
   }
 
@@ -128,7 +146,10 @@ class ReadReceiptOverviewController extends State<ReadReceiptOverviewPage> {
   void _updateReadReceiptRequests(Room room, MatrixEvent event) async {
     // if room is not already in panelItems, add it
     if (!panelItems.containsKey(room.id)) {
-      _addPanelItem(room);
+      _addPanelItem(room, event);
+    } else {
+      // update sort date with latest read receipt event
+      panelItems[room.id]!.sortDate = event.originServerTs;
     }
 
     if (panelItems[room.id]!.timeline == null) {
