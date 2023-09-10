@@ -1,4 +1,4 @@
-# 17
+# 18
 
 Change: Adressbook remove refresh button, when invite button is visible.
 Change: Drop telecom connection service on android
