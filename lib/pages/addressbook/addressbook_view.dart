@@ -22,6 +22,7 @@ class AddressbookView extends StatelessWidget {
         selectedWithoutCategory.add(e);
       }
     }
+    final invitesFromMultipleSchools = controller.invitesFromMultipleSchools();
 
     // TODO add description (hover)
     backBtn = SliverAppBar(
@@ -32,14 +33,9 @@ class AddressbookView extends StatelessWidget {
             : Navigator.of(context).pop(),
       ),
       actions: [
-        IconButton(
-          icon: const Icon(Icons.refresh_outlined, size: 16.0),
-          onPressed: () => controller.loadAddressbook(true),
-          tooltip: L10n.of(context)!.refreshContacts,
-        ),
         if (selectedWithoutCategory.isNotEmpty &&
             controller.roomId != null &&
-            !controller.invitesFromMultipleSchools())
+            !invitesFromMultipleSchools)
           TextButton.icon(
             onPressed: () => controller.invite(
               selectedWithoutCategory,
@@ -48,8 +44,15 @@ class AddressbookView extends StatelessWidget {
             label: Text(L10n.of(context)!.inviteFromAddressbook),
             icon: const Icon(Icons.library_add),
           )
-        else if (selectedWithoutCategory.isNotEmpty &&
-            controller.roomId != null)
+        else
+          IconButton(
+            icon: const Icon(Icons.refresh_outlined, size: 16.0),
+            onPressed: () => controller.loadAddressbook(true),
+            tooltip: L10n.of(context)!.refreshContacts,
+          ),
+        if (selectedWithoutCategory.isNotEmpty &&
+            controller.roomId != null &&
+            invitesFromMultipleSchools)
           Text(
             L10n.of(context)!.contactsFromMultipleSchoolsError,
             style: const TextStyle(color: Colors.red),

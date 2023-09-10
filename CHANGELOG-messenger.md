@@ -1,3 +1,7 @@
+# 17
+
+Change: Adressbook remove refresh button, when invite button is visible.
+
 # 16
 
 Fix: Repair QRcode-Login
