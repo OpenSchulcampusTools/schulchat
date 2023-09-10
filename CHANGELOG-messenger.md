@@ -3,6 +3,8 @@
 Change: Adressbook remove refresh button, when invite button is visible.
 Change: Drop telecom connection service on android
 
+Misc: Fix integration tests
+
 # 16
 
 Fix: Repair QRcode-Login
