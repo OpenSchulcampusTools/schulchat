@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -42,6 +44,10 @@ abstract class FluffyThemes {
 
   static ThemeData buildTheme(Brightness brightness, [Color? seed]) =>
       ThemeData(
+        cupertinoOverrideTheme: const CupertinoThemeData(
+          textTheme:
+              CupertinoTextThemeData(), // This is required: https://github.com/mono0926/adaptive_dialog/blob/main/README.md#the-input-text-color-same-with-backgound-when-using-cupertinotextinputdialog
+        ),
         visualDensity: VisualDensity.standard,
         useMaterial3: true,
         brightness: brightness,
