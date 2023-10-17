@@ -11,23 +11,17 @@ class QRScanView extends StatelessWidget {
   const QRScanView(this.controller, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(L10n.of(context)!.scanExplanation)
-                ], //const <Widget>[Text('Scan a code')]
-              ),
-            ),
-          ),
-          Expanded(flex: 4, child: _buildQrView(context)),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        controller
+            .dispose(); //the scanner is stopped when the user leaves the page.
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(L10n.of(context)!.scanExplanation),
+        ),
+        body: _buildQrView(context),
       ),
     );
   }
