@@ -1,3 +1,8 @@
+# 19
+
+Fix: mime types on iOS
+Misc: Several UI improvements
+
 # 18
 
 Change: Adressbook remove refresh button, when invite button is visible.
