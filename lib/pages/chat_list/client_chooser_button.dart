@@ -18,15 +18,6 @@ class ClientChooserButton extends StatelessWidget {
   const ClientChooserButton(this.controller, {Key? key}) : super(key: key);
 
   List<PopupMenuEntry<Object>> _bundleMenuItems(BuildContext context) {
-    final matrix = Matrix.of(context);
-    final bundles = matrix.accountBundles.keys.toList()
-      ..sort(
-        (a, b) => a!.isValidMatrixId == b!.isValidMatrixId
-            ? 0
-            : a.isValidMatrixId && !b.isValidMatrixId
-                ? -1
-                : 1,
-      );
     return <PopupMenuEntry<Object>>[
       PopupMenuItem(
         value: SettingsAction.newGroup,
@@ -78,84 +69,6 @@ class ClientChooserButton extends StatelessWidget {
           ],
         ),
       ),
-      const PopupMenuItem(
-        value: null,
-        child: Divider(height: 1),
-      ),
-      for (final bundle in bundles) ...[
-        if (matrix.accountBundles[bundle]!.length != 1 ||
-            matrix.accountBundles[bundle]!.single!.userID != bundle)
-          PopupMenuItem(
-            value: null,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  bundle!,
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.titleMedium!.color,
-                    fontSize: 14,
-                  ),
-                ),
-                const Divider(height: 1),
-              ],
-            ),
-          ),
-        ...matrix.accountBundles[bundle]!
-            .map(
-              (client) => PopupMenuItem(
-                value: client,
-                child: FutureBuilder<Profile?>(
-                  // analyzer does not understand this type cast for error
-                  // handling
-                  //
-                  // ignore: unnecessary_cast
-                  future: (client!.fetchOwnProfile() as Future<Profile?>)
-                      .onError((e, s) => null),
-                  builder: (context, snapshot) => Row(
-                    children: [
-                      Avatar(
-                        mxContent: snapshot.data?.avatarUrl,
-                        name: snapshot.data?.displayName ??
-                            client.userID!.localpart,
-                        size: 32,
-                        fontSize: 12,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          snapshot.data?.displayName ??
-                              client.userID!.localpart!,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      IconButton(
-                        icon: const Icon(Icons.edit_outlined),
-                        onPressed: () => controller.editBundlesForAccount(
-                          client.userID,
-                          bundle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
-            .toList(),
-      ],
-      /* #schulChatSpecific
-      PopupMenuItem(
-        value: SettingsAction.addAccount,
-        child: Row(
-          children: [
-            const Icon(Icons.person_add_outlined),
-            const SizedBox(width: 18),
-            Text(L10n.of(context)!.addAccount),
-          ],
-        ),
-      ),*/
     ];
   }
 
