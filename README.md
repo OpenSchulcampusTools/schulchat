@@ -1,46 +1,53 @@
 ![](https://git.fairkom.net/chat/matrix/schulchatrlp/-/raw/main/assets/info-logo.png)
 
-SchulChatRLP is the chat messenger for schools in Rheinland-Pfalz (Germany) using the Matrix messenger protocol. 
+SchulchatRLP is the chat messenger for schools in Rheinland-Pfalz (Germany) using the Matrix messenger protocol. 
 
 The client for Android, iOS and Web is based on a fork of FluffyChat.  
 
 <a href="https://matrix.to/#/#fluffychat:matrix.org" target="new">Join the FluffyChat community</a> - <a href="https://metalhead.club/@krille" target="new">Follow FluffyChat on Mastodon</a> - <a href="https://hosted.weblate.org/projects/fluffychat/" target="new">Translate FluffyChat</a> - <a href="https://fluffychat.im" target="new">FluffyChat Website</a> - <a href="https://gitlab.com/famedly/famedlysdk" target="new">Famedly Matrix SDK</a> 
 
-SchulChatRLP has been developed by <a href="https://fairkom.eu">fairkom</a>. Features such as Reading confirmation or polls have been added. 
+SchulchatRLP has been developed by <a href="https://fairkom.eu">fairkom</a>. 
 
 FluffyChat is an open source, nonprofit matrix messenger app. The app is easy to use but secure and decentralized.
 
-## Features
+## FluffyChat core features
 
 - Send all kinds of messages, images and files
 - Voice messages
-- Location sharing
 - Push notifications
-- Unlimited private and public group chats
 - Public channels with thousands of participants
 - Feature rich group moderation including all matrix features
-- Discover and join public groups
 - Dark mode
 - Custom themes
 - Hides complexity of Matrix IDs behind simple QR codes
 - Custom emotes and stickers
-- Spaces
 - Compatible with Element, Nheko, NeoChat and all other Matrix apps
 - End to end encryption
 - Emoji verification & cross signing
--  ...
+
+### Added features
+
+For education environments, we have added in SchulchatRLP:
+
+- Reading confirmation
+- Polls
+
+### Removed features 
+
+- Location sharing
+- Spaces
+- Unlimited private and public group chats
+- Discover and join public groups
 
 # Installation
 
-Please visit our website for installation instructions:
+The SchulchatRLP app is available in the Google / Apple Stores. Usage requires an account on https://bildungsportal.rlp.de
 
-https://fluffychat.im
+Please visit the Fluffychat website for further installation instructions: https://fluffychat.im (but use this repo).
 
-# How to build
+## How to build
 
-Please visit our Wiki for build instructions:
-
-https://gitlab.com/famedly/fluffychat/-/wikis/How-To-Build
+Please visit the Fluffychat Wiki for build instructions: https://gitlab.com/famedly/fluffychat/-/wikis/How-To-Build (but use this repo). Desktop builds have not been tested. 
 
 
 # Special thanks
