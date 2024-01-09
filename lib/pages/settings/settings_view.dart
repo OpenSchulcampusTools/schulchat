@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:matrix/matrix.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:vrouter/vrouter.dart';
 
 import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/utils/fluffy_share.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/widgets/avatar.dart';
-import 'package:fluffychat/widgets/matrix.dart';
 import 'settings.dart';
 
 class SettingsView extends StatelessWidget {
@@ -39,74 +35,6 @@ class SettingsView extends StatelessWidget {
         child: ListView(
           key: const Key('SettingsListViewContent'),
           children: <Widget>[
-            FutureBuilder<Profile>(
-              future: controller.profileFuture,
-              builder: (context, snapshot) {
-                final profile = snapshot.data;
-                final mxid =
-                    Matrix.of(context).client.userID ?? L10n.of(context)!.user;
-                final displayname =
-                    profile?.displayName ?? mxid.localpart ?? mxid;
-                return Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(32.0),
-                      child: Stack(
-                        children: [
-                          Material(
-                            elevation: Theme.of(context)
-                                    .appBarTheme
-                                    .scrolledUnderElevation ??
-                                4,
-                            shadowColor:
-                                Theme.of(context).appBarTheme.shadowColor,
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                color: Theme.of(context).dividerColor,
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                Avatar.defaultSize * 2.5,
-                              ),
-                            ),
-                            child: Avatar(
-                              mxContent: profile?.avatarUrl,
-                              name: displayname,
-                              size: Avatar.defaultSize * 2.5,
-                              fontSize: 18 * 2.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextButton.icon(
-                            onPressed: () => FluffyShare.share(mxid, context),
-                            icon: const Icon(
-                              Icons.copy_outlined,
-                              size: 14,
-                            ),
-                            style: TextButton.styleFrom(
-                              foregroundColor:
-                                  Theme.of(context).colorScheme.secondary,
-                            ),
-                            label: Text(
-                              mxid,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              //    style: const TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
             const Divider(thickness: 1),
             if (showChatBackupBanner == null)
               ListTile(
