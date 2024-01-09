@@ -70,6 +70,9 @@ RUN sed -i "s#schulchat.rlp.de#synapse#g" config.sample.json lib/config/app_conf
 RUN sed -i 's#homeserver = Uri.https#homeserver = Uri.http#g' lib/pages/homeserver_picker/homeserver_picker.dart
 RUN sed -i 's#var newDomain = Uri.https#var newDomain = Uri.http#g' lib/pages/login/login.dart
 
+# disable SLO
+RUN sed -i 's#launchUrl(Uri.parse(AppConfig.idpLogoutUrl));##g' lib/pages/settings/settings.dart
+
 # currently no idm login is done
 RUN sed -i 's#disableAuthWithUsernameAndPassword = true#disableAuthWithUsernameAndPassword = false#g' lib/config/edu_settings.dart
 

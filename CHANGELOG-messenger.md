@@ -1,3 +1,6 @@
+# 20
+Feature: Logout gleichzeitig im Schulcampus
+
 # 19
 
 Fix: mime types on iOS
