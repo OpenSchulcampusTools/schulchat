@@ -57,8 +57,8 @@ abstract class AppConfig {
       'https://github.com/googlefonts/noto-emoji/';
   static const double borderRadius = 16.0;
   static const double columnWidth = 360.0;
-  static const String idpLogoutUrl = 'https://schulcampus-rlp.de/idp/SAML2/REDIRECT/SLO';
-  
+  static String idpLogoutUrl =
+      'https://schulcampus-rlp.de/idp/SAML2/REDIRECT/SLO';
 
   static void loadFromJson(Map<String, dynamic> json) {
     if (json['chat_color'] != null) {
@@ -94,6 +94,9 @@ abstract class AppConfig {
     }
     if (json['hide_unknown_events'] is bool) {
       hideUnknownEvents = json['hide_unknown_events'];
+    }
+    if (json['idpLogoutUrl'] is String) {
+      idpLogoutUrl = json['idpLogoutUrl'];
     }
   }
 
