@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 import 'package:vrouter/vrouter.dart';
@@ -128,17 +127,6 @@ class ClientChooserButton extends StatelessWidget {
       controller.setActiveBundle(object);
     } else if (object is SettingsAction) {
       switch (object) {
-        case SettingsAction.addAccount:
-          final consent = await showOkCancelAlertDialog(
-            context: context,
-            title: L10n.of(context)!.addAccount,
-            message: L10n.of(context)!.enableMultiAccounts,
-            okLabel: L10n.of(context)!.next,
-            cancelLabel: L10n.of(context)!.cancel,
-          );
-          if (consent != OkCancelResult.ok) return;
-          VRouter.of(context).to('/settings/addaccount');
-          break;
         case SettingsAction.newGroup:
           VRouter.of(context).to('/newgroup');
           break;
@@ -160,7 +148,6 @@ class ClientChooserButton extends StatelessWidget {
 }
 
 enum SettingsAction {
-  addAccount,
   newGroup,
   settings,
   archive,

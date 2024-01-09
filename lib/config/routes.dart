@@ -339,35 +339,6 @@ class AppRoutes {
           ],
         ),
         VWidget(
-          path: 'addaccount',
-          widget: const HomeserverPicker(),
-          buildTransition: _fadeTransition,
-          stackedRoutes: [
-            VWidget(
-              path: 'login',
-              widget: const Login(),
-              buildTransition: _fadeTransition,
-            ),
-            VWidget(
-              path: 'connect',
-              widget: const ConnectPage(),
-              buildTransition: _fadeTransition,
-              stackedRoutes: [
-                VWidget(
-                  path: 'login',
-                  widget: const Login(),
-                  buildTransition: _fadeTransition,
-                ),
-                VWidget(
-                  path: 'signup',
-                  widget: const SignupPage(),
-                  buildTransition: _fadeTransition,
-                ),
-              ],
-            ),
-          ],
-        ),
-        VWidget(
           path: 'security',
           widget: const SettingsSecurity(),
           buildTransition: _dynamicTransition,

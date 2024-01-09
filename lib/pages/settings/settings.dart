@@ -38,11 +38,11 @@ class SettingsController extends State<Settings> {
         OkCancelResult.cancel) {
       return;
     }
-    final matrix = Matrix.of(context);
     await showFutureLoadingDialog(
-        context: context,
-        // future: () => matrix.client.logout(),
-        future: () => logoutWrapper(context));
+      context: context,
+      // future: () => matrix.client.logout(),
+      future: () => logoutWrapper(context),
+    );
   }
 
   @override
