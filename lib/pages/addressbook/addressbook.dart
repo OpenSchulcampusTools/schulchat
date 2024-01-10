@@ -287,7 +287,6 @@ class AddressbookController extends State<AddressbookPage> {
         if (filteredSchool.isNotEmpty && filteredSchool != school) continue;
 
         final schoolName = abookJson[school]['name'];
-        //final schoolName = await Matrix.of(context).client.request(RequestType.GET, '/../idm/school/${school}');
         final abookSchool = ABookEntry(
           title: schoolName,
           children: [],
@@ -325,6 +324,31 @@ class AddressbookController extends State<AddressbookPage> {
           category: true,
           orgName: school,
         );
+        final abookOffice = ABookEntry(
+          title: L10n.of(context)!.abookTitleOffice,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookSocialWork = ABookEntry(
+          title: L10n.of(context)!.abookTitleSocialWork,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookElternbeirat = ABookEntry(
+          title: L10n.of(context)!.abookTitleElternbeirat,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookPrincipal = ABookEntry(
+          title: L10n.of(context)!.abookTitlePrincipal,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+
         allUsers[school] = [];
         if (abookJson[school]['teachers'] != null &&
             abookJson[school]['teachers'].isNotEmpty) {
@@ -435,10 +459,10 @@ class AddressbookController extends State<AddressbookPage> {
             allUsers[school]!.add(entry);
           });
         }
-        if (abookJson[school]['admins'] != null &&
-            abookJson[school]['admins'].isNotEmpty) {
+        if (abookJson[school]['Organisationsadmin'] != null &&
+            abookJson[school]['Organisationsadmin'].isNotEmpty) {
           abookSchool.children.add(abookAdmins);
-          abookJson[school]['admins'].forEach((admin) {
+          abookJson[school]['Organisationsadmin'].forEach((admin) {
             final entry = ABookEntry(
               title: admin,
               info: '${L10n.of(context)!.contactsInfoAdmin} $schoolName',
@@ -448,6 +472,78 @@ class AddressbookController extends State<AddressbookPage> {
               active: abookJson['users'][admin].last == 'active',
             );
             abookAdmins.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['Schulleitung'] != null &&
+            abookJson[school]['Schulleitung'].isNotEmpty) {
+          abookSchool.children.add(abookPrincipal);
+          abookJson[school]['Schulleitung'].forEach((user) {
+            final entry = ABookEntry(
+              title: user,
+              info: '${L10n.of(context)!.contactsInfoPrincipal} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][user].first,
+              kind: 'Schulleitung', //TODO
+              active: abookJson['users'][user].last == 'active',
+            );
+            abookPrincipal.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['Sekretariat'] != null &&
+            abookJson[school]['Sekretariat'].isNotEmpty) {
+          abookSchool.children.add(abookOffice);
+          abookJson[school]['Sekretariat'].forEach((user) {
+            final entry = ABookEntry(
+              title: user,
+              info: '${L10n.of(context)!.contactsInfoOffice} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][user].first,
+              kind: 'Sekretariat', //TODO
+              active: abookJson['users'][user].last == 'active',
+            );
+            abookOffice.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['SocialWork'] != null &&
+            abookJson[school]['SocialWork'].isNotEmpty) {
+          abookSchool.children.add(abookSocialWork);
+          abookJson[school]['SocialWork'].forEach((user) {
+            final entry = ABookEntry(
+              title: user,
+              info: '${L10n.of(context)!.contactsInfoSocialWork} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][user].first,
+              kind: 'Schulsozialarbeit', //TODO
+              active: abookJson['users'][user].last == 'active',
+            );
+            abookSocialWork.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['Elternbeirat'] != null &&
+            abookJson[school]['Elternbeirat'].isNotEmpty) {
+          abookSchool.children.add(abookElternbeirat);
+          abookJson[school]['Elternbeirat'].forEach((user) {
+            final entry = ABookEntry(
+              title: user,
+              info: '${L10n.of(context)!.contactsInfoElternbeirat} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][user].first,
+              kind: 'Elternbeirat', //TODO
+              active: abookJson['users'][user].last == 'active',
+            );
+            abookElternbeirat.children.add(
               entry,
             );
             allUsers[school]!.add(entry);
