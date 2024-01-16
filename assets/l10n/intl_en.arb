@@ -1079,7 +1079,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "kicked": "👞 {username} kicked {targetName}",
+    "kicked": "👞 {username} removed {targetName} from room",
     "@kicked": {
         "type": "text",
         "placeholders": {
@@ -1087,7 +1087,7 @@
             "targetName": {}
         }
     },
-    "kickedAndBanned": "🙅 {username} kicked and banned {targetName}",
+    "kickedAndBanned": "🙅 {username} removed and banned {targetName} from room",
     "@kickedAndBanned": {
         "type": "text",
         "placeholders": {
@@ -2326,13 +2326,13 @@
             "user": {}
         }
     },
-    "youKicked": "👞 You kicked {user}",
+    "youKicked": "👞 You removed {user} from room",
     "@youKicked": {
         "placeholders": {
             "user": {}
         }
     },
-    "youKickedAndBanned": "🙅 You kicked and banned {user}",
+    "youKickedAndBanned": "🙅 You removed and banned {user} from room",
     "@youKickedAndBanned": {
         "placeholders": {
             "user": {}

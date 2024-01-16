@@ -986,7 +986,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "👞 {username} hat {targetName} hinausgeworfen",
+  "kicked": "👞 {username} hat {targetName} entfernt",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -994,7 +994,7 @@
       "targetName": {}
     }
   },
-  "kickedAndBanned": "🙅 {username} hat {targetName} hinausgeworfen und verbannt",
+  "kickedAndBanned": "🙅 {username} hat {targetName} aus dem Raum entfernt und verbannt",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
@@ -2233,13 +2233,13 @@
   },
   "widgetNameError": "Bitte gib einen Anzeigenamen an.",
   "@widgetNameError": {},
-  "youKicked": "👞 Du hast {user} rausgeworfen",
+  "youKicked": "👞 Du hast {user} aus dem Raum entfernt",
   "@youKicked": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKickedAndBanned": "🙅 Du hast {user} rausgeworfen und verbannt",
+  "youKickedAndBanned": "🙅 Du hast {user} aus dem Raum entfernt und verbannt",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
