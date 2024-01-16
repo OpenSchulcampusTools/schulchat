@@ -1039,6 +1039,13 @@
             "targetName": {}
         }
     },
+    "invitedUserWithoutInviter": "📩 {targetName} was invited",
+    "@invitedUserWithoutInviter": {
+      "type": "text",
+      "placeholders": {
+        "targetName": {}
+      }
+    },
     "invitedUsersOnly": "Invited users only",
     "@invitedUsersOnly": {
         "type": "text",
@@ -1087,11 +1094,25 @@
             "targetName": {}
         }
     },
+    "kickedWithoutName": "👞 {targetName} removed from room",
+    "@kickedWithoutName": {
+      "type": "text",
+      "placeholders": {
+        "targetName": {}
+      }
+    },
     "kickedAndBanned": "🙅 {username} removed and banned {targetName} from room",
     "@kickedAndBanned": {
         "type": "text",
         "placeholders": {
             "username": {},
+            "targetName": {}
+        }
+    },
+    "kickedAndBannedWithoutName": "🙅 removed and banned {targetName} from room",
+    "@kickedAndBannedWithoutName": {
+        "type": "text",
+        "placeholders": {
             "targetName": {}
         }
     },
@@ -2319,6 +2340,9 @@
         "placeholders": {
             "user": {}
         }
+    },
+    "youInvitedByWithoutName": "📩 You have been invited",
+    "@youInvitedByWithoutName": {
     },
     "youInvitedUser": "📩 You invited {user}",
     "@youInvitedUser": {

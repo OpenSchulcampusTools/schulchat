@@ -946,6 +946,13 @@
       "targetName": {}
     }
   },
+  "invitedUserWithoutInviter": "📩 {targetName} wurde eingeladen",
+  "@invitedUserWithoutInviter": {
+    "type": "text",
+    "placeholders": {
+      "targetName": {}
+    }
+  },
   "invitedUsersOnly": "Nur eingeladene Mitglieder",
   "@invitedUsersOnly": {
     "type": "text",
@@ -986,11 +993,18 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "👞 {username} hat {targetName} entfernt",
+  "kicked": "👞 {username} hat {targetName} aus dem Raum entfernt",
   "@kicked": {
     "type": "text",
     "placeholders": {
       "username": {},
+      "targetName": {}
+    }
+  },
+  "kickedWithoutName": "👞 {targetName} wurde aus dem Raum entfernt",
+  "@kickedWithoutName": {
+    "type": "text",
+    "placeholders": {
       "targetName": {}
     }
   },
@@ -1001,6 +1015,13 @@
       "username": {},
       "targetName": {}
     }
+  },
+  "kickedAndBannedWithoutName": "🙅 {targetName} wurde aus dem Raum entfernt und verbannt",
+  "@kickedAndBannedWithoutName": {
+      "type": "text",
+      "placeholders": {
+          "targetName": {}
+      }
   },
   "kickFromChat": "Aus dem Raum hinauswerfen",
   "@kickFromChat": {
@@ -2274,6 +2295,9 @@
     "placeholders": {
       "user": {}
     }
+  },
+  "youInvitedByWithoutName": "📩 Du wurdest eingeladen",
+  "@youInvitedByWithoutName": {
   },
   "youInvitedUser": "📩 Du hast {user} eingeladen",
   "@youInvitedUser": {
