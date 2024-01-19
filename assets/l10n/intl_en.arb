@@ -2554,13 +2554,13 @@
     "@abookTitleElternbeirat": {},
     "abookTitlePrincipal": "Principal",
     "@abookTitlePrincipal": {},
-    "inviteTitleMessage": "You are about to invite {uniqUsersLength} users and {uniqGroupsLength} groups (total: {selectionLength}) to room {name}",
+    "inviteTitleMessage": "You are about to invite {uniqUsersLength} users and {uniqGroupsLength} groups (total: {allUsers} users) to room {name}",
     "@inviteTitleMessage": {
       "type": "text",
       "placeholders": {
         "uniqUsersLength": {},
         "uniqGroupsLength": {},
-        "selectionLength": {},
+        "allUsers": {},
         "name": {}
       }
     },

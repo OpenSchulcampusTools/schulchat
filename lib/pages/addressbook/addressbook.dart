@@ -564,25 +564,35 @@ class AddressbookController extends State<AddressbookPage> {
     final Set uniqUsers = {};
     final List<String> uniqGroups = [];
     final hs = Matrix.of(context).client.homeserver?.host;
+    final room = Matrix.of(context).client.getRoomById(roomId)!;
 
-    final orgName = getSchoolFromSelection();
+    final orgName =
+        room.schoolId == '' ? getSchoolFromSelection() : room.schoolId;
+
+    // Note that this is not really used for invites. Group invites happen on the server, direct user invites
+    // happen via the client. This number is only used in UI.
+    final Set uniqUsersInclGroups = {};
 
     for (final e in selection) {
       if (e.id != null) {
-        uniqGroups.add('#${e.orgName}--${e.id}:$hs');
+        final groupName = '#${e.orgName}--${e.id}:$hs';
+        uniqGroups.add(groupName);
+        uniqUsersInclGroups
+            .addAll(await room.getMembersOfSCGroup(e.id, orgName));
       } else {
-        uniqUsers.add('@${e.title}:$hs');
+        final userName = '@${e.title}:$hs';
+        uniqUsers.add(userName);
+        uniqUsersInclGroups.add(userName);
       }
     }
 
-    final room = Matrix.of(context).client.getRoomById(roomId)!;
     if (OkCancelResult.ok !=
         await showOkCancelAlertDialog(
           context: context,
           title: L10n.of(context)!.inviteTitleMessage(
             uniqUsers.length,
             uniqGroups.length,
-            selection.length,
+            uniqUsersInclGroups.length,
             room.name,
           ),
           okLabel: L10n.of(context)!.inviteOKLabel,

@@ -2578,13 +2578,13 @@
   "@abookTitleElternbeirat": {},
   "abookTitlePrincipal": "Schulleitung",
   "@abookTitlePrincipal": {},
-  "inviteTitleMessage": "{uniqUsersLength} Nutzer:innen und {uniqGroupsLength} Gruppen (insgesamt: {selectionLength}) in den Raum {name} einladen",
+  "inviteTitleMessage": "{uniqUsersLength} Nutzer:innen und {uniqGroupsLength} Gruppen (insgesamt: {allUsers} Nutzer:innen) in den Raum {name} einladen",
   "@inviteTitleMessage": {
     "type": "text",
     "placeholders": {
       "uniqUsersLength": {},
       "uniqGroupsLength": {},
-      "selectionLength": {},
+      "allUsers": {},
       "name": {}
     }
   },
