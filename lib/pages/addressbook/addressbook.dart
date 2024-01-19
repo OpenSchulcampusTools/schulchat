@@ -605,6 +605,12 @@ class AddressbookController extends State<AddressbookPage> {
       context: context,
       future: () async {
         final List<String> errors = [];
+
+        // if this fails do not catch exception here
+        if (orgName != null) {
+          await room.setSchoolId(orgName);
+        }
+
         for (final u in uniqUsers) {
           try {
             await room.invite(u);
@@ -612,11 +618,15 @@ class AddressbookController extends State<AddressbookPage> {
             errors.add(e.errorMessage);
           }
         }
-        if (uniqGroups.isNotEmpty) {
-          room.setRestrictedJoinRules(uniqGroups);
-        }
-        if (orgName != null) {
-          room.setSchoolId(orgName);
+
+        try {
+          // either set to uniqGroups or if there are already groups set,
+          // add uniqGroups to those
+          if (uniqGroups.isNotEmpty) {
+            await room.addToRestrictedJoinRules(uniqGroups);
+          }
+        } on MatrixException catch (e) {
+          errors.add(e.errorMessage);
         }
 
         // we collected all errors above, now throw an exception
