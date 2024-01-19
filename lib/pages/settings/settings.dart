@@ -45,7 +45,6 @@ class SettingsController extends State<Settings> {
     );
   }
 
-  @override
   Future<void> logoutWrapper(pContext) {
     final matrix = Matrix.of(pContext);
     launchUrl(Uri.parse(AppConfig.idpLogoutUrl));

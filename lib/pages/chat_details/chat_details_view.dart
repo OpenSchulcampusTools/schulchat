@@ -365,24 +365,30 @@ class ChatDetailsView extends StatelessWidget {
                               : Container(),
                           // TODO regexp
                           //'SC-Gruppe ${g.first} (Schule: ${g.last})'),
-                          if (allowedSCGroups != null &&
-                              allowedSCGroups.isNotEmpty) ...[
+                          if (allowedSCGroups.isNotEmpty) ...[
                             for (final g in allowedSCGroups)
                               ListTile(
                                 title: FutureBuilder<String?>(
                                   future: controller.getGroupDisplayName(
-                                      g.split(':')[0].split('--')[1], room),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<String?> snapshot) {
+                                    g.split(':')[0].split('--')[1],
+                                    room,
+                                  ),
+                                  builder: (
+                                    BuildContext context,
+                                    AsyncSnapshot<String?> snapshot,
+                                  ) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
                                       return const CircularProgressIndicator();
                                     } else if (snapshot.hasError) {
                                       return Text('Error: ${snapshot.error}');
                                     } else {
-                                      return Text(L10n.of(context)!.scgroupName(
+                                      return Text(
+                                        L10n.of(context)!.scgroupName(
                                           snapshot.data ??
-                                              g.split(':')[0].split('--')[1]));
+                                              g.split(':')[0].split('--')[1],
+                                        ),
+                                      );
                                     }
                                   },
                                 ),

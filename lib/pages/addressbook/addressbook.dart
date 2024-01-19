@@ -381,7 +381,7 @@ class AddressbookController extends State<AddressbookPage> {
           groupsSorted
               .sort((a, b) => a[0].toLowerCase().compareTo(b[0].toLowerCase()));
 
-          groupsSorted.forEach((item) {
+          for (final item in groupsSorted) {
             final name = item[0];
             final id = item[1];
             final users = abookJson[school]['scgroups'][id].last;
@@ -421,7 +421,7 @@ class AddressbookController extends State<AddressbookPage> {
                 scgroupUsersInactive: inactiveUsers,
               ),
             );
-          });
+          }
         }
         if (abookJson[school]['students'] != null &&
             abookJson[school]['students'].isNotEmpty) {

@@ -66,7 +66,10 @@ class QRScanController extends State<QRScan> {
   }
 
   void showErrorDialog(
-      BuildContext context, String authorizationCode, String error) {
+    BuildContext context,
+    String authorizationCode,
+    String error,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -75,7 +78,7 @@ class QRScanController extends State<QRScan> {
           content: Text(L10n.of(context)!.scanErrorExplanation),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
                 isCurrentlySendingAuthorizationCode = false;
@@ -119,7 +122,10 @@ class QRScanController extends State<QRScan> {
         return;
       } else {
         showErrorDialog(
-            context, authorizationCode, response.statusCode.toString());
+          context,
+          authorizationCode,
+          response.statusCode.toString(),
+        );
         Logs().d('Failed to send authorization code: ${response.statusCode}');
       }
     } catch (e) {
