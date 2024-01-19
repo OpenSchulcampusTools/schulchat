@@ -574,6 +574,10 @@ class AddressbookController extends State<AddressbookPage> {
     final Set uniqUsersInclGroups = {};
 
     for (final e in selection) {
+      // skip categories; we can still select everything in a category, but not the category itself
+      // otherwise invites would be sent to broken mxids
+      if (e.category) continue;
+
       if (e.id != null) {
         final groupName = '#${e.orgName}--${e.id}:$hs';
         uniqGroups.add(groupName);
