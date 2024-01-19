@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:emojis/emoji.dart';
-import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:matrix/matrix.dart';
 import 'package:slugify/slugify.dart';
@@ -12,7 +11,6 @@ import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/mxc_image.dart';
 import '../../widgets/avatar.dart';
 import '../../widgets/matrix.dart';
-import 'command_hints.dart';
 
 class InputBar extends StatelessWidget {
   final Room room;
@@ -55,20 +53,6 @@ class InputBar extends StatelessWidget {
     final List<Map<String, String?>> ret = <Map<String, String?>>[];
     const maxResults = 30;
 
-    final commandMatch = RegExp(r'^/(\w*)$').firstMatch(searchText);
-    if (commandMatch != null) {
-      final commandSearch = commandMatch[1]!.toLowerCase();
-      for (final command in room.client.commands.keys) {
-        if (command.contains(commandSearch)) {
-          ret.add({
-            'type': 'command',
-            'name': command,
-          });
-        }
-
-        if (ret.length > maxResults) return ret;
-      }
-    }
     final emojiMatch =
         RegExp(r'(?:\s|^):(?:([-\w]+)~)?([-\w]+)$').firstMatch(searchText);
     if (emojiMatch != null) {
@@ -219,32 +203,6 @@ class InputBar extends StatelessWidget {
   ) {
     const size = 30.0;
     const padding = EdgeInsets.all(4.0);
-    if (suggestion['type'] == 'command') {
-      final command = suggestion['name']!;
-      final hint = commandHint(L10n.of(context)!, command);
-      return Tooltip(
-        message: hint,
-        waitDuration: const Duration(days: 1), // don't show on hover
-        child: Container(
-          padding: padding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '/$command',
-                style: const TextStyle(fontFamily: 'monospace'),
-              ),
-              Text(
-                hint,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
-      );
-    }
     if (suggestion['type'] == 'emoji') {
       final label = suggestion['label']!;
       return Tooltip(
@@ -324,13 +282,6 @@ class InputBar extends StatelessWidget {
         ? ''
         : controller!.text.substring(controller!.selection.baseOffset + 1);
     var insertText = '';
-    if (suggestion['type'] == 'command') {
-      insertText = '${suggestion['name']!} ';
-      startText = replaceText.replaceAllMapped(
-        RegExp(r'^(/\w*)$'),
-        (Match m) => '/$insertText',
-      );
-    }
     if (suggestion['type'] == 'emoji') {
       insertText = '${suggestion['emoji']!} ';
       startText = replaceText.replaceAllMapped(

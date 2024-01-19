@@ -323,38 +323,10 @@ class ChatController extends State<Chat> {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('draft_$roomId');
 
-    var parseCommands = false;
-
-    final commandMatch =
-        RegExp(r'^\/(\w+)').firstMatch(sendController.text.trim());
-    // command syntax was found
-    if (commandMatch != null) {
-      // command not found
-      if (!room!.client.commands.keys
-          .contains(commandMatch[1]!.toLowerCase())) {
-        final l10n = L10n.of(context)!;
-        final dialogResult = await showOkCancelAlertDialog(
-          context: context,
-          useRootNavigator: false,
-          title: l10n.commandInvalid,
-          message: l10n.commandMissing(commandMatch[0]!),
-          okLabel: l10n.sendAsText,
-          cancelLabel: l10n.cancel,
-        );
-        if (dialogResult == OkCancelResult.cancel) return;
-        parseCommands = false;
-      }
-      // command found - mark for execution
-      else {
-        parseCommands = true;
-      }
-    }
-
     final String? eventId = await room!.sendTextEvent(
       sendController.text,
       inReplyTo: replyEvent,
       editEventId: editEvent?.eventId,
-      parseCommands: parseCommands,
     );
 
     if (eventId != null) {
