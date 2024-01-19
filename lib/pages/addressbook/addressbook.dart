@@ -597,14 +597,12 @@ class AddressbookController extends State<AddressbookPage> {
         final List<String> errors = [];
         for (final u in uniqUsers) {
           try {
-            Logs().v('about to invite $u');
             await room.invite(u);
           } on MatrixException catch (e) {
             errors.add(e.errorMessage);
           }
         }
         if (uniqGroups.isNotEmpty) {
-          Logs().v('about to invite groups $uniqGroups');
           room.setRestrictedJoinRules(uniqGroups);
         }
         if (orgName != null) {

@@ -2556,5 +2556,12 @@
       "placeholders": {}
     },
     "forwardedMessage": "Forwarded Message:",
-    "@forwardedMessage": {}
+    "@forwardedMessage": {},
+    "scgroupName": "SC-group {name}",
+    "@scgroupName": {
+      "type": "text",
+      "placeholders": {
+        "name": {}
+      }
+    }
 }

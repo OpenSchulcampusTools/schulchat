@@ -2587,5 +2587,12 @@
     "placeholders": {}
   },
   "forwardedMessage": "Weitergeleitete Nachricht:",
-  "@forwardedMessage": {}
+  "@forwardedMessage": {},
+  "scgroupName": "SC-Gruppe {name}",
+  "@scgroupName": {
+    "type": "text",
+    "placeholders": {
+      "name": {}
+    }
+  }
 }

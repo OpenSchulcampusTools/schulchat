@@ -25,6 +25,7 @@ class ChatDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final room = Matrix.of(context).client.getRoomById(controller.roomId!);
+
     if (room == null) {
       return Scaffold(
         appBar: AppBar(
@@ -362,14 +363,29 @@ class ChatDetailsView extends StatelessWidget {
                                       VRouter.of(context).to('addressbook'),
                                 )
                               : Container(),
+                          // TODO regexp
+                          //'SC-Gruppe ${g.first} (Schule: ${g.last})'),
                           if (allowedSCGroups != null &&
                               allowedSCGroups.isNotEmpty) ...[
                             for (final g in allowedSCGroups)
                               ListTile(
-                                title: Text(
-                                  'SC-Gruppe ${g.split(':')[0].split('--')[1]} (Schule: ${g.split(':')[0].split('--')[0].split('#')[1]})',
-                                ), // TODO regexp
-                                //'SC-Gruppe ${g.first} (Schule: ${g.last})'),
+                                title: FutureBuilder<String?>(
+                                  future: controller.getGroupDisplayName(
+                                      g.split(':')[0].split('--')[1], room),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String?> snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    } else {
+                                      return Text(L10n.of(context)!.scgroupName(
+                                          snapshot.data ??
+                                              g.split(':')[0].split('--')[1]));
+                                    }
+                                  },
+                                ),
                                 leading: CircleAvatar(
                                   backgroundColor:
                                       Theme.of(context).primaryColor,

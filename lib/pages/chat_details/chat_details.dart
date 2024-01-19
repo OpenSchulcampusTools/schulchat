@@ -33,6 +33,17 @@ class ChatDetailsController extends State<ChatDetails> {
 
   String? get roomId => VRouter.of(context).pathParameters['roomid'];
 
+  Future<String?> getGroupDisplayName(String groupId, Room room) async {
+    final String? schoolId = room.schoolId != '' ? room.schoolId : null;
+
+    try {
+      return await room.getNameOfSCGroup(groupId, schoolId);
+    } catch (error) {
+      Logs().e('Error in getGroupDisplayName: $error');
+      return null;
+    }
+  }
+
   void setDisplaynameAction() async {
     final room = Matrix.of(context).client.getRoomById(roomId!)!;
     final input = await showTextInputDialog(
