@@ -31,7 +31,7 @@ abstract class AppConfig {
   static const String sourceCodeUrl =
       'https://git.fairkom.net/chat/matrix/schulchatrlp/';
   static const String supportUrl =
-      'https://git.fairkom.net/chat/matrix/schulchatrlp/-/issues';
+      'https://infoportal.schulcampus-rlp.de/lehrende/schulchat/schulchat-rlp-einfuehrung/';
   static bool renderHtml = true;
   static bool hideRedactedEvents = false;
   static bool hideUnknownEvents = true;
