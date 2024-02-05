@@ -8,6 +8,7 @@ import 'package:vrouter/vrouter.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/pages/chat_details/chat_details.dart';
 import 'package:fluffychat/pages/chat_details/participant_list_item.dart';
+import 'package:fluffychat/pages/chat_details/scgroup_list_item.dart';
 import 'package:fluffychat/utils/fluffy_share.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/widgets/avatar.dart';
@@ -42,15 +43,6 @@ class ChatDetailsView extends StatelessWidget {
         (room.summary.mJoinedMemberCount ?? 0);
     final canRequestMoreMembers =
         controller.members!.length < actualMembersCount;
-    final allowedSCGroups = room
-        .restrictedJoinRulesAllowedRooms; /*[];
-    for (final SCGroupId in room.restrictedJoinRulesAllowedRooms) {
-      final info = await Matrix.of(context).client.request(
-          RequestType.GET,
-          '/client/unstable/fairkom.fairmessenger.addressbook/class/$SCGroupId',
-        );
-      allowedSCGroups.add([info['title'], info['school']]);
-    }*/
     final iconColor = Theme.of(context).textTheme.bodyLarge!.color;
     return StreamBuilder(
       stream: room.onUpdate.stream,
@@ -363,44 +355,9 @@ class ChatDetailsView extends StatelessWidget {
                                       VRouter.of(context).to('addressbook'),
                                 )
                               : Container(),
-                          // TODO regexp
-                          //'SC-Gruppe ${g.first} (Schule: ${g.last})'),
-                          if (allowedSCGroups.isNotEmpty) ...[
-                            for (final g in allowedSCGroups)
-                              ListTile(
-                                title: FutureBuilder<String?>(
-                                  future: controller.getGroupDisplayName(
-                                    g.split(':')[0].split('--')[1],
-                                    room,
-                                  ),
-                                  builder: (
-                                    BuildContext context,
-                                    AsyncSnapshot<String?> snapshot,
-                                  ) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text('Error: ${snapshot.error}');
-                                    } else {
-                                      return Text(
-                                        L10n.of(context)!.scgroupName(
-                                          snapshot.data ??
-                                              g.split(':')[0].split('--')[1],
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                                leading: CircleAvatar(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  foregroundColor: Colors.white,
-                                  radius: Avatar.defaultSize / 2,
-                                  child: const Icon(Icons.group),
-                                ),
-                              ),
-                          ]
+                          if (controller.scGroups?.isNotEmpty ?? false)
+                            for (final group in controller.scGroups!)
+                              SCGroupListItem(group, controller)
                         ],
                       )
                     : i < controller.members!.length + 1

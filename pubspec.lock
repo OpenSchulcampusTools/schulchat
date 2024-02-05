@@ -1111,7 +1111,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "841738b56b9cb491090eb8aa84861fae5540411c"
+      resolved-ref: "43c7e3d9a6b88bce5dcf001bf4943980a061668a"
       url: "git@git.fairkom.net:clients/rlp/client/famedlysdk"
     source: git
     version: "0.17.1"

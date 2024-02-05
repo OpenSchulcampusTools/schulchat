@@ -1454,6 +1454,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "removeGroupFromRoom": "Gruppe entfernen",
+  "@remove": {
+    "type": "text",
+    "placeholders": {}
+  },
   "removeAllOtherDevices": "Alle anderen Geräte entfernen",
   "@removeAllOtherDevices": {
     "type": "text",
