@@ -611,7 +611,7 @@ class AddressbookController extends State<AddressbookPage> {
         final List<String> errors = [];
 
         // if this fails do not catch exception here
-        if (orgName != null && room.schoolId != '') {
+        if (orgName != null && room.schoolId == '') {
           await room.setSchoolId(orgName);
         }
 
