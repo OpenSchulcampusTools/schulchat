@@ -1,7 +1,7 @@
 name: fluffychat
 description: Schulchat für Rheinland-Pfalz
 publish_to: none
-version: 20.0.0+24
+version: 21.0.0+25
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -69,7 +69,7 @@ dependencies:
   latlong2: ^0.8.1
   matrix:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/famedlysdk
+      url: git@git.fairkom.net:clients/rlp/client/famedlysdk.git
       ref: main
   matrix_homeserver_recommendations:
     git:

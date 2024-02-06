@@ -97,6 +97,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "areYouSureDeleteRoom": "Bist du sicher, dass du den Raum löschen möchtest?",
+  "@areYouSureDeleteRoom": {
+    "type": "text",
+    "placeholders": {}
+  },
   "areYouSureYouWantToLogout": "Willst du dich wirklich abmelden?",
   "@areYouSureYouWantToLogout": {
     "type": "text",
@@ -361,6 +366,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "closeRoomProcessMessage": "Die App erst schließen, wenn der Raum gelöscht ist.",
+  "@closeRoomProcessMessage": {
+    "type": "text",
+    "placeholders": {}
+  },
   "commandHint_ban": "Verbanne den übergebenen Benutzer aus diesen Raum",
   "@commandHint_ban": {
     "type": "text",
@@ -588,6 +598,11 @@
   "@delete": {
     "type": "text",
     "placeholders": {}
+  },
+  "deleteRoom": "Raum löschen",
+  "@delete": {
+  "type": "text",
+  "placeholders": {}
   },
   "deleteAccount": "Konto löschen",
   "@deleteAccount": {

@@ -1,3 +1,10 @@
+# 21
+
+Added: possibility to remove group from room
+Added: possibility to leave a room, removing all groups/users first
+Change: Help/support link
+Fix: prevent setting schoolid during new invites
+
 # 20
 Feature: Logout gleichzeitig im Schulcampus
 

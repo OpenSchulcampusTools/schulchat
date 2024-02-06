@@ -147,6 +147,11 @@
         "type": "text",
         "placeholders": {}
     },
+      "areYouSureDeleteRoom": "Are you sure you want to delete the room?",
+      "@areYouSureDeleteRoom": {
+        "type": "text",
+        "placeholders": {}
+      },
     "areYouSureYouWantToLogout": "Are you sure you want to log out?",
     "@areYouSureYouWantToLogout": {
         "type": "text",
@@ -427,6 +432,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "closeRoomProcessMessage": "Do not close the app until the room has been deleted.",
+    "@closeRoomProcessMessage": {
+        "type": "text",
+        "placeholders": {}
+     },
     "commandHint_markasdm": "Mark as direct message room",
     "@commandHint_markasdm": {},
     "commandHint_markasgroup": "Mark as room",
@@ -675,6 +685,11 @@
         "placeholders": {}
     },
     "delete": "Delete",
+    "@delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "deleteRoom": "Delete room",
     "@delete": {
         "type": "text",
         "placeholders": {}
