@@ -1,3 +1,6 @@
+# 22
+Fix: Invite groups on iOS
+
 # 21
 
 Added: possibility to remove group from room

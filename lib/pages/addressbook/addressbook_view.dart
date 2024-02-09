@@ -38,7 +38,6 @@ class AddressbookView extends StatelessWidget {
             !invitesFromMultipleSchools)
           TextButton.icon(
             onPressed: () => controller.invite(
-              selectedWithoutCategory,
               controller.roomId!,
             ),
             label: Text(L10n.of(context)!.inviteFromAddressbook),

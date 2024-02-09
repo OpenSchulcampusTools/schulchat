@@ -559,7 +559,7 @@ class AddressbookController extends State<AddressbookPage> {
 
   // receives a list of user and group ids and tries to invite them
   // returns a Set of success/failure per id
-  void invite(invitees, String roomId) async {
+  void invite(String roomId) async {
     // selection can contain the same user multiple times
     final Set uniqUsers = {};
     final List<String> uniqGroups = [];
@@ -581,8 +581,11 @@ class AddressbookController extends State<AddressbookPage> {
       if (e.id != null) {
         final groupName = '#${e.orgName}--${e.id}:$hs';
         uniqGroups.add(groupName);
-        uniqUsersInclGroups
-            .addAll(await room.getMembersOfSCGroup(e.id, orgName));
+        final List<dynamic> gUsers =
+            await room.getMembersOfSCGroup(e.id, orgName);
+        for (final u in gUsers) {
+          uniqUsersInclGroups.add('@$u:$hs');
+        }
       } else {
         final userName = '@${e.title}:$hs';
         uniqUsers.add(userName);
