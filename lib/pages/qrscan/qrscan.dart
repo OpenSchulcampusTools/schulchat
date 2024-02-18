@@ -90,6 +90,20 @@ class QRScanController extends State<QRScan> {
     );
   }
 
+  Future<void> finishLogin(String? token) async {
+    if (token?.isEmpty ?? true) return;
+
+    await showFutureLoadingDialog(
+      context: context,
+      future: () => Matrix.of(context).getLoginClient().login(
+            LoginType.mLoginToken,
+            token: token,
+            initialDeviceDisplayName: PlatformInfos.clientName,
+          ),
+    );
+    return;
+  }
+
   Future<void> sendAuthorizationCode(String authorizationCode) async {
     isCurrentlySendingAuthorizationCode = true;
 
@@ -108,18 +122,13 @@ class QRScanController extends State<QRScan> {
       if (response.statusCode == 302 && response.headers['location'] != null) {
         final Uri redirectUri = Uri.parse(response.headers['location']!);
         final String? token = redirectUri.queryParameters['loginToken'];
-
-        if (token?.isEmpty ?? true) return;
-
-        await showFutureLoadingDialog(
-          context: context,
-          future: () => Matrix.of(context).getLoginClient().login(
-                LoginType.mLoginToken,
-                token: token,
-                initialDeviceDisplayName: PlatformInfos.clientName,
-              ),
-        );
-        return;
+        await finishLogin(token);
+      } else if (response.statusCode == 200) {
+        final body = await response.stream.bytesToString();
+        final RegExp regExp = RegExp(r'(?<=loginToken=)[\w-]+');
+        final Match? match = regExp.firstMatch(body);
+        final String? token = match?.group(0);
+        await finishLogin(token);
       } else {
         showErrorDialog(
           context,
