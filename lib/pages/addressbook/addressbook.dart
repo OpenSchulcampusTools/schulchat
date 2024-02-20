@@ -513,10 +513,10 @@ class AddressbookController extends State<AddressbookPage> {
             allUsers[school]!.add(entry);
           });
         }
-        if (abookJson[school]['SocialWork'] != null &&
-            abookJson[school]['SocialWork'].isNotEmpty) {
+        if (abookJson[school]['Schulsozialarbeit'] != null &&
+            abookJson[school]['Schulsozialarbeit'].isNotEmpty) {
           abookSchool.children.add(abookSocialWork);
-          abookJson[school]['SocialWork'].forEach((user) {
+          abookJson[school]['Schulsozialarbeit'].forEach((user) {
             final entry = ABookEntry(
               title: user,
               info: '${L10n.of(context)!.contactsInfoSocialWork} $schoolName',
