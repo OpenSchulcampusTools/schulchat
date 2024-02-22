@@ -1,5 +1,10 @@
 # 22
+
+Added: Add a notice for users to remember to logout when sharing a device
+Fix: Role Schulsozialarbeit was not shown in addressbook
 Fix: Invite groups on iOS
+Fix: Logout URL link was pointing to dev env
+Fix: QR-Code-Login was not working in dev env (k8s)
 
 # 21
 
