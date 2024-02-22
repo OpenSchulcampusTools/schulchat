@@ -60,6 +60,7 @@
     "type": "text",
     "placeholders": {}
   },
+  "alwaysLogout": "Melde dich immer im Schulchat ab, wenn du das Gerät nicht alleine nutzt. Bei Abmeldung im Schulcampus erfolgt hier keine automatische Abmeldung.",
   "answeredTheCall": "{senderName} hat den Anruf angenommen",
   "@answeredTheCall": {
     "type": "text",

@@ -86,6 +86,7 @@
         "type": "text",
         "placeholders": {}
     },
+    "alwaysLogout": "Always log out in the school chat if you are not using the device alone. If you log out in the school campus, you will not be logged out automatically.",
     "commandHint_googly": "Send some googly eyes",
     "commandHint_cuddle": "Send a cuddle",
     "commandHint_hug": "Send a hug",
