@@ -39,6 +39,52 @@ Please visit our Wiki for build instructions:
 
 https://gitlab.com/famedly/fluffychat/-/wikis/How-To-Build
 
+# Building a docker image
+
+## Install flutter
+
+In addition to the installation instruction on the flutter website mentioned above, keep in mind that the dart sdk 
+version must be in the range defined in pubspec.yaml => environment => sdk
+
+```yaml
+...
+environment:
+  sdk: ">= min_version < max_version"
+...
+```
+On the [flutter download page](https://docs.flutter.dev/release/archive), look in the "Stable channel (Linux)" tab. The 
+dart version is in the second column from the right. 
+
+For example, if the sdk version is defined as `">=2.17.0 <3.0.0"`, you'd want the flutter distribution that contains the 
+latest 2.x-based dart sdk, in this case flutter 3.7.12 (dart sdk 2.19.6).
+
+Download the archive and install it using [the instruction on the flutter website](https://docs.flutter.dev/get-started/install/linux#method-2-manual-installation).
+
+## Set up and build fluffychat
+
+There are two scripts that take of the build process. Run these sequentially:
+
+```
+./scripts/prepare-web.sh
+./scripts/build-web.sh
+```
+
+This will yield a "build" directory containing the freshly built web client. 
+
+## Build docker image
+
+There is a dockerfile that can be used to take care of the rest of the build process:
+
+```shell
+docker build -t <tag> -f docker/Dockerfile.web
+```
+
+## Add docker file to the container registry
+
+```shell
+docker push <tag>
+```
+
 
 # Special thanks
 
