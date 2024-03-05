@@ -85,6 +85,13 @@ docker build -t <tag> -f docker/Dockerfile.web
 docker push <tag>
 ```
 
+## Add docker image from artifacts to registry
+
+Download the artifact from the `build_docker` job. It is zipped by default, so first unzip, then gzip -d.
+
+```shell
+docker image import docker_image_web registry.fairkom.net/clients/rlp/client/fluffychat:22.0.3_36-a7a35c2b
+```
 
 # Special thanks
 

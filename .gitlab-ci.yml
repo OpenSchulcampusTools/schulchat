@@ -9,8 +9,7 @@ variables:
 stages:
   - analyze
   - build_and_test
-    #  - build
-    #  - test
+  - build_docker
 #  - upload #FIXME upload webbuild and android package
 
 
@@ -117,6 +116,24 @@ build_web_profile:
   artifacts:
     paths:
       - build/web/webbuild.zip
+
+docker_image_web:
+  stage: build_docker
+  tags: [docker, rlp]
+  dependencies:
+    - build_web
+  variables:
+    FF_NETWORK_PER_BUILD: "true"
+  script: |
+    cd build/web && unzip webbuild.zip
+    rm webbuild.zip && cd ../..
+    docker image rm docker_image_web || true
+    docker build -f docker/Dockerfile.web -t docker_image_web .
+    docker save docker_image_web:latest | gzip > docker_image_web.gz
+  artifacts:
+    when: always
+    paths:
+      - docker_image_web.gz
 
 # TODO include config.sample.json?
 build_android_apk:
