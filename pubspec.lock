@@ -581,6 +581,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.0"
+  flutter_hooks:
+    dependency: transitive
+    description:
+      name: flutter_hooks
+      sha256: "6a126f703b89499818d73305e4ce1e3de33b4ae1c5512e3b8eab4b986f46774c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.6"
   flutter_keyboard_visibility:
     dependency: transitive
     description:
@@ -724,6 +732,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.13"
+  flutter_polls:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "4722b36e2ffd793e59e8c5aaea01f5c29179ef8b"
+      url: "git@git.fairkom.net:clients/rlp/client/flutter_polls"
+    source: git
+    version: "0.1.5"
   flutter_ringtone_player:
     dependency: "direct main"
     description:
@@ -1111,16 +1128,16 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "5beeabbda60778af1bba0ac1a22e32bc42966203"
-      url: "git@git.fairkom.net:clients/rlp/client/famedlysdk.git"
+      resolved-ref: cd2da8c06c23e0643fb459a60baf72fe07505f6c
+      url: "git@git.fairkom.net:clients/rlp/client/famedlysdk"
     source: git
     version: "0.17.1"
   matrix_api_lite:
     dependency: "direct overridden"
     description:
       path: "."
-      ref: main
-      resolved-ref: "5ec3d8dd2679e5d0b836e82cc757bd45fd1ebc59"
+      ref: polls
+      resolved-ref: fefc819811299147b51505d756df9c8bb4ac7d10
       url: "git@git.fairkom.net:clients/rlp/client/matrix_api_lite"
     source: git
     version: "1.1.10"
@@ -1366,6 +1383,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.1"
+  percent_indicator:
+    dependency: transitive
+    description:
+      name: percent_indicator
+      sha256: c37099ad833a883c9d71782321cb65c3a848c21b6939b6185f0ff6640d05814c
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.3"
   permission_handler:
     dependency: "direct main"
     description:

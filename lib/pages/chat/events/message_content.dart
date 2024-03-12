@@ -108,6 +108,7 @@ class MessageContent extends StatelessWidget {
       case EventTypes.Message:
       case EventTypes.Encrypted:
       case EventTypes.Sticker:
+      case EventTypes.PollStart:
         switch (event.messageType) {
           case MessageTypes.Image:
             return ImageBubble(
@@ -182,6 +183,7 @@ class MessageContent extends StatelessWidget {
               icon: const Icon(Icons.lock_outline),
               label: L10n.of(context)!.encrypted,
             );
+          case EventTypes.PollStart:
           case MessageTypes.None:
           textmessage:
           default:

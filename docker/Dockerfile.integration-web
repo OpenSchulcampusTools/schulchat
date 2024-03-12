@@ -40,7 +40,7 @@ RUN git checkout $CI_COMMIT_SHA
 RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
 
 # local domain is synapse
-RUN sed -i "s#schulchat.rlp.de#synapse#g" config.sample.json lib/config/app_config.dart
+RUN sed -i "s#schulchat.dev.osalliance.com#synapse#g" config.sample.json lib/config/app_config.dart
 
 # no https support for our local synapse
 RUN sed -i 's#homeserver = Uri.https#homeserver = Uri.http#g' lib/pages/homeserver_picker/homeserver_picker.dart

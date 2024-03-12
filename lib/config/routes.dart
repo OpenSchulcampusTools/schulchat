@@ -33,6 +33,7 @@ import 'package:fluffychat/widgets/layouts/loading_view.dart';
 import 'package:fluffychat/widgets/layouts/side_view_layout.dart';
 import 'package:fluffychat/widgets/layouts/two_column_layout.dart';
 import 'package:fluffychat/widgets/log_view.dart';
+import '../pages/chat_poll/chat_poll_creator.dart';
 
 class AppRoutes {
   final bool columnMode;
@@ -82,6 +83,11 @@ class AppRoutes {
                 VWidget(
                   path: 'search',
                   widget: const ChatSearch(),
+                  // stackedRoutes: _chatDetailsRoutes,
+                ),
+                VWidget(
+                  path: 'newpoll',
+                  widget: const ChatPollCreator(),
                   // stackedRoutes: _chatDetailsRoutes,
                 ),
               ],
@@ -174,6 +180,11 @@ class AppRoutes {
                       widget: const ChatSearch(),
                       buildTransition: _fadeTransition,
                       //  stackedRoutes: _chatDetailsRoutes,
+                    ),
+                    VWidget(
+                      path: 'newpoll',
+                      widget: const ChatPollCreator(),
+                      buildTransition: _fadeTransition,
                     ),
                     VWidget(
                       path: 'invite',
