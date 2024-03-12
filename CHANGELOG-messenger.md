@@ -1,3 +1,13 @@
+# 23
+
+Add: Polls
+
+Change: idpLogoutURL from SAML2 to OAuth2
+Change: Clear local data from SchulchatRLP before logging out from SC
+
+Fix: Logout using FlutterWebAuth instead of launchUrl
+
+
 # 22
 
 Added: Add a notice for users to remember to logout when sharing a device

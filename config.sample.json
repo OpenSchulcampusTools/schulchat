@@ -7,5 +7,5 @@
   "render_html": false,
   "hide_redacted_events": false,
   "hide_unknown_events": true,
-  "idpLogoutUrl": "https://bildungsportal.rlp.de/idp/SAML2/REDIRECT/SLO"
+  "idpLogoutUrl": "https://bildungsportal.rlp.de/oauth2/logout"
 }
