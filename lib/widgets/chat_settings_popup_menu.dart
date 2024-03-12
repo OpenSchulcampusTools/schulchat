@@ -93,6 +93,7 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
         ),
       ),
     ];
+
     getDeleteSettingMenu(items);
 
     if (widget.room.canInvite) {
@@ -124,6 +125,7 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
         ),
       );
     }
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -218,11 +220,6 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
                 break;
               case 'search':
                 _showChatSearch();
-                /*showDialog(
-                  context: context,
-                  builder: (context) => SearchDialog(room: widget.room),
-                  useRootNavigator: false,
-                );*/
                 break;
             }
           },
