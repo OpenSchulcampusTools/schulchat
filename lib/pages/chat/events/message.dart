@@ -5,7 +5,6 @@ import 'package:matrix/matrix.dart';
 import 'package:swipe_to_action/swipe_to_action.dart';
 
 import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/pages/chat/events/poll.dart';
 import 'package:fluffychat/pages/chat/read_receipt/read_receipt_extension.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/string_color.dart';
@@ -27,7 +26,6 @@ class Message extends StatelessWidget {
   final void Function(String)? scrollToEventId;
   final void Function(SwipeDirection) onSwipe;
   final void Function(Event)? onReadReceipt;
-  final Future<bool> Function(Event, String?)? onVoted;
   final bool longPressSelect;
   final bool selected;
   final Timeline timeline;
@@ -43,7 +41,6 @@ class Message extends StatelessWidget {
     this.scrollToEventId,
     required this.onSwipe,
     this.onReadReceipt,
-    this.onVoted,
     this.selected = false,
     required this.timeline,
     this.searchTerm,
@@ -60,7 +57,6 @@ class Message extends StatelessWidget {
       EventTypes.Message,
       EventTypes.Sticker,
       EventTypes.Encrypted,
-      EventTypes.PollStart,
     }.contains(event.type)) {
       return StateMessage(event);
     }
@@ -292,16 +288,12 @@ class Message extends StatelessWidget {
                                   );
                                 },
                               ),
-                            if (event.type == EventTypes.PollStart &&
-                                !event.redacted)
-                              Poll(event, timeline, onVoted)
-                            else
-                              MessageContent(
-                                displayEvent,
-                                textColor: textColor,
-                                onInfoTab: onInfoTab,
-                                searchTerm: searchTerm,
-                              ),
+                            MessageContent(
+                              displayEvent,
+                              textColor: textColor,
+                              onInfoTab: onInfoTab,
+                              searchTerm: searchTerm,
+                            ),
                             if (event.hasAggregatedEvents(
                               timeline,
                               RelationshipTypes.edit,

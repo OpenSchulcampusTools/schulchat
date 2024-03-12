@@ -185,15 +185,6 @@ class MatrixLocals extends MatrixLocalizations {
   String get schoolId => l10n.schoolId;
 
   @override
-  String get pollStart => l10n.newPoll;
-
-  @override
-  String get pollEnd => l10n.pollClosed;
-
-  @override
-  String get pollResponse => l10n.pollAnswered;
-
-  @override
   String redactedAnEvent(String senderName) {
     return l10n.redactedAnEvent(senderName);
   }

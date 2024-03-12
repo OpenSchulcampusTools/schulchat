@@ -474,8 +474,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8V4399QP73;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 23.0.4;
-				FLUTTER_BUILD_NUMBER = 23.0.4;
+				FLUTTER_BUILD_NAME = 22.0.3;
+				FLUTTER_BUILD_NUMBER = 22.0.3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -617,8 +617,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8V4399QP73;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 23.0.4;
-				FLUTTER_BUILD_NUMBER = 23.0.4;
+				FLUTTER_BUILD_NAME = 22.0.3;
+				FLUTTER_BUILD_NUMBER = 22.0.3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -653,8 +653,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8V4399QP73;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 23.0.4;
-				FLUTTER_BUILD_NUMBER = 23.0.4;
+				FLUTTER_BUILD_NAME = 22.0.3;
+				FLUTTER_BUILD_NUMBER = 22.0.3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -698,7 +698,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 23.0.4;
+				MARKETING_VERSION = 22.0.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.rlp.schulchat.FluffyChat-Share";
@@ -732,7 +732,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 23.0.4;
+				MARKETING_VERSION = 22.0.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.rlp.schulchat.FluffyChat-Share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -763,7 +763,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 23.0.4;
+				MARKETING_VERSION = 22.0.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.rlp.schulchat.FluffyChat-Share";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -26,7 +26,7 @@ echo "synapse server ip: ${SYNAPSE_IP}"
 
 ./scripts/integration-prepare-homeserver.sh
 
-sed -i "s#schulchat.dev.osalliance.com#synapse#g" config.sample.json lib/config/app_config.dart
+sed -i "s#schulchat.rlp.de#synapse#g" config.sample.json lib/config/app_config.dart
 sed -i 's#homeserver = Uri.https#homeserver = Uri.http#g' lib/pages/homeserver_picker/homeserver_picker.dart
 sed -i 's#var newDomain = Uri.https#var newDomain = Uri.http#g' lib/pages/login/login.dart
 sed -i 's#disableAuthWithUsernameAndPassword = true#disableAuthWithUsernameAndPassword = false#g' lib/config/edu_settings.dart

@@ -1,7 +1,7 @@
 name: fluffychat
 description: Schulchat für Rheinland-Pfalz
 publish_to: none
-version: 23.0.4+42
+version: 22.0.3+36
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -52,10 +52,6 @@ dependencies:
     git:
       url: git@git.fairkom.net:clients/rlp/client/flutter-openssl-crypto
       ref: main
-  flutter_polls:
-    git:
-      url: git@git.fairkom.net:clients/rlp/client/flutter_polls
-      ref: main
   flutter_ringtone_player: ^3.1.1
   flutter_secure_storage: ^7.0.1
   flutter_typeahead: ^4.3.2
@@ -73,7 +69,7 @@ dependencies:
   latlong2: ^0.8.1
   matrix:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/famedlysdk
+      url: git@git.fairkom.net:clients/rlp/client/famedlysdk.git
       ref: main
   matrix_homeserver_recommendations:
     git:
@@ -187,4 +183,4 @@ dependency_overrides:
   matrix_api_lite:
     git:
       url: git@git.fairkom.net:clients/rlp/client/matrix_api_lite
-      ref: polls
+      ref: main
