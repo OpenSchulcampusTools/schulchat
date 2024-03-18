@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../config/app_config.dart';
 import '../../widgets/matrix.dart';
@@ -49,11 +51,15 @@ class SettingsController extends State<Settings> {
     final matrix = Matrix.of(pContext);
     await matrix.client.logout();
     try {
-      // Workaround using Webview
-      await FlutterWebAuth.authenticate(
-        url: AppConfig.idpLogoutUrl,
-        callbackUrlScheme: 'https',
-      );
+      if (kIsWeb) {
+        launchUrl(Uri.parse(AppConfig.idpLogoutUrl));
+      } else {
+        // Workaround using Webview
+        await FlutterWebAuth.authenticate(
+          url: AppConfig.idpLogoutUrl,
+          callbackUrlScheme: 'https',
+        );
+      }
       // retry logout?
     } catch (_) {}
   }
