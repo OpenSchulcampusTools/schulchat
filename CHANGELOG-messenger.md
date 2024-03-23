@@ -1,3 +1,10 @@
+# 24
+
+Fix: SLO in Schulcampus when using the web client
+
+Change: Revert: Clear local data from SchulchatRLP before logging out from SC (Regression)
+
+
 # 23
 
 Add: Polls

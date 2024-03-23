@@ -49,7 +49,6 @@ class SettingsController extends State<Settings> {
 
   Future<void> logoutWrapper(pContext) async {
     final matrix = Matrix.of(pContext);
-    await matrix.client.logout();
     try {
       if (kIsWeb) {
         launchUrl(Uri.parse(AppConfig.idpLogoutUrl));
@@ -62,6 +61,8 @@ class SettingsController extends State<Settings> {
       }
       // retry logout?
     } catch (_) {}
+
+    await matrix.client.logout();
   }
 
   @override
