@@ -1,3 +1,7 @@
+# 24.0.1
+
+Change: Better error handling during QR-Code Login (Android/iOS)
+
 # 24
 
 Fix: SLO in Schulcampus when using the web client

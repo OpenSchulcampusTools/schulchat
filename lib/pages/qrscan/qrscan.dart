@@ -70,12 +70,15 @@ class QRScanController extends State<QRScan> {
     String authorizationCode,
     String error,
   ) {
+    final String scanError = L10n.of(context)!.scanError;
+    final String scanErrorExplanation =
+        L10n.of(context)!.scanErrorExplanation(error);
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(L10n.of(context)!.scanError),
-          content: Text(L10n.of(context)!.scanErrorExplanation),
+          title: Text(scanError),
+          content: Text(scanErrorExplanation),
           actions: <Widget>[
             TextButton(
               child: const Text('OK'),
@@ -91,7 +94,10 @@ class QRScanController extends State<QRScan> {
   }
 
   Future<void> finishLogin(String? token) async {
-    if (token?.isEmpty ?? true) return;
+    if (token == null || token.isEmpty) {
+      final tokenEmptyMessage = L10n.of(context)!.scanErrorToken;
+      throw Exception(tokenEmptyMessage);
+    }
 
     await showFutureLoadingDialog(
       context: context,
@@ -129,13 +135,13 @@ class QRScanController extends State<QRScan> {
         final Match? match = regExp.firstMatch(body);
         final String? token = match?.group(0);
         await finishLogin(token);
+      }
+      if (response.statusCode == 400) {
+        final statusCodeMessage = L10n.of(context)!.scanErrorAgain;
+        throw Exception(statusCodeMessage);
       } else {
-        showErrorDialog(
-          context,
-          authorizationCode,
-          response.statusCode.toString(),
-        );
-        Logs().d('Failed to send authorization code: ${response.statusCode}');
+        final statusCode = response.statusCode;
+        throw Exception(' $statusCode');
       }
     } catch (e) {
       showErrorDialog(context, authorizationCode, e.toString());

@@ -1552,15 +1552,25 @@
     "type": "text",
     "placeholders": {}
   },
-  "scanError": "Fehler beim Scannen vom QR-Code" ,
+  "scanError": "Fehler beim Scannen vom QR-Code",
   "@scanError": {
     "type": "text",
     "placeholders": {}
   },
-  "scanErrorExplanation": "Ein Fehler ist aufgetreten. Bitte versuche es erneut. Hier sind zusätzliche Informationen:",
-  "@scanErrorExplanation": {
+  "scanErrorAgain": "QR-Code ist veraltet, bitte die Seite im Schulcampus aktualisieren",
+  "@scanErrorAgain": {
     "type": "text",
     "placeholders": {}
+  },
+  "scanErrorToken": "Fehler beim Scannen des Tokens. Token ist leer" ,
+  "@scanErrorToken": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "scanErrorExplanation": "Ein Fehler ist aufgetreten. Bitte versuche es erneut. Hier sind zusätzliche Informationen:  {error}",
+  "@scanErrorExplanation": {
+    "type": "text",
+    "placeholders": {"error": {}}
   },
   "search": "Suchen",
   "@search": {

@@ -1690,10 +1690,20 @@
       "type": "text",
       "placeholders": {}
     },
-    "scanErrorExplanation": "An error has occurred. Please try again. Additional information:",
-    "@scanErrorExplanation": {
+    "scanErrorToken": "Error scanning the token. Token is empty",
+    "@scanErrorToken": {
       "type": "text",
       "placeholders": {}
+     },
+    "scanErrorAgain": "QR code is outdated, please refresh the Schulcampus page",
+    "@scanErrorAgain": {
+      "type": "text",
+      "placeholders": {}
+    },
+    "scanErrorExplanation": "An error has occurred. Please try again. Additional information: {error}",
+    "@scanErrorExplanation": {
+      "type": "text",
+      "placeholders": {"error": {}}
     },
     "search": "Search",
     "@search": {

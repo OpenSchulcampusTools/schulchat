@@ -1,7 +1,7 @@
 name: fluffychat
 description: Schulchat für Rheinland-Pfalz
 publish_to: none
-version: 24.0.0+44
+version: 24.0.1+45
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
