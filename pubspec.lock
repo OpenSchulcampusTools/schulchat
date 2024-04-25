@@ -15,7 +15,7 @@ packages:
       path: "."
       ref: main
       resolved-ref: "4a449306c26a111ca0bdd1dd988b9d1afac3177d"
-      url: "git@git.fairkom.net:clients/rlp/client/adaptive_dialog"
+      url: "git@git.fairkom.net:hosting/chat/matrix/adaptive_dialog.git"
     source: git
     version: "1.8.2"
   analyzer:
@@ -422,9 +422,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: e9605a1020be3f54a76687433701f99611e6eee4
+      ref: main
       resolved-ref: e9605a1020be3f54a76687433701f99611e6eee4
-      url: "git@git.fairkom.net:clients/rlp/client/file_picker_cross.git"
+      url: "git@git.fairkom.net:hosting/chat/matrix/file_picker_cross.git"
     source: git
     version: "4.6.0"
   file_selector:
@@ -694,9 +694,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: abfadec795817a53688369e8e3ba4fb3500a1916
+      ref: main
       resolved-ref: abfadec795817a53688369e8e3ba4fb3500a1916
-      url: "git@git.fairkom.net:clients/rlp/client/flutter_matrix_html.git"
+      url: "git@git.fairkom.net:hosting/chat/matrix/flutter_matrix_html.git"
     source: git
     version: "1.1.0"
   flutter_native_splash:
@@ -721,7 +721,7 @@ packages:
       path: "."
       ref: main
       resolved-ref: c0cc78d0f94c06b4642f0087e4f3c6ba97bf576e
-      url: "git@git.fairkom.net:clients/rlp/client/flutter-openssl-crypto"
+      url: "git@git.fairkom.net:hosting/chat/matrix/flutter-openssl-crypto.git"
     source: git
     version: "0.1.0"
   flutter_plugin_android_lifecycle:
@@ -738,7 +738,7 @@ packages:
       path: "."
       ref: main
       resolved-ref: "4722b36e2ffd793e59e8c5aaea01f5c29179ef8b"
-      url: "git@git.fairkom.net:clients/rlp/client/flutter_polls"
+      url: "git@git.fairkom.net:hosting/chat/matrix/flutter_polls.git"
     source: git
     version: "0.1.5"
   flutter_ringtone_player:
@@ -1062,9 +1062,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: fix-typing-in-chat
-      resolved-ref: baedbae35e26131d454309fb8c62921b2270bbc4
-      url: "git@git.fairkom.net:clients/rlp/client/keyboard_shortcuts.git"
+      ref: main
+      resolved-ref: a3d4020911860ff091d90638ab708604b71d2c5a
+      url: "git@git.fairkom.net:hosting/chat/matrix/keyboard_shortcuts.git"
     source: git
     version: "0.1.4"
   latlong2:
@@ -1128,8 +1128,8 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: af83a95762cdabc30060310b4f94fe3f01dd6c20
-      url: "git@git.fairkom.net:clients/rlp/client/famedlysdk"
+      resolved-ref: a6af50795e56de089fa6868bc0c0f3216a7c6140
+      url: "git@git.fairkom.net:hosting/chat/matrix/famedlysdk.git"
     source: git
     version: "0.17.1"
   matrix_api_lite:
@@ -1137,8 +1137,8 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: d9c33f6351872a4222c947d0745d7afb6827e723
-      url: "git@git.fairkom.net:clients/rlp/client/matrix_api_lite"
+      resolved-ref: "8e19d909c6d76390276a0f076a0b72d03b14e1f5"
+      url: "git@git.fairkom.net:hosting/chat/matrix/matrix_api_lite.git"
     source: git
     version: "1.1.10"
   matrix_homeserver_recommendations:
@@ -1147,7 +1147,7 @@ packages:
       path: "."
       ref: main
       resolved-ref: "5f543bce7094734b46b92d942d60910d215d993f"
-      url: "git@git.fairkom.net:clients/rlp/client/matrix_homeserver_recommendations.git"
+      url: "git@git.fairkom.net:hosting/chat/matrix/matrix_homeserver_recommendations.git"
     source: git
     version: "0.3.0"
   matrix_link_text:
