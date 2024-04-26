@@ -246,6 +246,17 @@ class ConnectPageView extends StatelessWidget {
                 ),
               ),
             ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: kIsWeb
+                ? Text(
+                    L10n.of(context)!.alwaysLogout,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                  )
+                : const SizedBox(),
+          ),
         ],
       ),
     );

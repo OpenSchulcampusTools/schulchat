@@ -24,6 +24,8 @@ class ChatSettingsPopupMenu extends StatefulWidget {
   const ChatSettingsPopupMenu(this.room, this.displayChatDetails, {Key? key})
       : super(key: key);
 
+  bool get isAdmin => room.ownPowerLevel >= 100;
+
   @override
   ChatSettingsPopupMenuState createState() => ChatSettingsPopupMenuState();
 }
@@ -81,16 +83,6 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
               ),
             ),
       PopupMenuItem<String>(
-        value: 'leave',
-        child: Row(
-          children: [
-            const Icon(Icons.delete_outlined),
-            const SizedBox(width: 12),
-            Text(L10n.of(context)!.leave),
-          ],
-        ),
-      ),
-      PopupMenuItem<String>(
         value: 'search',
         child: Row(
           children: [
@@ -101,6 +93,9 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
         ),
       ),
     ];
+
+    getDeleteSettingMenu(items);
+
     if (widget.room.canInvite) {
       items.add(
         PopupMenuItem<String>(
@@ -130,6 +125,7 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
         ),
       );
     }
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -165,6 +161,25 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
                   );
                 }
                 break;
+              case 'delete':
+                final confirmed = await showOkCancelAlertDialog(
+                  useRootNavigator: false,
+                  context: context,
+                  title: L10n.of(context)!.areYouSureDeleteRoom,
+                  okLabel: L10n.of(context)!.ok,
+                  cancelLabel: L10n.of(context)!.cancel,
+                );
+                if (confirmed == OkCancelResult.ok) {
+                  final success = await showFutureLoadingDialog(
+                    context: context,
+                    future: () => widget.room.deleteRoom(),
+                    title: L10n.of(context)!.closeRoomProcessMessage,
+                  );
+                  if (success.error == null) {
+                    VRouter.of(context).to('/rooms');
+                  }
+                }
+                break;
               case 'leave':
                 final confirmed = await showOkCancelAlertDialog(
                   useRootNavigator: false,
@@ -179,7 +194,7 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
                     future: () => widget.room.leave(),
                   );
                   if (success.error == null) {
-                    VRouter.of(context).to('/rooms');
+                    //VRouter.of(context).to('/rooms');
                   }
                 }
                 break;
@@ -205,11 +220,6 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
                 break;
               case 'search':
                 _showChatSearch();
-                /*showDialog(
-                  context: context,
-                  builder: (context) => SearchDialog(room: widget.room),
-                  useRootNavigator: false,
-                );*/
                 break;
             }
           },
@@ -251,6 +261,65 @@ class ChatSettingsPopupMenuState extends State<ChatSettingsPopupMenu> {
       VRouter.of(context).toSegments(['rooms', widget.room.id]);
     } else {
       VRouter.of(context).toSegments(['rooms', widget.room.id, 'search']);
+    }
+  }
+
+  void getDeleteSettingMenu(items) async {
+    if (!widget.isAdmin) {
+      items.add(
+        PopupMenuItem<String>(
+          value: 'leave',
+          child: Row(
+            children: [
+              const Icon(Icons.delete_outlined),
+              const SizedBox(width: 12),
+              Text(L10n.of(context)!.leave),
+            ],
+          ),
+        ),
+      );
+      return;
+    }
+
+    final canLeave = await widget.room.canLeave();
+    if (!canLeave) {
+      items.add(
+        PopupMenuItem<String>(
+          value: 'delete',
+          child: Row(
+            children: [
+              const Icon(Icons.delete_outlined),
+              const SizedBox(width: 12),
+              Text(L10n.of(context)!.deleteRoom),
+            ],
+          ),
+        ),
+      );
+    } else {
+      items.add(
+        PopupMenuItem<String>(
+          value: 'delete',
+          child: Row(
+            children: [
+              const Icon(Icons.delete_outlined),
+              const SizedBox(width: 12),
+              Text(L10n.of(context)!.deleteRoom),
+            ],
+          ),
+        ),
+      );
+      items.add(
+        PopupMenuItem<String>(
+          value: 'leave',
+          child: Row(
+            children: [
+              const Icon(Icons.delete_outlined),
+              const SizedBox(width: 12),
+              Text(L10n.of(context)!.leave),
+            ],
+          ),
+        ),
+      );
     }
   }
 }

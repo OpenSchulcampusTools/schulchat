@@ -1,12 +1,16 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../config/app_config.dart';
 import '../../widgets/matrix.dart';
 import '../bootstrap/bootstrap_dialog.dart';
 import 'settings_view.dart';
@@ -36,11 +40,29 @@ class SettingsController extends State<Settings> {
         OkCancelResult.cancel) {
       return;
     }
-    final matrix = Matrix.of(context);
     await showFutureLoadingDialog(
       context: context,
-      future: () => matrix.client.logout(),
+      // future: () => matrix.client.logout(),
+      future: () => logoutWrapper(context),
     );
+  }
+
+  Future<void> logoutWrapper(pContext) async {
+    final matrix = Matrix.of(pContext);
+    try {
+      if (kIsWeb) {
+        launchUrl(Uri.parse(AppConfig.idpLogoutUrl));
+      } else {
+        // Workaround using Webview
+        await FlutterWebAuth.authenticate(
+          url: AppConfig.idpLogoutUrl,
+          callbackUrlScheme: 'https',
+        );
+      }
+      // retry logout?
+    } catch (_) {}
+
+    await matrix.client.logout();
   }
 
   @override

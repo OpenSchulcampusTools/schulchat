@@ -287,7 +287,6 @@ class AddressbookController extends State<AddressbookPage> {
         if (filteredSchool.isNotEmpty && filteredSchool != school) continue;
 
         final schoolName = abookJson[school]['name'];
-        //final schoolName = await Matrix.of(context).client.request(RequestType.GET, '/../idm/school/${school}');
         final abookSchool = ABookEntry(
           title: schoolName,
           children: [],
@@ -325,6 +324,31 @@ class AddressbookController extends State<AddressbookPage> {
           category: true,
           orgName: school,
         );
+        final abookOffice = ABookEntry(
+          title: L10n.of(context)!.abookTitleOffice,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookSocialWork = ABookEntry(
+          title: L10n.of(context)!.abookTitleSocialWork,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookElternbeirat = ABookEntry(
+          title: L10n.of(context)!.abookTitleElternbeirat,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+        final abookPrincipal = ABookEntry(
+          title: L10n.of(context)!.abookTitlePrincipal,
+          children: [],
+          category: true,
+          orgName: school,
+        );
+
         allUsers[school] = [];
         if (abookJson[school]['teachers'] != null &&
             abookJson[school]['teachers'].isNotEmpty) {
@@ -357,7 +381,7 @@ class AddressbookController extends State<AddressbookPage> {
           groupsSorted
               .sort((a, b) => a[0].toLowerCase().compareTo(b[0].toLowerCase()));
 
-          groupsSorted.forEach((item) {
+          for (final item in groupsSorted) {
             final name = item[0];
             final id = item[1];
             final users = abookJson[school]['scgroups'][id].last;
@@ -397,7 +421,7 @@ class AddressbookController extends State<AddressbookPage> {
                 scgroupUsersInactive: inactiveUsers,
               ),
             );
-          });
+          }
         }
         if (abookJson[school]['students'] != null &&
             abookJson[school]['students'].isNotEmpty) {
@@ -435,10 +459,10 @@ class AddressbookController extends State<AddressbookPage> {
             allUsers[school]!.add(entry);
           });
         }
-        if (abookJson[school]['admins'] != null &&
-            abookJson[school]['admins'].isNotEmpty) {
+        if (abookJson[school]['Organisationsadmin'] != null &&
+            abookJson[school]['Organisationsadmin'].isNotEmpty) {
           abookSchool.children.add(abookAdmins);
-          abookJson[school]['admins'].forEach((admin) {
+          abookJson[school]['Organisationsadmin'].forEach((admin) {
             final entry = ABookEntry(
               title: admin,
               info: '${L10n.of(context)!.contactsInfoAdmin} $schoolName',
@@ -448,6 +472,78 @@ class AddressbookController extends State<AddressbookPage> {
               active: abookJson['users'][admin].last == 'active',
             );
             abookAdmins.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['Schulleitung'] != null &&
+            abookJson[school]['Schulleitung'].isNotEmpty) {
+          abookSchool.children.add(abookPrincipal);
+          abookJson[school]['Schulleitung'].forEach((user) {
+            final entry = ABookEntry(
+              title: user,
+              info: '${L10n.of(context)!.contactsInfoPrincipal} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][user].first,
+              kind: 'Schulleitung', //TODO
+              active: abookJson['users'][user].last == 'active',
+            );
+            abookPrincipal.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['Sekretariat'] != null &&
+            abookJson[school]['Sekretariat'].isNotEmpty) {
+          abookSchool.children.add(abookOffice);
+          abookJson[school]['Sekretariat'].forEach((user) {
+            final entry = ABookEntry(
+              title: user,
+              info: '${L10n.of(context)!.contactsInfoOffice} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][user].first,
+              kind: 'Sekretariat', //TODO
+              active: abookJson['users'][user].last == 'active',
+            );
+            abookOffice.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['Schulsozialarbeit'] != null &&
+            abookJson[school]['Schulsozialarbeit'].isNotEmpty) {
+          abookSchool.children.add(abookSocialWork);
+          abookJson[school]['Schulsozialarbeit'].forEach((user) {
+            final entry = ABookEntry(
+              title: user,
+              info: '${L10n.of(context)!.contactsInfoSocialWork} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][user].first,
+              kind: 'Schulsozialarbeit', //TODO
+              active: abookJson['users'][user].last == 'active',
+            );
+            abookSocialWork.children.add(
+              entry,
+            );
+            allUsers[school]!.add(entry);
+          });
+        }
+        if (abookJson[school]['Elternbeirat'] != null &&
+            abookJson[school]['Elternbeirat'].isNotEmpty) {
+          abookSchool.children.add(abookElternbeirat);
+          abookJson[school]['Elternbeirat'].forEach((user) {
+            final entry = ABookEntry(
+              title: user,
+              info: '${L10n.of(context)!.contactsInfoElternbeirat} $schoolName',
+              orgName: school,
+              longName: abookJson['users'][user].first,
+              kind: 'Elternbeirat', //TODO
+              active: abookJson['users'][user].last == 'active',
+            );
+            abookElternbeirat.children.add(
               entry,
             );
             allUsers[school]!.add(entry);
@@ -463,30 +559,47 @@ class AddressbookController extends State<AddressbookPage> {
 
   // receives a list of user and group ids and tries to invite them
   // returns a Set of success/failure per id
-  void invite(invitees, String roomId) async {
+  void invite(String roomId) async {
     // selection can contain the same user multiple times
     final Set uniqUsers = {};
     final List<String> uniqGroups = [];
     final hs = Matrix.of(context).client.homeserver?.host;
+    final room = Matrix.of(context).client.getRoomById(roomId)!;
 
-    final orgName = getSchoolFromSelection();
+    final orgName =
+        room.schoolId == '' ? getSchoolFromSelection() : room.schoolId;
+
+    // Note that this is not really used for invites. Group invites happen on the server, direct user invites
+    // happen via the client. This number is only used in UI.
+    final Set uniqUsersInclGroups = {};
 
     for (final e in selection) {
+      // skip categories; we can still select everything in a category, but not the category itself
+      // otherwise invites would be sent to broken mxids
+      if (e.category) continue;
+
       if (e.id != null) {
-        uniqGroups.add('#${e.orgName}--${e.id}:$hs');
+        final groupName = '#${e.orgName}--${e.id}:$hs';
+        uniqGroups.add(groupName);
+        final List<dynamic> gUsers =
+            await room.getMembersOfSCGroup(e.id, orgName);
+        for (final u in gUsers) {
+          uniqUsersInclGroups.add('@$u:$hs');
+        }
       } else {
-        uniqUsers.add('@${e.title}:$hs');
+        final userName = '@${e.title}:$hs';
+        uniqUsers.add(userName);
+        uniqUsersInclGroups.add(userName);
       }
     }
 
-    final room = Matrix.of(context).client.getRoomById(roomId)!;
     if (OkCancelResult.ok !=
         await showOkCancelAlertDialog(
           context: context,
           title: L10n.of(context)!.inviteTitleMessage(
             uniqUsers.length,
             uniqGroups.length,
-            selection.length,
+            uniqUsersInclGroups.length,
             room.name,
           ),
           okLabel: L10n.of(context)!.inviteOKLabel,
@@ -499,20 +612,28 @@ class AddressbookController extends State<AddressbookPage> {
       context: context,
       future: () async {
         final List<String> errors = [];
+
+        // if this fails do not catch exception here
+        if (orgName != null && room.schoolId == '') {
+          await room.setSchoolId(orgName);
+        }
+
         for (final u in uniqUsers) {
           try {
-            Logs().v('about to invite $u');
             await room.invite(u);
           } on MatrixException catch (e) {
             errors.add(e.errorMessage);
           }
         }
-        if (uniqGroups.isNotEmpty) {
-          Logs().v('about to invite groups $uniqGroups');
-          room.setRestrictedJoinRules(uniqGroups);
-        }
-        if (orgName != null) {
-          room.setSchoolId(orgName);
+
+        try {
+          // either set to uniqGroups or if there are already groups set,
+          // add uniqGroups to those
+          if (uniqGroups.isNotEmpty) {
+            await room.addToRestrictedJoinRules(uniqGroups);
+          }
+        } on MatrixException catch (e) {
+          errors.add(e.errorMessage);
         }
 
         // we collected all errors above, now throw an exception

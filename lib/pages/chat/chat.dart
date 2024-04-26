@@ -33,6 +33,7 @@ import 'package:fluffychat/widgets/matrix.dart';
 import '../../utils/account_bundles.dart';
 import '../../utils/localized_exception_extension.dart';
 import '../../utils/matrix_sdk_extensions/matrix_file_extension.dart';
+import 'poll/poll_extension.dart';
 import 'send_file_dialog.dart';
 import 'sticker_picker_dialog.dart';
 
@@ -323,38 +324,10 @@ class ChatController extends State<Chat> {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('draft_$roomId');
 
-    var parseCommands = false;
-
-    final commandMatch =
-        RegExp(r'^\/(\w+)').firstMatch(sendController.text.trim());
-    // command syntax was found
-    if (commandMatch != null) {
-      // command not found
-      if (!room!.client.commands.keys
-          .contains(commandMatch[1]!.toLowerCase())) {
-        final l10n = L10n.of(context)!;
-        final dialogResult = await showOkCancelAlertDialog(
-          context: context,
-          useRootNavigator: false,
-          title: l10n.commandInvalid,
-          message: l10n.commandMissing(commandMatch[0]!),
-          okLabel: l10n.sendAsText,
-          cancelLabel: l10n.cancel,
-        );
-        if (dialogResult == OkCancelResult.cancel) return;
-        parseCommands = false;
-      }
-      // command found - mark for execution
-      else {
-        parseCommands = true;
-      }
-    }
-
     final String? eventId = await room!.sendTextEvent(
       sendController.text,
       inReplyTo: replyEvent,
       editEventId: editEvent?.eventId,
-      parseCommands: parseCommands,
     );
 
     if (eventId != null) {
@@ -636,6 +609,29 @@ class ChatController extends State<Chat> {
     }
   }
 
+  void _showNewPoll() {
+    if (VRouter.of(context).path.endsWith('/newpoll')) {
+      VRouter.of(context).toSegments(['rooms', room!.id]);
+    } else {
+      VRouter.of(context).toSegments(['rooms', room!.id, 'newpoll']);
+    }
+  }
+
+  Future<bool> onVoted(Event event, String? optionId) async {
+    if (optionId != null) {
+      final responseEventId =
+          await room!.sendPollResponse(event.eventId, optionId);
+      if (responseEventId != null) {
+        setState(() {
+          event;
+        });
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   String _getSelectedEventString() {
     var copyString = '';
     if (selectedEvents.length == 1) {
@@ -759,6 +755,40 @@ class ChatController extends State<Chat> {
     }
   }
 
+  void closePoll() async {
+    if (canClosePoll) {
+      final pollStartEvent = selectedEvents.first;
+      final allResponses = await pollStartEvent.allResponses(timeline!);
+      final answers = pollStartEvent.getAnswers();
+      Map<String, int> results = {};
+
+      for (final response in allResponses) {
+        final votedId = response.getVoteId();
+        if (votedId != null) {
+          final text = answers[votedId];
+          if (text != null) {
+            if (results.containsKey(text)) {
+              results[text] = results[text]! + 1;
+            } else {
+              results.addAll({text: 1});
+            }
+          }
+        }
+      }
+
+      results = Map.fromEntries(
+        results.entries.toList()
+          ..sort((e1, e2) => e1.value.compareTo(e2.value)),
+      );
+
+      room!.closePoll(pollStartEvent.eventId, results);
+
+      setState(() {
+        selectedEvents.clear();
+      });
+    }
+  }
+
   List<Client?> get currentRoomBundle {
     final clients = matrix!.currentBundle!;
     clients.removeWhere((c) => c!.getRoomById(roomId!) == null);
@@ -791,6 +821,16 @@ class ChatController extends State<Chat> {
               .contains(EduSettings.eduNamespace) &&
           selectedEvents.first.content[EduSettings.eduNamespace] ==
               EduSettings.requireReadReceipt;
+    }
+    return false;
+  }
+
+  /* each room admin can close the poll */
+  bool get canClosePoll {
+    if (selectedEvents.length == 1 &&
+        selectedEvents.first.type == EventTypes.PollStart) {
+      final endEvent = selectedEvents.first.getPollEndEvent(timeline!);
+      return (endEvent == null && room!.canOpenPoll);
     }
     return false;
   }
@@ -1106,6 +1146,9 @@ class ChatController extends State<Chat> {
     }
     if (choice == 'reading-receipt') {
       toggleReadReceiptAction();
+    }
+    if (choice == 'poll') {
+      _showNewPoll();
     }
   }
 

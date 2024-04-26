@@ -19,7 +19,6 @@ import 'package:fluffychat/pages/settings_security/settings_security.dart';
 import 'package:fluffychat/utils/famedlysdk_store.dart';
 import 'package:fluffychat/utils/localized_exception_extension.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
-import '../../../utils/account_bundles.dart';
 import '../../utils/matrix_sdk_extensions/matrix_file_extension.dart';
 import '../../utils/url_launcher.dart';
 import '../../widgets/fluffy_chat_app.dart';
@@ -554,48 +553,6 @@ class ChatListController extends State<ChatList>
             .setActiveClient(Matrix.of(context).currentBundle!.first);
       }
     });
-  }
-
-  void editBundlesForAccount(String? userId, String? activeBundle) async {
-    final l10n = L10n.of(context)!;
-    final client = Matrix.of(context)
-        .widget
-        .clients[Matrix.of(context).getClientIndexByMatrixId(userId!)];
-    final action = await showConfirmationDialog<EditBundleAction>(
-      context: context,
-      title: L10n.of(context)!.editBundlesForAccount,
-      actions: [
-        AlertDialogAction(
-          key: EditBundleAction.addToBundle,
-          label: L10n.of(context)!.addToBundle,
-        ),
-        if (activeBundle != client.userID)
-          AlertDialogAction(
-            key: EditBundleAction.removeFromBundle,
-            label: L10n.of(context)!.removeFromBundle,
-          ),
-      ],
-    );
-    if (action == null) return;
-    switch (action) {
-      case EditBundleAction.addToBundle:
-        final bundle = await showTextInputDialog(
-          context: context,
-          title: l10n.bundleName,
-          textFields: [DialogTextField(hintText: l10n.bundleName)],
-        );
-        if (bundle == null || bundle.isEmpty || bundle.single.isEmpty) return;
-        await showFutureLoadingDialog(
-          context: context,
-          future: () => client.setAccountBundle(bundle.single),
-        );
-        break;
-      case EditBundleAction.removeFromBundle:
-        await showFutureLoadingDialog(
-          context: context,
-          future: () => client.removeFromAccountBundle(activeBundle!),
-        );
-    }
   }
 
   bool get displayBundles =>

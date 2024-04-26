@@ -15,7 +15,7 @@ packages:
       path: "."
       ref: main
       resolved-ref: "4a449306c26a111ca0bdd1dd988b9d1afac3177d"
-      url: "git@git.fairkom.net:clients/rlp/client/adaptive_dialog"
+      url: "git@git.fairkom.net:hosting/chat/matrix/adaptive_dialog.git"
     source: git
     version: "1.8.2"
   analyzer:
@@ -422,9 +422,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: e9605a1020be3f54a76687433701f99611e6eee4
+      ref: main
       resolved-ref: e9605a1020be3f54a76687433701f99611e6eee4
-      url: "git@git.fairkom.net:clients/rlp/client/file_picker_cross.git"
+      url: "git@git.fairkom.net:hosting/chat/matrix/file_picker_cross.git"
     source: git
     version: "4.6.0"
   file_selector:
@@ -581,6 +581,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.0"
+  flutter_hooks:
+    dependency: transitive
+    description:
+      name: flutter_hooks
+      sha256: "6a126f703b89499818d73305e4ce1e3de33b4ae1c5512e3b8eab4b986f46774c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.6"
   flutter_keyboard_visibility:
     dependency: transitive
     description:
@@ -686,9 +694,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: abfadec795817a53688369e8e3ba4fb3500a1916
+      ref: main
       resolved-ref: abfadec795817a53688369e8e3ba4fb3500a1916
-      url: "git@git.fairkom.net:clients/rlp/client/flutter_matrix_html.git"
+      url: "git@git.fairkom.net:hosting/chat/matrix/flutter_matrix_html.git"
     source: git
     version: "1.1.0"
   flutter_native_splash:
@@ -713,7 +721,7 @@ packages:
       path: "."
       ref: main
       resolved-ref: c0cc78d0f94c06b4642f0087e4f3c6ba97bf576e
-      url: "git@git.fairkom.net:clients/rlp/client/flutter-openssl-crypto"
+      url: "git@git.fairkom.net:hosting/chat/matrix/flutter-openssl-crypto.git"
     source: git
     version: "0.1.0"
   flutter_plugin_android_lifecycle:
@@ -724,6 +732,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.13"
+  flutter_polls:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "4722b36e2ffd793e59e8c5aaea01f5c29179ef8b"
+      url: "git@git.fairkom.net:hosting/chat/matrix/flutter_polls.git"
+    source: git
+    version: "0.1.5"
   flutter_ringtone_player:
     dependency: "direct main"
     description:
@@ -1045,9 +1062,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: fix-typing-in-chat
-      resolved-ref: baedbae35e26131d454309fb8c62921b2270bbc4
-      url: "git@git.fairkom.net:clients/rlp/client/keyboard_shortcuts.git"
+      ref: main
+      resolved-ref: a3d4020911860ff091d90638ab708604b71d2c5a
+      url: "git@git.fairkom.net:hosting/chat/matrix/keyboard_shortcuts.git"
     source: git
     version: "0.1.4"
   latlong2:
@@ -1094,10 +1111,10 @@ packages:
     dependency: transitive
     description:
       name: matcher
-      sha256: "16db949ceee371e9b99d22f88fa3a73c4e59fd0afed0bd25fc336eb76c198b72"
+      sha256: c94db23593b89766cda57aab9ac311e3616cf87c6fa4e9749df032f66f30dcb8
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.13"
+    version: "0.12.14"
   material_color_utilities:
     dependency: transitive
     description:
@@ -1111,8 +1128,8 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: e29e13fa233c358c7cf3250da2e19ba57fae7453
-      url: "git@git.fairkom.net:clients/rlp/client/famedlysdk"
+      resolved-ref: a6af50795e56de089fa6868bc0c0f3216a7c6140
+      url: "git@git.fairkom.net:hosting/chat/matrix/famedlysdk.git"
     source: git
     version: "0.17.1"
   matrix_api_lite:
@@ -1120,8 +1137,8 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "5ec3d8dd2679e5d0b836e82cc757bd45fd1ebc59"
-      url: "git@git.fairkom.net:clients/rlp/client/matrix_api_lite"
+      resolved-ref: "8e19d909c6d76390276a0f076a0b72d03b14e1f5"
+      url: "git@git.fairkom.net:hosting/chat/matrix/matrix_api_lite.git"
     source: git
     version: "1.1.10"
   matrix_homeserver_recommendations:
@@ -1130,7 +1147,7 @@ packages:
       path: "."
       ref: main
       resolved-ref: "5f543bce7094734b46b92d942d60910d215d993f"
-      url: "git@git.fairkom.net:clients/rlp/client/matrix_homeserver_recommendations.git"
+      url: "git@git.fairkom.net:hosting/chat/matrix/matrix_homeserver_recommendations.git"
     source: git
     version: "0.3.0"
   matrix_link_text:
@@ -1290,10 +1307,10 @@ packages:
     dependency: transitive
     description:
       name: path
-      sha256: db9d4f58c908a4ba5953fcee2ae317c94889433e5024c27ce74a37f94267945b
+      sha256: "8829d8a55c13fc0e37127c29fedf290c102f4e40ae94ada574091fe0ff96c917"
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.2"
+    version: "1.8.3"
   path_drawing:
     dependency: transitive
     description:
@@ -1366,6 +1383,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.1"
+  percent_indicator:
+    dependency: transitive
+    description:
+      name: percent_indicator
+      sha256: c37099ad833a883c9d71782321cb65c3a848c21b6939b6185f0ff6640d05814c
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.3"
   permission_handler:
     dependency: "direct main"
     description:
@@ -1839,10 +1864,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: ad540f65f92caa91bf21dfc8ffb8c589d6e4dc0c2267818b4cc2792857706206
+      sha256: c9282698e2982b6c3817037554e52f99d4daba493e8028f8112a83d68ccd0b12
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.16"
+    version: "0.4.17"
   timezone:
     dependency: transitive
     description:
@@ -2244,5 +2269,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.19.0 <3.0.0"
+  dart: ">=2.19.0 <4.0.0"
   flutter: ">=3.4.0-17.0.pre"

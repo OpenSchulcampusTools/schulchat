@@ -60,6 +60,7 @@
     "type": "text",
     "placeholders": {}
   },
+  "alwaysLogout": "Melde dich immer im Schulchat ab, wenn du das Gerät nicht alleine nutzt. Bei Abmeldung im Schulcampus erfolgt hier keine automatische Abmeldung.",
   "answeredTheCall": "{senderName} hat den Anruf angenommen",
   "@answeredTheCall": {
     "type": "text",
@@ -94,6 +95,11 @@
   },
   "areYouSure": "Bist du sicher?",
   "@areYouSure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "areYouSureDeleteRoom": "Bist du sicher, dass du den Raum löschen möchtest?",
+  "@areYouSureDeleteRoom": {
     "type": "text",
     "placeholders": {}
   },
@@ -361,6 +367,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "closeRoomProcessMessage": "Die App erst schließen, wenn der Raum gelöscht ist.",
+  "@closeRoomProcessMessage": {
+    "type": "text",
+    "placeholders": {}
+  },
   "commandHint_ban": "Verbanne den übergebenen Benutzer aus diesen Raum",
   "@commandHint_ban": {
     "type": "text",
@@ -588,6 +599,11 @@
   "@delete": {
     "type": "text",
     "placeholders": {}
+  },
+  "deleteRoom": "Raum löschen",
+  "@delete": {
+  "type": "text",
+  "placeholders": {}
   },
   "deleteAccount": "Konto löschen",
   "@deleteAccount": {
@@ -946,6 +962,13 @@
       "targetName": {}
     }
   },
+  "invitedUserWithoutInviter": "📩 {targetName} wurde eingeladen",
+  "@invitedUserWithoutInviter": {
+    "type": "text",
+    "placeholders": {
+      "targetName": {}
+    }
+  },
   "invitedUsersOnly": "Nur eingeladene Mitglieder",
   "@invitedUsersOnly": {
     "type": "text",
@@ -986,7 +1009,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "kicked": "👞 {username} hat {targetName} hinausgeworfen",
+  "kicked": "👞 {username} hat {targetName} aus dem Raum entfernt",
   "@kicked": {
     "type": "text",
     "placeholders": {
@@ -994,13 +1017,27 @@
       "targetName": {}
     }
   },
-  "kickedAndBanned": "🙅 {username} hat {targetName} hinausgeworfen und verbannt",
+  "kickedWithoutName": "👞 {targetName} wurde aus dem Raum entfernt",
+  "@kickedWithoutName": {
+    "type": "text",
+    "placeholders": {
+      "targetName": {}
+    }
+  },
+  "kickedAndBanned": "🙅 {username} hat {targetName} aus dem Raum entfernt und verbannt",
   "@kickedAndBanned": {
     "type": "text",
     "placeholders": {
       "username": {},
       "targetName": {}
     }
+  },
+  "kickedAndBannedWithoutName": "🙅 {targetName} wurde aus dem Raum entfernt und verbannt",
+  "@kickedAndBannedWithoutName": {
+      "type": "text",
+      "placeholders": {
+          "targetName": {}
+      }
   },
   "kickFromChat": "Aus dem Raum hinauswerfen",
   "@kickFromChat": {
@@ -1433,6 +1470,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "removeGroupFromRoom": "Gruppe entfernen",
+  "@remove": {
+    "type": "text",
+    "placeholders": {}
+  },
   "removeAllOtherDevices": "Alle anderen Geräte entfernen",
   "@removeAllOtherDevices": {
     "type": "text",
@@ -1509,6 +1551,26 @@
   "@scanExplanation": {
     "type": "text",
     "placeholders": {}
+  },
+  "scanError": "Fehler beim Scannen vom QR-Code",
+  "@scanError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "scanErrorAgain": "QR-Code ist veraltet, bitte die Seite im Schulcampus aktualisieren",
+  "@scanErrorAgain": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "scanErrorToken": "Fehler beim Scannen des Tokens. Token ist leer" ,
+  "@scanErrorToken": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "scanErrorExplanation": "Ein Fehler ist aufgetreten. Bitte versuche es erneut. Hier sind zusätzliche Informationen:  {error}",
+  "@scanErrorExplanation": {
+    "type": "text",
+    "placeholders": {"error": {}}
   },
   "search": "Suchen",
   "@search": {
@@ -2063,18 +2125,6 @@
   },
   "serverRequiresEmail": "Dieser Server muss deine E-Mail-Adresse für die Registrierung überprüfen.",
   "@serverRequiresEmail": {},
-  "enableMultiAccounts": "(BETA) Aktiviere Multi-Accounts für dieses Gerät",
-  "@enableMultiAccounts": {},
-  "bundleName": "Name des Bundles",
-  "@bundleName": {},
-  "removeFromBundle": "Von diesem Bundle entfernen",
-  "@removeFromBundle": {},
-  "addToBundle": "Zu einem Bundle hinzufügen",
-  "@addToBundle": {},
-  "editBundlesForAccount": "Bundles für dieses Konto bearbeiten",
-  "@editBundlesForAccount": {},
-  "addAccount": "Konto hinzufügen",
-  "@addAccount": {},
   "oneClientLoggedOut": "Einer deiner Clients wurde abgemeldet",
   "@oneClientLoggedOut": {},
   "homeserver": "Homeserver",
@@ -2245,13 +2295,13 @@
   },
   "widgetNameError": "Bitte gib einen Anzeigenamen an.",
   "@widgetNameError": {},
-  "youKicked": "👞 Du hast {user} rausgeworfen",
+  "youKicked": "👞 Du hast {user} aus dem Raum entfernt",
   "@youKicked": {
     "placeholders": {
       "user": {}
     }
   },
-  "youKickedAndBanned": "🙅 Du hast {user} rausgeworfen und verbannt",
+  "youKickedAndBanned": "🙅 Du hast {user} aus dem Raum entfernt und verbannt",
   "@youKickedAndBanned": {
     "placeholders": {
       "user": {}
@@ -2286,6 +2336,9 @@
     "placeholders": {
       "user": {}
     }
+  },
+  "youInvitedByWithoutName": "📩 Du wurdest eingeladen",
+  "@youInvitedByWithoutName": {
   },
   "youInvitedUser": "📩 Du hast {user} eingeladen",
   "@youInvitedUser": {
@@ -2509,12 +2562,20 @@
   "@contactsInfoTeacher": {},
   "contactsInfoStudent": "Schüler:in in",
   "@contactsInfoStudent": {},
-  "contactsInfoAdmin": "Admin in",
+  "contactsInfoAdmin": "Organisationsadmin in",
   "@contactsInfoAdmin": {},
   "contactsInfoParent": "Sorgeberechtigte:r in",
   "@contactsInfoParent": {},
   "contactsInfoGroup": "Gruppe in",
   "@contactsInfoGroup": {},
+  "contactsInfoSocialWork": "Schulsozialarbeit in",
+  "@contactsInfoSocialWork": {},
+  "contactsInfoOffice": "Sekretariat in",
+  "@contactsInfoOffice": {},
+  "contactsInfoPrincipal": "Schulleitung in",
+  "@contactsInfoPrincipal": {},
+  "contactsInfoElternbeirat": "Elternbeirat in",
+  "@contactsInfoElternbeirat": {},
   "userNotInMessenger": "noch nicht im Schulchat",
   "@userNotInMessenger": {},
   "inviteErrorHappened": "Ein Fehler trat während der Einladung auf",
@@ -2538,15 +2599,23 @@
   "@abookTitleSCGroups": {},
   "abookTitleParents": "Sorgeberechtigte",
   "@abookTitleParents": {},
-  "abookTitleAdmins": "Administratoren",
+  "abookTitleAdmins": "Organisationsadmins",
   "@abookTitleAdmins": {},
-  "inviteTitleMessage": "{uniqUsersLength} Nutzer:innen und {uniqGroupsLength} Gruppen (insgesamt: {selectionLength}) in den Raum {name} einladen",
+  "abookTitleOffice": "Sekretariat",
+  "@abookTitleOffice": {},
+  "abookTitleSocialWork": "Schulsozialarbeit",
+  "@abookTitleSocialWork": {},
+  "abookTitleElternbeirat": "Elternbeirat",
+  "@abookTitleElternbeirat": {},
+  "abookTitlePrincipal": "Schulleitung",
+  "@abookTitlePrincipal": {},
+  "inviteTitleMessage": "{uniqUsersLength} Nutzer:innen und {uniqGroupsLength} Gruppen (insgesamt: {allUsers} Nutzer:innen) in den Raum {name} einladen",
   "@inviteTitleMessage": {
     "type": "text",
     "placeholders": {
       "uniqUsersLength": {},
       "uniqGroupsLength": {},
-      "selectionLength": {},
+      "allUsers": {},
       "name": {}
     }
   },
@@ -2583,5 +2652,48 @@
     "placeholders": {}
   },
   "forwardedMessage": "Weitergeleitete Nachricht:",
-  "@forwardedMessage": {}
+  "@forwardedMessage": {},
+  "scgroupName": "SC-Gruppe {name}",
+  "@scgroupName": {
+    "type": "text",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "newPoll": "Umfrage erstellen",
+  "@newPoll": {},
+  "question": "Frage",
+  "@question": {},
+  "option": "Antwort",
+  "@option": {},
+  "options": "Antworten",
+  "@options": {},
+  "newOption": "Antwort hinzufügen",
+  "@newOption": {},
+  "allowFreeText": "Freitext-Antwort erlauben",
+  "@allowFreeText": {},
+  "showNames": "Namen anzeigen",
+  "@showNames": {},
+  "isLivePoll": "Live-Umfrage",
+  "@isLivePoll": {},
+  "allowMultipleAnswers": "Mehrere Antworten möglich",
+  "@allowMultipleAnswers": {},
+  "questionMissing": "Frage angeben",
+  "@questionMissing": {},
+  "answerMissing": "Mindestens eine Antwortmöglichkeit angeben",
+  "@answerMissing": {},
+  "pollSaved": "Umfrage wurde erstellt",
+  "@pollSaved": {},
+  "pollSaveError": "Fehler beim Erstellen der Umfrage",
+  "@pollSaveError": {},
+  "votes": "Stimmen",
+  "@votes": {},
+  "closePoll": "Umfrage beenden",
+  "@closePoll": {},
+  "pollCreated": "Neue Umfrage",
+  "@pollCreated": {},
+  "pollAnswered": "Neue Umfrage-Antwort",
+  "@pollAnswered": {},
+  "pollClosed": "Umfrage beendet",
+  "@pollClosed": {}
 }

@@ -1,3 +1,42 @@
+# 24.0.1
+
+Change: Better error handling during QR-Code Login (Android/iOS)
+
+# 24
+
+Fix: SLO in Schulcampus when using the web client
+
+Change: Revert: Clear local data from SchulchatRLP before logging out from SC (Regression)
+
+
+# 23
+
+Add: Polls
+
+Change: idpLogoutURL from SAML2 to OAuth2
+Change: Clear local data from SchulchatRLP before logging out from SC
+
+Fix: Logout using FlutterWebAuth instead of launchUrl
+
+
+# 22
+
+Added: Add a notice for users to remember to logout when sharing a device
+Fix: Role Schulsozialarbeit was not shown in addressbook
+Fix: Invite groups on iOS
+Fix: Logout URL link was pointing to dev env
+Fix: QR-Code-Login was not working in dev env (k8s)
+
+# 21
+
+Added: possibility to remove group from room
+Added: possibility to leave a room, removing all groups/users first
+Change: Help/support link
+Fix: prevent setting schoolid during new invites
+
+# 20
+Feature: Logout gleichzeitig im Schulcampus
+
 # 19
 
 Fix: mime types on iOS

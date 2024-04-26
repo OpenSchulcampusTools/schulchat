@@ -31,7 +31,7 @@ abstract class AppConfig {
   static const String sourceCodeUrl =
       'https://git.fairkom.net/chat/matrix/schulchatrlp/';
   static const String supportUrl =
-      'https://git.fairkom.net/chat/matrix/schulchatrlp/-/issues';
+      'https://infoportal.schulcampus-rlp.de/lehrende/schulchat/schulchat-rlp-einfuehrung/';
   static bool renderHtml = true;
   static bool hideRedactedEvents = false;
   static bool hideUnknownEvents = true;
@@ -57,6 +57,7 @@ abstract class AppConfig {
       'https://github.com/googlefonts/noto-emoji/';
   static const double borderRadius = 16.0;
   static const double columnWidth = 360.0;
+  static String idpLogoutUrl = 'https://bildungsportal.rlp.de/oauth2/logout';
 
   static void loadFromJson(Map<String, dynamic> json) {
     if (json['chat_color'] != null) {
@@ -79,10 +80,10 @@ abstract class AppConfig {
       _defaultHomeserver = json['default_homeserver'];
     }
     if (json['privacy_url'] is String) {
-      _webBaseUrl = json['privacy_url'];
+      _privacyUrl = json['privacy_url'];
     }
     if (json['web_base_url'] is String) {
-      _privacyUrl = json['web_base_url'];
+      _webBaseUrl = json['web_base_url'];
     }
     if (json['render_html'] is bool) {
       renderHtml = json['render_html'];
@@ -92,6 +93,9 @@ abstract class AppConfig {
     }
     if (json['hide_unknown_events'] is bool) {
       hideUnknownEvents = json['hide_unknown_events'];
+    }
+    if (json['idpLogoutUrl'] is String) {
+      idpLogoutUrl = json['idpLogoutUrl'];
     }
   }
 

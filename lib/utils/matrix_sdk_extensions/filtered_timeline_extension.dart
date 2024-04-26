@@ -34,7 +34,9 @@ extension IsStateExtension on Event {
           type != EventTypes.RoomMember ||
           room.joinRules != JoinRules.public ||
           content.tryGet<String>('membership') == 'ban' ||
-          stateKey != senderId);
+          stateKey != senderId) &&
+      !(type == EventTypes.RoomMember &&
+          stateKey?.localpart == 'idm_provisioning_bot');
 
   static const Set<String> importantStateEvents = {
     EventTypes.Encryption,
@@ -45,6 +47,7 @@ extension IsStateExtension on Event {
 
   bool get isState => !{
         EventTypes.Message,
+        EventTypes.PollStart,
         EventTypes.Sticker,
         EventTypes.Encrypted
       }.contains(type);

@@ -86,6 +86,7 @@
         "type": "text",
         "placeholders": {}
     },
+    "alwaysLogout": "Always log out in the school chat if you are not using the device alone. If you log out in the school campus, you will not be logged out automatically.",
     "commandHint_googly": "Send some googly eyes",
     "commandHint_cuddle": "Send a cuddle",
     "commandHint_hug": "Send a hug",
@@ -147,6 +148,11 @@
         "type": "text",
         "placeholders": {}
     },
+      "areYouSureDeleteRoom": "Are you sure you want to delete the room?",
+      "@areYouSureDeleteRoom": {
+        "type": "text",
+        "placeholders": {}
+      },
     "areYouSureYouWantToLogout": "Are you sure you want to log out?",
     "@areYouSureYouWantToLogout": {
         "type": "text",
@@ -427,6 +433,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "closeRoomProcessMessage": "Do not close the app until the room has been deleted.",
+    "@closeRoomProcessMessage": {
+        "type": "text",
+        "placeholders": {}
+     },
     "commandHint_markasdm": "Mark as direct message room",
     "@commandHint_markasdm": {},
     "commandHint_markasgroup": "Mark as room",
@@ -675,6 +686,11 @@
         "placeholders": {}
     },
     "delete": "Delete",
+    "@delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "deleteRoom": "Delete room",
     "@delete": {
         "type": "text",
         "placeholders": {}
@@ -1039,6 +1055,13 @@
             "targetName": {}
         }
     },
+    "invitedUserWithoutInviter": "📩 {targetName} was invited",
+    "@invitedUserWithoutInviter": {
+      "type": "text",
+      "placeholders": {
+        "targetName": {}
+      }
+    },
     "invitedUsersOnly": "Invited users only",
     "@invitedUsersOnly": {
         "type": "text",
@@ -1079,7 +1102,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "kicked": "👞 {username} kicked {targetName}",
+    "kicked": "👞 {username} removed {targetName} from room",
     "@kicked": {
         "type": "text",
         "placeholders": {
@@ -1087,11 +1110,25 @@
             "targetName": {}
         }
     },
-    "kickedAndBanned": "🙅 {username} kicked and banned {targetName}",
+    "kickedWithoutName": "👞 {targetName} removed from room",
+    "@kickedWithoutName": {
+      "type": "text",
+      "placeholders": {
+        "targetName": {}
+      }
+    },
+    "kickedAndBanned": "🙅 {username} removed and banned {targetName} from room",
     "@kickedAndBanned": {
         "type": "text",
         "placeholders": {
             "username": {},
+            "targetName": {}
+        }
+    },
+    "kickedAndBannedWithoutName": "🙅 removed and banned {targetName} from room",
+    "@kickedAndBannedWithoutName": {
+        "type": "text",
+        "placeholders": {
             "targetName": {}
         }
     },
@@ -1373,18 +1410,6 @@
     },
     "oneClientLoggedOut": "One of your clients has been logged out",
     "@oneClientLoggedOut": {},
-    "addAccount": "Add account",
-    "@addAccount": {},
-    "editBundlesForAccount": "Edit bundles for this account",
-    "@editBundlesForAccount": {},
-    "addToBundle": "Add to bundle",
-    "@addToBundle": {},
-    "removeFromBundle": "Remove from this bundle",
-    "@removeFromBundle": {},
-    "bundleName": "Bundle name",
-    "@bundleName": {},
-    "enableMultiAccounts": "(BETA) Enable multi accounts on this device",
-    "@enableMultiAccounts": {},
     "openInMaps": "Open in maps",
     "@openInMaps": {
         "type": "text",
@@ -1577,6 +1602,12 @@
         "type": "text",
         "placeholders": {}
     },
+    "removeGroupFromRoom": "Remove group",
+    "@remove": {
+    "type": "text",
+    "placeholders": {}
+    },
+
     "removeAllOtherDevices": "Remove all other devices",
     "@removeAllOtherDevices": {
         "type": "text",
@@ -1653,6 +1684,26 @@
     "@scanExplanation": {
       "type": "text",
       "placeholders": {}
+    },
+    "scanError": "Error while scanning the QR code",
+    "@scanError": {
+      "type": "text",
+      "placeholders": {}
+    },
+    "scanErrorToken": "Error scanning the token. Token is empty",
+    "@scanErrorToken": {
+      "type": "text",
+      "placeholders": {}
+     },
+    "scanErrorAgain": "QR code is outdated, please refresh the Schulcampus page",
+    "@scanErrorAgain": {
+      "type": "text",
+      "placeholders": {}
+    },
+    "scanErrorExplanation": "An error has occurred. Please try again. Additional information: {error}",
+    "@scanErrorExplanation": {
+      "type": "text",
+      "placeholders": {"error": {}}
     },
     "search": "Search",
     "@search": {
@@ -2332,19 +2383,22 @@
             "user": {}
         }
     },
+    "youInvitedByWithoutName": "📩 You have been invited",
+    "@youInvitedByWithoutName": {
+    },
     "youInvitedUser": "📩 You invited {user}",
     "@youInvitedUser": {
         "placeholders": {
             "user": {}
         }
     },
-    "youKicked": "👞 You kicked {user}",
+    "youKicked": "👞 You removed {user} from room",
     "@youKicked": {
         "placeholders": {
             "user": {}
         }
     },
-    "youKickedAndBanned": "🙅 You kicked and banned {user}",
+    "youKickedAndBanned": "🙅 You removed and banned {user} from room",
     "@youKickedAndBanned": {
         "placeholders": {
             "user": {}
@@ -2485,6 +2539,14 @@
     "@contactsInfoParent": {},
     "contactsInfoGroup": "Group in",
     "@contactsInfoGroup": {},
+    "contactsInfoSocialWork": "Social Work in",
+    "@contactsInfoSocialWork": {},
+    "contactsInfoOffice": "Office in",
+    "@contactsInfoOffice": {},
+    "contactsInfoPrincipal": "Principal in",
+    "@contactsInfoPrincipal": {},
+    "contactsInfoElternbeirat": "Parents association in",
+    "@contactsInfoElternbeirat": {},
     "searchContacts": "Search people or groups",
     "@searchContacts": {},
     "contactsInvited": "Contacts have been invited",
@@ -2516,13 +2578,21 @@
     "@abookTitleParents": {},
     "abookTitleAdmins": "Administrators",
     "@abookTitleAdmins": {},
-    "inviteTitleMessage": "You are about to invite {uniqUsersLength} users and {uniqGroupsLength} groups (total: {selectionLength}) to room {name}",
+    "abookTitleOffice": "Office",
+    "@abookTitleOffice": {},
+    "abookTitleSocialWork": "Social Work",
+    "@abookTitleSocialWork": {},
+    "abookTitleElternbeirat": "Parents association",
+    "@abookTitleElternbeirat": {},
+    "abookTitlePrincipal": "Principal",
+    "@abookTitlePrincipal": {},
+    "inviteTitleMessage": "You are about to invite {uniqUsersLength} users and {uniqGroupsLength} groups (total: {allUsers} users) to room {name}",
     "@inviteTitleMessage": {
       "type": "text",
       "placeholders": {
         "uniqUsersLength": {},
         "uniqGroupsLength": {},
-        "selectionLength": {},
+        "allUsers": {},
         "name": {}
       }
     },
@@ -2552,5 +2622,48 @@
       "placeholders": {}
     },
     "forwardedMessage": "Forwarded Message:",
-    "@forwardedMessage": {}
+    "@forwardedMessage": {},
+    "scgroupName": "SC-group {name}",
+    "@scgroupName": {
+      "type": "text",
+      "placeholders": {
+        "name": {}
+      }
+    },
+    "newPoll": "New poll",
+    "@newPoll": {},
+    "question": "Frage",
+    "@question": {},
+    "option": "Option",
+    "@option": {},
+    "options": "Options",
+    "@options": {},
+    "newOption": "Add option",
+    "@newOption": {},
+    "allowFreeText": "Allow free text answer",
+    "@allowFreeText": {},
+    "showNames": "Show names",
+    "@showNames": {},
+    "isLivePoll": "Live poll",
+    "@isLivePoll": {},
+    "allowMultipleAnswers": "Multiple answers possible",
+    "@allowMultipleAnswers": {},
+    "questionMissing": "Enter question",
+    "@questionMissing": {},
+    "answerMissing": "Enter at least one option",
+    "@answerMissing": {},
+    "pollSaved": "Poll successfully saved",
+    "@pollSaved": {},
+    "pollSaveError": "Error saving poll",
+    "@pollSaveError": {},
+    "votes": "Stimmen",
+    "@votes": {},
+    "closePoll": "Close poll",
+    "@closePoll": {},
+    "pollCreated": "New poll",
+    "@pollCreated": {},
+    "pollAnswered": "New poll answer",
+    "@pollAnswered": {},
+    "pollClosed": "Poll closed",
+    "@pollClosed": {}
 }

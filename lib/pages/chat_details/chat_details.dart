@@ -26,12 +26,24 @@ class ChatDetails extends StatefulWidget {
 
 class ChatDetailsController extends State<ChatDetails> {
   List<User>? members;
+  List<String>? scGroups;
   bool displaySettings = false;
 
   void toggleDisplaySettings() =>
       setState(() => displaySettings = !displaySettings);
 
   String? get roomId => VRouter.of(context).pathParameters['roomid'];
+
+  Future<String?> getGroupDisplayName(String groupId, Room room) async {
+    final String? schoolId = room.schoolId != '' ? room.schoolId : null;
+
+    try {
+      return await room.getNameOfSCGroup(groupId, schoolId);
+    } catch (error) {
+      Logs().e('Error in getGroupDisplayName: $error');
+      return null;
+    }
+  }
 
   void setDisplaynameAction() async {
     final room = Matrix.of(context).client.getRoomById(roomId!)!;
@@ -246,6 +258,36 @@ class ChatDetailsController extends State<ChatDetails> {
             .setJoinRules(joinRule),
       );
 
+  Future<void> removeGroupFromRoom(String scgroupId) async {
+    final room = Matrix.of(context).client.getRoomById(roomId!)!;
+    await room.removeGroupFromRoom(scgroupId);
+
+    final participants = await room.requestParticipants();
+    final currSCGroups = room.restrictedJoinRulesAllowedRooms;
+
+    setState(() {
+      members = participants;
+      scGroups = currSCGroups;
+    });
+  }
+
+  Future<String> getNameOfSCGroup(String scgroupId) async {
+    final room = Matrix.of(context).client.getRoomById(roomId!)!;
+    final String? groupName = await room.getNameOfSCGroup(scgroupId);
+    if (groupName == null) {
+      return "";
+    }
+
+    return groupName;
+  }
+
+  Future<List<dynamic>> getMemberNamesOfSCGroup(String scgroupId) async {
+    final room = Matrix.of(context).client.getRoomById(roomId!)!;
+    final membersOfSCGroup = await room.getMemberNamesOfSCGroup(scgroupId);
+
+    return membersOfSCGroup;
+  }
+
   void goToEmoteSettings() async {
     final room = Matrix.of(context).client.getRoomById(roomId!)!;
     // okay, we need to test if there are any emote state events other than the default one
@@ -341,8 +383,12 @@ class ChatDetailsController extends State<ChatDetails> {
 
   @override
   Widget build(BuildContext context) {
-    members ??=
-        Matrix.of(context).client.getRoomById(roomId!)!.getParticipants();
+    final room = Matrix.of(context).client.getRoomById(roomId!)!;
+
+    members ??= room.getParticipants();
+
+    scGroups ??= room.restrictedJoinRulesAllowedRooms;
+
     return SizedBox(
       width: fixedWidth,
       child: ChatDetailsView(this),

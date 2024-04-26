@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:matrix/matrix.dart';
@@ -64,6 +65,51 @@ class QRScanController extends State<QRScan> {
     });
   }
 
+  void showErrorDialog(
+    BuildContext context,
+    String authorizationCode,
+    String error,
+  ) {
+    final String scanError = L10n.of(context)!.scanError;
+    final String scanErrorExplanation =
+        L10n.of(context)!.scanErrorExplanation(error);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(scanError),
+          content: Text(scanErrorExplanation),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                isCurrentlySendingAuthorizationCode = false;
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> finishLogin(String? token) async {
+    if (token == null || token.isEmpty) {
+      final tokenEmptyMessage = L10n.of(context)!.scanErrorToken;
+      throw Exception(tokenEmptyMessage);
+    }
+
+    await showFutureLoadingDialog(
+      context: context,
+      future: () => Matrix.of(context).getLoginClient().login(
+            LoginType.mLoginToken,
+            token: token,
+            initialDeviceDisplayName: PlatformInfos.clientName,
+          ),
+    );
+    return;
+  }
+
   Future<void> sendAuthorizationCode(String authorizationCode) async {
     isCurrentlySendingAuthorizationCode = true;
 
@@ -82,26 +128,25 @@ class QRScanController extends State<QRScan> {
       if (response.statusCode == 302 && response.headers['location'] != null) {
         final Uri redirectUri = Uri.parse(response.headers['location']!);
         final String? token = redirectUri.queryParameters['loginToken'];
-
-        if (token?.isEmpty ?? true) return;
-
-        await showFutureLoadingDialog(
-          context: context,
-          future: () => Matrix.of(context).getLoginClient().login(
-                LoginType.mLoginToken,
-                token: token,
-                initialDeviceDisplayName: PlatformInfos.clientName,
-              ),
-        );
-        return;
+        await finishLogin(token);
+      } else if (response.statusCode == 200) {
+        final body = await response.stream.bytesToString();
+        final RegExp regExp = RegExp(r'(?<=loginToken=)[\w-]+');
+        final Match? match = regExp.firstMatch(body);
+        final String? token = match?.group(0);
+        await finishLogin(token);
+      }
+      if (response.statusCode == 400) {
+        final statusCodeMessage = L10n.of(context)!.scanErrorAgain;
+        throw Exception(statusCodeMessage);
       } else {
-        Logs().w('Failed to send authorization code: ${response.statusCode}');
+        final statusCode = response.statusCode;
+        throw Exception(' $statusCode');
       }
     } catch (e) {
+      showErrorDialog(context, authorizationCode, e.toString());
       Logs().e('Error sending authorization code: $e');
     }
-
-    isCurrentlySendingAuthorizationCode = false;
   }
 
   void onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {

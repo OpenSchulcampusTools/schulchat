@@ -97,6 +97,19 @@ class ChatInputRow extends StatelessWidget {
                     onSelected: controller.onAddPopupMenuButtonSelected,
                     itemBuilder: (BuildContext context) =>
                         <PopupMenuEntry<String>>[
+                      if (controller.room!.canOpenPoll)
+                        PopupMenuItem<String>(
+                          value: 'poll',
+                          child: ListTile(
+                            leading: const CircleAvatar(
+                              backgroundColor: Colors.cyan,
+                              foregroundColor: Colors.white,
+                              child: Icon(Icons.poll_outlined),
+                            ),
+                            title: Text(L10n.of(context)!.newPoll),
+                            contentPadding: const EdgeInsets.all(0),
+                          ),
+                        ),
                       PopupMenuItem<String>(
                         value: 'file',
                         child: ListTile(

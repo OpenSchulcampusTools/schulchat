@@ -144,7 +144,9 @@ class MatrixLocals extends MatrixLocalizations {
 
   @override
   String invitedUser(String senderName, String targetName) {
-    return l10n.invitedUser(senderName, targetName);
+    return senderName == 'idm_provisioning_bot'
+        ? l10n.invitedUserWithoutInviter(targetName)
+        : l10n.invitedUser(senderName, targetName);
   }
 
   @override
@@ -157,7 +159,9 @@ class MatrixLocals extends MatrixLocalizations {
 
   @override
   String kicked(String senderName, String targetName) {
-    return l10n.kicked(senderName, targetName);
+    return senderName == 'idm_provisioning_bot'
+        ? l10n.kickedWithoutName(targetName)
+        : l10n.kicked(senderName, targetName);
   }
 
   @override
@@ -179,6 +183,15 @@ class MatrixLocals extends MatrixLocalizations {
 
   @override
   String get schoolId => l10n.schoolId;
+
+  @override
+  String get pollStart => l10n.newPoll;
+
+  @override
+  String get pollEnd => l10n.pollClosed;
+
+  @override
+  String get pollResponse => l10n.pollAnswered;
 
   @override
   String redactedAnEvent(String senderName) {
@@ -266,7 +279,11 @@ class MatrixLocals extends MatrixLocalizations {
       l10n.youHaveWithdrawnTheInvitationFor(targetName);
 
   @override
-  String youInvitedBy(String senderName) => l10n.youInvitedBy(senderName);
+  String youInvitedBy(String senderName) {
+    return senderName == 'idm_provisioning_bot'
+        ? l10n.youInvitedByWithoutName
+        : l10n.youInvitedBy(senderName);
+  }
 
   @override
   String youInvitedUser(String targetName) => l10n.youInvitedUser(targetName);

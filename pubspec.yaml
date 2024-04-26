@@ -1,7 +1,7 @@
 name: fluffychat
 description: Schulchat für Rheinland-Pfalz
 publish_to: none
-version: 19.0.0+23
+version: 24.0.2+48
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -9,7 +9,7 @@ environment:
 dependencies:
   adaptive_dialog:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/adaptive_dialog
+      url: https://git.fairkom.net/hosting/chat/matrix/adaptive_dialog.git
       ref: main
   animations: ^2.0.7
   badges: ^2.0.3
@@ -29,8 +29,8 @@ dependencies:
   fcm_shared_isolate: ^0.1.0
   file_picker_cross:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/file_picker_cross.git
-      ref: e9605a1020be3f54a76687433701f99611e6eee4
+      url: https://git.fairkom.net/hosting/chat/matrix/file_picker_cross.git
+      ref: main
   flutter:
     sdk: flutter
   flutter_app_badger: ^1.5.0
@@ -45,12 +45,16 @@ dependencies:
   flutter_map: ^3.1.0
   flutter_matrix_html:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/flutter_matrix_html.git
-      ref: abfadec795817a53688369e8e3ba4fb3500a1916
+      url: https://git.fairkom.net/hosting/chat/matrix/flutter_matrix_html.git
+      ref: main
   flutter_olm: ^1.2.0
   flutter_openssl_crypto:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/flutter-openssl-crypto
+      url: https://git.fairkom.net/hosting/chat/matrix/flutter-openssl-crypto.git
+      ref: main
+  flutter_polls:
+    git:
+      url: https://git.fairkom.net/hosting/chat/matrix/flutter_polls.git
       ref: main
   flutter_ringtone_player: ^3.1.1
   flutter_secure_storage: ^7.0.1
@@ -69,11 +73,11 @@ dependencies:
   latlong2: ^0.8.1
   matrix:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/famedlysdk
+      url: https://git.fairkom.net/hosting/chat/matrix/famedlysdk.git
       ref: main
   matrix_homeserver_recommendations:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/matrix_homeserver_recommendations.git
+      url: https://git.fairkom.net/hosting/chat/matrix/matrix_homeserver_recommendations.git
       ref: main
   matrix_link_text: ^1.0.2
   native_imaging:
@@ -178,9 +182,9 @@ dependency_overrides:
   # Upstream pull request: https://github.com/AntoineMarcel/keyboard_shortcuts/pull/13
   keyboard_shortcuts:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/keyboard_shortcuts.git
-      ref: fix-typing-in-chat
+      url: https://git.fairkom.net/hosting/chat/matrix/keyboard_shortcuts.git
+      ref: main
   matrix_api_lite:
     git:
-      url: git@git.fairkom.net:clients/rlp/client/matrix_api_lite
+      url: https://git.fairkom.net/hosting/chat/matrix/matrix_api_lite.git
       ref: main
