@@ -9,7 +9,7 @@ environment:
 dependencies:
   adaptive_dialog:
     git:
-      url: git@git.fairkom.net:hosting/chat/matrix/adaptive_dialog.git
+      url: https://git.fairkom.net/hosting/chat/matrix/adaptive_dialog.git
       ref: main
   animations: ^2.0.7
   badges: ^2.0.3
@@ -29,7 +29,7 @@ dependencies:
   fcm_shared_isolate: ^0.1.0
   file_picker_cross:
     git:
-      url: git@git.fairkom.net:hosting/chat/matrix/file_picker_cross.git
+      url: https://git.fairkom.net/hosting/chat/matrix/file_picker_cross.git
       ref: main
   flutter:
     sdk: flutter
@@ -45,16 +45,16 @@ dependencies:
   flutter_map: ^3.1.0
   flutter_matrix_html:
     git:
-      url: git@git.fairkom.net:hosting/chat/matrix/flutter_matrix_html.git
+      url: https://git.fairkom.net/hosting/chat/matrix/flutter_matrix_html.git
       ref: main
   flutter_olm: ^1.2.0
   flutter_openssl_crypto:
     git:
-      url: git@git.fairkom.net:hosting/chat/matrix/flutter-openssl-crypto.git
+      url: https://git.fairkom.net/hosting/chat/matrix/flutter-openssl-crypto.git
       ref: main
   flutter_polls:
     git:
-      url: git@git.fairkom.net:hosting/chat/matrix/flutter_polls.git
+      url: https://git.fairkom.net/hosting/chat/matrix/flutter_polls.git
       ref: main
   flutter_ringtone_player: ^3.1.1
   flutter_secure_storage: ^7.0.1
@@ -73,11 +73,11 @@ dependencies:
   latlong2: ^0.8.1
   matrix:
     git:
-      url: git@git.fairkom.net:hosting/chat/matrix/famedlysdk.git
+      url: https://git.fairkom.net/hosting/chat/matrix/famedlysdk.git
       ref: main
   matrix_homeserver_recommendations:
     git:
-      url: git@git.fairkom.net:hosting/chat/matrix/matrix_homeserver_recommendations.git
+      url: https://git.fairkom.net/hosting/chat/matrix/matrix_homeserver_recommendations.git
       ref: main
   matrix_link_text: ^1.0.2
   native_imaging:
@@ -182,9 +182,9 @@ dependency_overrides:
   # Upstream pull request: https://github.com/AntoineMarcel/keyboard_shortcuts/pull/13
   keyboard_shortcuts:
     git:
-      url: git@git.fairkom.net:hosting/chat/matrix/keyboard_shortcuts.git
+      url: https://git.fairkom.net/hosting/chat/matrix/keyboard_shortcuts.git
       ref: main
   matrix_api_lite:
     git:
-      url: git@git.fairkom.net:hosting/chat/matrix/matrix_api_lite.git
+      url: https://git.fairkom.net/hosting/chat/matrix/matrix_api_lite.git
       ref: main
