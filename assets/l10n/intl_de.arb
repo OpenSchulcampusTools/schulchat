@@ -98,6 +98,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "userCanJoinAgain": "Aufgrund von Gruppenmitgliedschaften können User wieder in den Raum synchronisiert werden.",
+  "@userCanJoinAgain": {
+    "type": "text",
+    "placeholders": {}
+  },
   "areYouSureDeleteRoom": "Bist du sicher, dass du den Raum löschen möchtest?",
   "@areYouSureDeleteRoom": {
     "type": "text",
@@ -335,7 +340,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "chatBackupDescription": "Deine alten Nachrichten sind mit einem Wiederherstellungsschlüssel gesichert. Bitte stelle sicher, dass du ihn nicht verlierst.",
+  "chatBackupDescription": "Um den Chat komplett zu verschlüsseln, braucht es noch ein Codewort. Das kann ein langes Fantasiewort mit Zahlen sein.",
   "@chatBackupDescription": {
     "type": "text",
     "placeholders": {}
@@ -912,7 +917,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "ignoreListDescription": "Du kannst störende Personen ignorieren. Du bist dann nicht mehr in der Lage, Nachrichten oder Raumeinladungen von diesen zu erhalten.",
+  "ignoreListDescription": "Wenn du Personen in einer früheren Version ignoriert hast, kannst du dies hier wieder entfernen, sonst bist du bist nicht mehr in der Lage, Nachrichten oder Raumeinladungen von diesen zu erhalten.",
   "@ignoreListDescription": {
     "type": "text",
     "placeholders": {}
@@ -1039,7 +1044,7 @@
           "targetName": {}
       }
   },
-  "kickFromChat": "Aus dem Raum hinauswerfen",
+  "kickFromChat": "Aus dem Raum entfernen",
   "@kickFromChat": {
     "type": "text",
     "placeholders": {}
@@ -2054,7 +2059,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "wipeChatBackup": "Das Chat-Backup löschen, um einen neuen Wiederherstellungsschlüssel zu erstellen?",
+  "wipeChatBackup": "Das Chat-Backup löschen, um eine neue Sicherheitsfrage festzulegen?",
   "@wipeChatBackup": {
     "type": "text",
     "placeholders": {}
@@ -2695,5 +2700,39 @@
   "pollAnswered": "Neue Umfrage-Antwort",
   "@pollAnswered": {},
   "pollClosed": "Umfrage beendet",
-  "@pollClosed": {}
+  "@pollClosed": {},
+  "reportAbuse": "Missbrauch melden",
+  "@reportAbuse" : {},
+  "reportAbuseSuccess": "Nachricht wurde erfolgreich gesendet",
+  "@reportAbuseSuccess" : {},
+  "doNotUseBildungsportalPwd": "Hinweis: Bitte verwende nicht Dein Bildungsportal-Passwort.",
+  "@doNotUseBildungsportalPwd" : {},
+  "chooseSecQuestion": "Sicherheitsfrage auswählen",
+  "@chooseSecQuestion" : {},
+  "chooseQuestion": "Wähle eine Frage aus",
+  "@chooseQuestion" : {},
+  "hintLongPwd": "Lege die Antwort fest!\nLange und komplizierte Antworten sind sicherer – wie bei Passwörtern",
+  "@hintLongPwd" : {},
+  "setAnswer": "Antwort festlegen",
+  "@setAnswer" : {},
+  "answerSecQuestion": "Sicherheitsfrage beantworten um Chats zu entschlüsseln",
+  "@answerSecQuestion" : {},
+  "answerGivenQuest": "Beantworte die gewählte Sicherheitsfrage",
+  "@answerGivenQuest" : {},
+  "finishChatBackup": "Chat-Backup einrichten",
+  "@finishChatBackup" : {},
+  "resetSecQuestion": "Sicherheitsfrage zurücksetzen",
+  "@resetSecQuestion" : {},
+  "enterRecoveryKey": "Gib deinen Wiederherstellungsschlüssel ein",
+  "@enterRecoveryKey" : {},
+  "@recoverOrVerify": "Wenn du deinen bisherigen Wiederherstellungsschlüssel noch kennst, gib ihn jetzt ein. Wenn du mit einem anderen verifizierten Gerät angemeldet bist, verifiziere es nun.",
+  "@recoverOrVerify" : {},
+  "currentRecoveryKey": "Der bisherige Wiederherstellungsschlüssel",
+  "@currentRecoveryKey" : {},
+  "errorWrongRecoveryKey": "Fehler",
+  "@errorWrongRecoveryKey" : {},
+  "errorWrongRecoveryKeyLong": "Ein Fehler trat auf, wegen einem falschen Wiederherstellungsschlüssel. Versuche es erneut oder klicke auf Schlüssel löschen. Danach kannst Du deine alten Chats nicht mehr lesen.",
+  "@errorWrongRecoveryKeyLong" : {},
+  "readReceiptAnswer": "Lesebestätigungen",
+  "@readReceiptAnswer": {}
 }

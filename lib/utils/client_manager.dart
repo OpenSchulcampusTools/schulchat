@@ -112,13 +112,11 @@ abstract class ClientManager {
       databaseBuilder: FlutterHiveCollectionsDatabase.databaseBuilder,
       supportedLoginTypes: {
         AuthenticationTypes.password,
-        if (PlatformInfos.isMobile ||
-            PlatformInfos.isWeb ||
-            PlatformInfos.isMacOS)
-          AuthenticationTypes.sso
+        AuthenticationTypes.sso,
       },
       nativeImplementations: nativeImplementations,
       customImageResizer: PlatformInfos.isMobile ? customImageResizer : null,
+      enableDehydratedDevices: true,
     );
   }
 }

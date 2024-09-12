@@ -1,3 +1,7 @@
+# 25
+
+Change: Do not request profile information of bot
+
 # 24.0.1
 
 Change: Better error handling during QR-Code Login (Android/iOS)

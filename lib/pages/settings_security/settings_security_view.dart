@@ -23,12 +23,14 @@ class SettingsSecurityView extends StatelessWidget {
           withScrolling: true,
           child: Column(
             children: [
-              ListTile(
-                leading: const Icon(Icons.block_outlined),
-                trailing: const Icon(Icons.chevron_right_outlined),
-                title: Text(L10n.of(context)!.ignoredUsers),
-                onTap: () => VRouter.of(context).to('ignorelist'),
-              ),
+              Matrix.of(context).client.ignoredUsers.isNotEmpty
+                  ? ListTile(
+                      leading: const Icon(Icons.block_outlined),
+                      trailing: const Icon(Icons.chevron_right_outlined),
+                      title: Text(L10n.of(context)!.ignoredUsers),
+                      onTap: () => VRouter.of(context).to('ignorelist'),
+                    )
+                  : Container(),
               if (Matrix.of(context).client.encryption != null) ...{
                 const Divider(thickness: 1),
                 if (PlatformInfos.isMobile)
@@ -56,7 +58,9 @@ class SettingsSecurityView extends StatelessWidget {
                   style: const TextStyle(color: Colors.red),
                 ),
                 onTap: controller.dehydrateAction,
-              ),
+              )
+              /*,
+              schulchat-specific
               ListTile(
                 leading: const Icon(Icons.delete_outlined),
                 trailing: const Icon(Icons.chevron_right_outlined),
@@ -66,6 +70,7 @@ class SettingsSecurityView extends StatelessWidget {
                 ),
                 onTap: controller.deleteAccountAction,
               ),
+              */
             ],
           ),
         ),

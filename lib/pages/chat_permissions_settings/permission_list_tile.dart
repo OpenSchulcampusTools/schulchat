@@ -34,6 +34,8 @@ class PermissionsListTile extends StatelessWidget {
           return L10n.of(context)!.deleteMessage;
         case 'invite':
           return L10n.of(context)!.inviteContact;
+        case 'edu.matrix.klassenfunk.read_receipt':
+          return L10n.of(context)!.readReceiptAnswer;
       }
     } else if (category == 'notifications') {
       switch (permissionKey) {
@@ -58,6 +60,8 @@ class PermissionsListTile extends StatelessWidget {
           return L10n.of(context)!.enableEncryption;
         case 'm.room.server_acl':
           return L10n.of(context)!.editBlockedServers;
+        case EventTypes.ReadReceipt:
+          return L10n.of(context)!.readReceiptAnswer;
       }
     }
     return permissionKey;
@@ -75,6 +79,7 @@ class PermissionsListTile extends StatelessWidget {
       title: Text(getLocalizedPowerLevelString(context)),
       subtitle: Row(
         children: [
+          /* schulchat-specific: remove permission number
           Container(
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
@@ -86,6 +91,7 @@ class PermissionsListTile extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
+           */
           Text(permission.toLocalizedPowerLevelString(context)),
         ],
       ),

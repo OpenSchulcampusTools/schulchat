@@ -19,8 +19,7 @@ echo "Done converting test report."
 genhtml -o coverage_widget coverage_widget/lcov.info || true
 echo "Done genhtml."
 curl https://raw.githubusercontent.com/eriwen/lcov-to-cobertura-xml/master/lcov_cobertura/lcov_cobertura.py > lcov_cobertura.py #TODO how to install package without migrating to docker images?
-chmod +x lcov_cobertura.py
-./lcov_cobertura.py coverage_widget/lcov.info || true
+python3 ./lcov_cobertura.py coverage_widget/lcov.info || true
 mv coverage.xml coverage_widget.xml
 echo "Done cobertura."
 echo $exit_code >exit_code

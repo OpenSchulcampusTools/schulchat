@@ -112,7 +112,7 @@ class ChatView extends StatelessWidget {
                       color: Colors.red,
                     ),
                     const SizedBox(width: 12),
-                    Text(L10n.of(context)!.reportMessage),
+                    Text(L10n.of(context)!.reportAbuse),
                   ],
                 ),
               ),
@@ -135,32 +135,17 @@ class ChatView extends StatelessWidget {
       ];
     } else {
       return [
-        ChatSettingsPopupMenu(controller.room!, !controller.room!.isDirectChat),
+        ChatSettingsPopupMenu(controller.room, !controller.room.isDirectChat),
       ];
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    controller.matrix ??= Matrix.of(context);
-    final client = controller.matrix!.client;
-    controller.sendingClient ??= client;
-    controller.room = controller.sendingClient!.getRoomById(controller.roomId!);
-    if (controller.room == null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(L10n.of(context)!.oopsSomethingWentWrong),
-        ),
-        body: Center(
-          child: Text(L10n.of(context)!.youAreNoLongerParticipatingInThisChat),
-        ),
-      );
-    }
-
-    if (controller.room!.membership == Membership.invite) {
+    if (controller.room.membership == Membership.invite) {
       showFutureLoadingDialog(
         context: context,
-        future: () => controller.room!.join(),
+        future: () => controller.room.join(),
       );
     }
     final bottomSheetPadding = FluffyThemes.isColumnMode(context) ? 16.0 : 8.0;
@@ -180,13 +165,13 @@ class ChatView extends StatelessWidget {
         controller.scrollToEventAfterSearch(context, from, to);
       },
       child: GestureDetector(
-        onTapDown: controller.setReadMarker,
+        onTapDown: (_) => controller.setReadMarker(),
         behavior: HitTestBehavior.opaque,
         child: StreamBuilder(
-          stream: controller.room!.onUpdate.stream
+          stream: controller.room.onUpdate.stream
               .rateLimit(const Duration(seconds: 1)),
-          builder: (context, snapshot) => FutureBuilder<bool>(
-            future: controller.getTimeline(),
+          builder: (context, snapshot) => FutureBuilder(
+            future: controller.loadTimelineFuture,
             builder: (BuildContext context, snapshot) {
               return Scaffold(
                 appBar: AppBar(
@@ -204,7 +189,7 @@ class ChatView extends StatelessWidget {
                           color: Theme.of(context).colorScheme.primary,
                         )
                       : UnreadRoomsBadge(
-                          filter: (r) => r.id != controller.roomId!,
+                          filter: (r) => r.id != controller.roomId,
                           badgePosition: BadgePosition.topEnd(end: 8, top: 4),
                           child: const Center(child: BackButton()),
                         ),
@@ -271,15 +256,22 @@ class ChatView extends StatelessWidget {
                                       );
                                     }
 
-                                    return ChatEventList(
-                                      controller: controller,
+                                    return RepaintBoundary(
+                                      key: controller.screenshotKey,
+                                      child: Container(
+                                        color: colorScheme.primaryContainer
+                                            .withAlpha(64),
+                                        child: ChatEventList(
+                                          controller: controller,
+                                        ),
+                                      ),
                                     );
                                   },
                                 ),
                               ),
                             ),
-                            if (controller.room!.canSendDefaultMessages &&
-                                controller.room!.membership == Membership.join)
+                            if (controller.room.canSendDefaultMessages &&
+                                controller.room.membership == Membership.join)
                               Container(
                                 margin: EdgeInsets.only(
                                   bottom: bottomSheetPadding,
@@ -304,7 +296,7 @@ class ChatView extends StatelessWidget {
                                           Brightness.light
                                       ? Colors.white
                                       : Colors.black,
-                                  child: controller.room?.isAbandonedDMRoom ==
+                                  child: controller.room.isAbandonedDMRoom ==
                                           true
                                       ? Row(
                                           mainAxisAlignment:

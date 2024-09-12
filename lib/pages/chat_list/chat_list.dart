@@ -510,11 +510,21 @@ class ChatListController extends State<ChatList>
 
       // Display first login bootstrap if enabled
       if (client.encryption?.keyManager.enabled == true) {
+        Logs().d('RECO: Key manager is enabled');
+        Logs().d(
+          'RECO: keyManager.isCached? ${await client.encryption?.keyManager.isCached()}',
+        );
+        Logs().d(
+          'RECO: crossSigning.isCached? ${await client.encryption?.crossSigning.isCached()}',
+        );
         if (await client.encryption?.keyManager.isCached() == false ||
             await client.encryption?.crossSigning.isCached() == false ||
             client.isUnknownSession && !mounted) {
           await BootstrapDialog(client: client).show(context);
         }
+      } else {
+        Logs().d('RECO: Key manager is not enabled');
+        await BootstrapDialog(client: client).show(context);
       }
     }
     if (!mounted) return;

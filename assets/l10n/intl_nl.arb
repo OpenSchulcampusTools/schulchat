@@ -451,12 +451,12 @@
     },
     "description": "State that {command} is not a valid /command."
   },
-  "compareEmojiMatch": "Vergelijk of de volgende emoji overeenkomen met die van het andere apparaat:",
+  "compareEmojiMatch": "Vergelijk de emoji's",
   "@compareEmojiMatch": {
     "type": "text",
     "placeholders": {}
   },
-  "compareNumbersMatch": "Vergelijk of de volgende nummers overeenkomen met die van het andere apparaat:",
+  "compareNumbersMatch": "Vergelijk de cijfers",
   "@compareNumbersMatch": {
     "type": "text",
     "placeholders": {}
@@ -2544,5 +2544,20 @@
   "noBackupWarning": "Waarschuwing! Zonder de chatback-up in te schakelen, verlies je de toegang tot je versleutelde berichten. Het is sterk aanbevolen om eerst de chatback-up in te schakelen voordat je uitlogt.",
   "@noBackupWarning": {},
   "fileIsTooBigForServer": "De server meldt dat het bestand te groot is om te verzenden.",
-  "@fileIsTooBigForServer": {}
+  "@fileIsTooBigForServer": {},
+  "fileHasBeenSavedAt": "Het bestand is opgeslagen op {path}",
+  "@fileHasBeenSavedAt": {
+    "type": "text",
+    "placeholders": {
+      "path": {}
+    }
+  },
+  "jumpToLastReadMessage": "Spring naar het laatst gelezen bericht",
+  "@jumpToLastReadMessage": {},
+  "readUpToHere": "Lees tot hier",
+  "@readUpToHere": {},
+  "jump": "Spring",
+  "@jump": {},
+  "openLinkInBrowser": "Link in browser openen",
+  "@openLinkInBrowser": {}
 }

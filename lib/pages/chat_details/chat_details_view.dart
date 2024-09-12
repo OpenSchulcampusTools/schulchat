@@ -354,7 +354,7 @@ class ChatDetailsView extends StatelessWidget {
                                   onTap: () =>
                                       VRouter.of(context).to('addressbook'),
                                 )
-                              : Container(),
+                              : const SizedBox.shrink(),
                           if (controller.scGroups?.isNotEmpty ?? false)
                             for (final group in controller.scGroups!)
                               SCGroupListItem(group, controller)

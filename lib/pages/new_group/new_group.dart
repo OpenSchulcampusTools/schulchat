@@ -34,7 +34,18 @@ class NewGroupController extends State<NewGroup> {
           preset: sdk.CreateRoomPreset.privateChat,
           powerLevelContentOverride: {
             'invite': 50,
-            if (readOnly) ...{'users_default': -1}
+            if (readOnly) ...{'users_default': -1},
+            'events': {
+              "m.room.name": 50,
+              "m.room.power_levels": 100,
+              "m.room.history_visibility": 100,
+              "m.room.canonical_alias": 50,
+              "m.room.avatar": 50,
+              "m.room.tombstone": 100,
+              "m.room.server_acl": 100,
+              "m.room.encryption": 100,
+              'edu.matrix.klassenfunk.read_receipt': -2,
+            },
           },
           /* #schulChatSpecific
           visibility:
