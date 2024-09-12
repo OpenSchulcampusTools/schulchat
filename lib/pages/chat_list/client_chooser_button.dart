@@ -1,9 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
+import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vrouter/vrouter.dart';
 
+import 'package:fluffychat/pages/bootstrap/bootstrap_dialog.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import '../../config/app_config.dart';
@@ -15,6 +21,8 @@ class ClientChooserButton extends StatelessWidget {
   const ClientChooserButton(this.controller, {Key? key}) : super(key: key);
 
   List<PopupMenuEntry<Object>> _bundleMenuItems(BuildContext context) {
+    final matrix = Matrix.of(context);
+
     return <PopupMenuEntry<Object>>[
       PopupMenuItem(
         value: SettingsAction.newGroup,
@@ -66,6 +74,62 @@ class ClientChooserButton extends StatelessWidget {
           ],
         ),
       ),
+      //schulchat-specific: show only displayname, seen in https://gitlab.com/famedly/fluffychat/-/blob/v1.11.0/lib/pages/chat_list/client_chooser_button.dart
+      const PopupMenuItem(
+        value: null,
+        child: Divider(height: 1),
+      ),
+      PopupMenuItem(
+        value: matrix.client,
+        child: FutureBuilder<Profile?>(
+          // analyzer does not understand this type cast for error
+          // handling
+          //
+          // ignore: unnecessary_cast
+          future: (matrix.client.fetchOwnProfile() as Future<Profile?>)
+              .onError((e, s) => null),
+          builder: (context, snapshot) => Row(
+            children: [
+              Avatar(
+                mxContent: snapshot.data?.avatarUrl,
+                name: snapshot.data?.displayName ?? "",
+                size: 32,
+                fontSize: 12,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  snapshot.data?.displayName ?? "",
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 12),
+            ],
+          ),
+        ),
+      ),
+      //schulchat-specific: add sign out button in client_chooser_button
+      PopupMenuItem(
+        value: SettingsAction.logout,
+        child: Row(
+          children: [
+            const Icon(Icons.logout_outlined),
+            const SizedBox(width: 18),
+            Text(L10n.of(context)!.logout),
+          ],
+        ),
+      ),
+      if (!(matrix.client.getBackupQuestion()?.startsWith('q') ?? false))
+        PopupMenuItem(
+          value: SettingsAction.finishBackup,
+          child: Row(
+            children: [
+              const Icon(Icons.warning_sharp),
+              const SizedBox(width: 18),
+              Text(L10n.of(context)!.finishChatBackup),
+            ],
+          ),
+        ),
     ];
   }
 
@@ -142,6 +206,47 @@ class ClientChooserButton extends StatelessWidget {
         case SettingsAction.showAddressbook:
           VRouter.of(context).to('/addressbook');
           break;
+        case SettingsAction.finishBackup:
+          await BootstrapDialog(
+            client: Matrix.of(context).client,
+          ).show(context);
+          break;
+        case SettingsAction
+            .logout: //schulchat-specific: add sign out button in client_chooser_button
+          if (await showOkCancelAlertDialog(
+                useRootNavigator: false,
+                context: context,
+                title: L10n.of(context)!.areYouSureYouWantToLogout,
+                message: L10n.of(context)!.noBackupWarning,
+                //isDestructiveAction: noBackup,
+                okLabel: L10n.of(context)!.logout,
+                cancelLabel: L10n.of(context)!.cancel,
+              ) ==
+              OkCancelResult.cancel) {
+            return;
+          }
+          await showFutureLoadingDialog(
+            context: context,
+            // future: () => matrix.client.logout(),
+            future: () async {
+              final matrix = Matrix.of(context);
+              try {
+                if (kIsWeb) {
+                  launchUrl(Uri.parse(AppConfig.idpLogoutUrl));
+                } else {
+                  // Workaround using Webview
+                  await FlutterWebAuth2.authenticate(
+                    url: AppConfig.idpLogoutUrl,
+                    callbackUrlScheme: 'https',
+                  );
+                }
+                // retry logout?
+              } catch (_) {}
+
+              await matrix.client.logout();
+            },
+          );
+          break;
       }
     }
   }
@@ -152,5 +257,7 @@ enum SettingsAction {
   settings,
   archive,
   requireReadReceipt,
-  showAddressbook
+  showAddressbook,
+  finishBackup,
+  logout
 }

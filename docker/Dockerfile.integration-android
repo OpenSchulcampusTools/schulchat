@@ -28,9 +28,9 @@ RUN apt update
 RUN apt install -y curl unzip openjdk-11-jdk-headless libgl1 git xz-utils cmake clang ninja-build adb lcov python --no-install-recommends
 
 #only for scrcpy
-RUN echo 'deb http://deb.debian.org/debian sid main' >> /etc/apt/sources.list
-RUN apt update
-RUN apt install -y -t sid scrcpy --no-install-recommends
+#RUN echo 'deb http://deb.debian.org/debian sid main' >> /etc/apt/sources.list
+#RUN apt update
+RUN apt install -y -t bullseye-backports scrcpy --no-install-recommends
 RUN curl https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip > cmdline-tools.zip \
     && unzip cmdline-tools.zip \
     && mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools \

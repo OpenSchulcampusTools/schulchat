@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:matrix/matrix.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:fluffychat/pages/bootstrap/bootstrap_dialog.dart';
 import '../../config/app_config.dart';
 import '../../widgets/matrix.dart';
-import '../bootstrap/bootstrap_dialog.dart';
 import 'settings_view.dart';
 
 class Settings extends StatefulWidget {
@@ -27,7 +27,7 @@ class SettingsController extends State<Settings> {
   bool profileUpdated = false;
 
   void logoutAction() async {
-    final noBackup = showChatBackupBanner == true;
+    const noBackup = false; //showChatBackupBanner == true;
     if (await showOkCancelAlertDialog(
           useRootNavigator: false,
           context: context,
@@ -54,7 +54,7 @@ class SettingsController extends State<Settings> {
         launchUrl(Uri.parse(AppConfig.idpLogoutUrl));
       } else {
         // Workaround using Webview
-        await FlutterWebAuth.authenticate(
+        await FlutterWebAuth2.authenticate(
           url: AppConfig.idpLogoutUrl,
           callbackUrlScheme: 'https',
         );
@@ -67,11 +67,12 @@ class SettingsController extends State<Settings> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => checkBootstrap());
+    //WidgetsBinding.instance.addPostFrameCallback((_) => checkBootstrap());
 
     super.initState();
   }
 
+  /*
   void checkBootstrap() async {
     final client = Matrix.of(context).client;
     if (!client.encryptionEnabled) return;
@@ -86,15 +87,24 @@ class SettingsController extends State<Settings> {
         await client.encryption?.keyManager.isCached() == false ||
             client.encryption?.crossSigning.enabled == false ||
             crossSigning == false;
+    // not verified
     final isUnknownSession = client.isUnknownSession;
     setState(() {
       showChatBackupBanner = needsBootstrap || isUnknownSession;
     });
   }
+  */
+  void resetBackupDialog(BuildContext context) async {
+    await BootstrapDialog(
+      client: Matrix.of(context).client,
+      wipe: true,
+    ).show(context);
+  }
 
   bool? crossSigningCached;
   bool? showChatBackupBanner;
 
+  /*
   void firstRunBootstrapAction([_]) async {
     if (showChatBackupBanner != true) {
       showOkAlertDialog(
@@ -110,6 +120,7 @@ class SettingsController extends State<Settings> {
     ).show(context);
     checkBootstrap();
   }
+  */
 
   @override
   Widget build(BuildContext context) {

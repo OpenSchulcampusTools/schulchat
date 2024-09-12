@@ -13,7 +13,6 @@ import 'package:fluffychat/pages/chat_list/navi_rail_item.dart';
 import 'package:fluffychat/widgets/unread_rooms_badge.dart';
 import '../../widgets/matrix.dart';
 import 'chat_list_body.dart';
-import 'chat_list_header.dart';
 import 'start_chat_fab.dart';
 
 class ChatListView extends StatelessWidget {
@@ -120,7 +119,7 @@ class ChatListView extends StatelessWidget {
                     final destinations = getNavigationDestinations(context);
 
                     return SizedBox(
-                      width: 64,
+                      width: FluffyThemes.navRailWidth,
                       child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         itemCount: destinations.length,
@@ -152,7 +151,6 @@ class ChatListView extends StatelessWidget {
                   excludeFromSemantics: true,
                   behavior: HitTestBehavior.translucent,
                   child: Scaffold(
-                    appBar: ChatListHeader(controller: controller),
                     body: ChatListViewBody(controller),
                     bottomNavigationBar: controller.displayNavigationBar
                         ? NavigationBar(
@@ -163,24 +161,24 @@ class ChatListView extends StatelessWidget {
                             destinations: getNavigationDestinations(context),
                           )
                         : null,
-                    floatingActionButtonLocation:
-                        controller.filteredRooms.isEmpty
-                            ? FloatingActionButtonLocation.centerFloat
-                            : null,
-                    floatingActionButton: selectMode == SelectMode.normal
-                        ? KeyBoardShortcuts(
-                            keysToPress: {
-                              LogicalKeyboardKey.controlLeft,
-                              LogicalKeyboardKey.keyN
-                            },
-                            onKeysPressed: () =>
-                                VRouter.of(context).to('/newgroupchat'),
-                            helpLabel: L10n.of(context)!.createNewGroup,
-                            child: StartChatFloatingActionButton(
-                              controller: controller,
-                            ),
-                          )
-                        : null,
+                    floatingActionButton: KeyBoardShortcuts(
+                      keysToPress: {
+                        LogicalKeyboardKey.controlLeft,
+                        LogicalKeyboardKey.keyN
+                      },
+                      onKeysPressed: () =>
+                          VRouter.of(context).to('/newgroupchat'),
+                      helpLabel: L10n.of(context)!.createNewGroup,
+                      child: selectMode == SelectMode.normal &&
+                              controller.filteredRooms.isNotEmpty &&
+                              !controller.isSearchMode
+                          ? StartChatFloatingActionButton(
+                              activeFilter: controller.activeFilter,
+                              roomsIsEmpty: false,
+                              scrolledToTop: controller.scrolledToTop,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
                   ),
                 ),
               ),

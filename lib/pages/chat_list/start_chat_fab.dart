@@ -7,10 +7,16 @@ import '../../config/themes.dart';
 import 'chat_list.dart';
 
 class StartChatFloatingActionButton extends StatelessWidget {
-  final ChatListController controller;
+  final ActiveFilter activeFilter;
+  final bool scrolledToTop;
+  final bool roomsIsEmpty;
 
-  const StartChatFloatingActionButton({Key? key, required this.controller})
-      : super(key: key);
+  const StartChatFloatingActionButton({
+    Key? key,
+    required this.activeFilter,
+    required this.scrolledToTop,
+    required this.roomsIsEmpty,
+  }) : super(key: key);
 
   void _onPressed(BuildContext context) {
     VRouter.of(context).to('/newgroup');
@@ -29,15 +35,13 @@ class StartChatFloatingActionButton extends StatelessWidget {
     return AnimatedContainer(
       duration: FluffyThemes.animationDuration,
       curve: FluffyThemes.animationCurve,
-      width: controller.filteredRooms.isEmpty
+      width: roomsIsEmpty
           ? null
-          : controller.scrolledToTop
+          : scrolledToTop
               ? 144
               : 56,
-      child: controller.scrolledToTop
+      child: scrolledToTop
           ? FloatingActionButton.extended(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               onPressed: () => _onPressed(context),
               icon: Icon(icon),
               label: Text(
@@ -46,8 +50,6 @@ class StartChatFloatingActionButton extends StatelessWidget {
               ),
             )
           : FloatingActionButton(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               onPressed: () => _onPressed(context),
               child: Icon(icon),
             ),

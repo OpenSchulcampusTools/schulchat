@@ -34,9 +34,11 @@ WORKDIR /home/fluffy
 RUN curl -s https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz | tar xfJ - -C /tmp
 ENV PATH=${PATH}:/tmp/flutter/bin:/tmp/flutter/.pub-cache/bin
 RUN git clone https://gitlab-ci-token:$CITOKEN@git.fairkom.net/clients/rlp/client/fluffychat.git
+ADD lib/config/app_config.dart fluffychat/lib/config/
+ADD lib/pages/login/login.dart fluffychat/lib/pages/login/
+ADD config.sample.json fluffychat/
 WORKDIR ./fluffychat
 RUN git checkout $CI_COMMIT_SHA
-RUN git show bb8d920adb73a7aa6f80f2709952340f58f80df0|git apply --reverse
 RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.yaml
 RUN sed -i "s#git@git.fairkom.net:#https://gitlab-ci-token:$CITOKEN@git.fairkom.net/#g" pubspec.lock
 #RUN rm pubspec.lock || true

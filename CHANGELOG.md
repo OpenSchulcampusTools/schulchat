@@ -1,3 +1,47 @@
+## v1.11.2
+- Translated using Weblate (Croatian) (Milo Ivir)
+- Translated using Weblate (Dutch) (Jelv)
+- Translated using Weblate (Estonian) (Priit Jõerüüt)
+- Translated using Weblate (Galician) (josé m)
+- Translated using Weblate (Polish) (Eryk Michalak)
+- Translated using Weblate (Turkish) (Oğuz Ersen)
+- Translated using Weblate (Ukrainian) (Ihor Hordiichuk)
+- feat: Permission dialog before open link in browser (Krille)
+- fix: Chats do not load (Krille)
+
+## v1.11.1 - 2023-04-20
+- fix: Download files on web and iOS with correct mimetype
+
+## v1.11.0 - 2023-04-14
+- feat: Add visual read marker (Krille)
+- feat: Jump to last read event (Krille)
+- feat: Use fragmented timeline to jump to event (Krille)
+- feat: change to flutterwebauth2 (ShootingStarDragons)
+- fix: Join public room (Krille)
+- fix: Set fcm priority to max on android (Krille)
+- refactor: CI scripts and old workarounds for build scripts (Krille)
+- refactor: Client in ChatPage (Krille)
+- refactor: Not nullable room in ChatPage (Krille)
+- refactor: Switch to file_picker package and get rid of some dependency overrides (Krille)
+- refactor: Use correct Matrix instance (Krille)
+- style: Make emptypage logo bigger (Krille)
+- style: Minor adjustments for modal bottom sheets (Krille)
+- style: Move chats to top (Krille)
+- style: Use SliverList for chatlist (Krille)
+- refactor: Container -> SizedBox.shrink() (noob_tea)
+- Translated using Weblate (Chinese (Simplified)) (Eric)
+- Translated using Weblate (Dutch) (Jelv)
+- Translated using Weblate (Estonian) (Priit Jõerüüt)
+- Translated using Weblate (French) (Anne Onyme 017)
+- Translated using Weblate (Galician) (josé m)
+- Translated using Weblate (Indonesian) (Linerly)
+- Translated using Weblate (Persian) (Parsa)
+- Translated using Weblate (Persian) (Siavash)
+- Translated using Weblate (Polish) (Luna)
+- Translated using Weblate (Swedish) (Kristoffer Grundström)
+- Translated using Weblate (Turkish) (Oğuz Ersen)
+- Translated using Weblate (Ukrainian) (Ihor Hordiichuk)
+
 ## v1.10.0 - 2023-02-25
 - Added translation using Weblate (Thai) (Wphaoka)
 - Added translation using Weblate (Tibetan) (Nathan Freitas)

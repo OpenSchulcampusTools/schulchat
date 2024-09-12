@@ -43,7 +43,7 @@ dart_code_metrics_analyze:
   stage: analyze
   extends:
     - .flutter_deps_and_format
-  script: ['flutter pub run dart_code_metrics:metrics lib -r gitlab > code-quality-report.json']
+  script: ['dart run dart_code_metrics:metrics lib --no-fatal-warnings -r gitlab > code-quality-report.json']
   artifacts:
     paths:
       - untranslated-strings.txt
@@ -144,6 +144,7 @@ build_android_apk:
   tags: [docker, rlp]
   script: |
     docker container rm androidimage || true
+    docker image rm fluffy-android || true
     docker build -f docker/Dockerfile.android -t fluffy-android --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA .
     docker create --name androidimage fluffy-android
     docker cp androidimage:/home/fluffy/fluffychat/build/app/outputs/flutter-apk/app-debug.apk .
@@ -159,15 +160,15 @@ build_android_apk_for_dev:
   tags: [docker, rlp]
   script: |
     docker container rm androidimage-dev || true
+    docker image rm fluffy-android-dev || true
     sed -i "s#_defaultHomeserver = 'schulchat.rlp.de';#_defaultHomeserver = 'schulchat.dev.osalliance.com';#g" lib/config/app_config.dart
     sed -i 's#https://schulchat.rlp.de/_matrix/push/v1/notify#https://schulchat.dev.osalliance.com/_matrix/push/v1/notify#g' lib/config/app_config.dart
     sed -i 's#https://schulchat.rlp.de/web#https://schulchat.dev.osalliance.com/web#g' lib/config/app_config.dart
     sed -i 's#https://bildungsportal.rlp.de/oauth2/logout#https://dev.schulcampus-rlp.de/oauth2/logout#g' lib/config/app_config.dart
-    sed -i 's#schulchat.rlp.de#schulchat.dev.osalliance.com#g' docker/Dockerfile.android
     sed -i 's#www.schulcampus-rlp.de#dev.schulcampus-rlp.de#g' lib/pages/login/login.dart
     sed -i 's#schulchat.rlp.de#schulchat.dev.osalliance.com#g' config.sample.json
     sed -i 's#bildungsportal.rlp.de#dev.schulcampus-rlp.de#g' config.sample.json
-    docker build -f docker/Dockerfile.android -t fluffy-android-dev --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA .
+    docker build -f docker/Dockerfile.android-dev -t fluffy-android-dev --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA .
     docker create --name androidimage-dev fluffy-android-dev
     docker cp androidimage-dev:/home/fluffy/fluffychat/build/app/outputs/flutter-apk/app-debug.apk .
     docker rm androidimage-dev
@@ -177,20 +178,20 @@ build_android_apk_for_dev:
     paths:
       - app-debug.apk
 
-build_apk_without_google:
-  stage: build
-  tags: [docker, rlp]
-  script: |
-    docker container rm androidimage-fdroid || true
-    docker build -f docker/Dockerfile.android-without-google -t fluffy-android-fdroid --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA .
-    docker create --name androidimage-fdroid fluffy-android-fdroid
-    docker cp androidimage-fdroid:/home/fluffy/fluffychat/build/app/outputs/flutter-apk/app-debug.apk .
-    docker rm androidimage-fdroid
-  artifacts:
-    when: on_success
-    name: app-debug.apk
-    paths:
-      - app-debug.apk
+#build_apk_without_google:
+#  stage: build
+#  tags: [docker, rlp]
+#  script: |
+#    docker container rm androidimage-fdroid || true
+#    docker build -f docker/Dockerfile.android-without-google -t fluffy-android-fdroid --build-arg CITOKEN=$CITOKEN --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA .
+#    docker create --name androidimage-fdroid fluffy-android-fdroid
+#    docker cp androidimage-fdroid:/home/fluffy/fluffychat/build/app/outputs/flutter-apk/app-debug.apk .
+#    docker rm androidimage-fdroid
+#  artifacts:
+#    when: on_success
+#    name: app-debug.apk
+#    paths:
+#      - app-debug.apk
 
 integration_android:
   stage: test

@@ -30,6 +30,7 @@ class SettingsIgnoreListView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  /* schulchat-specific
                   TextField(
                     controller: controller.controller,
                     autocorrect: false,
@@ -47,7 +48,7 @@ class SettingsIgnoreListView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 16),*/
                   Text(
                     L10n.of(context)!.ignoreListDescription,
                     style: const TextStyle(color: Colors.orange),

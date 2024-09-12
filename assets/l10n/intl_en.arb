@@ -148,11 +148,16 @@
         "type": "text",
         "placeholders": {}
     },
-      "areYouSureDeleteRoom": "Are you sure you want to delete the room?",
-      "@areYouSureDeleteRoom": {
+    "userCanJoinAgain": "Users can be synchronized back into the room based on group memberships.",
+    "@userCanJoinAgain": {
         "type": "text",
         "placeholders": {}
-      },
+    },
+    "areYouSureDeleteRoom": "Are you sure you want to delete the room?",
+    "@areYouSureDeleteRoom": {
+        "type": "text",
+        "placeholders": {}
+    },
     "areYouSureYouWantToLogout": "Are you sure you want to log out?",
     "@areYouSureYouWantToLogout": {
         "type": "text",
@@ -1005,7 +1010,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "ignoreListDescription": "You can ignore users who are disturbing you. You won't be able to receive any messages or room invites from the users on your personal ignore list.",
+    "ignoreListDescription": "If you have ignored people in a previous version, you can remove this here, otherwise you will no longer be able to receive messages or room invitations from them.",
     "@ignoreListDescription": {
         "type": "text",
         "placeholders": {}
@@ -1132,7 +1137,7 @@
             "targetName": {}
         }
     },
-    "kickFromChat": "Kick from chat",
+    "kickFromChat": "Remove from chat",
     "@kickFromChat": {
         "type": "text",
         "placeholders": {}
@@ -2490,7 +2495,6 @@
     "reopenChat": "Reopen chat",
     "noBackupWarning": "Warning! Without enabling chat backup, you will lose access to your encrypted messages. It is highly recommended to enable the chat backup first before logging out.",
     "noOtherDevicesFound": "No other devices found",
-    "fileIsTooBigForServer": "The server reports that the file is too large to be sent.",
     "noSearchResult": "No search results found",
     "@noSearchResult": {},
     "searchError": "An error occurred while searching",
@@ -2656,7 +2660,7 @@
     "@pollSaved": {},
     "pollSaveError": "Error saving poll",
     "@pollSaveError": {},
-    "votes": "Stimmen",
+    "votes": "Votes",
     "@votes": {},
     "closePoll": "Close poll",
     "@closePoll": {},
@@ -2665,5 +2669,51 @@
     "pollAnswered": "New poll answer",
     "@pollAnswered": {},
     "pollClosed": "Poll closed",
-    "@pollClosed": {}
+    "@pollClosed": {},
+    "reportAbuse": "Report abuse",
+    "@reportAbuse" : {},
+    "reportAbuseSuccess": "Message sent successfully",
+    "@reportAbuseSuccess" : {},
+    "doNotUseBildungsportalPwd": "Note: Please do not use your Educational Portal password.",
+    "@doNotUseBildungsportalPwd" : {},
+    "chooseSecQuestion": "Choose a security question",
+    "@chooseSecQuestion" : {},
+    "chooseQuestion": "Select a question",
+    "@chooseQuestion" : {},
+    "hintLongPwd": "Set your answer!\nLong and complex answers are more secure – just like passwords",
+    "@hintLongPwd" : {},
+    "setAnswer": "Set answer",
+    "@setAnswer" : {},
+    "answerSecQuestion": "Answer the security question to decrypt chats",
+    "@answerSecQuestion" : {},
+    "answerGivenQuest": "Answer the chosen security question",
+    "@answerGivenQuest" : {},
+    "finishChatBackup": "Set up chat backup",
+    "@finishChatBackup" : {},
+    "resetSecQuestion": "Reset security question",
+    "@resetSecQuestion" : {},
+    "enterRecoveryKey": "Enter your recovery key",
+    "@enterRecoveryKey" : {},
+    "recoverOrVerify": "If you still know your previous recovery key, enter it now. If you are logged in with another verified device, verify it now.",
+    "@recoverOrVerify" : {},
+    "currentRecoveryKey": "The previous recovery key",
+    "@currentRecoveryKey" : {},
+    "errorWrongRecoveryKey": "Error",
+    "@errorWrongRecoveryKey" : {},
+    "errorWrongRecoveryKeyLong": "An error occurred due to an incorrect recovery key. Please try again or click on 'Delete Key'. After that, you will not be able to read your old chats.",
+    "@errorWrongRecoveryKeyLong" : {},
+    "fileIsTooBigForServer": "The server reports that the file is too large to be sent.",
+    "fileHasBeenSavedAt": "File has been saved at {path}",
+    "@fileHasBeenSavedAt": {
+        "type": "text",
+        "placeholders": {
+            "path": {}
+        }
+    },
+    "jumpToLastReadMessage": "Jump to last read message",
+    "readUpToHere": "Read up to here",
+    "jump": "Jump",
+    "openLinkInBrowser": "Open link in browser",
+    "readReceiptAnswer": "read receipt",
+    "@readReceiptAnswer": {}
 }

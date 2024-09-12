@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/widgets/avatar.dart';
 import '../../widgets/matrix.dart';
@@ -54,7 +53,7 @@ class UserBottomSheetView extends StatelessWidget {
                   ),
                   if (controller.widget.onMention != null)
                     ListTile(
-                      trailing: const Icon(Icons.alternate_email_outlined),
+                      leading: const Icon(Icons.alternate_email_outlined),
                       title: Text(L10n.of(context)!.mention),
                       onTap: () => controller
                           .participantAction(UserBottomSheetAction.mention),
@@ -62,7 +61,7 @@ class UserBottomSheetView extends StatelessWidget {
                   if (user.canChangePowerLevel)
                     ListTile(
                       title: Text(L10n.of(context)!.setPermissionsLevel),
-                      trailing: const Icon(Icons.edit_attributes_outlined),
+                      leading: const Icon(Icons.edit_attributes_outlined),
                       onTap: () => controller.participantAction(
                         UserBottomSheetAction.permission,
                       ),
@@ -70,21 +69,22 @@ class UserBottomSheetView extends StatelessWidget {
                   if (user.canKick)
                     ListTile(
                       title: Text(L10n.of(context)!.kickFromChat),
-                      trailing: const Icon(Icons.exit_to_app_outlined),
+                      leading: const Icon(Icons.exit_to_app_outlined),
                       onTap: () => controller
                           .participantAction(UserBottomSheetAction.kick),
                     ),
+                  /* schulchat-specific: remove ban, unban, ignore and report
                   if (user.canBan && user.membership != Membership.ban)
                     ListTile(
                       title: Text(L10n.of(context)!.banFromChat),
-                      trailing: const Icon(Icons.warning_sharp),
+                      leading: const Icon(Icons.warning_sharp),
                       onTap: () => controller
                           .participantAction(UserBottomSheetAction.ban),
                     )
                   else if (user.canBan && user.membership == Membership.ban)
                     ListTile(
                       title: Text(L10n.of(context)!.unbanFromChat),
-                      trailing: const Icon(Icons.warning_outlined),
+                      leading: const Icon(Icons.warning_outlined),
                       onTap: () => controller
                           .participantAction(UserBottomSheetAction.unban),
                     ),
@@ -94,7 +94,7 @@ class UserBottomSheetView extends StatelessWidget {
                       textColor: Theme.of(context).colorScheme.onErrorContainer,
                       iconColor: Theme.of(context).colorScheme.onErrorContainer,
                       title: Text(L10n.of(context)!.ignore),
-                      trailing: const Icon(Icons.block),
+                      leading: const Icon(Icons.block),
                       onTap: () => controller
                           .participantAction(UserBottomSheetAction.ignore),
                     ),
@@ -103,10 +103,11 @@ class UserBottomSheetView extends StatelessWidget {
                       textColor: Theme.of(context).colorScheme.error,
                       iconColor: Theme.of(context).colorScheme.error,
                       title: Text(L10n.of(context)!.reportUser),
-                      trailing: const Icon(Icons.shield_outlined),
+                      leading: const Icon(Icons.shield_outlined),
                       onTap: () => controller
                           .participantAction(UserBottomSheetAction.report),
                     ),
+                   */
                 ],
               ),
             )

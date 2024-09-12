@@ -21,6 +21,7 @@ import 'verification_request_content.dart';
 class Message extends StatelessWidget {
   final Event event;
   final Event? nextEvent;
+  final bool displayReadMarker;
   final void Function(Event)? onSelect;
   final void Function(Event)? onAvatarTab;
   final void Function(Event)? onInfoTab;
@@ -36,6 +37,7 @@ class Message extends StatelessWidget {
   const Message(
     this.event, {
     this.nextEvent,
+    this.displayReadMarker = false,
     this.longPressSelect = false,
     this.onSelect,
     this.onInfoTab,
@@ -363,7 +365,8 @@ class Message extends StatelessWidget {
     Widget container;
     if (event.hasAggregatedEvents(timeline, RelationshipTypes.reaction) ||
         displayTime ||
-        selected) {
+        selected ||
+        displayReadMarker) {
       container = Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment:
@@ -406,6 +409,35 @@ class Message extends StatelessWidget {
                 right: 12.0,
               ),
               child: MessageReactions(event, timeline),
+            ),
+          if (displayReadMarker)
+            Row(
+              children: [
+                Expanded(
+                  child: Divider(color: Theme.of(context).colorScheme.primary),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  margin: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                  ),
+                  child: Text(
+                    L10n.of(context)!.readUpToHere,
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  ),
+                ),
+                Expanded(
+                  child: Divider(color: Theme.of(context).colorScheme.primary),
+                ),
+              ],
             ),
         ],
       );

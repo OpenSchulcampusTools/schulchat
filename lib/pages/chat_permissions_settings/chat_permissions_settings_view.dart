@@ -46,6 +46,32 @@ class ChatPermissionsSettingsView extends StatelessWidget {
             final eventsPowerLevels =
                 Map<String, dynamic>.from(powerLevelsContent['events'] ?? {})
                   ..removeWhere((k, v) => v is! int);
+
+            // schulchat-specific: remove some powerLevel: 'ban', 'redact', 'state_default', 'user_default'
+            const powerLevelsKeysToRemove = [
+              'ban',
+              'redact',
+              'state_default',
+              'users_default',
+              'edu.matrix.klassenfunk.read_receipt',
+            ];
+            powerLevelsKeysToRemove.forEach(powerLevels.remove);
+
+            // schulchat-specific: remove kick if client is not a moderator
+            if (room.ownPowerLevel <= 50) {
+              powerLevels.remove('kick');
+            }
+            // schulchat-specific: remove some eventsPowerLevels: 'm.room.canonical_ alias', 'm.room.encryption', 'm.room.power_levels', 'm.room.server_acl', 'm.room.tombstone'
+            const powerLevelsEventsKeysToRemove = [
+              'm.room.canonical_alias',
+              'm.room.encryption',
+              'm.room.history_visibility',
+              'm.room.power_levels',
+              'm.room.server_acl',
+              'm.room.tombstone'
+            ];
+            powerLevelsEventsKeysToRemove.forEach(eventsPowerLevels.remove);
+
             return Column(
               children: [
                 Column(

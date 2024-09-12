@@ -95,7 +95,7 @@ index d9930f55..351b1a5b 100644
  
 -import chat.fluffy.fluffychat.MainActivity
 +import de.rlp.schulchat.MainActivity
- 
+
  import io.flutter.embedding.android.FlutterActivity
  import io.flutter.embedding.engine.FlutterEngine
 @@ -33,4 +33,3 @@ class FcmPushService : FcmSharedIsolateService() {
@@ -167,6 +167,6 @@ index b03af289..e2ea4b06 100644
    emojis: ^0.9.9
 -  #fcm_shared_isolate: ^0.1.0
 +  fcm_shared_isolate: ^0.1.0
-   file_picker_cross:
-     git:
-       url: git@git.fairkom.net:clients/rlp/client/file_picker_cross.git
+   file_picker: ^5.2.6
+   flutter:
+     sdk: flutter

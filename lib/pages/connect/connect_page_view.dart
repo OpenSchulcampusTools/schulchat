@@ -251,8 +251,8 @@ class ConnectPageView extends StatelessWidget {
             child: kIsWeb
                 ? Text(
                     L10n.of(context)!.alwaysLogout,
-                    style: const TextStyle(
-                      color: Colors.grey,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
                   )
                 : const SizedBox(),

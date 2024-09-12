@@ -11,14 +11,10 @@ import '../../widgets/matrix.dart';
 import 'user_bottom_sheet_view.dart';
 
 enum UserBottomSheetAction {
-  report,
   mention,
-  ban,
   kick,
-  unban,
   permission,
   message,
-  ignore,
 }
 
 class UserBottomSheet extends StatefulWidget {
@@ -59,7 +55,19 @@ class UserBottomSheetController extends State<UserBottomSheet> {
           cancelLabel: L10n.of(context)!.no,
         ) ==
         OkCancelResult.ok);
+
+    // schulchat-specific
+    informAboutRejoin() async => (await showOkCancelAlertDialog(
+          useRootNavigator: false,
+          context: context,
+          title: L10n.of(context)!.userCanJoinAgain,
+          okLabel: L10n.of(context)!.ok,
+          cancelLabel: L10n.of(context)!.cancel,
+        ) ==
+        OkCancelResult.ok);
+
     switch (action) {
+      /* schulchat-specific
       case UserBottomSheetAction.report:
         final event = widget.user;
         final score = await showConfirmationDialog<int>(
@@ -107,10 +115,12 @@ class UserBottomSheetController extends State<UserBottomSheet> {
           SnackBar(content: Text(L10n.of(context)!.contentHasBeenReported)),
         );
         break;
+       */
       case UserBottomSheetAction.mention:
         Navigator.of(context, rootNavigator: false).pop();
         widget.onMention!();
         break;
+      /* schulchat-specific:
       case UserBottomSheetAction.ban:
         if (await askConfirmation()) {
           await showFutureLoadingDialog(
@@ -129,8 +139,9 @@ class UserBottomSheetController extends State<UserBottomSheet> {
           Navigator.of(context, rootNavigator: false).pop();
         }
         break;
+     */
       case UserBottomSheetAction.kick:
-        if (await askConfirmation()) {
+        if (await informAboutRejoin()) {
           await showFutureLoadingDialog(
             context: context,
             future: () => widget.user.kick(),
@@ -162,6 +173,7 @@ class UserBottomSheetController extends State<UserBottomSheet> {
             .toSegments(['rooms', roomIdResult.result!]);
         Navigator.of(context, rootNavigator: false).pop();
         break;
+      /* schulchat-specific
       case UserBottomSheetAction.ignore:
         if (await askConfirmation()) {
           await showFutureLoadingDialog(
@@ -169,6 +181,7 @@ class UserBottomSheetController extends State<UserBottomSheet> {
             future: () => Matrix.of(context).client.ignoreUser(widget.user.id),
           );
         }
+        */
     }
   }
 

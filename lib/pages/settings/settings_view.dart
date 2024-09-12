@@ -15,7 +15,7 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final showChatBackupBanner = controller.showChatBackupBanner;
+//    final showChatBackupBanner = controller.showChatBackupBanner;
     return Scaffold(
       appBar: AppBar(
         leading: CloseButton(
@@ -36,6 +36,7 @@ class SettingsView extends StatelessWidget {
           key: const Key('SettingsListViewContent'),
           children: <Widget>[
             const Divider(thickness: 1),
+            /*
             if (showChatBackupBanner == null)
               ListTile(
                 leading: const Icon(Icons.backup_outlined),
@@ -51,6 +52,7 @@ class SettingsView extends StatelessWidget {
                 onChanged: controller.firstRunBootstrapAction,
               ),
             const Divider(thickness: 1),
+            */
             ListTile(
               leading: const Icon(Icons.format_paint_outlined),
               title: Text(L10n.of(context)!.changeTheme),
@@ -80,6 +82,12 @@ class SettingsView extends StatelessWidget {
               title: Text(L10n.of(context)!.security),
               onTap: () => VRouter.of(context).to('/settings/security'),
               trailing: const Icon(Icons.chevron_right_outlined),
+            ),
+            ListTile(
+              leading: const Icon(Icons.enhanced_encryption),
+              title: Text(L10n.of(context)!.resetSecQuestion),
+              onTap: () => controller.resetBackupDialog(context),
+              trailing: const Icon(Icons.open_in_new_outlined),
             ),
             const Divider(thickness: 1),
             ListTile(
